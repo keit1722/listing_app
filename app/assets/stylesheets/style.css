@@ -15571,7 +15571,8 @@ input:checked + .slider:before {
 	top: 1px;
 }
 
-#add-listing h5 {
+#add-listing h5,
+#add-listing h5 label {
 	font-size: 15px;
 	font-weight: 600;
 	color: #333;
