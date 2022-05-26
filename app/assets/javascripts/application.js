@@ -1,0 +1,13 @@
+//= require rails-ujs
+//=require "jquery-3.6.0.min.js"
+//=require "jquery-migrate-3.3.2.min.js"
+//=require "mmenu.min.js"
+//=require "chosen.min.js"
+//=require "slick.min.js"
+//=require "rangeslider.min.js"
+//=require "magnific-popup.min.js"
+//=require "waypoints.min.js"
+//=require "counterup.min.js"
+//=require "jquery-ui.min.js"
+//=require "tooltips.min.js"
+//=require "custom.js"
