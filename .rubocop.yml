@@ -36,3 +36,5 @@ Rails/UnknownEnv:
     - staging
 Naming/PredicateName:
   Enabled: false
+RSpec/MultipleExpectations:
+  Enabled: false
