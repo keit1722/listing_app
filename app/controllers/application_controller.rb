@@ -4,4 +4,8 @@ class ApplicationController < ActionController::Base
   def not_authenticated
     redirect_to login_path, error: 'ログインしてください'
   end
+
+  def require_logout
+    redirect_to root_path, error: 'ログアウトしてください' if logged_in?
+  end
 end
