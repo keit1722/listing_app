@@ -1,0 +1,6 @@
+<% flash.each do |message_type, message| %>
+  <div class="notification closeable margin-bottom-0 <%= message_type %>">
+    <p><%= message %></p>
+    <a class="close" href="#"></a>
+  </div>
+<% end %>
