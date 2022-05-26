@@ -1,0 +1,47 @@
+<div id="titlebar">
+  <div class="row">
+    <div class="col-md-12">
+      <h2>プロフィール編集</h2>
+      <!-- Breadcrumbs -->
+      <nav id="breadcrumbs">
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">マイページ</a></li>
+          <li>プロフィール編集</li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+
+  <!-- Profile -->
+  <div class="col-md-12">
+    <%= form_with model: @user, url: mypage_profile_path do |f| %>
+      <div class="dashboard-list-box margin-top-0">
+        <div class="dashboard-list-box-static">
+
+          <!-- Details -->
+          <div class="my-profile">
+
+            <%= f.label :last_name %>
+            <%= f.text_field :last_name %>
+            <%= f.label :first_name %>
+            <%= f.text_field :first_name %>
+            <%= f.label :username %>
+            <%= f.text_field :username %>
+            <%= f.label :email %>
+            <%= f.email_field :email %>
+            <%= f.label :password %>
+            <%= f.password_field :password %>
+            <%= f.label :password_confirmation %>
+            <%= f.password_field :password_confirmation %>
+
+          </div>
+        </div>
+      </div>
+
+      <%= f.submit nil, class: "button margin-top-15" %>
+    <% end %>
+  </div>
