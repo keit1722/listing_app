@@ -65,8 +65,16 @@
             </ul>
 
             <ul data-submenu-title="Account">
-              <li class="active"><a href="dashboard-my-profile.html"><i class="sl sl-icon-user"></i> My Profile</a></li>
-              <li><a href="index.html"><i class="sl sl-icon-power"></i> Logout</a></li>
+              <li>
+                <%= link_to mypage_profile_path do %>
+                  <i class="sl sl-icon-user"></i> プロフィール</a>
+                <% end %>
+              </li>
+              <li>
+                <%= link_to logout_path, method: :delete do %>
+                  <i class="sl sl-icon-power"></i> ログアウト</a>
+                <% end %>
+              </li>
             </ul>
 
           </div>
