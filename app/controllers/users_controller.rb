@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_action :require_logout
+
   def new
     @user = User.new
   end
@@ -24,7 +26,7 @@ class UsersController < ApplicationController
         :email,
         :password,
         :password_confirmation,
-        :username
+        :username,
       )
   end
 end

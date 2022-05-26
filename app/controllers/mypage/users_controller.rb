@@ -1,4 +1,6 @@
 class Mypage::UsersController < ApplicationController
+  before_action :require_login
+
   layout 'mypage'
 
   def show
