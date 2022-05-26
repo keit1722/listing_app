@@ -1,0 +1,14 @@
+<!-- Left Side Content -->
+<div class="left-side">
+
+  <!-- Logo -->
+  <div id="logo">
+    <%= link_to root_path do %>
+      <%= image_tag 'logo.png', alt: "" %>
+    <% end %>
+    <%= link_to root_path, class:"dashboard-logo" do %>
+      <%= image_tag 'logo2.png', alt: "" %>
+    <% end %>
+  </div>
+
+  <%= render 'shared/header_navigation' %>
