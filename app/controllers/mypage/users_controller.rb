@@ -14,7 +14,7 @@ class Mypage::UsersController < ApplicationController
   def update
     @user = User.find_by(public_uid: current_user.public_uid)
     if @user.update(user_params)
-      redirect_to root_path, success: 'プロフィールを更新しました'
+      redirect_to mypage_profile_path, success: 'プロフィールを更新しました'
     else
       flash.now[:error] = 'プロフィール更新ができませんでした'
       render :edit
