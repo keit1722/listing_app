@@ -4548,7 +4548,7 @@ body .alt-search-box .main-search-input-item .chosen-container-active.chosen-wit
 
 .slider-controls button.slide-m-next,
 .slider-controls button.slide-m-prev {
-	background-image:  url(../images/slider-arrow-grey.svg);
+	background-image:  image-url('slider-arrow-grey.svg');
 	background-repeat: no-repeat;
 	background-size:  auto 100%;
 	background-position: 50%;
@@ -4556,7 +4556,7 @@ body .alt-search-box .main-search-input-item .chosen-container-active.chosen-wit
 
 .home-search-carousel .slider-controls button.slide-m-next,
 .home-search-carousel .slider-controls button.slide-m-prev {
-	background-image:  url(../images/slider-arrow.svg);
+	background-image:  image-url('slider-arrow.svg');
 }
 
 .slider-controls button.slide-m-prev {
