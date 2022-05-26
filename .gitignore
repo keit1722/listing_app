@@ -37,3 +37,6 @@ yarn-debug.log*
 
 vendor
 /config/database.yml
+
+public/fonts/
+app/assets/images/
