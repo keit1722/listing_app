@@ -1,0 +1,62 @@
+<div id="titlebar">
+  <div class="row">
+    <div class="col-md-12">
+      <h2>プロフィール</h2>
+      <!-- Breadcrumbs -->
+      <nav id="breadcrumbs">
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">マイページ</a></li>
+          <li>プロフィール</li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+
+  <!-- Profile -->
+  <div class="col-md-12">
+    <div class="dashboard-list-box margin-top-0">
+      <div class="dashboard-list-box-static">
+        <!-- table -->
+        <table class="basic-table">
+          <tbody>
+
+            <tr>
+              <td data-label="項目"><%= User.human_attribute_name("last_name") %></td>
+              <td data-label="内容"><%= @user.last_name %></td>
+            </tr>
+
+            <tr>
+              <td data-label="項目"><%= User.human_attribute_name("first_name") %></td>
+              <td data-label="内容"><%= @user.first_name %></td>
+            </tr>
+
+            <tr>
+              <td data-label="項目"><%= User.human_attribute_name("username") %></td>
+              <td data-label="内容"><%= @user.username %></td>
+            </tr>
+
+            <tr>
+              <td data-label="項目"><%= User.human_attribute_name("email") %></td>
+              <td data-label="内容"><%= @user.email %></td>
+            </tr>
+
+          </tbody>
+        </table>
+
+      </div>
+
+
+    </div>
+
+    <%= link_to mypage_profile_edit_path, class: "button margin-top-15" do %>
+      <i class="sl sl-icon-pencil"></i> 編集
+    <% end %>
+    <%= link_to mypage_profile_path, method: :delete, data: { confirm: "アカウントを削除すると復旧はできません。よろしいですか？" }, class: "border button" do %>
+      <i class="sl sl-icon-trash"></i> アカウント削除
+    <% end %>
+    
+  </div>

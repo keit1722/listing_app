@@ -1,0 +1,9 @@
+<% if model.errors.any? %>
+  <div class="notification error margin-bottom-55">
+    <ul class="margin-bottom-0">
+      <% model.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
