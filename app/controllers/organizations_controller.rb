@@ -20,7 +20,7 @@ class OrganizationsController < ApplicationController
     if @organization.save
       redirect_to organizations_path, success: '作成しました'
     else
-      flash.now[:danger] = '作成できませんでした'
+      flash.now[:error] = '作成できませんでした'
       render :new
     end
   end
