@@ -1,6 +1,8 @@
 class OrganizationsController < ApplicationController
   before_action :only_business
 
+  layout 'mypage'
+
   def index
     @organizations = current_user.organizations
   end
