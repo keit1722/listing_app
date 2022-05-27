@@ -16,6 +16,9 @@
 #  index_organizations_on_slug  (slug) UNIQUE
 #
 class Organization < ApplicationRecord
+  has_many :organization_users, dependent: :destroy
+  has_many :users, through: :organization_users
+
   validates :name, length: { maximum: 100 }, uniqueness: true, presence: true
   validates :address, length: { maximum: 100 }, presence: true
   validates :phone, numericality: true, length: { in: 10..11 }, presence: true
