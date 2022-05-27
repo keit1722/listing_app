@@ -22,7 +22,15 @@ class Organization < ApplicationRecord
   validates :name, length: { maximum: 100 }, uniqueness: true, presence: true
   validates :address, length: { maximum: 100 }, presence: true
   validates :phone, numericality: true, length: { in: 10..11 }, presence: true
-  validates :slug, length: { maximum: 30 }, uniqueness: true, presence: true
+  validates :slug,
+            length: {
+              maximum: 30,
+            },
+            uniqueness: true,
+            presence: true,
+            format: {
+              with: /\A[a-z0-9\-]+\z/,
+            }
 
   def to_param
     slug
