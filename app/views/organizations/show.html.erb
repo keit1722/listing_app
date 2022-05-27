@@ -31,12 +31,12 @@
           </tbody>
         </table>
 
-        <%= link_to edit_organization_path, class: "button margin-top-15" do %>
-          <i class="sl sl-icon-pencil"></i> 組織情報を編集
-        <% end %>
-        <%= link_to organization_path, method: :delete, data: { confirm: "組織を削除すると復旧はできません。よろしいですか？" }, class: "border button" do %>
-          <i class="sl sl-icon-trash"></i> この組織を削除
-        <% end %>
       </div>
     </div>
+    <%= link_to edit_organization_path, class: "button margin-top-15" do %>
+      <i class="sl sl-icon-pencil"></i> 組織情報を編集
+    <% end %>
+    <%= link_to organization_path, method: :delete, data: { confirm: "組織を削除すると復旧はできません。よろしいですか？" }, class: "border button" do %>
+      <i class="sl sl-icon-trash"></i> この組織を削除
+    <% end %>
   </div>
