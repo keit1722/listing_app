@@ -8,7 +8,7 @@
 #  first_name       :string           not null
 #  last_name        :string           not null
 #  public_uid       :string
-#  role             :integer          default(1), not null
+#  role             :integer          default("general"), not null
 #  salt             :string
 #  username         :string           not null
 #  created_at       :datetime         not null
