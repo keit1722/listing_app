@@ -1,1 +1,18 @@
 # encoding: utf-8
+
+create_table 'organizations', force: :cascade do |t|
+  t.string 'name', null: false, index: { unique: true }
+  t.string 'address', null: false
+  t.string 'phone', null: false
+  t.string 'slug', null: false, index: { unique: true }
+  t.datetime 'updated_at', precision: 6, null: false
+  t.datetime 'created_at', precision: 6, null: false
+end
+
+create_table 'organization_users', force: :cascade do |t|
+  t.references 'user', foreign_key: true
+  t.references 'organization', foreign_key: true
+  t.datetime 'updated_at', precision: 6, null: false
+  t.datetime 'created_at', precision: 6, null: false
+  t.index %i[user_id organization_id], unique: true
+end
