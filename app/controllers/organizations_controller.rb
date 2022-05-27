@@ -1,4 +1,6 @@
 class OrganizationsController < ApplicationController
+  before_action :only_business
+
   def index
     @organizations = current_user.organizations
   end
@@ -52,5 +54,11 @@ class OrganizationsController < ApplicationController
 
   def organization_update_params
     params.require(:organization).permit(:name, :address, :phone)
+  end
+
+  def only_business
+    unless current_user&.business?
+      redirect_to root_path, error: 'ビジネスユーザー専用の機能です'
+    end
   end
 end
