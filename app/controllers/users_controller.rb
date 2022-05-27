@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_action :require_logout
+
   def new
     @user = User.new
   end
@@ -6,6 +8,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      auto_login(@user)
       redirect_to root_path, success: 'アカウントを作成しました'
     else
       flash.now[:error] = 'アカウントの作成ができませんでした'
@@ -24,7 +27,7 @@ class UsersController < ApplicationController
         :email,
         :password,
         :password_confirmation,
-        :username
+        :username,
       )
   end
 end

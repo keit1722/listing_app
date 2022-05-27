@@ -130,8 +130,32 @@
 <!-- Right Side Content / End -->
 <div class="right-side">
   <div class="header-widget">
-    <%= link_to signup_path, class: "sign-in" do %>
-      <i class="sl sl-icon-user-follow"></i> ユーザー登録</a>
+    <% if logged_in? %>
+    <!-- User Menu -->
+    <div class="user-menu">
+      <div class="user-name"><span><%= image_tag 'blank-profile-picture.png' %></span>ログイン中</div>
+      <ul>
+        <li>
+          <%= link_to mypage_profile_path do %>
+            <i class="sl sl-icon-user"></i> プロフィール</a>
+          <% end %>
+        </li>
+        <li><a href="dashboard-messages.html"><i class="sl sl-icon-envelope-open"></i> Messages</a></li>
+        <li><a href="dashboard-bookings.html"><i class="fa fa-calendar-check-o"></i> Bookings</a></li>
+        <li>
+          <%= link_to logout_path, method: :delete do %>
+            <i class="sl sl-icon-power"></i> ログアウト</a>
+          <% end %>
+        </li>
+      </ul>
+    </div>
+    <% else %>
+      <%= link_to login_path, class: "sign-in" do %>
+        <i class="sl sl-icon-login"></i> ログイン</a>
+      <% end %>
+      <%= link_to signup_path, class: "sign-in" do %>
+        <i class="sl sl-icon-user-follow"></i> ユーザー登録</a>
+      <% end %>
     <% end %>
   </div>
 </div>

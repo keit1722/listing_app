@@ -1471,14 +1471,14 @@ body .user-menu ul li a i.fa.fa-calendar-check-o:before {
 }
 
 .mm-navbar__title>span {
-    -o-text-overflow: ellipsis;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden
-    font-size: 14px;
-	font-weight: 600;
-    text-transform: uppercase;
-    font-size: 12px;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 12px;
 }
 
 .mm-navbar__btn:not(.mm-hidden)+.mm-navbar__title {
@@ -3591,7 +3591,7 @@ body.modal-open .mm-slideout {
 	width: auto;
     color: #fff;
     background-color: #66676b;
-    box-shadow: 0 2px 8px rgb(102,103,107, 0.2);
+    box-shadow: 0 2px 8px rgba(102,103,107, 0.2);
 
 }
 
@@ -4548,15 +4548,15 @@ body .alt-search-box .main-search-input-item .chosen-container-active.chosen-wit
 
 .slider-controls button.slide-m-next,
 .slider-controls button.slide-m-prev {
-	background-image:  image-url('slider-arrow-grey.svg');
+	background-image: url("slider-arrow-grey.svg");
 	background-repeat: no-repeat;
-	background-size:  auto 100%;
+	background-size: auto 100%;
 	background-position: 50%;
 }
 
 .home-search-carousel .slider-controls button.slide-m-next,
 .home-search-carousel .slider-controls button.slide-m-prev {
-	background-image:  image-url('slider-arrow.svg');
+	background-image: url("slider-arrow.svg");
 }
 
 .slider-controls button.slide-m-prev {
@@ -9001,7 +9001,6 @@ input#date-picker:hover {
 
 #booking-date-range i {
 	color: #999;
-	background-color: 
 }
 
 /* Booking Requests Filter / End */
@@ -10546,7 +10545,7 @@ section.fullwidth .blog-post { margin: 5px 0 0 0; }
 	text-align: center;
 	border-radius: 50%;
 	background-color: #66676b;
-	background-image: url(../images/plus-icon.svg);
+  background-image: url('plus-icon.svg');
 	background-repeat: no-repeat;
 	background-position: 50%
 }

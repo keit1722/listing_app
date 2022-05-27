@@ -1,18 +1,20 @@
 class Mypage::UsersController < ApplicationController
+  before_action :require_login
+
   layout 'mypage'
 
   def show
-    @user = User.find_by(public_uid: params[:id])
+    @user = User.find_by(public_uid: current_user.public_uid)
   end
 
   def edit
-    @user = User.find_by(public_uid: params[:id])
+    @user = User.find_by(public_uid: current_user.public_uid)
   end
 
   def update
-    @user = User.find_by(public_uid: params[:id])
+    @user = User.find_by(public_uid: current_user.public_uid)
     if @user.update(user_params)
-      redirect_to root_path, success: 'プロフィールを更新しました'
+      redirect_to mypage_profile_path, success: 'プロフィールを更新しました'
     else
       flash.now[:error] = 'プロフィール更新ができませんでした'
       render :edit
@@ -20,7 +22,7 @@ class Mypage::UsersController < ApplicationController
   end
 
   def destroy
-    @user = User.find_by(public_uid: params[:id])
+    @user = User.find_by(public_uid: current_user.public_uid)
     @user.destroy!
     redirect_to root_path, success: 'アカウントを削除しました'
   end
@@ -36,7 +38,7 @@ class Mypage::UsersController < ApplicationController
         :email,
         :password,
         :password_confirmation,
-        :username
+        :username,
       )
   end
 end
