@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'ログイン・ログアウト', type: :system do
-  let(:user) { create(:user) }
+  let(:user) { create(:general_user) }
 
   describe 'ログイン' do
     context '認証情報が正しい場合' do

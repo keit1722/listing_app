@@ -1,6 +1,6 @@
 module SystemHelper
   def login
-    user = create(:user)
+    user = create(:general_user)
     visit login_path
     fill_in 'メールアドレス', with: user.email
     fill_in 'パスワード', with: '12345678'
