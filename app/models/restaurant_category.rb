@@ -12,5 +12,8 @@
 #  index_restaurant_categories_on_name  (name) UNIQUE
 #
 class RestaurantCategory < ApplicationRecord
+  has_many :restaurant_category_mappings, dependent: :destroy
+  has_many :restaurants, through: :restaurant_category_mappings
+
   validates :name, presence: true
 end
