@@ -4,7 +4,7 @@ class OrganizationsController < ApplicationController
   layout 'mypage'
 
   def index
-    @organizations = current_user.organizations
+    @organizations = current_user.organizations.page(params[:page]).per(20)
   end
 
   def show
@@ -59,6 +59,8 @@ class OrganizationsController < ApplicationController
   end
 
   def only_business
-    redirect_to root_path, error: 'ビジネスユーザー専用の機能です' unless current_user&.business?
+    unless current_user&.business?
+      redirect_to root_path, error: 'ビジネスユーザー専用の機能です'
+    end
   end
 end
