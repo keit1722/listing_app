@@ -19,4 +19,6 @@
 #  fk_rails_...  (opening_hour_id => opening_hours.id)
 #
 class OpeningHourMapping < ApplicationRecord
+  belongs_to :opening_hour
+  belongs_to :opening_hourable, polymorphic: true
 end

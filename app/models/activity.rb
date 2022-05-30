@@ -32,6 +32,8 @@ class Activity < ApplicationRecord
            as: :reservation_linkable,
            dependent: :destroy
   has_many :reservation_links, through: :reservation_link_mappings
+  has_many :opening_hour_mappings, as: :opening_hourable, dependent: :destroy
+  has_many :opening_hours, through: :opening_hour_mappings
 
   has_many_attached :images
 

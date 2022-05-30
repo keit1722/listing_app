@@ -28,6 +28,8 @@ class HotSpring < ApplicationRecord
 
   has_many :district_mappings, as: :districtable, dependent: :destroy
   has_many :districts, through: :district_mappings
+  has_many :opening_hour_mappings, as: :opening_hourable, dependent: :destroy
+  has_many :opening_hours, through: :opening_hour_mappings
 
   has_many_attached :images
 

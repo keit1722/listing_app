@@ -10,6 +10,32 @@
 #  updated_at :datetime         not null
 #
 class OpeningHour < ApplicationRecord
+  has_many :opening_hour_mappings, dependent: :destroy
+  has_many :restaurants,
+           through: :opening_hour_mappings,
+           source: :opening_hourable,
+           source_type: 'Restaurant'
+  has_many :activities,
+           through: :opening_hour_mappings,
+           source: :opening_hourable,
+           source_type: 'Activity'
+  has_many :hot_springs,
+           through: :opening_hour_mappings,
+           source: :opening_hourable,
+           source_type: 'HotSpring'
+  has_many :ski_areas,
+           through: :opening_hour_mappings,
+           source: :opening_hourable,
+           source_type: 'SkiArea'
+  has_many :photo_spots,
+           through: :opening_hour_mappings,
+           source: :opening_hourable,
+           source_type: 'PhotoSpot'
+  has_many :shops,
+           through: :opening_hour_mappings,
+           source: :opening_hourable,
+           source_type: 'Shop'
+
   validates :start_time, presence: true
   validates :end_time, presence: true
 
