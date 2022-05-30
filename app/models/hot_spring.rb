@@ -26,6 +26,9 @@
 class HotSpring < ApplicationRecord
   belongs_to :organization
 
+  has_many :district_mappings, as: :districtable, dependent: :destroy
+  has_many :districts, through: :district_mappings
+
   has_many_attached :images
 
   validates :name, length: { maximum: 100 }, uniqueness: true, presence: true

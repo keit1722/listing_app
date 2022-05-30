@@ -13,6 +13,36 @@
 #  index_districts_on_name  (name) UNIQUE
 #
 class District < ApplicationRecord
+  has_many :district_mappings, dependent: :destroy
+  has_many :restaurants,
+           through: :district_mappings,
+           source: :districtable,
+           source_type: 'Restaurant'
+  has_many :hotels,
+           through: :district_mappings,
+           source: :districtable,
+           source_type: 'Hotel'
+  has_many :activities,
+           through: :district_mappings,
+           source: :districtable,
+           source_type: 'Activity'
+  has_many :hot_springs,
+           through: :district_mappings,
+           source: :districtable,
+           source_type: 'HotSpring'
+  has_many :ski_areas,
+           through: :district_mappings,
+           source: :districtable,
+           source_type: 'SkiArea'
+  has_many :photo_spots,
+           through: :district_mappings,
+           source: :districtable,
+           source_type: 'PhotoSpot'
+  has_many :shops,
+           through: :district_mappings,
+           source: :districtable,
+           source_type: 'Shop'
+
   validates :name, presence: true, uniqueness: true
   validates :location, presence: true
 

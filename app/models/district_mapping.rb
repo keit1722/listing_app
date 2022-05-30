@@ -20,5 +20,8 @@
 #  fk_rails_...  (district_id => districts.id)
 #
 class DistrictMapping < ApplicationRecord
+  belongs_to :district
+  belongs_to :districtable, polymorphic: true
+
   validates :districtable_id, uniqueness: { scope: :districtable_type }
 end
