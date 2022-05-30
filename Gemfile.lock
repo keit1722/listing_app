@@ -39,6 +39,11 @@ GEM
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.1, >= 1.2.0)
+    active_storage_validations (0.9.8)
+      activejob (>= 5.2.0)
+      activemodel (>= 5.2.0)
+      activestorage (>= 5.2.0)
+      activesupport (>= 5.2.0)
     activejob (6.1.4.7)
       activesupport (= 6.1.4.7)
       globalid (>= 0.3.6)
@@ -319,6 +324,7 @@ PLATFORMS
   x86_64-darwin-20
 
 DEPENDENCIES
+  active_storage_validations
   annotate
   better_errors
   binding_of_caller
