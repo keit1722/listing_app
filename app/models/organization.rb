@@ -18,18 +18,25 @@
 class Organization < ApplicationRecord
   has_many :organization_users, dependent: :destroy
   has_many :users, through: :organization_users
+  has_many :restaurants, dependent: :destroy
+  has_many :shops, dependent: :destroy
+  has_many :hotels, dependent: :destroy
+  has_many :activities, dependent: :destroy
+  has_many :hot_springs, dependent: :destroy
+  has_many :ski_areas, dependent: :destroy
+  has_many :photo_spots, dependent: :destroy
 
   validates :name, length: { maximum: 100 }, uniqueness: true, presence: true
   validates :address, length: { maximum: 100 }, presence: true
   validates :phone, numericality: true, length: { in: 10..11 }, presence: true
   validates :slug,
             length: {
-              maximum: 30
+              maximum: 30,
             },
             uniqueness: true,
             presence: true,
             format: {
-              with: /\A[a-z0-9\-]+\z/
+              with: /\A[a-z0-9\-]+\z/,
             }
 
   def to_param

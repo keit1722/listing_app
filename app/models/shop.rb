@@ -24,6 +24,8 @@
 #  fk_rails_...  (organization_id => organizations.id)
 #
 class Shop < ApplicationRecord
+  belongs_to :organization
+
   validates :name, length: { maximum: 100 }, uniqueness: true, presence: true
   validates :address, length: { maximum: 100 }, presence: true
   validates :lat, presence: true
