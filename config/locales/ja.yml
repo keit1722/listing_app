@@ -2,6 +2,7 @@ ja:
   activerecord:
     models:
       user: 'ユーザー'
+      user: '組織'
     attributes:
       user:
         last_name: '名字'
@@ -10,6 +11,11 @@ ja:
         username: 'ユーザーネーム'
         password: 'パスワード'
         password_confirmation: 'パスワード確認'
+      organization:
+        name: '会社名・屋号'
+        address: '住所'
+        phone: '電話番号'
+        slug: 'スラッグ'
   attributes:
     created_at: 作成日時
     updated_at: 更新日時
