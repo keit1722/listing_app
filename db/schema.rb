@@ -58,6 +58,25 @@ ActiveRecord::Schema.define(version: 2022_05_30_045102) do
     t.index ["slug"], name: "index_activities_on_slug", unique: true
   end
 
+  create_table "district_mappings", force: :cascade do |t|
+    t.bigint "district_id"
+    t.bigint "districtable_id"
+    t.string "districtable_type"
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.index ["district_id"], name: "index_district_mappings_on_district_id"
+    t.index ["districtable_id", "districtable_type"], name: "index_district_mappings_on_districtable_id_and_type", unique: true
+    t.index ["districtable_type", "districtable_id"], name: "index_polymorphic_district_mappings_on_districtable_id_and_type"
+  end
+
+  create_table "districts", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "location", null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.index ["name"], name: "index_districts_on_name", unique: true
+  end
+
   create_table "hot_springs", force: :cascade do |t|
     t.string "name", null: false
     t.string "address", null: false
@@ -222,6 +241,7 @@ ActiveRecord::Schema.define(version: 2022_05_30_045102) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "activities", "organizations"
+  add_foreign_key "district_mappings", "districts"
   add_foreign_key "hot_springs", "organizations"
   add_foreign_key "hotels", "organizations"
   add_foreign_key "organization_users", "organizations"
