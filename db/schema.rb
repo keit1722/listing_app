@@ -15,6 +15,51 @@ ActiveRecord::Schema.define(version: 2022_05_26_065035) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "activities", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "address", null: false
+    t.float "lat", null: false
+    t.float "lng", null: false
+    t.string "slug", null: false
+    t.text "description", null: false
+    t.bigint "organization_id"
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.index ["name"], name: "index_activities_on_name", unique: true
+    t.index ["organization_id"], name: "index_activities_on_organization_id"
+    t.index ["slug"], name: "index_activities_on_slug", unique: true
+  end
+
+  create_table "hot_springs", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "address", null: false
+    t.float "lat", null: false
+    t.float "lng", null: false
+    t.string "slug", null: false
+    t.text "description", null: false
+    t.bigint "organization_id"
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.index ["name"], name: "index_hot_springs_on_name", unique: true
+    t.index ["organization_id"], name: "index_hot_springs_on_organization_id"
+    t.index ["slug"], name: "index_hot_springs_on_slug", unique: true
+  end
+
+  create_table "hotels", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "address", null: false
+    t.float "lat", null: false
+    t.float "lng", null: false
+    t.string "slug", null: false
+    t.text "description", null: false
+    t.bigint "organization_id"
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.index ["name"], name: "index_hotels_on_name", unique: true
+    t.index ["organization_id"], name: "index_hotels_on_organization_id"
+    t.index ["slug"], name: "index_hotels_on_slug", unique: true
+  end
+
   create_table "organization_users", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "organization_id"
@@ -36,6 +81,66 @@ ActiveRecord::Schema.define(version: 2022_05_26_065035) do
     t.index ["slug"], name: "index_organizations_on_slug", unique: true
   end
 
+  create_table "photo_spots", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "address", null: false
+    t.float "lat", null: false
+    t.float "lng", null: false
+    t.string "slug", null: false
+    t.text "description", null: false
+    t.bigint "organization_id"
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.index ["name"], name: "index_photo_spots_on_name", unique: true
+    t.index ["organization_id"], name: "index_photo_spots_on_organization_id"
+    t.index ["slug"], name: "index_photo_spots_on_slug", unique: true
+  end
+
+  create_table "restaurants", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "address", null: false
+    t.float "lat", null: false
+    t.float "lng", null: false
+    t.string "slug", null: false
+    t.text "description", null: false
+    t.bigint "organization_id"
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.index ["name"], name: "index_restaurants_on_name", unique: true
+    t.index ["organization_id"], name: "index_restaurants_on_organization_id"
+    t.index ["slug"], name: "index_restaurants_on_slug", unique: true
+  end
+
+  create_table "shops", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "address", null: false
+    t.float "lat", null: false
+    t.float "lng", null: false
+    t.string "slug", null: false
+    t.text "description", null: false
+    t.bigint "organization_id"
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.index ["name"], name: "index_shops_on_name", unique: true
+    t.index ["organization_id"], name: "index_shops_on_organization_id"
+    t.index ["slug"], name: "index_shops_on_slug", unique: true
+  end
+
+  create_table "ski_areas", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "address", null: false
+    t.float "lat", null: false
+    t.float "lng", null: false
+    t.string "slug", null: false
+    t.text "description", null: false
+    t.bigint "organization_id"
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.index ["name"], name: "index_ski_areas_on_name", unique: true
+    t.index ["organization_id"], name: "index_ski_areas_on_organization_id"
+    t.index ["slug"], name: "index_ski_areas_on_slug", unique: true
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", null: false
     t.string "crypted_password"
@@ -52,6 +157,13 @@ ActiveRecord::Schema.define(version: 2022_05_26_065035) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "activities", "organizations"
+  add_foreign_key "hot_springs", "organizations"
+  add_foreign_key "hotels", "organizations"
   add_foreign_key "organization_users", "organizations"
   add_foreign_key "organization_users", "users"
+  add_foreign_key "photo_spots", "organizations"
+  add_foreign_key "restaurants", "organizations"
+  add_foreign_key "shops", "organizations"
+  add_foreign_key "ski_areas", "organizations"
 end

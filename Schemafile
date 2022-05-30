@@ -16,3 +16,87 @@ create_table 'organization_users', force: :cascade do |t|
   t.datetime 'created_at', precision: 6, null: false
   t.index %i[user_id organization_id], unique: true
 end
+
+create_table 'restaurants', force: :cascade do |t|
+  t.string 'name', null: false, index: { unique: true }
+  t.string 'address', null: false
+  t.float 'lat', null: false
+  t.float 'lng', null: false
+  t.string 'slug', null: false, index: { unique: true }
+  t.text 'description', null: false
+  t.references 'organization', foreign_key: true
+  t.datetime 'updated_at', precision: 6, null: false
+  t.datetime 'created_at', precision: 6, null: false
+end
+
+create_table 'shops', force: :cascade do |t|
+  t.string 'name', null: false, index: { unique: true }
+  t.string 'address', null: false
+  t.float 'lat', null: false
+  t.float 'lng', null: false
+  t.string 'slug', null: false, index: { unique: true }
+  t.text 'description', null: false
+  t.references 'organization', foreign_key: true
+  t.datetime 'updated_at', precision: 6, null: false
+  t.datetime 'created_at', precision: 6, null: false
+end
+
+create_table 'hotels', force: :cascade do |t|
+  t.string 'name', null: false, index: { unique: true }
+  t.string 'address', null: false
+  t.float 'lat', null: false
+  t.float 'lng', null: false
+  t.string 'slug', null: false, index: { unique: true }
+  t.text 'description', null: false
+  t.references 'organization', foreign_key: true
+  t.datetime 'updated_at', precision: 6, null: false
+  t.datetime 'created_at', precision: 6, null: false
+end
+
+create_table 'activities', force: :cascade do |t|
+  t.string 'name', null: false, index: { unique: true }
+  t.string 'address', null: false
+  t.float 'lat', null: false
+  t.float 'lng', null: false
+  t.string 'slug', null: false, index: { unique: true }
+  t.text 'description', null: false
+  t.references 'organization', foreign_key: true
+  t.datetime 'updated_at', precision: 6, null: false
+  t.datetime 'created_at', precision: 6, null: false
+end
+
+create_table 'hot_springs', force: :cascade do |t|
+  t.string 'name', null: false, index: { unique: true }
+  t.string 'address', null: false
+  t.float 'lat', null: false
+  t.float 'lng', null: false
+  t.string 'slug', null: false, index: { unique: true }
+  t.text 'description', null: false
+  t.references 'organization', foreign_key: true
+  t.datetime 'updated_at', precision: 6, null: false
+  t.datetime 'created_at', precision: 6, null: false
+end
+
+create_table 'ski_areas', force: :cascade do |t|
+  t.string 'name', null: false, index: { unique: true }
+  t.string 'address', null: false
+  t.float 'lat', null: false
+  t.float 'lng', null: false
+  t.string 'slug', null: false, index: { unique: true }
+  t.text 'description', null: false
+  t.references 'organization', foreign_key: true
+  t.datetime 'updated_at', precision: 6, null: false
+  t.datetime 'created_at', precision: 6, null: false
+end
+
+create_table 'photo_spots', force: :cascade do |t|
+  t.string 'name', null: false, index: { unique: true }
+  t.string 'address', null: false
+  t.float 'lat', null: false
+  t.float 'lng', null: false
+  t.string 'slug', null: false, index: { unique: true }
+  t.text 'description', null: false
+  t.references 'organization', foreign_key: true
+  t.datetime 'updated_at', precision: 6, null: false
+  t.datetime 'created_at', precision: 6, null: false
+end
