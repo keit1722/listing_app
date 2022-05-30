@@ -13,5 +13,15 @@ Rails.application.routes.draw do
     get 'profile/edit', to: 'users#edit'
   end
 
-  resources :organizations, param: :slug
+  resources :organizations, param: :slug do
+    scope module: :organizations do
+      resources :restaurants, param: :slug
+      resources :hotels, param: :slug
+      resources :activities, param: :slug
+      resources :hot_springs, param: :slug
+      resources :ski_areas, param: :slug
+      resources :photo_spots, param: :slug
+      resources :shops, param: :slug
+    end
+  end
 end
