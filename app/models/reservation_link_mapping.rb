@@ -19,4 +19,6 @@
 #  fk_rails_...  (reservation_link_id => reservation_links.id)
 #
 class ReservationLinkMapping < ApplicationRecord
+  belongs_to :reservation_link
+  belongs_to :reservation_linkable, polymorphic: true
 end
