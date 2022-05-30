@@ -20,5 +20,8 @@
 #  fk_rails_...  (shop_id => shops.id)
 #
 class ShopCategoryMapping < ApplicationRecord
+  belongs_to :shop
+  belongs_to :shop_category
+
   validates :shop_id, uniqueness: { scope: :shop_category_id }
 end
