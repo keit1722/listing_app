@@ -19,3 +19,10 @@ ja:
   attributes:
     created_at: 作成日時
     updated_at: 更新日時
+  views:
+    pagination:
+      first: <i class="fa fa-angle-double-left"></i>
+      last: <i class="fa fa-angle-double-right"></i>
+      previous: <i class="fa fa-angle-left"></i>
+      next: <i class="fa fa-angle-right"></i>
+      truncate: '...'

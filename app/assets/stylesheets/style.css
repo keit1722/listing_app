@@ -10128,6 +10128,7 @@ a.rate-review:hover {
 	font-size: 14px;
 }
 
+.pagination ul li.current,
 .pagination ul li a {
 	border-radius: 50%;
 	width: 52px;
@@ -10146,6 +10147,7 @@ a.rate-review:hover {
 }
 
 .pagination ul li a.current-page,
+.pagination ul li.current,
 .pagination .current,
 .pagination ul li a:hover,
 .pagination-next-prev ul li a:hover {
@@ -10173,6 +10175,7 @@ a.rate-review:hover {
 }
 
 .fs-listings .pagination ul li a.current-page,
+.fs-listings .pagination ul li.current,
 .fs-listings .pagination .current,
 .fs-listings .pagination ul li a:hover,
 .fs-listings .pagination-next-prev ul li a:hover {
@@ -14680,6 +14683,7 @@ a.dashboard-responsive-nav-trigger { display: none; }
 }
 
 #dashboard .pagination ul li a.current-page,
+#dashboard .pagination ul li.current,
 #dashboard .pagination .current,
 #dashboard .pagination ul li a:hover,
 #dashboard .pagination-next-prev ul li a:hover {
