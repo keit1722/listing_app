@@ -40,13 +40,13 @@ class OpeningHour < ApplicationRecord
   validates :end_time, presence: true
 
   enum day: {
-         monday: 1,
-         tuesday: 2,
-         wednesday: 3,
-         thursday: 4,
-         friday: 5,
-         saturday: 6,
-         sunday: 7,
-         holiday: 8,
-       }
+    monday: 1,
+    tuesday: 2,
+    wednesday: 3,
+    thursday: 4,
+    friday: 5,
+    saturday: 6,
+    sunday: 7,
+    holiday: 8
+  }
 end
