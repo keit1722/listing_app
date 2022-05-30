@@ -24,12 +24,12 @@ class Organization < ApplicationRecord
   validates :phone, numericality: true, length: { in: 10..11 }, presence: true
   validates :slug,
             length: {
-              maximum: 30,
+              maximum: 30
             },
             uniqueness: true,
             presence: true,
             format: {
-              with: /\A[a-z0-9\-]+\z/,
+              with: /\A[a-z0-9\-]+\z/
             }
 
   def to_param

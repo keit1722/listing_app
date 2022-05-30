@@ -30,7 +30,7 @@ RSpec.describe Organization, type: :model do
       same_name_organization = build(:organization, name: organization.name)
       same_name_organization.valid?
       expect(same_name_organization.errors[:name]).to include(
-        'はすでに存在します',
+        'はすでに存在します'
       )
     end
 
@@ -51,7 +51,7 @@ RSpec.describe Organization, type: :model do
         build(:organization, phone: Faker::Number.number(digits: 9))
       organization.valid?
       expect(organization.errors[:phone]).to include(
-        'は10文字以上で入力してください',
+        'は10文字以上で入力してください'
       )
     end
 
@@ -60,7 +60,7 @@ RSpec.describe Organization, type: :model do
         build(:organization, phone: Faker::Number.number(digits: 12))
       organization.valid?
       expect(organization.errors[:phone]).to include(
-        'は11文字以内で入力してください',
+        'は11文字以内で入力してください'
       )
     end
 
@@ -68,7 +68,7 @@ RSpec.describe Organization, type: :model do
       organization =
         build(
           :organization,
-          phone: Faker::PhoneNumber.phone_number.delete('-').tr('0-9', '０-９'),
+          phone: Faker::PhoneNumber.phone_number.delete('-').tr('0-9', '０-９')
         )
       organization.valid?
       expect(organization.errors[:phone]).to include('は数値で入力してください')
@@ -85,7 +85,7 @@ RSpec.describe Organization, type: :model do
       same_slug_organization = build(:organization, slug: organization.slug)
       same_slug_organization.valid?
       expect(same_slug_organization.errors[:slug]).to include(
-        'はすでに存在します',
+        'はすでに存在します'
       )
     end
   end
