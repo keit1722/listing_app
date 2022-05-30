@@ -156,6 +156,23 @@ ActiveRecord::Schema.define(version: 2022_05_30_045102) do
     t.index ["slug"], name: "index_restaurants_on_slug", unique: true
   end
 
+  create_table "shop_categories", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.index ["name"], name: "index_shop_categories_on_name", unique: true
+  end
+
+  create_table "shop_category_mappings", force: :cascade do |t|
+    t.bigint "shop_id"
+    t.bigint "shop_category_id"
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.index ["shop_category_id"], name: "index_shop_category_mappings_on_shop_category_id"
+    t.index ["shop_id", "shop_category_id"], name: "index_shop_category_mappings_on_id_and_category_id", unique: true
+    t.index ["shop_id"], name: "index_shop_category_mappings_on_shop_id"
+  end
+
   create_table "shops", force: :cascade do |t|
     t.string "name", null: false
     t.string "address", null: false
@@ -213,6 +230,8 @@ ActiveRecord::Schema.define(version: 2022_05_30_045102) do
   add_foreign_key "restaurant_category_mappings", "restaurant_categories"
   add_foreign_key "restaurant_category_mappings", "restaurants"
   add_foreign_key "restaurants", "organizations"
+  add_foreign_key "shop_category_mappings", "shop_categories"
+  add_foreign_key "shop_category_mappings", "shops"
   add_foreign_key "shops", "organizations"
   add_foreign_key "ski_areas", "organizations"
 end
