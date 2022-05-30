@@ -26,6 +26,8 @@
 class Shop < ApplicationRecord
   belongs_to :organization
 
+  has_many_attached :images
+
   validates :name, length: { maximum: 100 }, uniqueness: true, presence: true
   validates :address, length: { maximum: 100 }, presence: true
   validates :lat, presence: true
@@ -40,6 +42,12 @@ class Shop < ApplicationRecord
               with: /\A[a-z0-9\-]+\z/,
             }
   validates :description, length: { maximum: 10_000 }, presence: true
+  validates :images,
+            attached: true,
+            limit: {
+              max: 5,
+            },
+            content_type: %i[png jpg jpeg]
 
   def to_param
     slug
