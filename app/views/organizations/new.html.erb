@@ -1,0 +1,75 @@
+<div id="titlebar">
+  <div class="row">
+    <div class="col-md-12">
+      <%= render 'shared/breadcrumbs_mypage', { icon_name: "plus", page_name: "新規組織作成" } %>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+
+    <div id="add-listing">
+      <%= form_with model: @organization do |f| %>
+      <%= render 'shared/error_messages', model: f.object %>
+
+        <!-- Section -->
+        <div class="add-listing-section">
+
+          <!-- Headline -->
+          <div class="add-listing-headline">
+          </div>
+
+          <!-- Row -->
+          <div class="row with-forms margin-bottom-20">
+            <!-- Name -->
+            <div class="col-md-12">
+              <h5><%= f.label :name %></h5>
+              <%= f.text_field :name %>
+            </div>
+          </div>
+          <!-- Row / End -->
+
+          <!-- Row -->
+          <div class="row with-forms margin-bottom-20">
+            <!-- Address -->
+            <div class="col-md-12">
+              <h5><%= f.label :address %></h5>
+              <%= f.text_field :address %>
+            </div>
+          </div>
+          <!-- Row / End -->
+
+          <!-- Row -->
+          <div class="row with-forms margin-bottom-20">
+            <!-- Phone -->
+            <div class="col-md-12">
+              <h5><%= f.label :phone %></h5>
+              <p>半角数字で入力してください。<br>
+              ハイフン（-）も必要ありません。</p>
+              <%= f.text_field :phone, inputmode: "numeric" %>
+            </div>
+          </div>
+          <!-- Row / End -->
+
+          <!-- Row -->
+          <div class="row with-forms margin-bottom-20">
+            <!-- Slug -->
+            <div class="col-md-12">
+              <h5><%= f.label :slug %></h5>
+              <p>他のユーザーの目に触れる箇所になります。<br>
+              50文字以内で入力してください。後から変更が可能です。</p>
+              <%= f.text_field :slug, inputmode: "numeric" %>
+            </div>
+          </div>
+          <!-- Row / End -->
+
+
+        </div>
+        <!-- Section / End -->
+
+        <%= f.submit nil, class: "button margin-top-40" %>
+      <% end %>
+
+    </div>
+  </div>

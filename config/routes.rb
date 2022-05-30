@@ -12,4 +12,6 @@ Rails.application.routes.draw do
     delete 'profile', to: 'users#destroy'
     get 'profile/edit', to: 'users#edit'
   end
+
+  resources :organizations, param: :slug
 end

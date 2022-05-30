@@ -38,3 +38,7 @@ Naming/PredicateName:
   Enabled: false
 RSpec/MultipleExpectations:
   Enabled: false
+RSpec/ContextWording:
+  Enabled: false
+RSpec/ExampleLength:
+  Enabled: false

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'ログイン・ログアウト', type: :system do
-  let(:user) { create(:user) }
+  let(:user) { create(:general_user) }
 
   describe 'ログイン' do
     context '認証情報が正しい場合' do
@@ -10,7 +10,7 @@ RSpec.describe 'ログイン・ログアウト', type: :system do
         fill_in 'メールアドレス', with: user.email
         fill_in 'パスワード', with: '12345678'
         click_button 'ログイン'
-        expect(current_path).to eq root_path
+        expect(page).to have_current_path root_path, ignore_query: true
         expect(page).to have_content 'ログインしました'
       end
     end
@@ -21,7 +21,7 @@ RSpec.describe 'ログイン・ログアウト', type: :system do
         fill_in 'メールアドレス', with: user.email
         fill_in 'パスワード', with: '1234'
         click_button 'ログイン'
-        expect(current_path).to eq login_path
+        expect(page).to have_current_path login_path, ignore_query: true
         expect(page).to have_content 'ログインできませんでした'
       end
     end
@@ -29,10 +29,11 @@ RSpec.describe 'ログイン・ログアウト', type: :system do
 
   describe 'ログアウト' do
     before { login }
+
     it 'ログアウトできること' do
       find('div.user-menu').click
       click_link 'ログアウト'
-      expect(current_path).to eq root_path
+      expect(page).to have_current_path root_path, ignore_query: true
       expect(page).to have_content 'ログアウトしました'
     end
   end
