@@ -29,6 +29,7 @@ gem 'ridgepole'
 gem 'draper'
 gem 'sorcery'
 gem 'public_uid'
+gem 'active_storage_validations'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false

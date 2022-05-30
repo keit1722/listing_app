@@ -16,3 +16,178 @@ create_table 'organization_users', force: :cascade do |t|
   t.datetime 'created_at', precision: 6, null: false
   t.index %i[user_id organization_id], unique: true
 end
+
+create_table 'restaurants', force: :cascade do |t|
+  t.string 'name', null: false, index: { unique: true }
+  t.string 'address', null: false
+  t.float 'lat', null: false
+  t.float 'lng', null: false
+  t.string 'slug', null: false, index: { unique: true }
+  t.text 'description', null: false
+  t.references 'organization', foreign_key: true
+  t.datetime 'updated_at', precision: 6, null: false
+  t.datetime 'created_at', precision: 6, null: false
+end
+
+create_table 'shops', force: :cascade do |t|
+  t.string 'name', null: false, index: { unique: true }
+  t.string 'address', null: false
+  t.float 'lat', null: false
+  t.float 'lng', null: false
+  t.string 'slug', null: false, index: { unique: true }
+  t.text 'description', null: false
+  t.references 'organization', foreign_key: true
+  t.datetime 'updated_at', precision: 6, null: false
+  t.datetime 'created_at', precision: 6, null: false
+end
+
+create_table 'hotels', force: :cascade do |t|
+  t.string 'name', null: false, index: { unique: true }
+  t.string 'address', null: false
+  t.float 'lat', null: false
+  t.float 'lng', null: false
+  t.string 'slug', null: false, index: { unique: true }
+  t.text 'description', null: false
+  t.references 'organization', foreign_key: true
+  t.datetime 'updated_at', precision: 6, null: false
+  t.datetime 'created_at', precision: 6, null: false
+end
+
+create_table 'activities', force: :cascade do |t|
+  t.string 'name', null: false, index: { unique: true }
+  t.string 'address', null: false
+  t.float 'lat', null: false
+  t.float 'lng', null: false
+  t.string 'slug', null: false, index: { unique: true }
+  t.text 'description', null: false
+  t.references 'organization', foreign_key: true
+  t.datetime 'updated_at', precision: 6, null: false
+  t.datetime 'created_at', precision: 6, null: false
+end
+
+create_table 'hot_springs', force: :cascade do |t|
+  t.string 'name', null: false, index: { unique: true }
+  t.string 'address', null: false
+  t.float 'lat', null: false
+  t.float 'lng', null: false
+  t.string 'slug', null: false, index: { unique: true }
+  t.text 'description', null: false
+  t.references 'organization', foreign_key: true
+  t.datetime 'updated_at', precision: 6, null: false
+  t.datetime 'created_at', precision: 6, null: false
+end
+
+create_table 'ski_areas', force: :cascade do |t|
+  t.string 'name', null: false, index: { unique: true }
+  t.string 'address', null: false
+  t.float 'lat', null: false
+  t.float 'lng', null: false
+  t.string 'slug', null: false, index: { unique: true }
+  t.text 'description', null: false
+  t.references 'organization', foreign_key: true
+  t.datetime 'updated_at', precision: 6, null: false
+  t.datetime 'created_at', precision: 6, null: false
+end
+
+create_table 'photo_spots', force: :cascade do |t|
+  t.string 'name', null: false, index: { unique: true }
+  t.string 'address', null: false
+  t.float 'lat', null: false
+  t.float 'lng', null: false
+  t.string 'slug', null: false, index: { unique: true }
+  t.text 'description', null: false
+  t.references 'organization', foreign_key: true
+  t.datetime 'updated_at', precision: 6, null: false
+  t.datetime 'created_at', precision: 6, null: false
+end
+
+create_table 'restaurant_categories', force: :cascade do |t|
+  t.string 'name', null: false, index: { unique: true }
+  t.datetime 'updated_at', precision: 6, null: false
+  t.datetime 'created_at', precision: 6, null: false
+end
+
+create_table 'restaurant_category_mappings', force: :cascade do |t|
+  t.references 'restaurant', foreign_key: true
+  t.references 'restaurant_category', foreign_key: true
+  t.datetime 'updated_at', precision: 6, null: false
+  t.datetime 'created_at', precision: 6, null: false
+  t.index %i[restaurant_id restaurant_category_id],
+          unique: true,
+          name: 'index_restaurant_category_mappings_on_id_and_category_id'
+end
+
+create_table 'shop_categories', force: :cascade do |t|
+  t.string 'name', null: false, index: { unique: true }
+  t.datetime 'updated_at', precision: 6, null: false
+  t.datetime 'created_at', precision: 6, null: false
+end
+
+create_table 'shop_category_mappings', force: :cascade do |t|
+  t.references 'shop', foreign_key: true
+  t.references 'shop_category', foreign_key: true
+  t.datetime 'updated_at', precision: 6, null: false
+  t.datetime 'created_at', precision: 6, null: false
+  t.index %i[shop_id shop_category_id],
+          unique: true,
+          name: 'index_shop_category_mappings_on_id_and_category_id'
+end
+
+create_table 'districts', force: :cascade do |t|
+  t.string 'name', null: false, index: { unique: true }
+  t.integer 'location', null: false
+  t.datetime 'updated_at', precision: 6, null: false
+  t.datetime 'created_at', precision: 6, null: false
+end
+
+create_table 'district_mappings', force: :cascade do |t|
+  t.references 'district', foreign_key: true
+  t.references 'districtable',
+               polymorphic: true,
+               index: {
+                 name:
+                   'index_polymorphic_district_mappings_on_districtable_id_and_type',
+               }
+  t.datetime 'updated_at', precision: 6, null: false
+  t.datetime 'created_at', precision: 6, null: false
+  t.index %i[districtable_id districtable_type],
+          unique: true,
+          name: 'index_district_mappings_on_districtable_id_and_type'
+end
+
+create_table 'reservation_links', force: :cascade do |t|
+  t.string 'link', null: false
+  t.datetime 'updated_at', precision: 6, null: false
+  t.datetime 'created_at', precision: 6, null: false
+end
+
+create_table 'reservation_link_mappings', force: :cascade do |t|
+  t.references 'reservation_link', foreign_key: true
+  t.references 'reservation_linkable',
+               polymorphic: true,
+               index: {
+                 name:
+                   'index_polymorphic_reservation_link_mappings_on_id_and_type',
+               }
+  t.datetime 'updated_at', precision: 6, null: false
+  t.datetime 'created_at', precision: 6, null: false
+end
+
+create_table 'opening_hours', force: :cascade do |t|
+  t.string 'start_time', null: false
+  t.string 'end_time', null: false
+  t.integer 'day', null: false
+  t.datetime 'updated_at', precision: 6, null: false
+  t.datetime 'created_at', precision: 6, null: false
+end
+
+create_table 'opening_hour_mappings', force: :cascade do |t|
+  t.references 'opening_hour', foreign_key: true
+  t.references 'opening_hourable',
+               polymorphic: true,
+               index: {
+                 name: 'index_polymorphic_opening_hour_mappings_on_id_and_type',
+               }
+  t.datetime 'updated_at', precision: 6, null: false
+  t.datetime 'created_at', precision: 6, null: false
+end
