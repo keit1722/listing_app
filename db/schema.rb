@@ -107,6 +107,17 @@ ActiveRecord::Schema.define(version: 2022_05_30_045102) do
     t.index ["slug"], name: "index_hotels_on_slug", unique: true
   end
 
+  create_table "opening_hours", force: :cascade do |t|
+    t.bigint "opening_hourable_id"
+    t.string "opening_hourable_type"
+    t.string "start_time", null: false
+    t.string "end_time", null: false
+    t.integer "day", null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.index ["opening_hourable_type", "opening_hourable_id"], name: "index_polymorphic_opening_hour_mappings_on_id_and_type"
+  end
+
   create_table "organization_users", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "organization_id"
@@ -141,6 +152,15 @@ ActiveRecord::Schema.define(version: 2022_05_30_045102) do
     t.index ["name"], name: "index_photo_spots_on_name", unique: true
     t.index ["organization_id"], name: "index_photo_spots_on_organization_id"
     t.index ["slug"], name: "index_photo_spots_on_slug", unique: true
+  end
+
+  create_table "reservation_links", force: :cascade do |t|
+    t.bigint "reservation_linkable_id"
+    t.string "reservation_linkable_type"
+    t.string "link", null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.index ["reservation_linkable_type", "reservation_linkable_id"], name: "index_polymorphic_reservation_link_mappings_on_id_and_type"
   end
 
   create_table "restaurant_categories", force: :cascade do |t|
