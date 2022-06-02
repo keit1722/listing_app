@@ -30,6 +30,8 @@ class Restaurant < ApplicationRecord
   has_many :restaurant_categories, through: :restaurant_category_mappings
   has_many :district_mappings, as: :districtable, dependent: :destroy
   has_many :districts, through: :district_mappings
+  has_one :reservation_link, as: :reservation_linkable, dependent: :destroy
+  has_many :opening_hours, as: :opening_hourable, dependent: :destroy
 
   has_many_attached :images
 

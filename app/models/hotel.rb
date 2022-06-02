@@ -28,6 +28,7 @@ class Hotel < ApplicationRecord
 
   has_many :district_mappings, as: :districtable, dependent: :destroy
   has_many :districts, through: :district_mappings
+  has_one :reservation_link, as: :reservation_linkable, dependent: :destroy
 
   has_many_attached :images
 
