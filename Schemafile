@@ -173,9 +173,12 @@ create_table 'opening_hours', force: :cascade do |t|
                index: {
                  name: 'index_polymorphic_opening_hour_mappings_on_id_and_type',
                }
-  t.string 'start_time', null: false
-  t.string 'end_time', null: false
+  t.string 'start_time_hour', null: false
+  t.string 'start_time_minute', null: false
+  t.string 'end_time_hour', null: false
+  t.string 'end_time_minute', null: false
   t.integer 'day', null: false
+  t.boolean 'closed', null: false, default: false
   t.datetime 'updated_at', precision: 6, null: false
   t.datetime 'created_at', precision: 6, null: false
 end

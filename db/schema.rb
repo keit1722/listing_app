@@ -110,11 +110,14 @@ ActiveRecord::Schema.define(version: 2022_05_30_045102) do
   create_table "opening_hours", force: :cascade do |t|
     t.bigint "opening_hourable_id"
     t.string "opening_hourable_type"
-    t.string "start_time", null: false
-    t.string "end_time", null: false
     t.integer "day", null: false
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "created_at", precision: 6, null: false
+    t.string "start_time_hour", null: false
+    t.string "start_time_minute", null: false
+    t.string "end_time_hour", null: false
+    t.string "end_time_minute", null: false
+    t.boolean "closed", default: false, null: false
     t.index ["opening_hourable_type", "opening_hourable_id"], name: "index_polymorphic_opening_hour_mappings_on_id_and_type"
   end
 

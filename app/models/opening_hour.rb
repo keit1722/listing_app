@@ -3,10 +3,13 @@
 # Table name: opening_hours
 #
 #  id                    :bigint           not null, primary key
+#  closed                :boolean          default(FALSE), not null
 #  day                   :integer          not null
-#  end_time              :string           not null
+#  end_time_hour         :string           not null
+#  end_time_minute       :string           not null
 #  opening_hourable_type :string
-#  start_time            :string           not null
+#  start_time_hour       :string           not null
+#  start_time_minute     :string           not null
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
 #  opening_hourable_id   :bigint
@@ -18,8 +21,11 @@
 class OpeningHour < ApplicationRecord
   belongs_to :opening_hourable, polymorphic: true
 
-  validates :start_time, presence: true
-  validates :end_time, presence: true
+  validates :start_time_hour, presence: true
+  validates :start_time_minute, presence: true
+  validates :end_time_hour, presence: true
+  validates :end_time_minute, presence: true
+  validates :closed, presence: true
   validates :day, presence: true
 
   enum day: {
