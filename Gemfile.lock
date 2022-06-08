@@ -113,6 +113,8 @@ GEM
       activesupport (>= 5.0)
       request_store (>= 1.0)
       ruby2_keywords
+    enum_help (0.0.19)
+      activesupport (>= 3.0.0)
     erubi (1.10.0)
     factory_bot (6.2.1)
       activesupport (>= 5.0.0)
@@ -351,6 +353,7 @@ DEPENDENCIES
   byebug
   capybara
   draper
+  enum_help
   factory_bot_rails
   faker
   image_processing (~> 1.2)
