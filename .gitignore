@@ -40,3 +40,4 @@ vendor
 
 public/fonts/
 app/assets/images/
+/.env
