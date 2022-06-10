@@ -1,0 +1,11 @@
+<% if models.map(&:errors).map(&:any?).any? %>
+  <div class="notification error margin-bottom-55">
+    <ul class="margin-bottom-0">
+      <% models.each do |model| %>
+        <% model.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
