@@ -1,0 +1,89 @@
+<div id="titlebar">
+  <div class="row">
+    <div class="col-md-12">
+      <%= render 'shared/breadcrumbs_mypage', { icon_name: "doc", page_name: "ショップ詳細" } %>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+
+  <!-- Profile -->
+  <div class="col-md-12">
+    <div class="dashboard-list-box margin-top-0">
+      <div class="dashboard-list-box-static">
+        <!-- table -->
+        <table class="basic-table">
+          <tbody>
+            <tr>
+              <td data-label="項目"><%= Shop.human_attribute_name("name") %></td>
+              <td data-label="内容"><%= @shop.name %></td>
+            </tr>
+            <tr>
+              <td data-label="項目"><%= ShopCategory.model_name.human %></td>
+              <td data-label="内容">
+                <%= @shop.decorate.arranged_categories %>
+              </td>
+            </tr>
+            <tr>
+              <td data-label="項目"><%= Shop.human_attribute_name("address") %></td>
+              <td data-label="内容"><%= @shop.address %></td>
+            </tr>
+            <tr>
+              <td data-label="項目"><%= District.model_name.human %></td>
+              <td data-label="内容"><%= @shop.districts.first.name %></td>
+            </tr>
+            <tr>
+              <td data-label="項目"><%= Shop.human_attribute_name("description") %></td>
+              <td data-label="内容"><%= @shop.decorate.format_description %></td>
+            </tr>
+            <% if @shop.opening_hours.exists? %>
+              <tr>
+                <td data-label="項目"><%= OpeningHour.model_name.human %></td>
+                <td data-label="内容">
+                  <ul class="bg-transparent">
+                    <% @shop.opening_hours.early.each do |opening_hour| %>
+                      <li class="padding-top-0 padding-bottom-0 padding-right-0 padding-left-0 bg-transparent border-bottom-none">
+                        <%= opening_hour.day_i18n %>： <%= opening_hour.closed? ? "定休日" : "#{opening_hour.decorate.start_time} 〜 #{opening_hour.decorate.end_time}" %>
+                      </li>
+                    <% end %>
+                  </ul>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <!-- table end -->
+
+        <!-- Row -->
+        <div class="row with-forms margin-bottom-20">
+          <!-- Map -->
+          <div class="col-md-12">
+            <div id="map-location-display" class="margin-top-25 margin-bottom-25" data-lat="<%= @shop.lat %>" data-lng="<%= @shop.lng %>"></div>
+          </div>
+        </div>
+        <!-- Row / End -->
+
+        <!-- Row -->
+        <% if @shop.images.attached? %>
+          <div class="row with-forms margin-bottom-20">
+            <!-- Images preview -->
+            <div class="col-md-12">
+              <div id="preview">
+                <% @shop.images.each do |image| %>
+                  <%= image_tag image.variant(resize: '300x200').processed %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+        <!-- Row / End -->
+      </div>
+    </div>
+    <%= link_to edit_organization_shop_path, class: "button margin-top-15" do %>
+      <i class="sl sl-icon-pencil"></i> 情報を編集
+    <% end %>
+    <%= link_to organization_shop_path, method: :delete, data: { confirm: "削除すると復旧はできません。よろしいですか？" }, class: "border button" do %>
+      <i class="sl sl-icon-trash"></i> このショップを削除
+    <% end %>
+  </div>
