@@ -21109,3 +21109,63 @@ body .category-box-btn:hover {
 	@media only screen and (max-width: 1024px) {#style-switcher {display: none;}}
 
 	#style-switcher { display: none; }
+
+
+/* ------------------------------------------------------------------- */
+/* Custom CSS
+---------------------------------------------------------------------- */
+
+/* custom */
+
+.bg-transparent {
+  background-color: transparent !important;
+}
+
+.border-bottom-none {
+  border-bottom: none !important;
+}
+
+/* image uploader */
+
+.uploader-conteiner {
+  position: relative;
+  border: 2px dashed #d0d0d0;
+  border-radius: 3px;
+  background: #fcfcfc;
+  transition: all 0.3s linear;
+  margin-bottom: 10px;
+  margin-top: 5px;
+  display: inline-block;
+  width: 100%;
+  min-height: 150px;
+  padding: 20px 20px;
+  cursor: pointer;
+}
+
+.uploader-conteiner input[type="file"]  {
+  display: none;
+}
+
+.uploader-inner {
+  text-align: center;
+  margin: 50px 0;
+  font-size: 17px;
+  color: #888;
+  transition: all 0.3s linear;
+  position: relative;
+  z-index: 11;
+}
+
+.uploader-inner i {
+  display: block;
+  font-size: 32px;
+  margin-bottom: 15px;
+}
+
+/* map-location */
+
+#map-location-registration,
+#map-location-display {
+  height: 400px;
+  width: 100%;
+}
