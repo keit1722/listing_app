@@ -22,8 +22,8 @@
           </div>
         </div>
         <!-- Header / End -->
-
       </header>
+
       <div class="clearfix"></div>
       <!-- Header Container / End -->
 
@@ -46,5 +46,7 @@
     <!-- Wrapper / End -->
 
     <%= javascript_include_tag 'application' %>
+    <%= javascript_include_tag 'maps-location' %>
+    <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap&v=weekly" async></script>
   </body>
 </html>
