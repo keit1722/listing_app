@@ -16,5 +16,10 @@
 class ReservationLink < ApplicationRecord
   belongs_to :reservation_linkable, polymorphic: true
 
-  validates :link, length: { maximum: 100 }, presence: true
+  validates :link,
+            length: {
+              maximum: 100,
+            },
+            presence: true,
+            format: /\A#{URI.regexp(%w[http https])}\z/
 end

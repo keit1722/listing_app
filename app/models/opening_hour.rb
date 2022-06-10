@@ -25,7 +25,6 @@ class OpeningHour < ApplicationRecord
   validates :start_time_minute, presence: true
   validates :end_time_hour, presence: true
   validates :end_time_minute, presence: true
-  validates :closed, presence: true
   validates :day, presence: true
 
   enum day: {
@@ -38,4 +37,6 @@ class OpeningHour < ApplicationRecord
          sunday: 7,
          holiday: 8,
        }
+
+  scope :early, -> { order(id: :ASC) }
 end
