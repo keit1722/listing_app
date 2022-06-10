@@ -2,7 +2,18 @@ ja:
   activerecord:
     models:
       user: 'ユーザー'
-      user: '組織'
+      organization: '組織'
+      restaurant: '飲食店'
+      activity: 'アクティビティ'
+      shop: 'ショップ'
+      hotel: '宿泊施設'
+      hot_spring: '温泉'
+      ski_area: 'スキー場'
+      photo_spot: 'フォトスポット'
+      district: '地区'
+      opening_hour: '営業時間'
+      restaurant_category: '飲食店カテゴリー'
+      shop_category: 'ショップカテゴリー'
     attributes:
       user:
         last_name: '名字'
@@ -16,6 +27,95 @@ ja:
         address: '住所'
         phone: '電話番号'
         slug: 'スラッグ'
+      restaurant:
+        name: '店名'
+        address: '住所'
+        slug: 'スラッグ'
+        description: 店の紹介
+        images: '画像'
+      activity:
+        name: 'アクティビティの名前'
+        address: '住所'
+        slug: 'スラッグ'
+        description: アクティビティの紹介
+        images: '画像'
+      hotel:
+        name: '宿泊施設の名前'
+        address: '住所'
+        slug: 'スラッグ'
+        description: 宿泊施設の紹介
+        images: '画像'
+      shop:
+        name: '店名'
+        address: '住所'
+        slug: 'スラッグ'
+        description: ショップの紹介
+        images: '画像'
+      hot_spring:
+        name: '温泉の名前'
+        address: '住所'
+        slug: 'スラッグ'
+        description: 温泉の紹介
+        images: '画像'
+      ski_area:
+        name: 'スキー場の名前'
+        address: '住所'
+        slug: 'スラッグ'
+        description: スキー場の紹介
+        images: '画像'
+      photo_spot:
+        name: 'フォトスポットの名前'
+        address: '住所'
+        slug: 'スラッグ'
+        description: フォトスポットの紹介
+        images: '画像'
+      reservation_link:
+        link: '予約ページのURL'
+  activemodel:
+    attributes:
+      restaurant_create_form:
+        district_id: '地区'
+        restaurant_category_ids: 'カテゴリー'
+      restaurant_update_form:
+        district_id: '地区'
+        restaurant_category_ids: 'カテゴリー'
+      activity_create_form:
+        district_id: '地区'
+      activity_update_form:
+        district_id: '地区'
+      shop_create_form:
+        district_id: '地区'
+        shop_category_ids: 'カテゴリー'
+      shop_update_form:
+        district_id: '地区'
+        shop_category_ids: 'カテゴリー'
+      hotel_create_form:
+        district_id: '地区'
+      hotel_update_form:
+        district_id: '地区'
+      hot_spring_create_form:
+        district_id: '地区'
+      hot_spring_update_form:
+        district_id: '地区'
+      ski_area_create_form:
+        district_id: '地区'
+      ski_area_update_form:
+        district_id: '地区'
+      photo_spot_create_form:
+        district_id: '地区'
+      photo_spot_update_form:
+        district_id: '地区'
+  enums:
+    opening_hour:
+      day:
+        monday: '月曜日'
+        tuesday: '火曜日'
+        wednesday: '水曜日'
+        thursday: '木曜日'
+        friday: '金曜日'
+        saturday: '土曜日'
+        sunday: '日曜日'
+        holiday: '祝日'
   attributes:
     created_at: 作成日時
     updated_at: 更新日時
@@ -26,3 +126,6 @@ ja:
       previous: <i class="fa fa-angle-left"></i>
       next: <i class="fa fa-angle-right"></i>
       truncate: '...'
+  errors:
+    messages:
+      no_coordinate_format: 地図にピンを設置してください
