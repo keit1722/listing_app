@@ -27,7 +27,7 @@ class ShopUpdateForm
   end
 
   def update
-    build_asscociations
+    build_associationss
 
     return false unless valid?
 
@@ -41,7 +41,7 @@ class ShopUpdateForm
 
   private
 
-  def build_asscociations
+  def build_associationss
     @shop.district_ids = district_id.to_i unless district_id.empty?
     @shop.shop_category_ids = shop_category_ids.reject(&:empty?)&.map(&:to_i)
   end

@@ -41,7 +41,7 @@ class RestaurantCreateForm
   end
 
   def save
-    build_asscociations
+    build_associationss
 
     return false unless valid?
 
@@ -56,7 +56,7 @@ class RestaurantCreateForm
 
   private
 
-  def build_asscociations
+  def build_associationss
     restaurant.district_ids = district_id.to_i unless district_id.empty?
     restaurant.restaurant_category_ids =
       restaurant_category_ids.reject(&:empty?)&.map(&:to_i)

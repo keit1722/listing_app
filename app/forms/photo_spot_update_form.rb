@@ -18,7 +18,7 @@ class PhotoSpotUpdateForm
   end
 
   def update
-    build_asscociations
+    build_associationss
 
     return false unless valid?
 
@@ -29,7 +29,7 @@ class PhotoSpotUpdateForm
 
   private
 
-  def build_asscociations
+  def build_associationss
     @photo_spot.district_ids = district_id.to_i unless district_id.empty?
   end
 

@@ -29,7 +29,7 @@ class HotSpringCreateForm
   end
 
   def save
-    build_asscociations
+    build_associationss
 
     return false unless valid?
 
@@ -43,7 +43,7 @@ class HotSpringCreateForm
 
   private
 
-  def build_asscociations
+  def build_associationss
     hot_spring.district_ids = district_id.to_i unless district_id.empty?
     opening_hours.each do |opening_hour|
       opening_hour.opening_hourable = hot_spring

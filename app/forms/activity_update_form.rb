@@ -30,7 +30,7 @@ class ActivityUpdateForm
   end
 
   def update
-    build_asscociations
+    build_associations
 
     return false unless valid?
 
@@ -45,7 +45,7 @@ class ActivityUpdateForm
 
   private
 
-  def build_asscociations
+  def build_associations
     @activity.district_ids = district_id.to_i unless district_id.empty?
   end
 

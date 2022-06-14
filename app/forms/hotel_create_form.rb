@@ -25,7 +25,7 @@ class HotelCreateForm
   end
 
   def save
-    build_asscociations
+    build_associationss
 
     return false unless valid?
 
@@ -39,7 +39,7 @@ class HotelCreateForm
 
   private
 
-  def build_asscociations
+  def build_associationss
     hotel.district_ids = district_id.to_i unless district_id.empty?
     reservation_link.reservation_linkable = hotel
   end
