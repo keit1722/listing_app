@@ -36,11 +36,7 @@
                 <td data-label="項目"><%= OpeningHour.model_name.human %></td>
                 <td data-label="内容">
                   <ul class="bg-transparent">
-                    <% @ski_area.opening_hours.early.each do |opening_hour| %>
-                      <li class="padding-top-0 padding-bottom-0 padding-right-0 padding-left-0 bg-transparent border-bottom-none">
-                        <%= opening_hour.day_i18n %>： <%= opening_hour.closed? ? "定休日" : "#{opening_hour.decorate.start_time} 〜 #{opening_hour.decorate.end_time}" %>
-                      </li>
-                    <% end %>
+                    <%= render partial: "organizations/listings/opening_hour", collection: @ski_area.opening_hours.early %>
                   </ul>
                 </td>
               </tr>
