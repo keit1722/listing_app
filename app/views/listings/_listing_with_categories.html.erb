@@ -1,0 +1,22 @@
+<div class="col-lg-12 col-md-12">
+  <div class="listing-item-container list-layout" data-marker-id="<%= listing_counter + 1 %>" data-latitude="<%= listing.lat %>" data-longitude="<%= listing.lng %>">
+    <%= link_to polymorphic_path(listing), class: "listing-item" do %>
+
+      <!-- Image -->
+      <div class="listing-item-image">
+        <% if listing.images.attached? %>
+         <%= image_tag listing.images.first, class: "listing-image" %>
+        <% end %>
+        <span class="tag listing-category"><%= listing.decorate.arranged_categories %></span>
+      </div>
+
+      <!-- Content -->
+      <div class="listing-item-content">
+        <div class="listing-item-inner">
+          <h3 class="listing-name"><%= listing.name %></h3>
+          <span class="listing-address"><%= listing.address %></span>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
