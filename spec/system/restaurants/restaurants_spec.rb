@@ -10,7 +10,7 @@ RSpec.describe 'CRUD機能', type: :system do
       :restaurant,
       organization: organization_a,
       restaurant_categories: [restaurant_category],
-      districts: [district],
+      districts: [district]
     )
   end
   let!(:user_b) { create(:business_user) }
@@ -20,7 +20,7 @@ RSpec.describe 'CRUD機能', type: :system do
       :restaurant,
       organization: organization_b,
       restaurant_categories: [restaurant_category],
-      districts: [district],
+      districts: [district]
     )
   end
 
@@ -41,15 +41,15 @@ RSpec.describe 'CRUD機能', type: :system do
     it '自分の飲食店は表示される' do
       visit organization_restaurant_path(organization_a, restaurant_a)
       expect(page).to have_current_path organization_restaurant_path(
-                          organization_a,
-                          restaurant_a,
-                        )
+        organization_a,
+        restaurant_a
+      )
     end
 
     it '自分の飲食店以外は表示されない' do
-      expect {
+      expect do
         visit organization_restaurant_path(organization_b, restaurant_b)
-      }.to raise_error(ActiveRecord::RecordNotFound)
+      end.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
 
@@ -58,16 +58,16 @@ RSpec.describe 'CRUD機能', type: :system do
       it '登録フォームに進めること' do
         visit new_organization_restaurant_path(organization_a)
         expect(page).to have_current_path new_organization_restaurant_path(
-                            organization_a,
-                          )
+          organization_a
+        )
       end
     end
 
     context '自分の組織に関するものではない場合' do
       it '登録フォームに進めずエラーになること' do
-        expect {
+        expect do
           visit new_organization_restaurant_path(organization_b)
-        }.to raise_error(NoMethodError)
+        end.to raise_error(NoMethodError)
       end
     end
 
@@ -85,13 +85,13 @@ RSpec.describe 'CRUD機能', type: :system do
 
         find(
           '#restaurant_create_form_restaurant_attributes_lat',
-          visible: false,
+          visible: false
         ).set '36.6959303'
         find(
           '#restaurant_create_form_restaurant_attributes_lng',
-          visible: false,
+          visible: false
         ).set '137.8638005'
-        attach_file '画像', Rails.root.join('spec', 'fixtures', 'fixture.png')
+        attach_file '画像', Rails.root.join('spec/fixtures/fixture.png')
         select '和食', from: 'カテゴリー'
         fill_in 'restaurant_create_form_reservation_link_attributes_link',
                 with: 'https://google.com'
@@ -110,27 +110,24 @@ RSpec.describe 'CRUD機能', type: :system do
       it '編集フォームに進めること' do
         visit edit_organization_restaurant_path(organization_a, restaurant_a)
         expect(page).to have_current_path edit_organization_restaurant_path(
-                            organization_a,
-                            restaurant_a,
-                          )
+          organization_a,
+          restaurant_a
+        )
       end
     end
 
     context '自分の組織に関するものではない場合' do
       it '編集フォームに進めずエラーになること' do
-        expect {
+        expect do
           visit edit_organization_restaurant_path(organization_b, restaurant_b)
-        }.to raise_error(ActiveRecord::RecordNotFound)
+        end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
 
     context '入力情報が正しい場合' do
-      let!(:other_restaurant_category) do
-        create(:restaurant_category_chinese_food)
-      end
-      let!(:other_district) { create(:district_sano) }
-
       it '情報更新ができること' do
+        create(:restaurant_category_chinese_food)
+        create(:district_sano)
         visit edit_organization_restaurant_path(organization_a, restaurant_a)
 
         fill_in '店名', with: '更新サンプル飲食店店名'
@@ -142,13 +139,13 @@ RSpec.describe 'CRUD機能', type: :system do
 
         find(
           '#restaurant_update_form_restaurant_attributes_lat',
-          visible: false,
+          visible: false
         ).set '36.6981800'
         find(
           '#restaurant_update_form_restaurant_attributes_lng',
-          visible: false,
+          visible: false
         ).set '137.8618500'
-        attach_file '画像', Rails.root.join('spec', 'fixtures', 'fixture.png')
+        attach_file '画像', Rails.root.join('spec/fixtures/fixture.png')
         select '中華', from: 'カテゴリー'
         fill_in 'restaurant_update_form_reservation_link_attributes_link',
                 with: 'https://yahoo.com'
@@ -160,7 +157,7 @@ RSpec.describe 'CRUD機能', type: :system do
         expect(page).to have_content '佐野'
         expect(page).to have_content '更新サンプル飲食店住所'
         expect(
-          page,
+          page
         ).to have_content 'Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
         expect(page).to have_content '中華'
         expect(page).to have_content 'https://yahoo.com'

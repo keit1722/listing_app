@@ -15,7 +15,7 @@ FactoryBot.define do
       role { :business }
     end
 
-    factory :general_user, traits: %i[genereal]
-    factory :business_user, traits: %i[business]
+    factory :general_user, traits: [:genereal]
+    factory :business_user, traits: [:business]
   end
 end

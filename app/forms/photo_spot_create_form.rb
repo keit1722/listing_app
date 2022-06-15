@@ -11,7 +11,7 @@ class PhotoSpotCreateForm
     @organization = organization
     super params
 
-    self.photo_spot = organization.photo_spots.build unless photo_spot.present?
+    self.photo_spot = organization.photo_spots.build if photo_spot.blank?
     self.district_id = params[:district_id]
   end
 

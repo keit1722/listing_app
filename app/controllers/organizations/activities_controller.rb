@@ -1,27 +1,27 @@
 class Organizations::ActivitiesController < Organizations::BaseController
   layout :determine_mypage_layout
 
-  before_action :set_districts, only: %i[new create edit update]
+  before_action :set_districts, only: [:new, :create, :edit, :update]
 
   def index
     @activities =
       current_user
-        .organizations
-        .find_by!(slug: params[:organization_slug])
-        .activities
-        .page(params[:page])
-        .per(20)
-        .with_attached_images
+      .organizations
+      .find_by!(slug: params[:organization_slug])
+      .activities
+      .page(params[:page])
+      .per(20)
+      .with_attached_images
   end
 
   def show
     @activity =
       current_user
-        .organizations
-        .find_by!(slug: params[:organization_slug])
-        .activities
-        .with_attached_images
-        .find_by!(slug: params[:slug])
+      .organizations
+      .find_by!(slug: params[:organization_slug])
+      .activities
+      .with_attached_images
+      .find_by!(slug: params[:slug])
   end
 
   def new
@@ -47,22 +47,22 @@ class Organizations::ActivitiesController < Organizations::BaseController
   def edit
     @activity =
       current_user
-        .organizations
-        .find_by!(slug: params[:organization_slug])
-        .activities
-        .with_attached_images
-        .find_by!(slug: params[:slug])
+      .organizations
+      .find_by!(slug: params[:organization_slug])
+      .activities
+      .with_attached_images
+      .find_by!(slug: params[:slug])
     @activity_update_form = ActivityUpdateForm.new(@activity)
   end
 
   def update
     @activity =
       current_user
-        .organizations
-        .find_by!(slug: params[:organization_slug])
-        .activities
-        .with_attached_images
-        .find_by!(slug: params[:slug])
+      .organizations
+      .find_by!(slug: params[:organization_slug])
+      .activities
+      .with_attached_images
+      .find_by!(slug: params[:slug])
     @activity_update_form =
       ActivityUpdateForm.new(@activity, activity_update_params)
 
@@ -77,10 +77,10 @@ class Organizations::ActivitiesController < Organizations::BaseController
   def destroy
     @activity =
       current_user
-        .organizations
-        .find_by(slug: params[:organization_slug])
-        .activities
-        .find_by(slug: params[:slug])
+      .organizations
+      .find_by(slug: params[:organization_slug])
+      .activities
+      .find_by(slug: params[:slug])
 
     @activity.destroy!
     redirect_to organization_activities_path, success: '削除しました'
@@ -93,15 +93,9 @@ class Organizations::ActivitiesController < Organizations::BaseController
       .require(:activity_create_form)
       .permit(
         :district_id,
-        reservation_link_attributes: %i[link],
-        opening_hours_attributes: %i[
-          start_time_hour
-          start_time_minute
-          end_time_hour
-          end_time_minute
-          closed
-          day
-        ],
+        reservation_link_attributes: [:link],
+        opening_hours_attributes: [:start_time_hour, :start_time_minute, :end_time_hour, :end_time_minute, :closed,
+                                   :day],
         activity_attributes: [
           :name,
           :lat,
@@ -109,8 +103,8 @@ class Organizations::ActivitiesController < Organizations::BaseController
           :slug,
           :description,
           :address,
-          images: [],
-        ],
+          { images: [] }
+        ]
       )
   end
 
@@ -119,23 +113,17 @@ class Organizations::ActivitiesController < Organizations::BaseController
       .require(:activity_update_form)
       .permit(
         :district_id,
-        reservation_link_attributes: %i[link],
-        opening_hours_attributes: %i[
-          start_time_hour
-          start_time_minute
-          end_time_hour
-          end_time_minute
-          closed
-          day
-        ],
+        reservation_link_attributes: [:link],
+        opening_hours_attributes: [:start_time_hour, :start_time_minute, :end_time_hour, :end_time_minute, :closed,
+                                   :day],
         activity_attributes: [
           :name,
           :lat,
           :lng,
           :description,
           :address,
-          images: [],
-        ],
+          { images: [] }
+        ]
       )
   end
 end

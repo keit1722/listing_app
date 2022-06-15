@@ -62,7 +62,7 @@ class RestaurantUpdateForm
     [
       @restaurant.valid?,
       reservation_link.valid?,
-      opening_hours.map(&:valid?).all?,
+      opening_hours.map(&:valid?).all?
     ].all?
   end
 end

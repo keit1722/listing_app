@@ -11,10 +11,11 @@ class HotSpringCreateForm
     @organization = organization
     super params
 
-    self.hot_spring = organization.hot_springs.build unless hot_spring.present?
+    self.hot_spring = organization.hot_springs.build if hot_spring.blank?
     self.district_id = params[:district_id]
-    self.opening_hours =
-      DAY_COUNT.times.map { OpeningHour.new } unless opening_hours.present?
+    return if opening_hours.present?
+
+    self.opening_hours = Array.new(DAY_COUNT) { OpeningHour.new }
   end
 
   def hot_spring_attributes=(attributes)

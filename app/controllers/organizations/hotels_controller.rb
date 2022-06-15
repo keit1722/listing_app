@@ -1,27 +1,27 @@
 class Organizations::HotelsController < Organizations::BaseController
   layout :determine_mypage_layout
 
-  before_action :set_districts, only: %i[new create edit update]
+  before_action :set_districts, only: [:new, :create, :edit, :update]
 
   def index
     @hotels =
       current_user
-        .organizations
-        .find_by!(slug: params[:organization_slug])
-        .hotels
-        .page(params[:page])
-        .per(20)
-        .with_attached_images
+      .organizations
+      .find_by!(slug: params[:organization_slug])
+      .hotels
+      .page(params[:page])
+      .per(20)
+      .with_attached_images
   end
 
   def show
     @hotel =
       current_user
-        .organizations
-        .find_by!(slug: params[:organization_slug])
-        .hotels
-        .with_attached_images
-        .find_by!(slug: params[:slug])
+      .organizations
+      .find_by!(slug: params[:organization_slug])
+      .hotels
+      .with_attached_images
+      .find_by!(slug: params[:slug])
   end
 
   def new
@@ -46,22 +46,22 @@ class Organizations::HotelsController < Organizations::BaseController
   def edit
     @hotel =
       current_user
-        .organizations
-        .find_by!(slug: params[:organization_slug])
-        .hotels
-        .with_attached_images
-        .find_by!(slug: params[:slug])
+      .organizations
+      .find_by!(slug: params[:organization_slug])
+      .hotels
+      .with_attached_images
+      .find_by!(slug: params[:slug])
     @hotel_update_form = HotelUpdateForm.new(@hotel)
   end
 
   def update
     @hotel =
       current_user
-        .organizations
-        .find_by!(slug: params[:organization_slug])
-        .hotels
-        .with_attached_images
-        .find_by!(slug: params[:slug])
+      .organizations
+      .find_by!(slug: params[:organization_slug])
+      .hotels
+      .with_attached_images
+      .find_by!(slug: params[:slug])
     @hotel_update_form = HotelUpdateForm.new(@hotel, hotel_update_params)
 
     if @hotel_update_form.update
@@ -75,10 +75,10 @@ class Organizations::HotelsController < Organizations::BaseController
   def destroy
     @hotel =
       current_user
-        .organizations
-        .find_by(slug: params[:organization_slug])
-        .hotels
-        .find_by(slug: params[:slug])
+      .organizations
+      .find_by(slug: params[:organization_slug])
+      .hotels
+      .find_by(slug: params[:slug])
 
     @hotel.destroy!
     redirect_to organization_hotels_path, success: '削除しました'
@@ -91,15 +91,9 @@ class Organizations::HotelsController < Organizations::BaseController
       .require(:hotel_create_form)
       .permit(
         :district_id,
-        reservation_link_attributes: %i[link],
-        opening_hours_attributes: %i[
-          start_time_hour
-          start_time_minute
-          end_time_hour
-          end_time_minute
-          closed
-          day
-        ],
+        reservation_link_attributes: [:link],
+        opening_hours_attributes: [:start_time_hour, :start_time_minute, :end_time_hour, :end_time_minute, :closed,
+                                   :day],
         hotel_attributes: [
           :name,
           :lat,
@@ -107,8 +101,8 @@ class Organizations::HotelsController < Organizations::BaseController
           :slug,
           :description,
           :address,
-          images: [],
-        ],
+          { images: [] }
+        ]
       )
   end
 
@@ -117,23 +111,17 @@ class Organizations::HotelsController < Organizations::BaseController
       .require(:hotel_update_form)
       .permit(
         :district_id,
-        reservation_link_attributes: %i[link],
-        opening_hours_attributes: %i[
-          start_time_hour
-          start_time_minute
-          end_time_hour
-          end_time_minute
-          closed
-          day
-        ],
+        reservation_link_attributes: [:link],
+        opening_hours_attributes: [:start_time_hour, :start_time_minute, :end_time_hour, :end_time_minute, :closed,
+                                   :day],
         hotel_attributes: [
           :name,
           :lat,
           :lng,
           :description,
           :address,
-          images: [],
-        ],
+          { images: [] }
+        ]
       )
   end
 end

@@ -31,13 +31,13 @@ FactoryBot.define do
       day { :holiday }
     end
 
-    factory :day_monday, traits: %i[monday]
-    factory :day_tuesday, traits: %i[tuesday]
-    factory :day_wednesday, traits: %i[wednesday]
-    factory :day_thursday, traits: %i[thursday]
-    factory :day_friday, traits: %i[friday]
-    factory :day_saturday, traits: %i[saturday]
-    factory :day_sunday, traits: %i[sunday]
-    factory :day_holiday, traits: %i[holiday]
+    factory :day_monday, traits: [:monday]
+    factory :day_tuesday, traits: [:tuesday]
+    factory :day_wednesday, traits: [:wednesday]
+    factory :day_thursday, traits: [:thursday]
+    factory :day_friday, traits: [:friday]
+    factory :day_saturday, traits: [:saturday]
+    factory :day_sunday, traits: [:sunday]
+    factory :day_holiday, traits: [:holiday]
   end
 end

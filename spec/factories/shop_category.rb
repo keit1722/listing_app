@@ -7,7 +7,7 @@ FactoryBot.define do
       name { 'スポーツショップ' }
     end
 
-    factory :shop_category_souvenir, traits: %i[souvenir]
-    factory :shop_category_sports_shop, traits: %i[sports_shop]
+    factory :shop_category_souvenir, traits: [:souvenir]
+    factory :shop_category_sports_shop, traits: [:sports_shop]
   end
 end

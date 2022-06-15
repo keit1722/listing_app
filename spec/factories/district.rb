@@ -9,7 +9,7 @@ FactoryBot.define do
       location { 'hakuba' }
     end
 
-    factory :district_uchiyama, traits: %i[uchiyama]
-    factory :district_sano, traits: %i[sano]
+    factory :district_uchiyama, traits: [:uchiyama]
+    factory :district_sano, traits: [:sano]
   end
 end

@@ -11,9 +11,9 @@ class HotelCreateForm
     @organization = organization
     super params
 
-    self.hotel = organization.hotels.build unless hotel.present?
+    self.hotel = organization.hotels.build if hotel.blank?
     self.district_id = params[:district_id]
-    self.reservation_link = ReservationLink.new unless reservation_link.present?
+    self.reservation_link = ReservationLink.new if reservation_link.blank?
   end
 
   def hotel_attributes=(attributes)

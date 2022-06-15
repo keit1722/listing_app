@@ -7,7 +7,7 @@ FactoryBot.define do
       name { '中華' }
     end
 
-    factory :restaurant_category_japanese_food, traits: %i[japanese_food]
-    factory :restaurant_category_chinese_food, traits: %i[chinese_food]
+    factory :restaurant_category_japanese_food, traits: [:japanese_food]
+    factory :restaurant_category_chinese_food, traits: [:chinese_food]
   end
 end

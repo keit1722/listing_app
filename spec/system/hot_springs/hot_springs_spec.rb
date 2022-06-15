@@ -30,15 +30,15 @@ RSpec.describe 'CRUD機能', type: :system do
     it '自分の温泉は表示される' do
       visit organization_hot_spring_path(organization_a, hot_spring_a)
       expect(page).to have_current_path organization_hot_spring_path(
-                          organization_a,
-                          hot_spring_a,
-                        )
+        organization_a,
+        hot_spring_a
+      )
     end
 
     it '自分の温泉以外は表示されない' do
-      expect {
+      expect do
         visit organization_hot_spring_path(organization_b, hot_spring_b)
-      }.to raise_error(ActiveRecord::RecordNotFound)
+      end.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
 
@@ -47,16 +47,16 @@ RSpec.describe 'CRUD機能', type: :system do
       it '登録フォームに進めること' do
         visit new_organization_hot_spring_path(organization_a)
         expect(page).to have_current_path new_organization_hot_spring_path(
-                            organization_a,
-                          )
+          organization_a
+        )
       end
     end
 
     context '自分の組織に関するものではない場合' do
       it '登録フォームに進めずエラーになること' do
-        expect {
+        expect do
           visit new_organization_hot_spring_path(organization_b)
-        }.to raise_error(NoMethodError)
+        end.to raise_error(NoMethodError)
       end
     end
 
@@ -74,13 +74,13 @@ RSpec.describe 'CRUD機能', type: :system do
 
         find(
           '#hot_spring_create_form_hot_spring_attributes_lat',
-          visible: false,
+          visible: false
         ).set '36.6959303'
         find(
           '#hot_spring_create_form_hot_spring_attributes_lng',
-          visible: false,
+          visible: false
         ).set '137.8638005'
-        attach_file '画像', Rails.root.join('spec', 'fixtures', 'fixture.png')
+        attach_file '画像', Rails.root.join('spec/fixtures/fixture.png')
 
         click_button '登録する'
 
@@ -96,24 +96,23 @@ RSpec.describe 'CRUD機能', type: :system do
       it '編集フォームに進めること' do
         visit edit_organization_hot_spring_path(organization_a, hot_spring_a)
         expect(page).to have_current_path edit_organization_hot_spring_path(
-                            organization_a,
-                            hot_spring_a,
-                          )
+          organization_a,
+          hot_spring_a
+        )
       end
     end
 
     context '自分の組織に関するものではない場合' do
       it '編集フォームに進めずエラーになること' do
-        expect {
+        expect do
           visit edit_organization_hot_spring_path(organization_b, hot_spring_b)
-        }.to raise_error(ActiveRecord::RecordNotFound)
+        end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
 
     context '入力情報が正しい場合' do
-      let!(:other_district) { create(:district_sano) }
-
       it '情報更新ができること' do
+        create(:district_sano)
         visit edit_organization_hot_spring_path(organization_a, hot_spring_a)
 
         fill_in '温泉の名前', with: '更新サンプル温泉の名前'
@@ -125,13 +124,13 @@ RSpec.describe 'CRUD機能', type: :system do
 
         find(
           '#hot_spring_update_form_hot_spring_attributes_lat',
-          visible: false,
+          visible: false
         ).set '36.6981800'
         find(
           '#hot_spring_update_form_hot_spring_attributes_lng',
-          visible: false,
+          visible: false
         ).set '137.8618500'
-        attach_file '画像', Rails.root.join('spec', 'fixtures', 'fixture.png')
+        attach_file '画像', Rails.root.join('spec/fixtures/fixture.png')
 
         click_button '更新する'
 
@@ -140,7 +139,7 @@ RSpec.describe 'CRUD機能', type: :system do
         expect(page).to have_content '佐野'
         expect(page).to have_content '更新サンプル温泉住所'
         expect(
-          page,
+          page
         ).to have_content 'Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
       end
     end

@@ -11,10 +11,11 @@ class SkiAreaCreateForm
     @organization = organization
     super params
 
-    self.ski_area = organization.ski_areas.build unless ski_area.present?
+    self.ski_area = organization.ski_areas.build if ski_area.blank?
     self.district_id = params[:district_id]
-    self.opening_hours =
-      DAY_COUNT.times.map { OpeningHour.new } unless opening_hours.present?
+    return if opening_hours.present?
+
+    self.opening_hours = Array.new(DAY_COUNT) { OpeningHour.new }
   end
 
   def ski_area_attributes=(attributes)

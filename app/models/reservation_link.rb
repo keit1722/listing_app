@@ -18,8 +18,8 @@ class ReservationLink < ApplicationRecord
 
   validates :link,
             length: {
-              maximum: 100,
+              maximum: 100
             },
             presence: true,
-            format: /\A#{URI.regexp(%w[http https])}\z/
+            format: /\A#{URI::DEFAULT_PARSER.make_regexp(%w[http https])}\z/
 end

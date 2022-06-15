@@ -16,13 +16,14 @@ class RestaurantCreateForm
     @organization = organization
     super params
 
-    self.restaurant = organization.restaurants.build unless restaurant.present?
+    self.restaurant = organization.restaurants.build if restaurant.blank?
     self.district_id = params[:district_id]
     self.restaurant_category_ids =
       params[:restaurant_category_ids]&.reject(&:empty?)
-    self.reservation_link = ReservationLink.new unless reservation_link.present?
-    self.opening_hours =
-      DAY_COUNT.times.map { OpeningHour.new } unless opening_hours.present?
+    self.reservation_link = ReservationLink.new if reservation_link.blank?
+    return if opening_hours.present?
+
+    self.opening_hours = Array.new(DAY_COUNT) { OpeningHour.new }
   end
 
   def restaurant_attributes=(attributes)
@@ -71,7 +72,7 @@ class RestaurantCreateForm
     [
       restaurant.valid?,
       reservation_link.valid?,
-      opening_hours.map(&:valid?).all?,
+      opening_hours.map(&:valid?).all?
     ].all?
   end
 end

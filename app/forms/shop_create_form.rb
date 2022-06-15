@@ -12,11 +12,12 @@ class ShopCreateForm
     @organization = organization
     super params
 
-    self.shop = organization.shops.build unless shop.present?
+    self.shop = organization.shops.build if shop.blank?
     self.district_id = params[:district_id]
     self.shop_category_ids = params[:shop_category_ids]&.reject(&:empty?)
-    self.opening_hours =
-      DAY_COUNT.times.map { OpeningHour.new } unless opening_hours.present?
+    return if opening_hours.present?
+
+    self.opening_hours = Array.new(DAY_COUNT) { OpeningHour.new }
   end
 
   def shop_attributes=(attributes)

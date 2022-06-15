@@ -11,11 +11,12 @@ class ActivityCreateForm
     @organization = organization
     super params
 
-    self.activity = organization.activities.build unless activity.present?
+    self.activity = organization.activities.build if activity.blank?
     self.district_id = params[:district_id]
-    self.reservation_link = ReservationLink.new unless reservation_link.present?
-    self.opening_hours =
-      DAY_COUNT.times.map { OpeningHour.new } unless opening_hours.present?
+    self.reservation_link = ReservationLink.new if reservation_link.blank?
+    return if opening_hours.present?
+
+    self.opening_hours = Array.new(DAY_COUNT) { OpeningHour.new }
   end
 
   def activity_attributes=(attributes)
@@ -62,7 +63,7 @@ class ActivityCreateForm
     [
       activity.valid?,
       reservation_link.valid?,
-      opening_hours.map(&:valid?).all?,
+      opening_hours.map(&:valid?).all?
     ].all?
   end
 end

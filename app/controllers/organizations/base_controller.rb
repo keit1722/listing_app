@@ -10,8 +10,6 @@ class Organizations::BaseController < ApplicationController
   end
 
   def only_business
-    unless current_user&.business?
-      redirect_to root_path, error: 'ビジネスユーザー専用の機能です'
-    end
+    redirect_to root_path, error: 'ビジネスユーザー専用の機能です' unless current_user&.business?
   end
 end
