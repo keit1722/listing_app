@@ -6,13 +6,13 @@ Rails.application.routes.draw do
   get '/signup', to: 'users#new'
   post '/signup', to: 'users#create'
 
-  resources :restaurants, param: :slug, only: %i[show]
-  resources :shops, param: :slug, only: %i[show]
-  resources :hotels, param: :slug, only: %i[show]
-  resources :activities, param: :slug, only: %i[show]
-  resources :hot_springs, param: :slug, only: %i[show]
-  resources :ski_areas, param: :slug, only: %i[show]
-  resources :photo_spots, param: :slug, only: %i[show]
+  resources :restaurants, param: :slug, only: %i[index show]
+  resources :shops, param: :slug, only: %i[index show]
+  resources :hotels, param: :slug, only: %i[index show]
+  resources :activities, param: :slug, only: %i[index show]
+  resources :hot_springs, param: :slug, only: %i[index show]
+  resources :ski_areas, param: :slug, only: %i[index show]
+  resources :photo_spots, param: :slug, only: %i[index show]
 
   namespace :mypage do
     get 'profile', to: 'users#show'
