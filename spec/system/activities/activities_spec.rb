@@ -19,10 +19,16 @@ RSpec.describe 'CRUD機能', type: :system do
   end
 
   describe 'アクティビティ一覧表示' do
-    it '自分のアクティビティだけが表示されること' do
+    it 'マイページに自分のアクティビティだけが表示されること' do
       visit organization_activities_path(organization_a)
       expect(page).to have_content activity_a.name
       expect(page).not_to have_content activity_b.name
+    end
+
+    it '公開ページにはすべてのアクティビティが表示されること' do
+      visit activities_path
+      expect(page).to have_content activity_a.name
+      expect(page).to have_content activity_b.name
     end
   end
 

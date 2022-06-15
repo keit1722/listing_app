@@ -19,10 +19,16 @@ RSpec.describe 'CRUD機能', type: :system do
   end
 
   describe '温泉一覧表示' do
-    it '自分の温泉だけが表示されること' do
+    it 'マイページに自分の温泉だけが表示されること' do
       visit organization_hot_springs_path(organization_a)
       expect(page).to have_content hot_spring_a.name
       expect(page).not_to have_content hot_spring_b.name
+    end
+
+    it '公開ページにはすべての温泉が表示されること' do
+      visit hot_springs_path
+      expect(page).to have_content hot_spring_a.name
+      expect(page).to have_content hot_spring_b.name
     end
   end
 

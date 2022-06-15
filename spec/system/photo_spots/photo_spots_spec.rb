@@ -19,10 +19,16 @@ RSpec.describe 'CRUD機能', type: :system do
   end
 
   describe 'フォトスポット一覧表示' do
-    it '自分のフォトスポットだけが表示されること' do
+    it 'マイページに自分のフォトスポットだけが表示されること' do
       visit organization_photo_spots_path(organization_a)
       expect(page).to have_content photo_spot_a.name
       expect(page).not_to have_content photo_spot_b.name
+    end
+
+    it '公開ページにはすべてのフォトスポットが表示されること' do
+      visit photo_spots_path
+      expect(page).to have_content photo_spot_a.name
+      expect(page).to have_content photo_spot_b.name
     end
   end
 
