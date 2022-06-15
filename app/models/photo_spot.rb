@@ -24,19 +24,18 @@
 #  fk_rails_...  (organization_id => organizations.id)
 #
 class PhotoSpot < ApplicationRecord
+  include ActiveModel::Validations
+
   belongs_to :organization
 
   has_many :district_mappings, as: :districtable, dependent: :destroy
   has_many :districts, through: :district_mappings
-  has_many :opening_hour_mappings, as: :opening_hourable, dependent: :destroy
-  has_many :opening_hours, through: :opening_hour_mappings
 
   has_many_attached :images
 
   validates :name, length: { maximum: 100 }, uniqueness: true, presence: true
   validates :address, length: { maximum: 100 }, presence: true
-  validates :lat, presence: true
-  validates :lng, presence: true
+  validates_with CoordinateValidator
   validates :slug,
             length: {
               maximum: 100

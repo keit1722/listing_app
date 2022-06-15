@@ -107,22 +107,18 @@ ActiveRecord::Schema.define(version: 2022_05_30_045102) do
     t.index ["slug"], name: "index_hotels_on_slug", unique: true
   end
 
-  create_table "opening_hour_mappings", force: :cascade do |t|
-    t.bigint "opening_hour_id"
+  create_table "opening_hours", force: :cascade do |t|
     t.bigint "opening_hourable_id"
     t.string "opening_hourable_type"
-    t.datetime "updated_at", precision: 6, null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.index ["opening_hour_id"], name: "index_opening_hour_mappings_on_opening_hour_id"
-    t.index ["opening_hourable_type", "opening_hourable_id"], name: "index_polymorphic_opening_hour_mappings_on_id_and_type"
-  end
-
-  create_table "opening_hours", force: :cascade do |t|
-    t.string "start_time", null: false
-    t.string "end_time", null: false
     t.integer "day", null: false
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "created_at", precision: 6, null: false
+    t.string "start_time_hour", null: false
+    t.string "start_time_minute", null: false
+    t.string "end_time_hour", null: false
+    t.string "end_time_minute", null: false
+    t.boolean "closed", default: false, null: false
+    t.index ["opening_hourable_type", "opening_hourable_id"], name: "index_polymorphic_opening_hour_mappings_on_id_and_type"
   end
 
   create_table "organization_users", force: :cascade do |t|
@@ -161,20 +157,13 @@ ActiveRecord::Schema.define(version: 2022_05_30_045102) do
     t.index ["slug"], name: "index_photo_spots_on_slug", unique: true
   end
 
-  create_table "reservation_link_mappings", force: :cascade do |t|
-    t.bigint "reservation_link_id"
+  create_table "reservation_links", force: :cascade do |t|
     t.bigint "reservation_linkable_id"
     t.string "reservation_linkable_type"
-    t.datetime "updated_at", precision: 6, null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.index ["reservation_link_id"], name: "index_reservation_link_mappings_on_reservation_link_id"
-    t.index ["reservation_linkable_type", "reservation_linkable_id"], name: "index_polymorphic_reservation_link_mappings_on_id_and_type"
-  end
-
-  create_table "reservation_links", force: :cascade do |t|
     t.string "link", null: false
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "created_at", precision: 6, null: false
+    t.index ["reservation_linkable_type", "reservation_linkable_id"], name: "index_polymorphic_reservation_link_mappings_on_id_and_type"
   end
 
   create_table "restaurant_categories", force: :cascade do |t|
@@ -278,11 +267,9 @@ ActiveRecord::Schema.define(version: 2022_05_30_045102) do
   add_foreign_key "district_mappings", "districts"
   add_foreign_key "hot_springs", "organizations"
   add_foreign_key "hotels", "organizations"
-  add_foreign_key "opening_hour_mappings", "opening_hours"
   add_foreign_key "organization_users", "organizations"
   add_foreign_key "organization_users", "users"
   add_foreign_key "photo_spots", "organizations"
-  add_foreign_key "reservation_link_mappings", "reservation_links"
   add_foreign_key "restaurant_category_mappings", "restaurant_categories"
   add_foreign_key "restaurant_category_mappings", "restaurants"
   add_foreign_key "restaurants", "organizations"
