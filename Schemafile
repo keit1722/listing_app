@@ -156,38 +156,29 @@ create_table 'district_mappings', force: :cascade do |t|
 end
 
 create_table 'reservation_links', force: :cascade do |t|
-  t.string 'link', null: false
-  t.datetime 'updated_at', precision: 6, null: false
-  t.datetime 'created_at', precision: 6, null: false
-end
-
-create_table 'reservation_link_mappings', force: :cascade do |t|
-  t.references 'reservation_link', foreign_key: true
   t.references 'reservation_linkable',
                polymorphic: true,
                index: {
                  name:
                    'index_polymorphic_reservation_link_mappings_on_id_and_type',
                }
+  t.string 'link', null: false
   t.datetime 'updated_at', precision: 6, null: false
   t.datetime 'created_at', precision: 6, null: false
 end
 
 create_table 'opening_hours', force: :cascade do |t|
-  t.string 'start_time', null: false
-  t.string 'end_time', null: false
-  t.integer 'day', null: false
-  t.datetime 'updated_at', precision: 6, null: false
-  t.datetime 'created_at', precision: 6, null: false
-end
-
-create_table 'opening_hour_mappings', force: :cascade do |t|
-  t.references 'opening_hour', foreign_key: true
   t.references 'opening_hourable',
                polymorphic: true,
                index: {
                  name: 'index_polymorphic_opening_hour_mappings_on_id_and_type',
                }
+  t.string 'start_time_hour', null: false
+  t.string 'start_time_minute', null: false
+  t.string 'end_time_hour', null: false
+  t.string 'end_time_minute', null: false
+  t.integer 'day', null: false
+  t.boolean 'closed', null: false, default: false
   t.datetime 'updated_at', precision: 6, null: false
   t.datetime 'created_at', precision: 6, null: false
 end

@@ -4,7 +4,7 @@ class OrganizationsController < ApplicationController
   layout 'mypage'
 
   def index
-    @organizations = current_user.organizations
+    @organizations = current_user.organizations.page(params[:page]).per(20)
   end
 
   def show

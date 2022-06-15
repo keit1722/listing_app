@@ -24,23 +24,22 @@
 #  fk_rails_...  (organization_id => organizations.id)
 #
 class Restaurant < ApplicationRecord
+  include ActiveModel::Validations
+
   belongs_to :organization
 
+  has_many :restaurant_category_mappings, dependent: :destroy
+  has_many :restaurant_categories, through: :restaurant_category_mappings
   has_many :district_mappings, as: :districtable, dependent: :destroy
   has_many :districts, through: :district_mappings
-  has_many :reservation_link_mappings,
-           as: :reservation_linkable,
-           dependent: :destroy
-  has_many :reservation_links, through: :reservation_link_mappings
-  has_many :opening_hour_mappings, as: :opening_hourable, dependent: :destroy
-  has_many :opening_hours, through: :opening_hour_mappings
+  has_one :reservation_link, as: :reservation_linkable, dependent: :destroy
+  has_many :opening_hours, as: :opening_hourable, dependent: :destroy
 
   has_many_attached :images
 
   validates :name, length: { maximum: 100 }, uniqueness: true, presence: true
   validates :address, length: { maximum: 100 }, presence: true
-  validates :lat, presence: true
-  validates :lng, presence: true
+  validates_with CoordinateValidator
   validates :slug,
             length: {
               maximum: 100

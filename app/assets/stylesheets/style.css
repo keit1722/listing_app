@@ -10128,6 +10128,7 @@ a.rate-review:hover {
 	font-size: 14px;
 }
 
+.pagination ul li.current,
 .pagination ul li a {
 	border-radius: 50%;
 	width: 52px;
@@ -10146,6 +10147,7 @@ a.rate-review:hover {
 }
 
 .pagination ul li a.current-page,
+.pagination ul li.current,
 .pagination .current,
 .pagination ul li a:hover,
 .pagination-next-prev ul li a:hover {
@@ -10173,6 +10175,7 @@ a.rate-review:hover {
 }
 
 .fs-listings .pagination ul li a.current-page,
+.fs-listings .pagination ul li.current,
 .fs-listings .pagination .current,
 .fs-listings .pagination ul li a:hover,
 .fs-listings .pagination-next-prev ul li a:hover {
@@ -14680,6 +14683,7 @@ a.dashboard-responsive-nav-trigger { display: none; }
 }
 
 #dashboard .pagination ul li a.current-page,
+#dashboard .pagination ul li.current,
 #dashboard .pagination .current,
 #dashboard .pagination ul li a:hover,
 #dashboard .pagination-next-prev ul li a:hover {
@@ -21105,3 +21109,63 @@ body .category-box-btn:hover {
 	@media only screen and (max-width: 1024px) {#style-switcher {display: none;}}
 
 	#style-switcher { display: none; }
+
+
+/* ------------------------------------------------------------------- */
+/* Custom CSS
+---------------------------------------------------------------------- */
+
+/* custom */
+
+.bg-transparent {
+  background-color: transparent !important;
+}
+
+.border-bottom-none {
+  border-bottom: none !important;
+}
+
+/* image uploader */
+
+.uploader-conteiner {
+  position: relative;
+  border: 2px dashed #d0d0d0;
+  border-radius: 3px;
+  background: #fcfcfc;
+  transition: all 0.3s linear;
+  margin-bottom: 10px;
+  margin-top: 5px;
+  display: inline-block;
+  width: 100%;
+  min-height: 150px;
+  padding: 20px 20px;
+  cursor: pointer;
+}
+
+.uploader-conteiner input[type="file"]  {
+  display: none;
+}
+
+.uploader-inner {
+  text-align: center;
+  margin: 50px 0;
+  font-size: 17px;
+  color: #888;
+  transition: all 0.3s linear;
+  position: relative;
+  z-index: 11;
+}
+
+.uploader-inner i {
+  display: block;
+  font-size: 32px;
+  margin-bottom: 15px;
+}
+
+/* map-location */
+
+#map-location-registration,
+#map-location-display {
+  height: 400px;
+  width: 100%;
+}

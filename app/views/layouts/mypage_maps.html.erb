@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ListingApp</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+  </head>
+
+  <body>
+
+    <!-- Wrapper -->
+    <div id="wrapper">
+
+      <!-- Header Container -->
+      <header id="header-container" class="fixed fullwidth dashboard">
+        <!-- Header -->
+        <div id="header" class="not-sticky">
+          <div class="container">
+            <%= render 'shared/header_mypage' %>
+          </div>
+        </div>
+        <!-- Header / End -->
+      </header>
+
+      <div class="clearfix"></div>
+      <!-- Header Container / End -->
+
+      <!-- Dashboard -->
+      <div id="dashboard">
+        <%= render 'shared/mypage_navigation' %>
+        <!-- Content -->
+        <div class="dashboard-content">
+          <%= render 'shared/flash_messages_closable' %>
+          <%= yield %>
+            <!-- Copyrights -->
+            <%= render 'shared/copyright' %>
+          </div>
+        </div>
+        <!-- Content / End -->
+      </div>
+      <!-- Dashboard / End -->
+
+    </div>
+    <!-- Wrapper / End -->
+
+    <%= javascript_include_tag 'application' %>
+    <%= javascript_include_tag 'maps-location' %>
+    <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap&v=weekly" async></script>
+  </body>
+</html>
