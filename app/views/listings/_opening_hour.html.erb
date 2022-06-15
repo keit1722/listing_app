@@ -1,0 +1,6 @@
+<li>
+  <%= opening_hour.day_i18n %> 
+    <span>
+      <%= opening_hour.closed? ? "定休日" : "#{opening_hour.decorate.start_time} - #{opening_hour.decorate.end_time}" %>
+    </span>
+</li>
