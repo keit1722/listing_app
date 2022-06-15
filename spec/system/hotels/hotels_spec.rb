@@ -19,10 +19,16 @@ RSpec.describe 'CRUD機能', type: :system do
   end
 
   describe '宿泊施設一覧表示' do
-    it '自分の宿泊施設だけが表示されること' do
+    it 'マイページに自分の宿泊施設だけが表示されること' do
       visit organization_hotels_path(organization_a)
       expect(page).to have_content hotel_a.name
       expect(page).not_to have_content hotel_b.name
+    end
+
+    it '公開ページにはすべての宿泊施設が表示されること' do
+      visit hotels_path
+      expect(page).to have_content hotel_a.name
+      expect(page).to have_content hotel_b.name
     end
   end
 

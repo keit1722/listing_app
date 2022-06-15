@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ListingApp</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+  </head>
+
+  <body>
+
+    <!-- Wrapper -->
+    <div id="wrapper">
+
+      <!-- Header Container -->
+      <header id="header-container" class="fixed fullwidth">
+        <!-- Header -->
+        <div id="header" class="not-sticky">
+          <div class="container">
+            <%= render 'shared/header' %>
+          </div>
+        </div>
+        <!-- Header / End -->
+      </header>
+
+      <div class="clearfix"></div>
+      <!-- Header Container / End -->
+
+      <%= yield %>
+
+    </div>
+    <!-- Wrapper / End -->
+
+    <%= javascript_include_tag 'application' %>
+
+    <!-- Maps -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap&v=weekly"></script>
+    <%= javascript_include_tag 'infobox.min' %>
+    <%= javascript_include_tag 'markerclusterer' %>
+    <%= javascript_include_tag 'maps' %>
+  </body>
+</html>
