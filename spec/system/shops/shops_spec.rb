@@ -30,10 +30,16 @@ RSpec.describe 'CRUD機能', type: :system do
   end
 
   describe 'ショップ一覧表示' do
-    it '自分のショップだけが表示されること' do
+    it 'マイページに自分のショップだけが表示されること' do
       visit organization_shops_path(organization_a)
       expect(page).to have_content shop_a.name
       expect(page).not_to have_content shop_b.name
+    end
+
+    it '公開ページにはすべてのショップが表示されること' do
+      visit shops_path
+      expect(page).to have_content shop_a.name
+      expect(page).to have_content shop_b.name
     end
   end
 

@@ -30,10 +30,16 @@ RSpec.describe 'CRUD機能', type: :system do
   end
 
   describe '飲食店一覧表示' do
-    it '自分の飲食店だけが表示されること' do
+    it 'マイページに自分の飲食店だけが表示されること' do
       visit organization_restaurants_path(organization_a)
       expect(page).to have_content restaurant_a.name
       expect(page).not_to have_content restaurant_b.name
+    end
+
+    it '公開ページにはすべての飲食店が表示されること' do
+      visit restaurants_path
+      expect(page).to have_content restaurant_a.name
+      expect(page).to have_content restaurant_b.name
     end
   end
 

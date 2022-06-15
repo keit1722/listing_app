@@ -19,10 +19,16 @@ RSpec.describe 'CRUD機能', type: :system do
   end
 
   describe 'スキー場一覧表示' do
-    it '自分のスキー場だけが表示されること' do
+    it 'マイページに自分のスキー場だけが表示されること' do
       visit organization_ski_areas_path(organization_a)
       expect(page).to have_content ski_area_a.name
       expect(page).not_to have_content ski_area_b.name
+    end
+
+    it '公開ページにはすべてのスキー場が表示されること' do
+      visit ski_areas_path
+      expect(page).to have_content ski_area_a.name
+      expect(page).to have_content ski_area_b.name
     end
   end
 
