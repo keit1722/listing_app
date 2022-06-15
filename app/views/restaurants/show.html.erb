@@ -1,0 +1,91 @@
+  <!-- Slider -->
+  <% if @restaurant.images.attached? %>
+    <div class="listing-slider mfp-gallery-container margin-bottom-0">
+      <%= render partial: "listings/image", collection: @restaurant.images %>
+    </div>
+  <% end %>
+
+  <!-- Content -->
+  <div class="container">
+    <div class="row sticky-wrapper">
+      <div class="col-lg-8 col-md-8 padding-right-30">
+
+        <!-- Titlebar -->
+        <div id="titlebar" class="listing-titlebar">
+          <div class="listing-titlebar-title">
+            <h2>
+              <%= @restaurant.name %> 
+              <span class="listing-tag"><%= @restaurant.decorate.arranged_categories %></span>
+            </h2>
+            <span>
+              <a href="#listing-location" class="listing-address">
+                <i class="fa fa-map-marker"></i>
+                <%= @restaurant.address %>
+              </a>
+            </span>
+          </div>
+        </div>
+
+         <!-- Listing Nav -->
+        <div id="listing-nav" class="listing-nav-container">
+          <ul class="listing-nav">
+            <li><a href="#listing-overview" class="active">概要</a></li>
+            <li><a href="#listing-location">地図</a></li>
+          </ul>
+        </div>
+
+           <!-- Overview -->
+          <div id="listing-overview" class="listing-section">
+            <!-- Description -->
+            <p><%= @restaurant.decorate.format_description %></p>
+          </div>
+
+        <!-- Location -->
+        <div id="listing-location" class="listing-section">
+          <h3 class="listing-desc-headline margin-top-60 margin-bottom-30">地図</h3>
+          <div id="map-location-display" class="margin-top-25 margin-bottom-25" data-lat="<%= @restaurant.lat %>" data-lng="<%= @restaurant.lng %>"></div>
+        </div>
+
+      </div>
+
+      <!-- Sidebar -->
+      <div class="col-lg-4 col-md-4 margin-top-75 sticky">
+
+        <!-- Opening Hours -->
+        <% if @restaurant.opening_hours.exists? %>
+          <div class="boxed-widget opening-hours margin-top-35">
+            <h3><i class="sl sl-icon-clock"></i> 営業時間</h3>
+            <ul>
+              <%= render partial: "listings/opening_hour", collection: @restaurant.opening_hours.early %>
+            </ul>
+          </div>
+        <% end %>
+        <!-- Opening Hours / End -->
+
+        <!-- Book Now -->
+        <% if @restaurant.reservation_link.present? %>
+          <div id="booking-widget-anchor" class="boxed-widget booking-widget margin-top-35">
+            <h3><i class="fa fa-calendar-check-o "></i> 予約</h3>
+            <div class="row with-forms  margin-top-0">
+              <div class="col-lg-12">
+                <p>以下のボタンをクリックすると外部予約サイトへ移動します。</p>
+              </div>
+            </div>
+
+            <!-- Book Now -->
+            <%= link_to "予約サイトはこちら", @restaurant.reservation_link.link, class: "button book-now fullwidth margin-top-5", target: :_blank, rel: "noopener noreferrer" %>
+          </div>
+        <% end %>
+        <!-- Book Now / End -->
+
+        <!-- Share / Like -->
+        <div class="listing-share margin-top-40 margin-bottom-40 no-border">
+          <button class="like-button"><span class="like-icon"></span> Bookmark this listing</button>
+          <div class="clearfix"></div>
+        </div>
+
+      </div>
+      <!-- Sidebar / End -->
+
+    </div>
+  </div>
