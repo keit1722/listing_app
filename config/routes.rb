@@ -6,7 +6,9 @@ Rails.application.routes.draw do
   get '/signup', to: 'users#new'
   post '/signup', to: 'users#create'
 
-  resources :restaurants, param: :slug, only: %i[index show]
+  resources :restaurants, param: :slug, only: %i[index show] do
+    collection { get 'search' }
+  end
   resources :shops, param: :slug, only: %i[index show]
   resources :hotels, param: :slug, only: %i[index show]
   resources :activities, param: :slug, only: %i[index show]
