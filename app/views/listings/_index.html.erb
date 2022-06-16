@@ -12,23 +12,15 @@
             <div class="row with-forms">
 
               <!-- Main Search Input -->
-              <div class="col-fs-6">
-                <div class="input-with-icon">
-                  <i class="sl sl-icon-magnifier"></i>
-                  <input type="text" placeholder="What are you looking for?" value="" />
-                </div>
+              <div class="col-fs-12">
+                <%= form_with model: @restaurants, url: search_restaurants_path, scope: :q, method: :get, local: true do |f| %>
+                    <div class="input-with-icon">
+                      <i class="sl sl-icon-magnifier"></i>
+                      <%= f.search_field :keyword %>
+                    </div>
+                    <%= f.submit '検索' %>
+                  <% end %>
               </div>
-
-              <!-- Main Search Input -->
-              <div class="col-fs-6">
-                <div class="input-with-icon location">
-                  <div id="autocomplete-container">
-                    <input id="autocomplete-input" type="text" placeholder="Location">
-                  </div>
-                  <a href="#"><i class="fa fa-map-marker"></i></a>
-                </div>
-              </div>
-
 
               <!-- Filters -->
               <div class="col-fs-12">
