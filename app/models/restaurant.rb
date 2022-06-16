@@ -57,11 +57,20 @@ class Restaurant < ApplicationRecord
             },
             content_type: %i[png jpg jpeg]
 
+  scope :search_with_category,
+        ->(category_ids) {
+          joins(:restaurant_categories).where(
+            restaurant_categories: {
+              id: category_ids,
+            },
+          )
+        }
+
   scope :keyword_contain,
         ->(keyword) {
           where(
             [
-              'description LIKE(?) OR name LIKE(?)',
+              'description LIKE(?) OR Restaurants.name LIKE(?)',
               "%#{keyword}%",
               "%#{keyword}%",
             ],

@@ -1285,15 +1285,15 @@ $(document).ready(function(){
 	    if(! mouse_is_inside) close_panel_dropdown();
 	});
 
-    // "All" checkbox
+    // "All" checkbox -- categories
     $('.checkboxes.categories input').on('change', function() {
-        if($(this).hasClass('all')){
-            $(this).parents('.checkboxes').find('input').prop('checked', false);
-            $(this).prop('checked', true);
-        } else {
-            $('.checkboxes input.all').prop('checked', false);
-        }
-    });
+      if($(this).hasClass('all')){
+          $(this).parents('.checkboxes').find('input').prop('checked', false);
+          $(this).prop('checked', true);
+      } else {
+          $(this).parents('.checkboxes').find('input.all').prop('checked', false);
+      }
+  });
 
 
 	$('input[type="range"].distance-radius').rangeslider({
