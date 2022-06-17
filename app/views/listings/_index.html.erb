@@ -1,0 +1,95 @@
+<div class="fs-container">
+  <div class="fs-inner-container content">
+    <div class="fs-content">
+
+      <!-- Search -->
+      <section class="search">
+
+        <div class="row">
+          <div class="col-md-12">
+
+            <!-- Row With Forms -->
+            <div class="row with-forms">
+              <%= form_with model: listings, url: polymorphic_path([:search, controller_name.to_sym]), scope: :q, method: :get, local: true do |f| %>
+
+                <!-- Main Search Input -->
+                <div class="col-fs-12">
+                  <div class="input-with-icon">
+                    <i class="sl sl-icon-magnifier"></i>
+                    <%= f.search_field :keyword %>
+                  </div>
+                </div>
+
+                <!-- Filters -->
+                <div class="col-fs-12">
+                  <%= render "listings/unselected_panels_area", { f: f } %>
+                </div>
+                <!-- Filters / End -->
+
+                <%= f.submit '検索', class: "right-side margin-right-0 margin-bottom-0" %>
+
+              <% end %>
+            </div>
+            <!-- Row With Forms / End -->
+
+          </div>
+        </div>
+
+      </section>
+      <!-- Search / End -->
+
+      <section class="listings-container margin-top-30">
+        <!-- Sorting / Layout Switcher -->
+        <div class="row fs-switcher">
+          <div class="col-md-6">
+            <!-- Showing Results -->
+            <p class="showing-results"><%= listing_all.size %>件表示中</p>
+          </div>
+        </div>
+
+        <!-- Listings -->
+        <div class="row fs-listings">
+          <!-- Listing Item -->
+          <%= render partial: "listings/#{partial_index}", collection: listings, as: "listing" %>
+          <!-- Listing Item / End -->
+        </div>
+        <!-- Listings Container / End -->
+
+        <!-- Pagination Container -->
+        <div class="row fs-listings">
+          <div class="col-md-12">
+
+            <!-- Pagination -->
+            <div class="clearfix"></div>
+            <div class="row">
+              <div class="col-md-12">
+                <!-- Pagination -->
+                <div class="pagination-container margin-top-15 margin-bottom-40">
+                  <%= paginate listings %>
+                </div>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+            <!-- Pagination / End -->
+
+            <!-- Copyrights -->
+            <div class="copyrights margin-top-0">© 2021 Listeo. All Rights Reserved.</div>
+
+          </div>
+        </div>
+        <!-- Pagination Container / End -->
+      </section>
+
+    </div>
+  </div>
+  <div class="fs-inner-container map-fixed">
+
+    <!-- Map -->
+    <div id="map-container">
+      <div id="map" data-map-zoom="11" data-map-scroll="true">
+        <!-- map goes here -->
+      </div>
+    </div>
+
+  </div>
+</div>
