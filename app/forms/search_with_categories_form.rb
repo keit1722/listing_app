@@ -8,8 +8,6 @@ class SearchWithCategoriesForm
   attribute :model, :string
 
   def search
-    # binding.pry
-
     scope = model.classify.safe_constantize.distinct
 
     scope = scope.search_with_category(category_ids_to_integer)
@@ -31,7 +29,6 @@ class SearchWithCategoriesForm
 
   def category_ids_to_integer
     if category_ids.include?('all')
-      # RestaurantCategory.ids
       "#{model}_categories".classify.safe_constantize.ids
     else
       category_ids.map(&:to_i)
