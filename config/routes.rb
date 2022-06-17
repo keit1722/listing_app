@@ -9,7 +9,9 @@ Rails.application.routes.draw do
   resources :restaurants, param: :slug, only: %i[index show] do
     collection { get 'search' }
   end
-  resources :shops, param: :slug, only: %i[index show]
+  resources :shops, param: :slug, only: %i[index show] do
+    collection { get 'search' }
+  end
   resources :hotels, param: :slug, only: %i[index show]
   resources :activities, param: :slug, only: %i[index show]
   resources :hot_springs, param: :slug, only: %i[index show]
