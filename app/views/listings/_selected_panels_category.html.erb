@@ -1,0 +1,21 @@
+<div class="panel-dropdown">
+  <a href="#">カテゴリー</a>
+  <div class="panel-dropdown-content checkboxes categories">
+
+    <!-- Checkboxes -->
+    <div class="row">
+      <div class="col-md-6">
+        <%= f.check_box :category_ids, {id: "check-category-1", class: "all", multiple: true, include_hidden: false, checked: selected_categories.include?('all') }, "all" %>
+        <%= f.label :category_ids, "全て", for: "check-category-1" %>
+
+        <%= render partial: 'listings/searched_category', collection: categories, locals: { f: f, selected_categories: selected_categories } %>
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="panel-buttons">
+      <button class="panel-apply" type="button">決定</button>
+    </div>
+
+  </div>
+</div>

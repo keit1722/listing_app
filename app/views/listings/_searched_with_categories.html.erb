@@ -22,7 +22,8 @@
 
                 <!-- Filters -->
                 <div class="col-fs-12">
-                  <%= render "listings/selected_panels", { f: f, categories: categories, categories: @categories, selected_categories: selected_categories, selected_area_groups: selected_area_groups } %>
+                  <%= render "listings/selected_panels_area", { f: f, selected_area_groups: selected_area_groups } %>
+                  <%= render "listings/selected_panels_category", { f: f, categories: categories, selected_categories: selected_categories, selected_area_groups: selected_area_groups } %>
                 </div>
                 <!-- Filters / End -->
 
