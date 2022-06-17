@@ -24,7 +24,9 @@ Rails.application.routes.draw do
   resources :ski_areas, param: :slug, only: %i[index show] do
     collection { get 'search' }
   end
-  resources :photo_spots, param: :slug, only: %i[index show]
+  resources :photo_spots, param: :slug, only: %i[index show] do
+    collection { get 'search' }
+  end
 
   namespace :mypage do
     get 'profile', to: 'users#show'
