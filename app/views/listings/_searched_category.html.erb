@@ -1,0 +1,2 @@
+<%= f.check_box :category_ids, {id: "check-category-#{searched_category_counter + 2}", multiple: true, include_hidden: false, checked: selected_categories.include?(searched_category.id.to_s) }, searched_category.id %>
+<%= f.label :category_ids, searched_category.name, for: "check-category-#{searched_category_counter + 2}" %>

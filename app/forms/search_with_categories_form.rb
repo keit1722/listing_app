@@ -1,13 +1,16 @@
-class SearchRestaurantsForm
+class SearchWithCategoriesForm
   include ActiveModel::Model
   include ActiveModel::Attributes
 
   attribute :keyword, :string
   attribute :category_ids, array: :integer
   attribute :area_groups, array: :integer
+  attribute :model, :string
 
   def search
-    scope = Restaurant.distinct
+    # binding.pry
+
+    scope = model.classify.safe_constantize.distinct
 
     scope = scope.search_with_category(category_ids_to_integer)
 
@@ -28,7 +31,8 @@ class SearchRestaurantsForm
 
   def category_ids_to_integer
     if category_ids.include?('all')
-      RestaurantCategory.ids
+      # RestaurantCategory.ids
+      "#{model}_categories".classify.safe_constantize.ids
     else
       category_ids.map(&:to_i)
     end

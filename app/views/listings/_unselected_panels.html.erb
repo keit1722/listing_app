@@ -1,0 +1,47 @@
+<!-- Panel Dropdown / End -->
+<div class="panel-dropdown">
+  <a href="#">カテゴリー</a>
+  <div class="panel-dropdown-content checkboxes categories">
+
+    <!-- Checkboxes -->
+    <div class="row">
+      <div class="col-md-6">
+        <%= f.check_box :category_ids, {id: "check-category-1", class: "all", multiple: true, include_hidden: false, checked: true }, "all" %>
+        <%= f.label :category_ids, "全て", for: "check-category-1" %>
+
+        <%= render partial: 'listings/category', collection: categories, locals: { f: f } %>
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="panel-buttons">
+      <button class="panel-apply" type="button">決定</button>
+    </div>
+
+  </div>
+</div>
+<!-- Panel Dropdown / End -->
+
+<!-- Panel Dropdown / End -->
+<div class="panel-dropdown">
+  <a href="#">エリア</a>
+  <div class="panel-dropdown-content checkboxes categories">
+
+    <!-- Checkboxes -->
+    <div class="row">
+      <div class="col-md-6">
+        <%= f.check_box :area_groups, {id: "check-area-1", class: "all", multiple: true, include_hidden: false, checked: true }, "all" %>
+        <%= f.label :area_groups, "全て", for: "check-area-1" %>
+
+        <%= render partial: 'listings/area', collection: Constants::AREA_GROUPS, locals: { f: f } %>
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="panel-buttons">
+      <button class="panel-apply" type="button">決定</button>
+    </div>
+
+  </div>
+</div>
+<!-- Panel Dropdown / End -->

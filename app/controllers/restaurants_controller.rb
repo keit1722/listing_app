@@ -19,7 +19,7 @@ class RestaurantsController < ApplicationController
 
   def search
     @restaurants =
-      SearchRestaurantsForm
+      SearchWithCategoriesForm
         .new(search_restaurants_params)
         .search
         .with_attached_images
@@ -27,17 +27,22 @@ class RestaurantsController < ApplicationController
         .page(params[:page])
         .per(20)
     @restaurant_all =
-      SearchRestaurantsForm.new(search_restaurants_params).search
+      SearchWithCategoriesForm.new(search_restaurants_params).search
+    @selected_categories = params[:q][:category_ids]
+    @selected_area_groups = params[:q][:area_groups]
     render layout: 'listings_index'
   end
 
   private
 
   def search_restaurants_params
-    params.fetch(:q, {}).permit(:keyword, category_ids: [], area_groups: [])
+    params
+      .fetch(:q, {})
+      .permit(:keyword, category_ids: [], area_groups: [])
+      .merge(model: 'restaurant')
   end
 
   def set_restaurant_categories
-    @restaurant_categories = RestaurantCategory.all
+    @categories = RestaurantCategory.all
   end
 end
