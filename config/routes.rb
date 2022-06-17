@@ -12,7 +12,9 @@ Rails.application.routes.draw do
   resources :shops, param: :slug, only: %i[index show] do
     collection { get 'search' }
   end
-  resources :hotels, param: :slug, only: %i[index show]
+  resources :hotels, param: :slug, only: %i[index show] do
+    collection { get 'search' }
+  end
   resources :activities, param: :slug, only: %i[index show]
   resources :hot_springs, param: :slug, only: %i[index show]
   resources :ski_areas, param: :slug, only: %i[index show]
