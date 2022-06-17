@@ -1295,6 +1295,16 @@ $(document).ready(function(){
       }
   });
 
+  // "All" checkbox -- areas
+  $('.checkboxes.areas input').on('change', function() {
+      if($(this).hasClass('all')){
+          $(this).parents('.checkboxes').find('input').prop('checked', false);
+          $(this).prop('checked', true);
+      } else {
+          $(this).parents('.checkboxes').find('input.all').prop('checked', false);
+      }
+  });
+
 
 	$('input[type="range"].distance-radius').rangeslider({
 	    polyfill : false,

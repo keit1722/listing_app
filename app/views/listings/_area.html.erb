@@ -1,0 +1,2 @@
+<%= f.check_box :area_groups, {id: "check-area-#{area_counter + 2}", multiple: true, include_hidden: false }, area[:area] %>
+<%= f.label :area_groups, area[:display], for: "check-area-#{area_counter + 2}" %>

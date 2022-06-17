@@ -34,7 +34,7 @@ class RestaurantsController < ApplicationController
   private
 
   def search_restaurants_params
-    params.fetch(:q, {}).permit(:keyword, category_ids: [])
+    params.fetch(:q, {}).permit(:keyword, category_ids: [], area_groups: [])
   end
 
   def set_restaurant_categories

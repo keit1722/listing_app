@@ -66,6 +66,11 @@ class Restaurant < ApplicationRecord
           )
         }
 
+  scope :search_with_district,
+        ->(district_ids) {
+          joins(:districts).where(districts: { id: district_ids })
+        }
+
   scope :keyword_contain,
         ->(keyword) {
           where(
