@@ -21,7 +21,9 @@ Rails.application.routes.draw do
   resources :hot_springs, param: :slug, only: %i[index show] do
     collection { get 'search' }
   end
-  resources :ski_areas, param: :slug, only: %i[index show]
+  resources :ski_areas, param: :slug, only: %i[index show] do
+    collection { get 'search' }
+  end
   resources :photo_spots, param: :slug, only: %i[index show]
 
   namespace :mypage do

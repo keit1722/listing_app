@@ -9,4 +9,26 @@ class SkiAreasController < ApplicationController
     @ski_area = SkiArea.with_attached_images.find_by!(slug: params[:slug])
     render layout: 'listings_single'
   end
+
+  def search
+    @ski_areas =
+      SearchForm
+        .new(search_ski_areas_params)
+        .search
+        .with_attached_images
+        .page(params[:page])
+        .per(20)
+    @ski_area_all = SearchForm.new(search_ski_areas_params).search
+    @selected_area_groups = params[:q][:area_groups]
+    render layout: 'listings_index'
+  end
+
+  private
+
+  def search_ski_areas_params
+    params
+      .fetch(:q, {})
+      .permit(:keyword, area_groups: [])
+      .merge(model: 'ski_area')
+  end
 end
