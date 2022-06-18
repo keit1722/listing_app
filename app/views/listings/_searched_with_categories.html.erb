@@ -10,7 +10,7 @@
 
             <!-- Row With Forms -->
             <div class="row with-forms">
-              <%= form_with model: listings, url: polymorphic_path([:search, controller_name.to_sym]), scope: :q, method: :get, local: true do |f| %>
+              <%= form_with model: listings, url: polymorphic_path([:search, category.to_sym]), scope: :q, method: :get, local: true do |f| %>
 
                 <!-- Main Search Input -->
                 <div class="col-fs-12">
