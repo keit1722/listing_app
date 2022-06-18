@@ -29,4 +29,14 @@ module Constants
       grouped: %w[北小谷 中土],
     },
   ]
+
+  LISTINGS = [
+    { display: '飲食店', category: 'restaurants' },
+    { display: '宿泊', category: 'hotels' },
+    { display: 'アクティビティ', category: 'activities' },
+    { display: 'ショップ', category: 'shops' },
+    { display: 'フォトスポット', category: 'photo_spots' },
+    { display: '温泉', category: 'hot_springs' },
+    { display: 'スキー場', category: 'ski_areas' },
+  ]
 end

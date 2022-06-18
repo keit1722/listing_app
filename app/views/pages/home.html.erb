@@ -57,34 +57,23 @@
     <!-- Search -->
     <div class="container search-cont">
       <div class="col-md-12">
-
-        <div class="main-search-input">
-
-          <div class="main-search-input-item">
-            <input type="text" placeholder="What are you looking for?" value="" />
-          </div>
-
-          <div class="main-search-input-item location">
-            <div id="autocomplete-container">
-              <input id="autocomplete-input" type="text" placeholder="Location">
+        <%= form_with url: search_path, scope: :q, method: :get, local: true do |f| %>
+          <div class="main-search-input">
+            <div class="main-search-input-item">
+              <%= f.search_field :keyword, placeholder: "検索ワードを入力" %>
             </div>
-            <a href="#"><i class="fa fa-map-marker"></i></a>
+
+            <div class="main-search-input-item">
+              <%= select(:q, :area, Constants::AREA_GROUPS.collect { |area_group| [ area_group[:display], area_group[:area] ] }, { include_blank: "エリアを選択" }, { class: "chosen-select" }) %>
+            </div>
+
+            <div class="main-search-input-item">
+              <%= select(:q, :category, Constants::LISTINGS.collect { |listing| [ listing[:display], listing[:category] ] }, { include_blank: "カテゴリーを選択（必須）" }, { class: "chosen-select" }) %>
+            </div>
+
+            <%= f.button '検索', class: "button" %>
           </div>
-
-          <div class="main-search-input-item">
-            <select data-placeholder="All Categories" class="chosen-select">
-              <option>All Categories</option>
-              <option>Shops</option>
-              <option>Hotels</option>
-              <option>Restaurants</option>
-              <option>Fitness</option>
-              <option>Events</option>
-            </select>
-          </div>
-
-          <button class="button" onclick="window.location.href='listings-half-screen-map-list.html'">Search</button>
-
-        </div>
+        <% end %>
       </div>
     </div>
   </div>
