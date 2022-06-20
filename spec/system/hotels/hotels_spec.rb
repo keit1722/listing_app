@@ -13,13 +13,9 @@ RSpec.describe 'CRUD機能', type: :system do
     create(:hotel, organization: organization_b, districts: [district])
   end
 
-  before do
-    driven_by(:rack_test)
-    login_as user_a
-  end
-
   describe '宿泊施設一覧表示' do
     it 'マイページに自分の宿泊施設だけが表示されること' do
+      login_as user_a
       visit organization_hotels_path(organization_a)
       expect(page).to have_content hotel_a.name
       expect(page).not_to have_content hotel_b.name
@@ -33,63 +29,60 @@ RSpec.describe 'CRUD機能', type: :system do
   end
 
   describe '宿泊施設詳細表示' do
-    it '自分の宿泊施設は表示される' do
+    before { login_as user_a }
+
+    it 'マイページに自分の宿泊施設は表示されること' do
       visit organization_hotel_path(organization_a, hotel_a)
       expect(page).to have_current_path organization_hotel_path(
-        organization_a,
-        hotel_a
-      )
+                          organization_a,
+                          hotel_a,
+                        )
     end
 
-    it '自分の宿泊施設以外は表示されない' do
-      expect do
-        visit organization_hotel_path(organization_b, hotel_b)
-      end.to raise_error(ActiveRecord::RecordNotFound)
+    it 'マイページには自分の宿泊施設以外は表示されないこと' do
+      Capybara.raise_server_errors = false
+      visit organization_hotel_path(organization_b, hotel_b)
+      assert_text 'ActiveRecord::RecordNotFound'
     end
   end
 
   describe '宿泊施設新規登録' do
+    before { login_as user_a }
+
     context '自分の組織に関するものの場合' do
       it '登録フォームに進めること' do
         visit new_organization_hotel_path(organization_a)
         expect(page).to have_current_path new_organization_hotel_path(
-          organization_a
-        )
+                            organization_a,
+                          )
       end
     end
 
     context '自分の組織に関するものではない場合' do
       it '登録フォームに進めずエラーになること' do
-        expect do
-          visit new_organization_hotel_path(organization_b)
-        end.to raise_error(NoMethodError)
+        Capybara.raise_server_errors = false
+        visit new_organization_hotel_path(organization_b)
+        assert_text 'NoMethodError'
       end
     end
 
     context '入力情報が正しい場合' do
       it '新規登録できること' do
         visit new_organization_hotel_path(organization_a)
-
         fill_in '宿泊施設の名前', with: 'サンプル宿泊施設の名前'
-        select '内山', from: '地区'
+        find('#hotel_create_form_district_id_chosen').click
+        find('.active-result').click
         fill_in '住所', with: 'サンプル宿泊施設住所'
         fill_in 'スラッグ', with: 'sample-hotel'
         fill_in '宿泊施設の紹介',
                 with:
                   'Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua.'
-
-        find(
-          '#hotel_create_form_hotel_attributes_lat',
-          visible: false
-        ).set '36.6959303'
-        find(
-          '#hotel_create_form_hotel_attributes_lng',
-          visible: false
-        ).set '137.8638005'
-        attach_file '画像', Rails.root.join('spec/fixtures/fixture.png')
+        find('#map-location-registration').click
+        attach_file '画像',
+                    Rails.root.join('spec/fixtures/fixture.png'),
+                    make_visible: true
         fill_in 'hotel_create_form_reservation_link_attributes_link',
                 with: 'https://google.com'
-
         click_button '登録する'
 
         expect(page).to have_content '作成しました'
@@ -100,21 +93,23 @@ RSpec.describe 'CRUD機能', type: :system do
   end
 
   describe '宿泊施設情報編集' do
+    before { login_as user_a }
+
     context '自分の組織に関するものの場合' do
       it '編集フォームに進めること' do
         visit edit_organization_hotel_path(organization_a, hotel_a)
         expect(page).to have_current_path edit_organization_hotel_path(
-          organization_a,
-          hotel_a
-        )
+                            organization_a,
+                            hotel_a,
+                          )
       end
     end
 
     context '自分の組織に関するものではない場合' do
       it '編集フォームに進めずエラーになること' do
-        expect do
-          visit edit_organization_hotel_path(organization_b, hotel_b)
-        end.to raise_error(ActiveRecord::RecordNotFound)
+        Capybara.raise_server_errors = false
+        visit edit_organization_hotel_path(organization_b, hotel_b)
+        assert_text 'ActiveRecord::RecordNotFound'
       end
     end
 
@@ -122,26 +117,19 @@ RSpec.describe 'CRUD機能', type: :system do
       it '情報更新ができること' do
         create(:district_sano)
         visit edit_organization_hotel_path(organization_a, hotel_a)
-
         fill_in '宿泊施設の名前', with: '更新サンプル宿泊施設の名前'
-        select '佐野', from: '地区'
+        find('#hotel_update_form_district_id_chosen').click
+        page.all('.active-result')[1].click
         fill_in '住所', with: '更新サンプル宿泊施設住所'
         fill_in '宿泊施設の紹介',
                 with:
                   'Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-
-        find(
-          '#hotel_update_form_hotel_attributes_lat',
-          visible: false
-        ).set '36.6981800'
-        find(
-          '#hotel_update_form_hotel_attributes_lng',
-          visible: false
-        ).set '137.8618500'
-        attach_file '画像', Rails.root.join('spec/fixtures/fixture.png')
+        find('#map-location-registration').click
+        attach_file '画像',
+                    Rails.root.join('spec/fixtures/fixture.png'),
+                    make_visible: true
         fill_in 'hotel_update_form_reservation_link_attributes_link',
                 with: 'https://yahoo.com'
-
         click_button '更新する'
 
         expect(page).to have_content '情報を更新しました'
@@ -149,7 +137,7 @@ RSpec.describe 'CRUD機能', type: :system do
         expect(page).to have_content '佐野'
         expect(page).to have_content '更新サンプル宿泊施設住所'
         expect(
-          page
+          page,
         ).to have_content 'Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
         expect(page).to have_content 'https://yahoo.com'
       end

@@ -10,7 +10,7 @@ RSpec.describe 'CRUD機能', type: :system do
       :restaurant,
       organization: organization_a,
       restaurant_categories: [restaurant_category],
-      districts: [district]
+      districts: [district],
     )
   end
   let!(:user_b) { create(:business_user) }
@@ -20,17 +20,13 @@ RSpec.describe 'CRUD機能', type: :system do
       :restaurant,
       organization: organization_b,
       restaurant_categories: [restaurant_category],
-      districts: [district]
+      districts: [district],
     )
-  end
-
-  before do
-    driven_by(:rack_test)
-    login_as user_a
   end
 
   describe '飲食店一覧表示' do
     it 'マイページに自分の飲食店だけが表示されること' do
+      login_as user_a
       visit organization_restaurants_path(organization_a)
       expect(page).to have_content restaurant_a.name
       expect(page).not_to have_content restaurant_b.name
@@ -44,64 +40,62 @@ RSpec.describe 'CRUD機能', type: :system do
   end
 
   describe '飲食店詳細表示' do
-    it '自分の飲食店は表示される' do
+    before { login_as user_a }
+
+    it 'マイページに自分の飲食店は表示される' do
       visit organization_restaurant_path(organization_a, restaurant_a)
       expect(page).to have_current_path organization_restaurant_path(
-        organization_a,
-        restaurant_a
-      )
+                          organization_a,
+                          restaurant_a,
+                        )
     end
 
-    it '自分の飲食店以外は表示されない' do
-      expect do
-        visit organization_restaurant_path(organization_b, restaurant_b)
-      end.to raise_error(ActiveRecord::RecordNotFound)
+    it 'マイページには自分の飲食店以外は表示されない' do
+      Capybara.raise_server_errors = false
+      visit organization_restaurant_path(organization_b, restaurant_b)
+      assert_text 'ActiveRecord::RecordNotFound'
     end
   end
 
   describe '飲食店新規登録' do
+    before { login_as user_a }
+
     context '自分の組織に関するものの場合' do
       it '登録フォームに進めること' do
         visit new_organization_restaurant_path(organization_a)
         expect(page).to have_current_path new_organization_restaurant_path(
-          organization_a
-        )
+                            organization_a,
+                          )
       end
     end
 
     context '自分の組織に関するものではない場合' do
       it '登録フォームに進めずエラーになること' do
-        expect do
-          visit new_organization_restaurant_path(organization_b)
-        end.to raise_error(NoMethodError)
+        Capybara.raise_server_errors = false
+        visit new_organization_restaurant_path(organization_b)
+        assert_text 'NoMethodError'
       end
     end
 
     context '入力情報が正しい場合' do
       it '新規登録できること' do
         visit new_organization_restaurant_path(organization_a)
-
         fill_in '店名', with: 'サンプル飲食店店名'
-        select '内山', from: '地区'
+        find('#restaurant_create_form_district_id_chosen').click
+        find('.active-result').click
         fill_in '住所', with: 'サンプル飲食店住所'
         fill_in 'スラッグ', with: 'sample-restaurant'
         fill_in '店の紹介',
                 with:
                   'Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua.'
-
-        find(
-          '#restaurant_create_form_restaurant_attributes_lat',
-          visible: false
-        ).set '36.6959303'
-        find(
-          '#restaurant_create_form_restaurant_attributes_lng',
-          visible: false
-        ).set '137.8638005'
-        attach_file '画像', Rails.root.join('spec/fixtures/fixture.png')
-        select '和食', from: 'カテゴリー'
+        find('#map-location-registration').click
+        attach_file '画像',
+                    Rails.root.join('spec/fixtures/fixture.png'),
+                    make_visible: true
+        find('#restaurant_create_form_restaurant_category_ids_chosen').click
+        find('.active-result').click
         fill_in 'restaurant_create_form_reservation_link_attributes_link',
                 with: 'https://google.com'
-
         click_button '登録する'
 
         expect(page).to have_content '作成しました'
@@ -112,21 +106,23 @@ RSpec.describe 'CRUD機能', type: :system do
   end
 
   describe '飲食店情報編集' do
+    before { login_as user_a }
+
     context '自分の組織に関するものの場合' do
       it '編集フォームに進めること' do
         visit edit_organization_restaurant_path(organization_a, restaurant_a)
         expect(page).to have_current_path edit_organization_restaurant_path(
-          organization_a,
-          restaurant_a
-        )
+                            organization_a,
+                            restaurant_a,
+                          )
       end
     end
 
     context '自分の組織に関するものではない場合' do
       it '編集フォームに進めずエラーになること' do
-        expect do
-          visit edit_organization_restaurant_path(organization_b, restaurant_b)
-        end.to raise_error(ActiveRecord::RecordNotFound)
+        Capybara.raise_server_errors = false
+        visit edit_organization_restaurant_path(organization_b, restaurant_b)
+        assert_text 'ActiveRecord::RecordNotFound'
       end
     end
 
@@ -135,27 +131,21 @@ RSpec.describe 'CRUD機能', type: :system do
         create(:restaurant_category_chinese_food)
         create(:district_sano)
         visit edit_organization_restaurant_path(organization_a, restaurant_a)
-
         fill_in '店名', with: '更新サンプル飲食店店名'
-        select '佐野', from: '地区'
+        find('#restaurant_update_form_district_id_chosen').click
+        page.all('.active-result')[1].click
         fill_in '住所', with: '更新サンプル飲食店住所'
         fill_in '店の紹介',
                 with:
                   'Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-
-        find(
-          '#restaurant_update_form_restaurant_attributes_lat',
-          visible: false
-        ).set '36.6981800'
-        find(
-          '#restaurant_update_form_restaurant_attributes_lng',
-          visible: false
-        ).set '137.8618500'
-        attach_file '画像', Rails.root.join('spec/fixtures/fixture.png')
-        select '中華', from: 'カテゴリー'
+        find('#map-location-registration').click
+        attach_file '画像',
+                    Rails.root.join('spec/fixtures/fixture.png'),
+                    make_visible: true
+        find('#restaurant_update_form_restaurant_category_ids_chosen').click
+        find('.active-result').click
         fill_in 'restaurant_update_form_reservation_link_attributes_link',
                 with: 'https://yahoo.com'
-
         click_button '更新する'
 
         expect(page).to have_content '情報を更新しました'
@@ -163,7 +153,7 @@ RSpec.describe 'CRUD機能', type: :system do
         expect(page).to have_content '佐野'
         expect(page).to have_content '更新サンプル飲食店住所'
         expect(
-          page
+          page,
         ).to have_content 'Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
         expect(page).to have_content '中華'
         expect(page).to have_content 'https://yahoo.com'
