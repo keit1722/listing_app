@@ -143,4 +143,32 @@ RSpec.describe 'CRUD機能', type: :system do
       end
     end
   end
+
+  describe '公開ページ飲食店一覧での検索' do
+    let(:district_c) { create(:district_meitetsu) }
+    let!(:activity_c) do
+      create(:activity, organization: organization_a, districts: [district_c])
+    end
+
+    before { visit activities_path }
+
+    it '検索キーワードと一致する名前のものだけが表示されること' do
+      fill_in 'q_keyword', with: activity_a.name
+      click_button '検索'
+      expect(page).to have_content activity_a.name
+      expect(page).not_to have_content activity_b.name
+      expect(page).not_to have_content activity_c.name
+    end
+
+    it 'チェックしたエリアと一致する名前のものだけが表示されること' do
+      click_on 'エリア'
+      find("label[for='check-area-6']").click
+      first('.panel-apply', visible: false).click
+      click_button '検索'
+
+      expect(page).to have_content activity_a.name
+      expect(page).to have_content activity_b.name
+      expect(page).not_to have_content activity_c.name
+    end
+  end
 end

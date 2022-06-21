@@ -156,4 +156,49 @@ RSpec.describe 'CRUD機能', type: :system do
       end
     end
   end
+
+  describe '公開ページ飲食店一覧での検索' do
+    let(:district_c) { create(:district_meitetsu) }
+    let(:shop_category_b) { create(:shop_category_sports_shop) }
+    let!(:shop_c) do
+      create(
+        :shop,
+        organization: organization_a,
+        shop_categories: [shop_category_b],
+        districts: [district_c],
+      )
+    end
+
+    before { visit shops_path }
+
+    it '検索キーワードと一致する名前のものだけが表示されること' do
+      fill_in 'q_keyword', with: shop_a.name
+      click_button '検索'
+      expect(page).to have_content shop_a.name
+      expect(page).not_to have_content shop_b.name
+      expect(page).not_to have_content shop_c.name
+    end
+
+    it 'チェックしたエリアと一致する名前のものだけが表示されること' do
+      click_on 'エリア'
+      find("label[for='check-area-6']").click
+      first('.panel-apply', visible: false).click
+      click_button '検索'
+
+      expect(page).to have_content shop_a.name
+      expect(page).to have_content shop_b.name
+      expect(page).not_to have_content shop_c.name
+    end
+
+    it 'チェックしたカテゴリと一致する名前のものだけが表示されること' do
+      click_on 'カテゴリー'
+      find("label[for='check-category-2']").click
+      page.all('.panel-apply', visible: false)[1].click
+      click_button '検索'
+
+      expect(page).to have_content shop_a.name
+      expect(page).to have_content shop_b.name
+      expect(page).not_to have_content shop_c.name
+    end
+  end
 end
