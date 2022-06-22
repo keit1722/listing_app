@@ -13,11 +13,11 @@ class ActivitiesController < ApplicationController
   def search
     @activities =
       SearchForm
-        .new(search_activities_params)
-        .search
-        .with_attached_images
-        .page(params[:page])
-        .per(20)
+      .new(search_activities_params)
+      .search
+      .with_attached_images
+      .page(params[:page])
+      .per(20)
     @activity_all = SearchForm.new(search_activities_params).search
     @selected_area_groups = params[:q][:area_groups]
     render layout: 'listings_index'

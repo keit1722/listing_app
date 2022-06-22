@@ -11,10 +11,12 @@ class SearchHomeForm
 
     scope = scope.search_with_district(area_group_to_district_ids)
 
-    scope =
-      splited_keywords
+    if keyword.present?
+      scope =
+        splited_keywords
         .map { |splited_keyword| scope.keyword_contain(splited_keyword) }
-        .inject { |result, scp| result.or(scp) } if keyword.present?
+        .inject { |result, scp| result.or(scp) }
+    end
     scope
   end
 

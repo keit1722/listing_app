@@ -35,9 +35,9 @@ RSpec.describe 'CRUD機能', type: :system do
     it 'マイページに自分の温泉は表示されること' do
       visit organization_hot_spring_path(organization_a, hot_spring_a)
       expect(page).to have_current_path organization_hot_spring_path(
-                          organization_a,
-                          hot_spring_a,
-                        )
+        organization_a,
+        hot_spring_a
+      )
     end
 
     it 'マイページには自分の温泉以外は表示されないこと' do
@@ -54,8 +54,8 @@ RSpec.describe 'CRUD機能', type: :system do
       it '登録フォームに進めること' do
         visit new_organization_hot_spring_path(organization_a)
         expect(page).to have_current_path new_organization_hot_spring_path(
-                            organization_a,
-                          )
+          organization_a
+        )
       end
     end
 
@@ -74,7 +74,7 @@ RSpec.describe 'CRUD機能', type: :system do
         find('#hot_spring_create_form_district_id_chosen').click
         find(
           '#hot_spring_create_form_district_id_chosen .active-result',
-          text: '内山',
+          text: '内山'
         ).click
         fill_in '住所', with: 'サンプル温泉住所'
         fill_in 'スラッグ', with: 'sample-hot-spring'
@@ -101,9 +101,9 @@ RSpec.describe 'CRUD機能', type: :system do
       it '編集フォームに進めること' do
         visit edit_organization_hot_spring_path(organization_a, hot_spring_a)
         expect(page).to have_current_path edit_organization_hot_spring_path(
-                            organization_a,
-                            hot_spring_a,
-                          )
+          organization_a,
+          hot_spring_a
+        )
       end
     end
 
@@ -123,7 +123,7 @@ RSpec.describe 'CRUD機能', type: :system do
         find('#hot_spring_update_form_district_id_chosen').click
         find(
           '#hot_spring_update_form_district_id_chosen .active-result',
-          text: '佐野',
+          text: '佐野'
         ).click
         fill_in '住所', with: '更新サンプル温泉住所'
         fill_in '温泉の紹介',
@@ -140,7 +140,7 @@ RSpec.describe 'CRUD機能', type: :system do
         expect(page).to have_content '佐野'
         expect(page).to have_content '更新サンプル温泉住所'
         expect(
-          page,
+          page
         ).to have_content 'Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
       end
     end

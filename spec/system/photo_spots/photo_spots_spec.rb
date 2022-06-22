@@ -35,9 +35,9 @@ RSpec.describe 'CRUD機能', type: :system do
     it 'マイページに自分のフォトスポットは表示されること' do
       visit organization_photo_spot_path(organization_a, photo_spot_a)
       expect(page).to have_current_path organization_photo_spot_path(
-                          organization_a,
-                          photo_spot_a,
-                        )
+        organization_a,
+        photo_spot_a
+      )
     end
 
     it 'マイページには自分のフォトスポット以外は表示されないこと' do
@@ -54,8 +54,8 @@ RSpec.describe 'CRUD機能', type: :system do
       it '登録フォームに進めること' do
         visit new_organization_photo_spot_path(organization_a)
         expect(page).to have_current_path new_organization_photo_spot_path(
-                            organization_a,
-                          )
+          organization_a
+        )
       end
     end
 
@@ -74,7 +74,7 @@ RSpec.describe 'CRUD機能', type: :system do
         find('#photo_spot_create_form_district_id_chosen').click
         find(
           '#photo_spot_create_form_district_id_chosen .active-result',
-          text: '内山',
+          text: '内山'
         ).click
         fill_in '住所', with: 'サンプルフォトスポット住所'
         fill_in 'スラッグ', with: 'sample-photo-spot'
@@ -101,9 +101,9 @@ RSpec.describe 'CRUD機能', type: :system do
       it '編集フォームに進めること' do
         visit edit_organization_photo_spot_path(organization_a, photo_spot_a)
         expect(page).to have_current_path edit_organization_photo_spot_path(
-                            organization_a,
-                            photo_spot_a,
-                          )
+          organization_a,
+          photo_spot_a
+        )
       end
     end
 
@@ -123,7 +123,7 @@ RSpec.describe 'CRUD機能', type: :system do
         find('#photo_spot_update_form_district_id_chosen').click
         find(
           '#photo_spot_update_form_district_id_chosen .active-result',
-          text: '佐野',
+          text: '佐野'
         ).click
         fill_in '住所', with: '更新サンプルフォトスポット住所'
         fill_in 'フォトスポットの紹介',
@@ -140,7 +140,7 @@ RSpec.describe 'CRUD機能', type: :system do
         expect(page).to have_content '佐野'
         expect(page).to have_content '更新サンプルフォトスポット住所'
         expect(
-          page,
+          page
         ).to have_content 'Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
       end
     end

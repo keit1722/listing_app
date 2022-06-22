@@ -11,10 +11,12 @@ class SearchForm
 
     scope = scope.search_with_district(area_groups_to_district_ids)
 
-    scope =
-      splited_keywords
+    if keyword.present?
+      scope =
+        splited_keywords
         .map { |splited_keyword| scope.keyword_contain(splited_keyword) }
-        .inject { |result, scp| result.or(scp) } if keyword.present?
+        .inject { |result, scp| result.or(scp) }
+    end
     scope
   end
 
@@ -35,9 +37,7 @@ class SearchForm
           end
         end.flatten
       selected_districts =
-        selected_area_groups.map do |selected_area_group|
-          selected_area_group[:grouped]
-        end.flatten
+        selected_area_groups.pluck(:grouped).flatten
       District.where(name: selected_districts).pluck(:id)
     end
   end

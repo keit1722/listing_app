@@ -13,11 +13,11 @@ class SkiAreasController < ApplicationController
   def search
     @ski_areas =
       SearchForm
-        .new(search_ski_areas_params)
-        .search
-        .with_attached_images
-        .page(params[:page])
-        .per(20)
+      .new(search_ski_areas_params)
+      .search
+      .with_attached_images
+      .page(params[:page])
+      .per(20)
     @ski_area_all = SearchForm.new(search_ski_areas_params).search
     @selected_area_groups = params[:q][:area_groups]
     render layout: 'listings_index'

@@ -42,43 +42,43 @@ class Restaurant < ApplicationRecord
   validates_with CoordinateValidator
   validates :slug,
             length: {
-              maximum: 100,
+              maximum: 100
             },
             uniqueness: true,
             presence: true,
             format: {
-              with: /\A[a-z0-9\-]+\z/,
+              with: /\A[a-z0-9\-]+\z/
             }
   validates :description, length: { maximum: 10_000 }, presence: true
   validates :images,
             attached: true,
             limit: {
-              max: 5,
+              max: 5
             },
-            content_type: %i[png jpg jpeg]
+            content_type: [:png, :jpg, :jpeg]
 
   scope :search_with_category,
-        ->(category_ids) {
+        lambda { |category_ids|
           joins(:restaurant_categories).where(
             restaurant_categories: {
-              id: category_ids,
-            },
+              id: category_ids
+            }
           )
         }
 
   scope :search_with_district,
-        ->(district_ids) {
+        lambda { |district_ids|
           joins(:districts).where(districts: { id: district_ids })
         }
 
   scope :keyword_contain,
-        ->(keyword) {
+        lambda { |keyword|
           where(
             [
               'description LIKE(?) OR Restaurants.name LIKE(?)',
               "%#{keyword}%",
-              "%#{keyword}%",
-            ],
+              "%#{keyword}%"
+            ]
           )
         }
 
