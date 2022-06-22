@@ -1,0 +1,2 @@
+<%= f.check_box :category_ids, {id: "check-category-#{category_counter + 2}", multiple: true, include_hidden: false }, category.id %>
+<%= f.label :category_ids, category.name, for: "check-category-#{category_counter + 2}" %>

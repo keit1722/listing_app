@@ -1285,15 +1285,25 @@ $(document).ready(function(){
 	    if(! mouse_is_inside) close_panel_dropdown();
 	});
 
-    // "All" checkbox
+    // "All" checkbox -- categories
     $('.checkboxes.categories input').on('change', function() {
-        if($(this).hasClass('all')){
-            $(this).parents('.checkboxes').find('input').prop('checked', false);
-            $(this).prop('checked', true);
-        } else {
-            $('.checkboxes input.all').prop('checked', false);
-        }
-    });
+      if($(this).hasClass('all')){
+          $(this).parents('.checkboxes').find('input').prop('checked', false);
+          $(this).prop('checked', true);
+      } else {
+          $(this).parents('.checkboxes').find('input.all').prop('checked', false);
+      }
+  });
+
+  // "All" checkbox -- areas
+  $('.checkboxes.areas input').on('change', function() {
+      if($(this).hasClass('all')){
+          $(this).parents('.checkboxes').find('input').prop('checked', false);
+          $(this).prop('checked', true);
+      } else {
+          $(this).parents('.checkboxes').find('input.all').prop('checked', false);
+      }
+  });
 
 
 	$('input[type="range"].distance-radius').rangeslider({
@@ -1664,3 +1674,24 @@ function previewImage(obj) {
 		fileReader.readAsDataURL(obj.files[i]);
 	}
 }
+
+/*  Home search button
+/*--------------------------*/
+
+var homeSearchButton = document.getElementById('home-search-button');
+homeSearchButton.addEventListener('click', () => {
+
+  if (document.getElementById('q_category').value == "") {
+    var wrapper = document.getElementById('wrapper');
+
+    if (!document.getElementById('temporary-error')) {
+      wrapper.insertAdjacentHTML('afterbegin', '<div class="notification error margin-bottom-0" id="temporary-error"><p>カテゴリーを選択した上で検索してください</div>');
+    }
+
+    window.scroll({top: 0, behavior: 'smooth'});
+
+  } else {
+    homeSearchButton.removeAttribute("type");
+  }
+});
+

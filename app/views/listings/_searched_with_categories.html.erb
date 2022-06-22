@@ -10,7 +10,7 @@
 
             <!-- Row With Forms -->
             <div class="row with-forms">
-              <%= form_with model: listings, url: polymorphic_path([:search, controller_name.to_sym]), scope: :q, method: :get, local: true do |f| %>
+              <%= form_with model: listings, url: polymorphic_path([:search, category.to_sym]), scope: :q, method: :get, local: true do |f| %>
 
                 <!-- Main Search Input -->
                 <div class="col-fs-12">
@@ -22,7 +22,8 @@
 
                 <!-- Filters -->
                 <div class="col-fs-12">
-                  <%= render "listings/unselected_panels_area", { f: f } %>
+                  <%= render "listings/selected_panels_area", { f: f, selected_area_groups: selected_area_groups } %>
+                  <%= render "listings/selected_panels_category", { f: f, categories: categories, selected_categories: selected_categories, selected_area_groups: selected_area_groups } %>
                 </div>
                 <!-- Filters / End -->
 

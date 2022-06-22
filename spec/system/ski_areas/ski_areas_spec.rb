@@ -12,14 +12,11 @@ RSpec.describe 'CRUD機能', type: :system do
   let!(:ski_area_b) do
     create(:ski_area, organization: organization_b, districts: [district])
   end
-
-  before do
-    driven_by(:rack_test)
-    login_as user_a
-  end
+  let(:district_c) { create(:district_meitetsu) }
 
   describe 'スキー場一覧表示' do
     it 'マイページに自分のスキー場だけが表示されること' do
+      login_as user_a
       visit organization_ski_areas_path(organization_a)
       expect(page).to have_content ski_area_a.name
       expect(page).not_to have_content ski_area_b.name
@@ -33,7 +30,9 @@ RSpec.describe 'CRUD機能', type: :system do
   end
 
   describe 'スキー場詳細表示' do
-    it '自分のスキー場は表示される' do
+    before { login_as user_a }
+
+    it 'マイページに自分のスキー場は表示される' do
       visit organization_ski_area_path(organization_a, ski_area_a)
       expect(page).to have_current_path organization_ski_area_path(
         organization_a,
@@ -41,14 +40,16 @@ RSpec.describe 'CRUD機能', type: :system do
       )
     end
 
-    it '自分のスキー場以外は表示されない' do
-      expect do
-        visit organization_ski_area_path(organization_b, ski_area_b)
-      end.to raise_error(ActiveRecord::RecordNotFound)
+    it 'マイページには自分のスキー場以外は表示されない' do
+      Capybara.raise_server_errors = false
+      visit organization_ski_area_path(organization_b, ski_area_b)
+      assert_text 'ActiveRecord::RecordNotFound'
     end
   end
 
   describe 'スキー場新規登録' do
+    before { login_as user_a }
+
     context '自分の組織に関するものの場合' do
       it '登録フォームに進めること' do
         visit new_organization_ski_area_path(organization_a)
@@ -60,34 +61,30 @@ RSpec.describe 'CRUD機能', type: :system do
 
     context '自分の組織に関するものではない場合' do
       it '登録フォームに進めずエラーになること' do
-        expect do
-          visit new_organization_ski_area_path(organization_b)
-        end.to raise_error(NoMethodError)
+        Capybara.raise_server_errors = false
+        visit new_organization_ski_area_path(organization_b)
+        assert_text 'NoMethodError'
       end
     end
 
     context '入力情報が正しい場合' do
       it '新規登録できること' do
         visit new_organization_ski_area_path(organization_a)
-
         fill_in 'スキー場の名前', with: 'サンプルスキー場の名前'
-        select '内山', from: '地区'
+        find('#ski_area_create_form_district_id_chosen').click
+        find(
+          '#ski_area_create_form_district_id_chosen .active-result',
+          text: '内山'
+        ).click
         fill_in '住所', with: 'サンプルスキー場住所'
         fill_in 'スラッグ', with: 'sample-ski-area'
         fill_in 'スキー場の紹介',
                 with:
                   'Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua.'
-
-        find(
-          '#ski_area_create_form_ski_area_attributes_lat',
-          visible: false
-        ).set '36.6959303'
-        find(
-          '#ski_area_create_form_ski_area_attributes_lng',
-          visible: false
-        ).set '137.8638005'
-        attach_file '画像', Rails.root.join('spec/fixtures/fixture.png')
-
+        find('#map-location-registration').click
+        attach_file '画像',
+                    Rails.root.join('spec/fixtures/fixture.png'),
+                    make_visible: true
         click_button '登録する'
 
         expect(page).to have_content '作成しました'
@@ -98,6 +95,8 @@ RSpec.describe 'CRUD機能', type: :system do
   end
 
   describe 'スキー場情報編集' do
+    before { login_as user_a }
+
     context '自分の組織に関するものの場合' do
       it '編集フォームに進めること' do
         visit edit_organization_ski_area_path(organization_a, ski_area_a)
@@ -110,9 +109,9 @@ RSpec.describe 'CRUD機能', type: :system do
 
     context '自分の組織に関するものではない場合' do
       it '編集フォームに進めずエラーになること' do
-        expect do
-          visit edit_organization_ski_area_path(organization_b, ski_area_b)
-        end.to raise_error(ActiveRecord::RecordNotFound)
+        Capybara.raise_server_errors = false
+        visit edit_organization_ski_area_path(organization_b, ski_area_b)
+        assert_text 'ActiveRecord::RecordNotFound'
       end
     end
 
@@ -120,23 +119,20 @@ RSpec.describe 'CRUD機能', type: :system do
       it '情報更新ができること' do
         create(:district_sano)
         visit edit_organization_ski_area_path(organization_a, ski_area_a)
-
         fill_in 'スキー場の名前', with: '更新サンプルスキー場の名前'
-        select '佐野', from: '地区'
+        find('#ski_area_update_form_district_id_chosen').click
+        find(
+          '#ski_area_update_form_district_id_chosen .active-result',
+          text: '佐野'
+        ).click
         fill_in '住所', with: '更新サンプルスキー場住所'
         fill_in 'スキー場の紹介',
                 with:
                   'Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-
-        find(
-          '#ski_area_update_form_ski_area_attributes_lat',
-          visible: false
-        ).set '36.6981800'
-        find(
-          '#ski_area_update_form_ski_area_attributes_lng',
-          visible: false
-        ).set '137.8618500'
-        attach_file '画像', Rails.root.join('spec/fixtures/fixture.png')
+        find('#map-location-registration').click
+        attach_file '画像',
+                    Rails.root.join('spec/fixtures/fixture.png'),
+                    make_visible: true
 
         click_button '更新する'
 
@@ -147,6 +143,94 @@ RSpec.describe 'CRUD機能', type: :system do
         expect(
           page
         ).to have_content 'Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+      end
+    end
+  end
+
+  describe '公開ページスキー場一覧での検索' do
+    let!(:ski_area_c) do
+      create(:ski_area, organization: organization_a, districts: [district_c])
+    end
+
+    before { visit ski_areas_path }
+
+    it '検索キーワードと一致する名前のものだけが表示されること' do
+      fill_in 'q_keyword', with: ski_area_a.name
+      click_button '検索'
+      expect(page).to have_content ski_area_a.name
+      expect(page).not_to have_content ski_area_b.name
+      expect(page).not_to have_content ski_area_c.name
+    end
+
+    it 'チェックしたエリアと一致する名前のものだけが表示されること' do
+      click_on 'エリア'
+      find('.panel-dropdown.active label', text: 'さのさか').click
+      find('.panel-dropdown.active .panel-apply', text: '決定').click
+      click_button '検索'
+
+      expect(page).to have_content ski_area_a.name
+      expect(page).to have_content ski_area_b.name
+      expect(page).not_to have_content ski_area_c.name
+    end
+  end
+
+  describe 'トップページでの検索' do
+    let!(:ski_area_c) do
+      create(:ski_area, organization: organization_a, districts: [district_c])
+    end
+
+    before { visit root_path }
+
+    context '検索ワード・エリア・カテゴリー（スキー場）を指定した場合' do
+      it '指定された検索ワード・エリア・カテゴリーの一覧が表示されること' do
+        fill_in 'q_keyword', with: ski_area_a.name
+        find('#q_area_chosen').click
+        find('#q_area_chosen .active-result', text: 'さのさか').click
+        find('#q_category_chosen').click
+        find('#q_category_chosen .active-result', text: 'スキー場').click
+        click_button '検索'
+
+        expect(page).to have_content ski_area_a.name
+        expect(page).not_to have_content ski_area_b.name
+        expect(page).not_to have_content ski_area_c.name
+      end
+    end
+
+    context 'カテゴリー（スキー場）だけを指定した場合' do
+      it '全てのスキー場の一覧が表示される' do
+        find('#q_category_chosen').click
+        find('#q_category_chosen .active-result', text: 'スキー場').click
+        click_button '検索'
+
+        expect(page).to have_content ski_area_a.name
+        expect(page).to have_content ski_area_b.name
+        expect(page).to have_content ski_area_c.name
+      end
+    end
+
+    context 'エリアとカテゴリー（スキー場）だけを指定した場合' do
+      it '指定したエリアに所属しているスキー場の一覧が表示される' do
+        find('#q_area_chosen').click
+        find('#q_area_chosen .active-result', text: 'さのさか').click
+        find('#q_category_chosen').click
+        find('#q_category_chosen .active-result', text: 'スキー場').click
+        click_button '検索'
+
+        expect(page).to have_content ski_area_a.name
+        expect(page).to have_content ski_area_b.name
+        expect(page).not_to have_content ski_area_c.name
+      end
+    end
+
+    context 'カテゴリーを指定しない場合' do
+      it '検索結果が表示されないこと' do
+        fill_in 'q_keyword', with: ski_area_a.name
+        find('#q_area_chosen').click
+        find('#q_area_chosen .active-result', text: 'さのさか').click
+        click_button '検索'
+
+        expect(page).to have_content 'カテゴリーを選択した上で検索してください'
+        expect(page).to have_current_path root_path
       end
     end
   end

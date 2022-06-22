@@ -1,4 +1,6 @@
 class RestaurantsController < ApplicationController
+  before_action :set_restaurant_categories, only: [:index, :search]
+
   def index
     @restaurants =
       Restaurant
@@ -13,5 +15,34 @@ class RestaurantsController < ApplicationController
   def show
     @restaurant = Restaurant.with_attached_images.find_by!(slug: params[:slug])
     render layout: 'listings_single'
+  end
+
+  def search
+    @restaurants =
+      SearchWithCategoriesForm
+      .new(search_restaurants_params)
+      .search
+      .with_attached_images
+      .includes(:restaurant_categories, :restaurant_category_mappings)
+      .page(params[:page])
+      .per(20)
+    @restaurant_all =
+      SearchWithCategoriesForm.new(search_restaurants_params).search
+    @selected_categories = params[:q][:category_ids]
+    @selected_area_groups = params[:q][:area_groups]
+    render layout: 'listings_index'
+  end
+
+  private
+
+  def search_restaurants_params
+    params
+      .fetch(:q, {})
+      .permit(:keyword, category_ids: [], area_groups: [])
+      .merge(model: 'restaurant')
+  end
+
+  def set_restaurant_categories
+    @categories = RestaurantCategory.all
   end
 end
