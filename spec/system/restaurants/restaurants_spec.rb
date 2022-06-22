@@ -23,6 +23,8 @@ RSpec.describe 'CRUD機能', type: :system do
       districts: [district],
     )
   end
+  let(:district_c) { create(:district_meitetsu) }
+  let(:restaurant_category_b) { create(:restaurant_category_chinese_food) }
 
   describe '飲食店一覧表示' do
     it 'マイページに自分の飲食店だけが表示されること' do
@@ -162,8 +164,6 @@ RSpec.describe 'CRUD機能', type: :system do
   end
 
   describe '公開ページ飲食店一覧での検索' do
-    let(:district_c) { create(:district_meitetsu) }
-    let(:restaurant_category_b) { create(:restaurant_category_chinese_food) }
     let!(:restaurant_c) do
       create(
         :restaurant,
@@ -203,6 +203,72 @@ RSpec.describe 'CRUD機能', type: :system do
       expect(page).to have_content restaurant_a.name
       expect(page).to have_content restaurant_b.name
       expect(page).not_to have_content restaurant_c.name
+    end
+  end
+
+  describe 'トップページでの検索' do
+    let!(:restaurant_c) do
+      create(
+        :restaurant,
+        organization: organization_a,
+        restaurant_categories: [restaurant_category_b],
+        districts: [district_c],
+      )
+    end
+
+    before { visit root_path }
+
+    context '検索ワード・エリア・カテゴリー（飲食店）を指定した場合' do
+      it '指定された検索ワード・エリア・カテゴリーの一覧が表示されること' do
+        fill_in 'q_keyword', with: restaurant_a.name
+        find('#q_area_chosen').click
+        find('#q_area_chosen .active-result', text: 'さのさか').click
+        find('#q_category_chosen').click
+        find('#q_category_chosen .active-result', text: '飲食店').click
+        click_button '検索'
+
+        expect(page).to have_content restaurant_a.name
+        expect(page).not_to have_content restaurant_b.name
+        expect(page).not_to have_content restaurant_c.name
+      end
+    end
+
+    context 'カテゴリー（飲食店）だけを指定した場合' do
+      it '全ての飲食店の一覧が表示される' do
+        find('#q_category_chosen').click
+        find('#q_category_chosen .active-result', text: '飲食店').click
+        click_button '検索'
+
+        expect(page).to have_content restaurant_a.name
+        expect(page).to have_content restaurant_b.name
+        expect(page).to have_content restaurant_c.name
+      end
+    end
+
+    context 'エリアとカテゴリー（飲食店）だけを指定した場合' do
+      it '指定したエリアに所属している飲食店の一覧が表示される' do
+        find('#q_area_chosen').click
+        find('#q_area_chosen .active-result', text: 'さのさか').click
+        find('#q_category_chosen').click
+        find('#q_category_chosen .active-result', text: '飲食店').click
+        click_button '検索'
+
+        expect(page).to have_content restaurant_a.name
+        expect(page).to have_content restaurant_b.name
+        expect(page).not_to have_content restaurant_c.name
+      end
+    end
+
+    context 'カテゴリーを指定しない場合' do
+      it '検索結果が表示されないこと' do
+        fill_in 'q_keyword', with: restaurant_a.name
+        find('#q_area_chosen').click
+        find('#q_area_chosen .active-result', text: 'さのさか').click
+        click_button '検索'
+
+        expect(page).to have_content 'カテゴリーを選択した上で検索してください'
+        expect(page).to have_current_path root_path
+      end
     end
   end
 end

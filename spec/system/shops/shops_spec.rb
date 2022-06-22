@@ -23,6 +23,8 @@ RSpec.describe 'CRUD機能', type: :system do
       districts: [district],
     )
   end
+  let(:district_c) { create(:district_meitetsu) }
+  let(:shop_category_b) { create(:shop_category_sports_shop) }
 
   describe 'ショップ一覧表示' do
     it 'マイページに自分のショップだけが表示されること' do
@@ -157,9 +159,7 @@ RSpec.describe 'CRUD機能', type: :system do
     end
   end
 
-  describe '公開ページ飲食店一覧での検索' do
-    let(:district_c) { create(:district_meitetsu) }
-    let(:shop_category_b) { create(:shop_category_sports_shop) }
+  describe '公開ページショップ一覧での検索' do
     let!(:shop_c) do
       create(
         :shop,
@@ -199,6 +199,72 @@ RSpec.describe 'CRUD機能', type: :system do
       expect(page).to have_content shop_a.name
       expect(page).to have_content shop_b.name
       expect(page).not_to have_content shop_c.name
+    end
+  end
+
+  describe 'トップページでの検索' do
+    let!(:shop_c) do
+      create(
+        :shop,
+        organization: organization_a,
+        shop_categories: [shop_category_b],
+        districts: [district_c],
+      )
+    end
+
+    before { visit root_path }
+
+    context '検索ワード・エリア・カテゴリー（ショップ）を指定した場合' do
+      it '指定された検索ワード・エリア・カテゴリーの一覧が表示されること' do
+        fill_in 'q_keyword', with: shop_a.name
+        find('#q_area_chosen').click
+        find('#q_area_chosen .active-result', text: 'さのさか').click
+        find('#q_category_chosen').click
+        find('#q_category_chosen .active-result', text: 'ショップ').click
+        click_button '検索'
+
+        expect(page).to have_content shop_a.name
+        expect(page).not_to have_content shop_b.name
+        expect(page).not_to have_content shop_c.name
+      end
+    end
+
+    context 'カテゴリー（ショップ）だけを指定した場合' do
+      it '全てのショップの一覧が表示される' do
+        find('#q_category_chosen').click
+        find('#q_category_chosen .active-result', text: 'ショップ').click
+        click_button '検索'
+
+        expect(page).to have_content shop_a.name
+        expect(page).to have_content shop_b.name
+        expect(page).to have_content shop_c.name
+      end
+    end
+
+    context 'エリアとカテゴリー（ショップ）だけを指定した場合' do
+      it '指定したエリアに所属しているショップの一覧が表示される' do
+        find('#q_area_chosen').click
+        find('#q_area_chosen .active-result', text: 'さのさか').click
+        find('#q_category_chosen').click
+        find('#q_category_chosen .active-result', text: 'ショップ').click
+        click_button '検索'
+
+        expect(page).to have_content shop_a.name
+        expect(page).to have_content shop_b.name
+        expect(page).not_to have_content shop_c.name
+      end
+    end
+
+    context 'カテゴリーを指定しない場合' do
+      it '検索結果が表示されないこと' do
+        fill_in 'q_keyword', with: shop_a.name
+        find('#q_area_chosen').click
+        find('#q_area_chosen .active-result', text: 'さのさか').click
+        click_button '検索'
+
+        expect(page).to have_content 'カテゴリーを選択した上で検索してください'
+        expect(page).to have_current_path root_path
+      end
     end
   end
 end

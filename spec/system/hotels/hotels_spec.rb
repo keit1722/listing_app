@@ -12,6 +12,7 @@ RSpec.describe 'CRUD機能', type: :system do
   let!(:hotel_b) do
     create(:hotel, organization: organization_b, districts: [district])
   end
+  let(:district_c) { create(:district_meitetsu) }
 
   describe '宿泊施設一覧表示' do
     it 'マイページに自分の宿泊施設だけが表示されること' do
@@ -144,8 +145,7 @@ RSpec.describe 'CRUD機能', type: :system do
     end
   end
 
-  describe '公開ページ飲食店一覧での検索' do
-    let(:district_c) { create(:district_meitetsu) }
+  describe '公開ページ宿泊施設一覧での検索' do
     let!(:hotel_c) do
       create(:hotel, organization: organization_a, districts: [district_c])
     end
@@ -169,6 +169,67 @@ RSpec.describe 'CRUD機能', type: :system do
       expect(page).to have_content hotel_a.name
       expect(page).to have_content hotel_b.name
       expect(page).not_to have_content hotel_c.name
+    end
+  end
+
+  describe 'トップページでの検索' do
+    let!(:hotel_c) do
+      create(:hotel, organization: organization_a, districts: [district_c])
+    end
+
+    before { visit root_path }
+
+    context '検索ワード・エリア・カテゴリー（宿泊施設）を指定した場合' do
+      it '指定された検索ワード・エリア・カテゴリーの一覧が表示されること' do
+        fill_in 'q_keyword', with: hotel_a.name
+        find('#q_area_chosen').click
+        find('#q_area_chosen .active-result', text: 'さのさか').click
+        find('#q_category_chosen').click
+        find('#q_category_chosen .active-result', text: '宿泊').click
+        click_button '検索'
+
+        expect(page).to have_content hotel_a.name
+        expect(page).not_to have_content hotel_b.name
+        expect(page).not_to have_content hotel_c.name
+      end
+    end
+
+    context 'カテゴリー（宿泊施設）だけを指定した場合' do
+      it '全ての宿泊施設の一覧が表示される' do
+        find('#q_category_chosen').click
+        find('#q_category_chosen .active-result', text: '宿泊').click
+        click_button '検索'
+
+        expect(page).to have_content hotel_a.name
+        expect(page).to have_content hotel_b.name
+        expect(page).to have_content hotel_c.name
+      end
+    end
+
+    context 'エリアとカテゴリー（宿泊施設）だけを指定した場合' do
+      it '指定したエリアに所属している宿泊施設の一覧が表示される' do
+        find('#q_area_chosen').click
+        find('#q_area_chosen .active-result', text: 'さのさか').click
+        find('#q_category_chosen').click
+        find('#q_category_chosen .active-result', text: '宿泊').click
+        click_button '検索'
+
+        expect(page).to have_content hotel_a.name
+        expect(page).to have_content hotel_b.name
+        expect(page).not_to have_content hotel_c.name
+      end
+    end
+
+    context 'カテゴリーを指定しない場合' do
+      it '検索結果が表示されないこと' do
+        fill_in 'q_keyword', with: hotel_a.name
+        find('#q_area_chosen').click
+        find('#q_area_chosen .active-result', text: 'さのさか').click
+        click_button '検索'
+
+        expect(page).to have_content 'カテゴリーを選択した上で検索してください'
+        expect(page).to have_current_path root_path
+      end
     end
   end
 end

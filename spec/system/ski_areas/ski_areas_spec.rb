@@ -12,6 +12,7 @@ RSpec.describe 'CRUD機能', type: :system do
   let!(:ski_area_b) do
     create(:ski_area, organization: organization_b, districts: [district])
   end
+  let(:district_c) { create(:district_meitetsu) }
 
   describe 'スキー場一覧表示' do
     it 'マイページに自分のスキー場だけが表示されること' do
@@ -140,8 +141,7 @@ RSpec.describe 'CRUD機能', type: :system do
     end
   end
 
-  describe '公開ページ飲食店一覧での検索' do
-    let(:district_c) { create(:district_meitetsu) }
+  describe '公開ページスキー場一覧での検索' do
     let!(:ski_area_c) do
       create(:ski_area, organization: organization_a, districts: [district_c])
     end
@@ -165,6 +165,67 @@ RSpec.describe 'CRUD機能', type: :system do
       expect(page).to have_content ski_area_a.name
       expect(page).to have_content ski_area_b.name
       expect(page).not_to have_content ski_area_c.name
+    end
+  end
+
+  describe 'トップページでの検索' do
+    let!(:ski_area_c) do
+      create(:ski_area, organization: organization_a, districts: [district_c])
+    end
+
+    before { visit root_path }
+
+    context '検索ワード・エリア・カテゴリー（スキー場）を指定した場合' do
+      it '指定された検索ワード・エリア・カテゴリーの一覧が表示されること' do
+        fill_in 'q_keyword', with: ski_area_a.name
+        find('#q_area_chosen').click
+        find('#q_area_chosen .active-result', text: 'さのさか').click
+        find('#q_category_chosen').click
+        find('#q_category_chosen .active-result', text: 'スキー場').click
+        click_button '検索'
+
+        expect(page).to have_content ski_area_a.name
+        expect(page).not_to have_content ski_area_b.name
+        expect(page).not_to have_content ski_area_c.name
+      end
+    end
+
+    context 'カテゴリー（スキー場）だけを指定した場合' do
+      it '全てのスキー場の一覧が表示される' do
+        find('#q_category_chosen').click
+        find('#q_category_chosen .active-result', text: 'スキー場').click
+        click_button '検索'
+
+        expect(page).to have_content ski_area_a.name
+        expect(page).to have_content ski_area_b.name
+        expect(page).to have_content ski_area_c.name
+      end
+    end
+
+    context 'エリアとカテゴリー（スキー場）だけを指定した場合' do
+      it '指定したエリアに所属しているスキー場の一覧が表示される' do
+        find('#q_area_chosen').click
+        find('#q_area_chosen .active-result', text: 'さのさか').click
+        find('#q_category_chosen').click
+        find('#q_category_chosen .active-result', text: 'スキー場').click
+        click_button '検索'
+
+        expect(page).to have_content ski_area_a.name
+        expect(page).to have_content ski_area_b.name
+        expect(page).not_to have_content ski_area_c.name
+      end
+    end
+
+    context 'カテゴリーを指定しない場合' do
+      it '検索結果が表示されないこと' do
+        fill_in 'q_keyword', with: ski_area_a.name
+        find('#q_area_chosen').click
+        find('#q_area_chosen .active-result', text: 'さのさか').click
+        click_button '検索'
+
+        expect(page).to have_content 'カテゴリーを選択した上で検索してください'
+        expect(page).to have_current_path root_path
+      end
     end
   end
 end
