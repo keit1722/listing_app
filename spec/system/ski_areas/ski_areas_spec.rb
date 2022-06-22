@@ -72,7 +72,10 @@ RSpec.describe 'CRUD機能', type: :system do
         visit new_organization_ski_area_path(organization_a)
         fill_in 'スキー場の名前', with: 'サンプルスキー場の名前'
         find('#ski_area_create_form_district_id_chosen').click
-        find('.active-result').click
+        find(
+          '#ski_area_create_form_district_id_chosen .active-result',
+          text: '内山',
+        ).click
         fill_in '住所', with: 'サンプルスキー場住所'
         fill_in 'スラッグ', with: 'sample-ski-area'
         fill_in 'スキー場の紹介',
@@ -118,7 +121,10 @@ RSpec.describe 'CRUD機能', type: :system do
         visit edit_organization_ski_area_path(organization_a, ski_area_a)
         fill_in 'スキー場の名前', with: '更新サンプルスキー場の名前'
         find('#ski_area_update_form_district_id_chosen').click
-        page.all('.active-result')[1].click
+        find(
+          '#ski_area_update_form_district_id_chosen .active-result',
+          text: '佐野',
+        ).click
         fill_in '住所', with: '更新サンプルスキー場住所'
         fill_in 'スキー場の紹介',
                 with:
@@ -158,8 +164,8 @@ RSpec.describe 'CRUD機能', type: :system do
 
     it 'チェックしたエリアと一致する名前のものだけが表示されること' do
       click_on 'エリア'
-      find("label[for='check-area-6']").click
-      first('.panel-apply', visible: false).click
+      find('.panel-dropdown.active label', text: 'さのさか').click
+      find('.panel-dropdown.active .panel-apply', text: '決定').click
       click_button '検索'
 
       expect(page).to have_content ski_area_a.name

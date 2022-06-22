@@ -72,7 +72,10 @@ RSpec.describe 'CRUD機能', type: :system do
         visit new_organization_photo_spot_path(organization_a)
         fill_in 'フォトスポットの名前', with: 'サンプルフォトスポットの名前'
         find('#photo_spot_create_form_district_id_chosen').click
-        find('.active-result').click
+        find(
+          '#photo_spot_create_form_district_id_chosen .active-result',
+          text: '内山',
+        ).click
         fill_in '住所', with: 'サンプルフォトスポット住所'
         fill_in 'スラッグ', with: 'sample-photo-spot'
         fill_in 'フォトスポットの紹介',
@@ -118,7 +121,10 @@ RSpec.describe 'CRUD機能', type: :system do
         visit edit_organization_photo_spot_path(organization_a, photo_spot_a)
         fill_in 'フォトスポットの名前', with: '更新サンプルフォトスポットの名前'
         find('#photo_spot_update_form_district_id_chosen').click
-        page.all('.active-result')[1].click
+        find(
+          '#photo_spot_update_form_district_id_chosen .active-result',
+          text: '佐野',
+        ).click
         fill_in '住所', with: '更新サンプルフォトスポット住所'
         fill_in 'フォトスポットの紹介',
                 with:
@@ -157,8 +163,8 @@ RSpec.describe 'CRUD機能', type: :system do
 
     it 'チェックしたエリアと一致する名前のものだけが表示されること' do
       click_on 'エリア'
-      find("label[for='check-area-6']").click
-      first('.panel-apply', visible: false).click
+      find('.panel-dropdown.active label', text: 'さのさか').click
+      find('.panel-dropdown.active .panel-apply', text: '決定').click
       click_button '検索'
 
       expect(page).to have_content photo_spot_a.name

@@ -72,7 +72,10 @@ RSpec.describe 'CRUD機能', type: :system do
         visit new_organization_activity_path(organization_a)
         fill_in 'アクティビティの名前', with: 'サンプルアクティビティの名前'
         find('#activity_create_form_district_id_chosen').click
-        find('.active-result').click
+        find(
+          '#activity_create_form_district_id_chosen .active-result',
+          text: '内山',
+        ).click
         fill_in '住所', with: 'サンプルアクティビティ住所'
         fill_in 'スラッグ', with: 'sample-activity'
         fill_in 'アクティビティの紹介',
@@ -120,7 +123,10 @@ RSpec.describe 'CRUD機能', type: :system do
         visit edit_organization_activity_path(organization_a, activity_a)
         fill_in 'アクティビティの名前', with: '更新サンプルアクティビティの名前'
         find('#activity_update_form_district_id_chosen').click
-        page.all('.active-result')[1].click
+        find(
+          '#activity_update_form_district_id_chosen .active-result',
+          text: '佐野',
+        ).click
         fill_in '住所', with: '更新サンプルアクティビティ住所'
         fill_in 'アクティビティの紹介',
                 with:
@@ -162,8 +168,8 @@ RSpec.describe 'CRUD機能', type: :system do
 
     it 'チェックしたエリアと一致する名前のものだけが表示されること' do
       click_on 'エリア'
-      find("label[for='check-area-6']").click
-      first('.panel-apply', visible: false).click
+      find('.panel-dropdown.active label', text: 'さのさか').click
+      find('.panel-dropdown.active .panel-apply', text: '決定').click
       click_button '検索'
 
       expect(page).to have_content activity_a.name

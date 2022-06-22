@@ -84,7 +84,10 @@ RSpec.describe 'CRUD機能', type: :system do
         visit new_organization_restaurant_path(organization_a)
         fill_in '店名', with: 'サンプル飲食店店名'
         find('#restaurant_create_form_district_id_chosen').click
-        find('.active-result').click
+        find(
+          '#restaurant_create_form_district_id_chosen .active-result',
+          text: '内山',
+        ).click
         fill_in '住所', with: 'サンプル飲食店住所'
         fill_in 'スラッグ', with: 'sample-restaurant'
         fill_in '店の紹介',
@@ -95,7 +98,10 @@ RSpec.describe 'CRUD機能', type: :system do
                     Rails.root.join('spec/fixtures/fixture.png'),
                     make_visible: true
         find('#restaurant_create_form_restaurant_category_ids_chosen').click
-        find('.active-result').click
+        find(
+          '#restaurant_create_form_restaurant_category_ids_chosen .active-result',
+          text: '和食',
+        ).click
         fill_in 'restaurant_create_form_reservation_link_attributes_link',
                 with: 'https://google.com'
         click_button '登録する'
@@ -135,7 +141,10 @@ RSpec.describe 'CRUD機能', type: :system do
         visit edit_organization_restaurant_path(organization_a, restaurant_a)
         fill_in '店名', with: '更新サンプル飲食店店名'
         find('#restaurant_update_form_district_id_chosen').click
-        page.all('.active-result')[1].click
+        find(
+          '#restaurant_update_form_district_id_chosen .active-result',
+          text: '佐野',
+        ).click
         fill_in '住所', with: '更新サンプル飲食店住所'
         fill_in '店の紹介',
                 with:
@@ -145,7 +154,10 @@ RSpec.describe 'CRUD機能', type: :system do
                     Rails.root.join('spec/fixtures/fixture.png'),
                     make_visible: true
         find('#restaurant_update_form_restaurant_category_ids_chosen').click
-        find('.active-result').click
+        find(
+          '#restaurant_update_form_restaurant_category_ids_chosen .active-result',
+          text: '中華',
+        ).click
         fill_in 'restaurant_update_form_reservation_link_attributes_link',
                 with: 'https://yahoo.com'
         click_button '更新する'
@@ -185,8 +197,8 @@ RSpec.describe 'CRUD機能', type: :system do
 
     it 'チェックしたエリアと一致する名前のものだけが表示されること' do
       click_on 'エリア'
-      find("label[for='check-area-6']").click
-      first('.panel-apply', visible: false).click
+      find('.panel-dropdown.active label', text: 'さのさか').click
+      find('.panel-dropdown.active .panel-apply', text: '決定').click
       click_button '検索'
 
       expect(page).to have_content restaurant_a.name
@@ -196,8 +208,8 @@ RSpec.describe 'CRUD機能', type: :system do
 
     it 'チェックしたカテゴリと一致する名前のものだけが表示されること' do
       click_on 'カテゴリー'
-      find("label[for='check-category-2']").click
-      page.all('.panel-apply', visible: false)[1].click
+      find('.panel-dropdown.active label', text: '和食').click
+      find('.panel-dropdown.active .panel-apply', text: '決定').click
       click_button '検索'
 
       expect(page).to have_content restaurant_a.name
