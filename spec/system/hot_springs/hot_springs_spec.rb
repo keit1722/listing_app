@@ -12,14 +12,11 @@ RSpec.describe 'CRUD機能', type: :system do
   let!(:hot_spring_b) do
     create(:hot_spring, organization: organization_b, districts: [district])
   end
-
-  before do
-    driven_by(:rack_test)
-    login_as user_a
-  end
+  let(:district_c) { create(:district_meitetsu) }
 
   describe '温泉一覧表示' do
     it 'マイページに自分の温泉だけが表示されること' do
+      login_as user_a
       visit organization_hot_springs_path(organization_a)
       expect(page).to have_content hot_spring_a.name
       expect(page).not_to have_content hot_spring_b.name
@@ -33,7 +30,9 @@ RSpec.describe 'CRUD機能', type: :system do
   end
 
   describe '温泉詳細表示' do
-    it '自分の温泉は表示される' do
+    before { login_as user_a }
+
+    it 'マイページに自分の温泉は表示されること' do
       visit organization_hot_spring_path(organization_a, hot_spring_a)
       expect(page).to have_current_path organization_hot_spring_path(
         organization_a,
@@ -41,14 +40,16 @@ RSpec.describe 'CRUD機能', type: :system do
       )
     end
 
-    it '自分の温泉以外は表示されない' do
-      expect do
-        visit organization_hot_spring_path(organization_b, hot_spring_b)
-      end.to raise_error(ActiveRecord::RecordNotFound)
+    it 'マイページには自分の温泉以外は表示されないこと' do
+      Capybara.raise_server_errors = false
+      visit organization_hot_spring_path(organization_b, hot_spring_b)
+      assert_text 'ActiveRecord::RecordNotFound'
     end
   end
 
   describe '温泉新規登録' do
+    before { login_as user_a }
+
     context '自分の組織に関するものの場合' do
       it '登録フォームに進めること' do
         visit new_organization_hot_spring_path(organization_a)
@@ -60,34 +61,30 @@ RSpec.describe 'CRUD機能', type: :system do
 
     context '自分の組織に関するものではない場合' do
       it '登録フォームに進めずエラーになること' do
-        expect do
-          visit new_organization_hot_spring_path(organization_b)
-        end.to raise_error(NoMethodError)
+        Capybara.raise_server_errors = false
+        visit new_organization_hot_spring_path(organization_b)
+        assert_text 'NoMethodError'
       end
     end
 
     context '入力情報が正しい場合' do
       it '新規登録できること' do
         visit new_organization_hot_spring_path(organization_a)
-
         fill_in '温泉の名前', with: 'サンプル温泉の名前'
-        select '内山', from: '地区'
+        find('#hot_spring_create_form_district_id_chosen').click
+        find(
+          '#hot_spring_create_form_district_id_chosen .active-result',
+          text: '内山'
+        ).click
         fill_in '住所', with: 'サンプル温泉住所'
         fill_in 'スラッグ', with: 'sample-hot-spring'
         fill_in '温泉の紹介',
                 with:
                   'Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua.'
-
-        find(
-          '#hot_spring_create_form_hot_spring_attributes_lat',
-          visible: false
-        ).set '36.6959303'
-        find(
-          '#hot_spring_create_form_hot_spring_attributes_lng',
-          visible: false
-        ).set '137.8638005'
-        attach_file '画像', Rails.root.join('spec/fixtures/fixture.png')
-
+        find('#map-location-registration').click
+        attach_file '画像',
+                    Rails.root.join('spec/fixtures/fixture.png'),
+                    make_visible: true
         click_button '登録する'
 
         expect(page).to have_content '作成しました'
@@ -98,6 +95,8 @@ RSpec.describe 'CRUD機能', type: :system do
   end
 
   describe '温泉情報編集' do
+    before { login_as user_a }
+
     context '自分の組織に関するものの場合' do
       it '編集フォームに進めること' do
         visit edit_organization_hot_spring_path(organization_a, hot_spring_a)
@@ -110,9 +109,9 @@ RSpec.describe 'CRUD機能', type: :system do
 
     context '自分の組織に関するものではない場合' do
       it '編集フォームに進めずエラーになること' do
-        expect do
-          visit edit_organization_hot_spring_path(organization_b, hot_spring_b)
-        end.to raise_error(ActiveRecord::RecordNotFound)
+        Capybara.raise_server_errors = false
+        visit edit_organization_hot_spring_path(organization_b, hot_spring_b)
+        assert_text 'ActiveRecord::RecordNotFound'
       end
     end
 
@@ -120,24 +119,20 @@ RSpec.describe 'CRUD機能', type: :system do
       it '情報更新ができること' do
         create(:district_sano)
         visit edit_organization_hot_spring_path(organization_a, hot_spring_a)
-
         fill_in '温泉の名前', with: '更新サンプル温泉の名前'
-        select '佐野', from: '地区'
+        find('#hot_spring_update_form_district_id_chosen').click
+        find(
+          '#hot_spring_update_form_district_id_chosen .active-result',
+          text: '佐野'
+        ).click
         fill_in '住所', with: '更新サンプル温泉住所'
         fill_in '温泉の紹介',
                 with:
                   'Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-
-        find(
-          '#hot_spring_update_form_hot_spring_attributes_lat',
-          visible: false
-        ).set '36.6981800'
-        find(
-          '#hot_spring_update_form_hot_spring_attributes_lng',
-          visible: false
-        ).set '137.8618500'
-        attach_file '画像', Rails.root.join('spec/fixtures/fixture.png')
-
+        find('#map-location-registration').click
+        attach_file '画像',
+                    Rails.root.join('spec/fixtures/fixture.png'),
+                    make_visible: true
         click_button '更新する'
 
         expect(page).to have_content '情報を更新しました'
@@ -147,6 +142,94 @@ RSpec.describe 'CRUD機能', type: :system do
         expect(
           page
         ).to have_content 'Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+      end
+    end
+  end
+
+  describe '公開ページ温泉一覧での検索' do
+    let!(:hot_spring_c) do
+      create(:hot_spring, organization: organization_a, districts: [district_c])
+    end
+
+    before { visit hot_springs_path }
+
+    it '検索キーワードと一致する名前のものだけが表示されること' do
+      fill_in 'q_keyword', with: hot_spring_a.name
+      click_button '検索'
+      expect(page).to have_content hot_spring_a.name
+      expect(page).not_to have_content hot_spring_b.name
+      expect(page).not_to have_content hot_spring_c.name
+    end
+
+    it 'チェックしたエリアと一致する名前のものだけが表示されること' do
+      click_on 'エリア'
+      find('.panel-dropdown.active label', text: 'さのさか').click
+      find('.panel-dropdown.active .panel-apply', text: '決定').click
+      click_button '検索'
+
+      expect(page).to have_content hot_spring_a.name
+      expect(page).to have_content hot_spring_b.name
+      expect(page).not_to have_content hot_spring_c.name
+    end
+  end
+
+  describe 'トップページでの検索' do
+    let!(:hot_spring_c) do
+      create(:hot_spring, organization: organization_a, districts: [district_c])
+    end
+
+    before { visit root_path }
+
+    context '検索ワード・エリア・カテゴリー（温泉）を指定した場合' do
+      it '指定された検索ワード・エリア・カテゴリーの一覧が表示されること' do
+        fill_in 'q_keyword', with: hot_spring_a.name
+        find('#q_area_chosen').click
+        find('#q_area_chosen .active-result', text: 'さのさか').click
+        find('#q_category_chosen').click
+        find('#q_category_chosen .active-result', text: '温泉').click
+        click_button '検索'
+
+        expect(page).to have_content hot_spring_a.name
+        expect(page).not_to have_content hot_spring_b.name
+        expect(page).not_to have_content hot_spring_c.name
+      end
+    end
+
+    context 'カテゴリー（温泉）だけを指定した場合' do
+      it '全ての温泉の一覧が表示される' do
+        find('#q_category_chosen').click
+        find('#q_category_chosen .active-result', text: '温泉').click
+        click_button '検索'
+
+        expect(page).to have_content hot_spring_a.name
+        expect(page).to have_content hot_spring_b.name
+        expect(page).to have_content hot_spring_c.name
+      end
+    end
+
+    context 'エリアとカテゴリー（温泉）だけを指定した場合' do
+      it '指定したエリアに所属している温泉の一覧が表示される' do
+        find('#q_area_chosen').click
+        find('#q_area_chosen .active-result', text: 'さのさか').click
+        find('#q_category_chosen').click
+        find('#q_category_chosen .active-result', text: '温泉').click
+        click_button '検索'
+
+        expect(page).to have_content hot_spring_a.name
+        expect(page).to have_content hot_spring_b.name
+        expect(page).not_to have_content hot_spring_c.name
+      end
+    end
+
+    context 'カテゴリーを指定しない場合' do
+      it '検索結果が表示されないこと' do
+        fill_in 'q_keyword', with: hot_spring_a.name
+        find('#q_area_chosen').click
+        find('#q_area_chosen .active-result', text: 'さのさか').click
+        click_button '検索'
+
+        expect(page).to have_content 'カテゴリーを選択した上で検索してください'
+        expect(page).to have_current_path root_path
       end
     end
   end

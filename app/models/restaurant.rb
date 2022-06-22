@@ -57,6 +57,31 @@ class Restaurant < ApplicationRecord
             },
             content_type: [:png, :jpg, :jpeg]
 
+  scope :search_with_category,
+        lambda { |category_ids|
+          joins(:restaurant_categories).where(
+            restaurant_categories: {
+              id: category_ids
+            }
+          )
+        }
+
+  scope :search_with_district,
+        lambda { |district_ids|
+          joins(:districts).where(districts: { id: district_ids })
+        }
+
+  scope :keyword_contain,
+        lambda { |keyword|
+          where(
+            [
+              'description LIKE(?) OR Restaurants.name LIKE(?)',
+              "%#{keyword}%",
+              "%#{keyword}%"
+            ]
+          )
+        }
+
   def to_param
     slug
   end
