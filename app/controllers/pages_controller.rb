@@ -5,29 +5,23 @@ class PagesController < ApplicationController
 
   def search
     category = params[:q][:category]
+    listings = SearchHomeForm.new(search_params).search
 
-    if category.empty?
-      flash.now[:error] = 'カテゴリーを選択した上で検索してください'
-      render :home
-    else
-      listings = SearchHomeForm.new(search_params).search
+    instance_variable_set(
+      "@#{category}",
+      resolve_n1(category, listings)
+        .with_attached_images
+        .page(params[:page])
+        .per(20),
+    )
+    instance_variable_set("@#{category.singularize}_all", listings)
 
-      instance_variable_set(
-        "@#{category}",
-        resolve_n1(category, listings)
-          .with_attached_images
-          .page(params[:page])
-          .per(20),
-      )
-      instance_variable_set("@#{category.singularize}_all", listings)
+    @selected_categories = 'all'
+    @selected_area_groups =
+      params[:q][:area].present? ? params[:q][:area] : 'all'
+    @keyword = params[:q][:keyword]
 
-      @selected_categories = 'all'
-      @selected_area_groups =
-        params[:q][:area].present? ? params[:q][:area] : 'all'
-      @keyword = params[:q][:keyword]
-
-      render template: "#{category}/search", layout: 'listings_index'
-    end
+    render template: "#{category}/search", layout: 'listings_index'
   end
 
   private

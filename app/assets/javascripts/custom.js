@@ -1674,3 +1674,24 @@ function previewImage(obj) {
 		fileReader.readAsDataURL(obj.files[i]);
 	}
 }
+
+/*  Home search button
+/*--------------------------*/
+
+var homeSearchButton = document.getElementById('home-search-button');
+homeSearchButton.addEventListener('click', () => {
+
+  if (document.getElementById('q_category').value == "") {
+    var wrapper = document.getElementById('wrapper');
+
+    if (!document.getElementById('temporary-error')) {
+      wrapper.insertAdjacentHTML('afterbegin', '<div class="notification error margin-bottom-0" id="temporary-error"><p>カテゴリーを選択した上で検索してください</div>');
+    }
+
+    window.scroll({top: 0, behavior: 'smooth'});
+
+  } else {
+    homeSearchButton.removeAttribute("type");
+  }
+});
+
