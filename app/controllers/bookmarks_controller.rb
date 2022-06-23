@@ -1,11 +1,11 @@
 class BookmarksController < ApplicationController
   def create
     current_user.bookmark(@bookmarkable)
-    render 'listings/create.js.erb'
+    render 'listings/create'
   end
 
   def destroy
     current_user.unbookmark(@bookmarkable)
-    render 'listings/destroy.js.erb'
+    render 'listings/destroy'
   end
 end
