@@ -20,8 +20,12 @@
         </ul>
       </li>
       <li><a href="dashboard-reviews.html"><i class="sl sl-icon-star"></i> Reviews</a></li>
-      <li><a href="dashboard-bookmarks.html"><i class="sl sl-icon-heart"></i> Bookmarks</a></li>
       <li><a href="dashboard-add-listing.html"><i class="sl sl-icon-plus"></i> Add Listing</a></li>
+      <li>
+        <%= link_to mypage_bookmarks_path do %>
+          <i class="sl sl-icon-heart"></i> お気に入り
+        <% end %>
+      </li>
       <li>
         <%= link_to organizations_path do %>
           <i class="sl sl-icon-list"></i> 所属組織

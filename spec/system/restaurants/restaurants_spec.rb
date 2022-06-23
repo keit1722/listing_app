@@ -283,4 +283,43 @@ RSpec.describe 'CRUD機能', type: :system do
       end
     end
   end
+
+  describe 'お気に入り' do
+    before { login_as user_a }
+
+    it 'お気に入り登録ができること' do
+      visit restaurant_path(restaurant_a)
+      expect do
+        find('.like-button', text: 'お気に入りに登録').click
+        expect(page).to have_content 'お気に入りに登録済み'
+      end.to change(user_a.bookmarks, :count).by(1)
+    end
+
+    it 'お気に入り登録を取り消せること' do
+      user_a.bookmark(restaurant_a)
+      visit restaurant_path(restaurant_a)
+      expect do
+        find('.like-button', text: 'お気に入りに登録済み').click
+        expect(page).to have_content 'お気に入りに登録'
+      end.to change(user_a.bookmarks, :count).by(-1)
+    end
+
+    context 'お気に入り登録をした場合' do
+      it 'お気に入り登録した飲食店のみマイページに表示されること' do
+        user_a.bookmark(restaurant_a)
+        visit mypage_bookmarks_path
+        expect(page).to have_content restaurant_a.name
+        expect(page).not_to have_content restaurant_b.name
+      end
+    end
+
+    context 'ひとつもお気に入り登録をしていない場合' do
+      it 'マイページにはなにも表示されないこと' do
+        visit mypage_bookmarks_path
+        expect(page).to have_content 'お気に入り登録はありません'
+        expect(page).not_to have_content restaurant_a.name
+        expect(page).not_to have_content restaurant_b.name
+      end
+    end
+  end
 end

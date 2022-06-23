@@ -71,7 +71,7 @@
               <%= select(:q, :category, Constants::LISTINGS.collect { |listing| [ listing[:display], listing[:category] ] }, { include_blank: "カテゴリーを選択（必須）" }, { class: "chosen-select" }) %>
             </div>
 
-            <%= f.button '検索', {class: "button", id: "home-search-button", type: "button"} %>
+            <%= f.button '検索', class: "button", id: "home-search-button", type: "button", onclick: "homeSearch()" %>
           </div>
         <% end %>
       </div>
