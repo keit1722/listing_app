@@ -1,0 +1,20 @@
+<li>
+  <div class="list-box-listing">
+    <% if bookmark.bookmarkable.images.attached? %>
+      <div class="list-box-listing-img">
+        <%= link_to image_tag(bookmark.bookmarkable.images.first), bookmark.bookmarkable %>
+      </div>
+    <% end %>
+    <div class="list-box-listing-content">
+      <div class="inner">
+        <h3><%= link_to bookmark.bookmarkable.name, bookmark.bookmarkable %></h3>
+        <span><%= bookmark.bookmarkable.address %></span>
+        <div class="margin-top-5">
+          <%= link_to bookmark.bookmarkable, class: "button" do %>
+            <i class="sl sl-icon-arrow-right-circle"></i> ページへ移動
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</li>
