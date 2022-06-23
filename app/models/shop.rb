@@ -29,6 +29,7 @@ class Shop < ApplicationRecord
   belongs_to :organization
 
   include Districtable
+  include Bookmarkable
   has_many :shop_category_mappings, dependent: :destroy
   has_many :shop_categories, through: :shop_category_mappings
   has_many :opening_hours, as: :opening_hourable, dependent: :destroy

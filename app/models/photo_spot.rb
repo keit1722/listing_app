@@ -29,6 +29,7 @@ class PhotoSpot < ApplicationRecord
   belongs_to :organization
 
   include Districtable
+  include Bookmarkable
 
   has_many_attached :images
 

@@ -29,6 +29,7 @@ class Restaurant < ApplicationRecord
   belongs_to :organization
 
   include Districtable
+  include Bookmarkable
   has_many :restaurant_category_mappings, dependent: :destroy
   has_many :restaurant_categories, through: :restaurant_category_mappings
   has_one :reservation_link, as: :reservation_linkable, dependent: :destroy

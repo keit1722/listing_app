@@ -29,6 +29,7 @@ class HotSpring < ApplicationRecord
   belongs_to :organization
 
   include Districtable
+  include Bookmarkable
   has_many :opening_hours, as: :opening_hourable, dependent: :destroy
 
   has_many_attached :images

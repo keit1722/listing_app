@@ -30,10 +30,39 @@ class User < ApplicationRecord
 
   has_many :organization_users, dependent: :destroy
   has_many :organizations, through: :organization_users
+  has_many :bookmarks, dependent: :destroy
+  has_many :restaurant_bookmarks,
+           through: :bookmarks,
+           source: :bookmarkable,
+           source_type: 'Restaurant'
+  has_many :hotel_bookmarks,
+           through: :bookmarks,
+           source: :bookmarkable,
+           source_type: 'Hotel'
+  has_many :activity_bookmarks,
+           through: :bookmarks,
+           source: :bookmarkable,
+           source_type: 'Activity'
+  has_many :hot_spring_bookmarks,
+           through: :bookmarks,
+           source: :bookmarkable,
+           source_type: 'HotSpring'
+  has_many :ski_area_bookmarks,
+           through: :bookmarks,
+           source: :bookmarkable,
+           source_type: 'SkiArea'
+  has_many :photo_spot_bookmarks,
+           through: :bookmarks,
+           source: :bookmarkable,
+           source_type: 'PhotoSpot'
+  has_many :shop_bookmarks,
+           through: :bookmarks,
+           source: :bookmarkable,
+           source_type: 'Shop'
 
   validates :password,
             length: {
-              minimum: 3
+              minimum: 3,
             },
             if: -> { new_record? || changes[:crypted_password] }
   validates :password,
@@ -47,17 +76,17 @@ class User < ApplicationRecord
             uniqueness: true,
             presence: true,
             length: {
-              maximum: 100
+              maximum: 100,
             },
             format: {
-              with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+              with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i,
             }
   validates :first_name, presence: true, length: { maximum: 50 }
   validates :last_name, presence: true, length: { maximum: 50 }
   validates :username,
             presence: true,
             length: {
-              maximum: 100
+              maximum: 100,
             },
             uniqueness: true
 

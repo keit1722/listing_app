@@ -20,6 +20,9 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Bookmark < ApplicationRecord
+  belongs_to :user
+  belongs_to :bookmarkable, polymorphic: true
+
   validates :bookmarkable_id,
             uniqueness: {
               scope: %i[bookmarkable_type user_id],
