@@ -66,11 +66,16 @@
         <% end %>
         <!-- Book Now / End -->
 
-        <!-- Share / Like -->
-        <div class="listing-share margin-top-40 margin-bottom-40 no-border">
-          <button class="like-button"><span class="like-icon"></span> Bookmark this listing</button>
-          <div class="clearfix"></div>
-        </div>
+        <!-- Bookmark -->
+        <% if current_user %>
+          <div class="listing-share margin-top-40 margin-bottom-40 no-border" id="bookmark-area">
+            <% if current_user.bookmark?(@hotel) %>
+              <%= render 'listings/unbookmark', listing: @hotel %>
+            <% else %>
+              <%= render 'listings/bookmark', listing: @hotel %>
+            <% end %>
+          </div>
+        <% end %>
 
       </div>
       <!-- Sidebar / End -->

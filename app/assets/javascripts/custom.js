@@ -871,15 +871,6 @@ $(document).ready(function(){
 
 
     /*----------------------------------------------------*/
-    /*  Like Icon Trigger
-    /*----------------------------------------------------*/
-    $('.like-icon, .widget-button, .like-button').on('click', function(e){
-    	e.preventDefault();
-		$(this).toggleClass('liked');
-		$(this).children('.like-icon').toggleClass('liked');
-	});
-
-    /*----------------------------------------------------*/
     /*  Searh Form More Options
     /*----------------------------------------------------*/
     $('.more-search-options-trigger').on('click', function(e){
@@ -1678,8 +1669,7 @@ function previewImage(obj) {
 /*  Home search button
 /*--------------------------*/
 
-var homeSearchButton = document.getElementById('home-search-button');
-homeSearchButton.addEventListener('click', () => {
+  function homeSearch() {
 
   if (document.getElementById('q_category').value == "") {
     var wrapper = document.getElementById('wrapper');
@@ -1691,7 +1681,7 @@ homeSearchButton.addEventListener('click', () => {
     window.scroll({top: 0, behavior: 'smooth'});
 
   } else {
-    homeSearchButton.removeAttribute("type");
+    document.getElementById('home-search-button').removeAttribute("type");
   }
-});
+}
 

@@ -30,6 +30,35 @@ class User < ApplicationRecord
 
   has_many :organization_users, dependent: :destroy
   has_many :organizations, through: :organization_users
+  has_many :bookmarks, dependent: :destroy
+  has_many :restaurant_bookmarks,
+           through: :bookmarks,
+           source: :bookmarkable,
+           source_type: 'Restaurant'
+  has_many :hotel_bookmarks,
+           through: :bookmarks,
+           source: :bookmarkable,
+           source_type: 'Hotel'
+  has_many :activity_bookmarks,
+           through: :bookmarks,
+           source: :bookmarkable,
+           source_type: 'Activity'
+  has_many :hot_spring_bookmarks,
+           through: :bookmarks,
+           source: :bookmarkable,
+           source_type: 'HotSpring'
+  has_many :ski_area_bookmarks,
+           through: :bookmarks,
+           source: :bookmarkable,
+           source_type: 'SkiArea'
+  has_many :photo_spot_bookmarks,
+           through: :bookmarks,
+           source: :bookmarkable,
+           source_type: 'PhotoSpot'
+  has_many :shop_bookmarks,
+           through: :bookmarks,
+           source: :bookmarkable,
+           source_type: 'Shop'
 
   validates :password,
             length: {
@@ -65,5 +94,23 @@ class User < ApplicationRecord
 
   def to_param
     public_uid
+  end
+
+  def bookmark(bookmarkable)
+    send(bookmark_object(bookmarkable)) << bookmarkable
+  end
+
+  def unbookmark(bookmarkable)
+    send(bookmark_object(bookmarkable)).destroy(bookmarkable)
+  end
+
+  def bookmark?(bookmarkable)
+    send(bookmark_object(bookmarkable)).include?(bookmarkable)
+  end
+
+  private
+
+  def bookmark_object(bookmarkable)
+    "#{bookmarkable.class.to_s.underscore}_bookmarks"
   end
 end

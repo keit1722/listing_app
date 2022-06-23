@@ -52,3 +52,6 @@ RSpec/ExampleLength:
   Enabled: false
 RSpec/MultipleMemoizedHelpers:
   Enabled: false
+Rails/LexicallyScopedActionFilter:
+  Enabled: false
+  
