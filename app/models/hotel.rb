@@ -28,8 +28,7 @@ class Hotel < ApplicationRecord
 
   belongs_to :organization
 
-  has_many :district_mappings, as: :districtable, dependent: :destroy
-  has_many :districts, through: :district_mappings
+  include Districtable
   has_one :reservation_link, as: :reservation_linkable, dependent: :destroy
 
   has_many_attached :images
@@ -39,20 +38,20 @@ class Hotel < ApplicationRecord
   validates_with CoordinateValidator
   validates :slug,
             length: {
-              maximum: 100
+              maximum: 100,
             },
             uniqueness: true,
             presence: true,
             format: {
-              with: /\A[a-z0-9\-]+\z/
+              with: /\A[a-z0-9\-]+\z/,
             }
   validates :description, length: { maximum: 10_000 }, presence: true
   validates :images,
             attached: true,
             limit: {
-              max: 5
+              max: 5,
             },
-            content_type: [:png, :jpg, :jpeg]
+            content_type: %i[png jpg jpeg]
 
   scope :search_with_district,
         lambda { |district_ids|
@@ -65,8 +64,8 @@ class Hotel < ApplicationRecord
             [
               'description LIKE(?) OR Hotels.name LIKE(?)',
               "%#{keyword}%",
-              "%#{keyword}%"
-            ]
+              "%#{keyword}%",
+            ],
           )
         }
 

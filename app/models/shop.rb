@@ -28,10 +28,9 @@ class Shop < ApplicationRecord
 
   belongs_to :organization
 
+  include Districtable
   has_many :shop_category_mappings, dependent: :destroy
   has_many :shop_categories, through: :shop_category_mappings
-  has_many :district_mappings, as: :districtable, dependent: :destroy
-  has_many :districts, through: :district_mappings
   has_many :opening_hours, as: :opening_hourable, dependent: :destroy
 
   has_many_attached :images
@@ -41,20 +40,20 @@ class Shop < ApplicationRecord
   validates_with CoordinateValidator
   validates :slug,
             length: {
-              maximum: 100
+              maximum: 100,
             },
             uniqueness: true,
             presence: true,
             format: {
-              with: /\A[a-z0-9\-]+\z/
+              with: /\A[a-z0-9\-]+\z/,
             }
   validates :description, length: { maximum: 10_000 }, presence: true
   validates :images,
             attached: true,
             limit: {
-              max: 5
+              max: 5,
             },
-            content_type: [:png, :jpg, :jpeg]
+            content_type: %i[png jpg jpeg]
 
   scope :search_with_category,
         lambda { |category_ids|
@@ -72,8 +71,8 @@ class Shop < ApplicationRecord
             [
               'description LIKE(?) OR Shops.name LIKE(?)',
               "%#{keyword}%",
-              "%#{keyword}%"
-            ]
+              "%#{keyword}%",
+            ],
           )
         }
 
