@@ -30,6 +30,7 @@ class HotSpring < ApplicationRecord
 
   include Districtable
   include Bookmarkable
+  include Postable
   has_many :opening_hours, as: :opening_hourable, dependent: :destroy
 
   has_many_attached :images
@@ -39,20 +40,20 @@ class HotSpring < ApplicationRecord
   validates_with CoordinateValidator
   validates :slug,
             length: {
-              maximum: 100
+              maximum: 100,
             },
             uniqueness: true,
             presence: true,
             format: {
-              with: /\A[a-z0-9\-]+\z/
+              with: /\A[a-z0-9\-]+\z/,
             }
   validates :description, length: { maximum: 10_000 }, presence: true
   validates :images,
             attached: true,
             limit: {
-              max: 5
+              max: 5,
             },
-            content_type: [:png, :jpg, :jpeg]
+            content_type: %i[png jpg jpeg]
 
   scope :search_with_district,
         lambda { |district_ids|
@@ -65,8 +66,8 @@ class HotSpring < ApplicationRecord
             [
               'description LIKE(?) OR Hot_springs.name LIKE(?)',
               "%#{keyword}%",
-              "%#{keyword}%"
-            ]
+              "%#{keyword}%",
+            ],
           )
         }
 

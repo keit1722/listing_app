@@ -30,6 +30,7 @@ class Restaurant < ApplicationRecord
 
   include Districtable
   include Bookmarkable
+  include Postable
   has_many :restaurant_category_mappings, dependent: :destroy
   has_many :restaurant_categories, through: :restaurant_category_mappings
   has_one :reservation_link, as: :reservation_linkable, dependent: :destroy
@@ -42,27 +43,27 @@ class Restaurant < ApplicationRecord
   validates_with CoordinateValidator
   validates :slug,
             length: {
-              maximum: 100
+              maximum: 100,
             },
             uniqueness: true,
             presence: true,
             format: {
-              with: /\A[a-z0-9\-]+\z/
+              with: /\A[a-z0-9\-]+\z/,
             }
   validates :description, length: { maximum: 10_000 }, presence: true
   validates :images,
             attached: true,
             limit: {
-              max: 5
+              max: 5,
             },
-            content_type: [:png, :jpg, :jpeg]
+            content_type: %i[png jpg jpeg]
 
   scope :search_with_category,
         lambda { |category_ids|
           joins(:restaurant_categories).where(
             restaurant_categories: {
-              id: category_ids
-            }
+              id: category_ids,
+            },
           )
         }
 
@@ -77,8 +78,8 @@ class Restaurant < ApplicationRecord
             [
               'description LIKE(?) OR Restaurants.name LIKE(?)',
               "%#{keyword}%",
-              "%#{keyword}%"
-            ]
+              "%#{keyword}%",
+            ],
           )
         }
 

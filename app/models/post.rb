@@ -16,6 +16,8 @@
 #  index_posts_on_postable_type_and_postable_id  (postable_type,postable_id)
 #
 class Post < ApplicationRecord
+  belongs_to :postable, polymorphic: true
+
   validates :title, length: { maximum: 100 }, presence: true
   validates :body, length: { maximum: 10_000 }, presence: true
   validates :status, presence: true
