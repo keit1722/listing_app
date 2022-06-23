@@ -18,6 +18,8 @@
 class Post < ApplicationRecord
   belongs_to :postable, polymorphic: true
 
+  has_one_attached :image
+
   validates :title, length: { maximum: 100 }, presence: true
   validates :body, length: { maximum: 10_000 }, presence: true
   validates :status, presence: true
