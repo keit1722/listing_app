@@ -25,4 +25,6 @@ class Post < ApplicationRecord
   validates :status, presence: true
 
   enum status: { published: 1, draft: 2 }
+
+  scope :recent, -> { order(id: DESC) }
 end
