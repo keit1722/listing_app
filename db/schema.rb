@@ -58,6 +58,17 @@ ActiveRecord::Schema.define(version: 2022_05_30_045102) do
     t.index ["slug"], name: "index_activities_on_slug", unique: true
   end
 
+  create_table "bookmarks", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "bookmarkable_id"
+    t.string "bookmarkable_type"
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.index ["bookmarkable_type", "bookmarkable_id"], name: "index_bookmarks_on_bookmarkable_type_and_bookmarkable_id"
+    t.index ["user_id", "bookmarkable_id", "bookmarkable_type"], name: "index_bookmarks_on_user_id_and_bookmarkable_id_and_type", unique: true
+    t.index ["user_id"], name: "index_bookmarks_on_user_id"
+  end
+
   create_table "district_mappings", force: :cascade do |t|
     t.bigint "district_id"
     t.bigint "districtable_id"
@@ -264,6 +275,7 @@ ActiveRecord::Schema.define(version: 2022_05_30_045102) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "activities", "organizations"
+  add_foreign_key "bookmarks", "users"
   add_foreign_key "district_mappings", "districts"
   add_foreign_key "hot_springs", "organizations"
   add_foreign_key "hotels", "organizations"

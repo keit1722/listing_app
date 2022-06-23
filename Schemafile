@@ -182,3 +182,13 @@ create_table 'opening_hours', force: :cascade do |t|
   t.datetime 'updated_at', precision: 6, null: false
   t.datetime 'created_at', precision: 6, null: false
 end
+
+create_table 'bookmarks', force: :cascade do |t|
+  t.references 'user', foreign_key: true
+  t.references 'bookmarkable', polymorphic: true
+  t.datetime 'updated_at', precision: 6, null: false
+  t.datetime 'created_at', precision: 6, null: false
+  t.index %i[user_id bookmarkable_id bookmarkable_type],
+          unique: true,
+          name: 'index_bookmarks_on_user_id_and_bookmarkable_id_and_type'
+end
