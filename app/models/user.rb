@@ -95,4 +95,22 @@ class User < ApplicationRecord
   def to_param
     public_uid
   end
+
+  def bookmark(bookmarkable)
+    send(bookmark_object(bookmarkable)) << bookmarkable
+  end
+
+  def unbookmark(bookmarkable)
+    send(bookmark_object(bookmarkable)).destroy(bookmarkable)
+  end
+
+  def bookmark?(bookmarkable)
+    send(bookmark_object(bookmarkable)).include?(bookmarkable)
+  end
+
+  private
+
+  def bookmark_object(bookmarkable)
+    bookmarkable.class.to_s.underscore + '_bookmarks'
+  end
 end
