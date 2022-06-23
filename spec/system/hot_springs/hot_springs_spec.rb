@@ -35,9 +35,9 @@ RSpec.describe 'CRUD機能', type: :system do
     it 'マイページに自分の温泉は表示されること' do
       visit organization_hot_spring_path(organization_a, hot_spring_a)
       expect(page).to have_current_path organization_hot_spring_path(
-        organization_a,
-        hot_spring_a
-      )
+                          organization_a,
+                          hot_spring_a,
+                        )
     end
 
     it 'マイページには自分の温泉以外は表示されないこと' do
@@ -54,8 +54,8 @@ RSpec.describe 'CRUD機能', type: :system do
       it '登録フォームに進めること' do
         visit new_organization_hot_spring_path(organization_a)
         expect(page).to have_current_path new_organization_hot_spring_path(
-          organization_a
-        )
+                            organization_a,
+                          )
       end
     end
 
@@ -74,7 +74,7 @@ RSpec.describe 'CRUD機能', type: :system do
         find('#hot_spring_create_form_district_id_chosen').click
         find(
           '#hot_spring_create_form_district_id_chosen .active-result',
-          text: '内山'
+          text: '内山',
         ).click
         fill_in '住所', with: 'サンプル温泉住所'
         fill_in 'スラッグ', with: 'sample-hot-spring'
@@ -101,9 +101,9 @@ RSpec.describe 'CRUD機能', type: :system do
       it '編集フォームに進めること' do
         visit edit_organization_hot_spring_path(organization_a, hot_spring_a)
         expect(page).to have_current_path edit_organization_hot_spring_path(
-          organization_a,
-          hot_spring_a
-        )
+                            organization_a,
+                            hot_spring_a,
+                          )
       end
     end
 
@@ -123,7 +123,7 @@ RSpec.describe 'CRUD機能', type: :system do
         find('#hot_spring_update_form_district_id_chosen').click
         find(
           '#hot_spring_update_form_district_id_chosen .active-result',
-          text: '佐野'
+          text: '佐野',
         ).click
         fill_in '住所', with: '更新サンプル温泉住所'
         fill_in '温泉の紹介',
@@ -140,7 +140,7 @@ RSpec.describe 'CRUD機能', type: :system do
         expect(page).to have_content '佐野'
         expect(page).to have_content '更新サンプル温泉住所'
         expect(
-          page
+          page,
         ).to have_content 'Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
       end
     end
@@ -230,6 +230,45 @@ RSpec.describe 'CRUD機能', type: :system do
 
         expect(page).to have_content 'カテゴリーを選択した上で検索してください'
         expect(page).to have_current_path root_path
+      end
+    end
+  end
+
+  describe 'お気に入り' do
+    before { login_as user_a }
+
+    it 'お気に入り登録ができること' do
+      visit hot_spring_path(hot_spring_a)
+      expect {
+        find('.like-button', text: 'お気に入りに登録').click
+        expect(page).to have_content 'お気に入りに登録済み'
+      }.to change(user_a.bookmarks, :count).by(1)
+    end
+
+    it 'お気に入り登録を取り消せること' do
+      user_a.bookmark(hot_spring_a)
+      visit hot_spring_path(hot_spring_a)
+      expect {
+        find('.like-button', text: 'お気に入りに登録済み').click
+        expect(page).to have_content 'お気に入りに登録'
+      }.to change(user_a.bookmarks, :count).by(-1)
+    end
+
+    context 'お気に入り登録をした場合' do
+      it 'お気に入り登録した温泉のみマイページに表示されること' do
+        user_a.bookmark(hot_spring_a)
+        visit mypage_bookmarks_path
+        expect(page).to have_content hot_spring_a.name
+        expect(page).not_to have_content hot_spring_b.name
+      end
+    end
+
+    context 'ひとつもお気に入り登録をしていない場合' do
+      it 'マイページにはなにも表示されないこと' do
+        visit mypage_bookmarks_path
+        expect(page).to have_content 'お気に入り登録はありません'
+        expect(page).not_to have_content hot_spring_a.name
+        expect(page).not_to have_content hot_spring_b.name
       end
     end
   end
