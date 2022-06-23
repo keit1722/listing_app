@@ -1669,8 +1669,7 @@ function previewImage(obj) {
 /*  Home search button
 /*--------------------------*/
 
-var homeSearchButton = document.getElementById('home-search-button');
-homeSearchButton.addEventListener('click', () => {
+  function homeSearch() {
 
   if (document.getElementById('q_category').value == "") {
     var wrapper = document.getElementById('wrapper');
@@ -1682,7 +1681,7 @@ homeSearchButton.addEventListener('click', () => {
     window.scroll({top: 0, behavior: 'smooth'});
 
   } else {
-    homeSearchButton.removeAttribute("type");
+    document.getElementById('home-search-button').removeAttribute("type");
   }
-});
+}
 
