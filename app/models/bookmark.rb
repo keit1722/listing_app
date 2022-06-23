@@ -25,6 +25,6 @@ class Bookmark < ApplicationRecord
 
   validates :bookmarkable_id,
             uniqueness: {
-              scope: %i[bookmarkable_type user_id],
+              scope: [:bookmarkable_type, :user_id]
             }
 end

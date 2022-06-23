@@ -35,9 +35,9 @@ RSpec.describe 'CRUD機能', type: :system do
     it 'マイページに自分のスキー場は表示される' do
       visit organization_ski_area_path(organization_a, ski_area_a)
       expect(page).to have_current_path organization_ski_area_path(
-                          organization_a,
-                          ski_area_a,
-                        )
+        organization_a,
+        ski_area_a
+      )
     end
 
     it 'マイページには自分のスキー場以外は表示されない' do
@@ -54,8 +54,8 @@ RSpec.describe 'CRUD機能', type: :system do
       it '登録フォームに進めること' do
         visit new_organization_ski_area_path(organization_a)
         expect(page).to have_current_path new_organization_ski_area_path(
-                            organization_a,
-                          )
+          organization_a
+        )
       end
     end
 
@@ -74,7 +74,7 @@ RSpec.describe 'CRUD機能', type: :system do
         find('#ski_area_create_form_district_id_chosen').click
         find(
           '#ski_area_create_form_district_id_chosen .active-result',
-          text: '内山',
+          text: '内山'
         ).click
         fill_in '住所', with: 'サンプルスキー場住所'
         fill_in 'スラッグ', with: 'sample-ski-area'
@@ -101,9 +101,9 @@ RSpec.describe 'CRUD機能', type: :system do
       it '編集フォームに進めること' do
         visit edit_organization_ski_area_path(organization_a, ski_area_a)
         expect(page).to have_current_path edit_organization_ski_area_path(
-                            organization_a,
-                            ski_area_a,
-                          )
+          organization_a,
+          ski_area_a
+        )
       end
     end
 
@@ -123,7 +123,7 @@ RSpec.describe 'CRUD機能', type: :system do
         find('#ski_area_update_form_district_id_chosen').click
         find(
           '#ski_area_update_form_district_id_chosen .active-result',
-          text: '佐野',
+          text: '佐野'
         ).click
         fill_in '住所', with: '更新サンプルスキー場住所'
         fill_in 'スキー場の紹介',
@@ -141,7 +141,7 @@ RSpec.describe 'CRUD機能', type: :system do
         expect(page).to have_content '佐野'
         expect(page).to have_content '更新サンプルスキー場住所'
         expect(
-          page,
+          page
         ).to have_content 'Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
       end
     end
@@ -240,19 +240,19 @@ RSpec.describe 'CRUD機能', type: :system do
 
     it 'お気に入り登録ができること' do
       visit ski_area_path(ski_area_a)
-      expect {
+      expect do
         find('.like-button', text: 'お気に入りに登録').click
         expect(page).to have_content 'お気に入りに登録済み'
-      }.to change(user_a.bookmarks, :count).by(1)
+      end.to change(user_a.bookmarks, :count).by(1)
     end
 
     it 'お気に入り登録を取り消せること' do
       user_a.bookmark(ski_area_a)
       visit ski_area_path(ski_area_a)
-      expect {
+      expect do
         find('.like-button', text: 'お気に入りに登録済み').click
         expect(page).to have_content 'お気に入りに登録'
-      }.to change(user_a.bookmarks, :count).by(-1)
+      end.to change(user_a.bookmarks, :count).by(-1)
     end
 
     context 'お気に入り登録をした場合' do

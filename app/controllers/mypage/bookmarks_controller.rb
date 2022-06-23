@@ -4,9 +4,9 @@ class Mypage::BookmarksController < ApplicationController
   def index
     @bookmarks =
       current_user
-        .bookmarks
-        .includes([:bookmarkable])
-        .page(params[:page])
-        .per(20)
+      .bookmarks
+      .includes([:bookmarkable])
+      .page(params[:page])
+      .per(20)
   end
 end
