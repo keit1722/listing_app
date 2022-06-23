@@ -10,24 +10,31 @@ Rails.application.routes.draw do
 
   resources :restaurants, param: :slug, only: %i[index show] do
     collection { get 'search' }
+    resource :bookmarks, only: %i[create destroy], module: :restaurants
   end
   resources :shops, param: :slug, only: %i[index show] do
     collection { get 'search' }
+    resource :bookmarks, only: %i[create destroy], module: :shops
   end
   resources :hotels, param: :slug, only: %i[index show] do
     collection { get 'search' }
+    resource :bookmarks, only: %i[create destroy], module: :hotels
   end
   resources :activities, param: :slug, only: %i[index show] do
     collection { get 'search' }
+    resource :bookmarks, only: %i[create destroy], module: :activities
   end
   resources :hot_springs, param: :slug, only: %i[index show] do
     collection { get 'search' }
+    resource :bookmarks, only: %i[create destroy], module: :hot_springs
   end
   resources :ski_areas, param: :slug, only: %i[index show] do
     collection { get 'search' }
+    resource :bookmarks, only: %i[create destroy], module: :ski_areas
   end
   resources :photo_spots, param: :slug, only: %i[index show] do
     collection { get 'search' }
+    resource :bookmarks, only: %i[create destroy], module: :photo_spots
   end
 
   namespace :mypage do
