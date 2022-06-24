@@ -1,0 +1,85 @@
+<div id="titlebar">
+  <div class="row">
+    <div class="col-md-12">
+      <%= render 'shared/breadcrumbs_mypage', { icon_name: "doc", page_name: "投稿内容編集" } %>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <%= form_with model: [post.postable.organization, post.postable, post], url: [post.postable.organization, post.postable, post] do |f| %>
+        <div id="add-listing">
+          <%= render 'shared/error_messages', model: f.object %>
+          <!-- Section -->
+          <div class="add-listing-section padding-top-25">
+
+            <!-- Row -->
+            <div class="row with-forms">
+              <!-- Title -->
+              <div class="col-md-12">
+                <h5><%= f.label :title %></h5>
+                <%= f.text_field :title %>
+              </div>
+            </div>
+            <!-- Row / End -->
+
+            <!-- Row -->
+            <div class="row with-forms">
+              <!-- Body -->
+              <div class="col-md-12">
+                <h5><%= f.label :body %></h5>
+                <%= f.text_area :body, class: "WYSIWYG", cols: 40, rows: 3, id: "summary" %>
+              </div>
+            </div>
+            <!-- Row / End -->
+
+            <!-- Row -->
+            <div class="row with-forms margin-bottom-20">
+              <!-- Images -->
+              <div class="col-md-12">
+                <h5><%= f.label :image %></h5>
+                <%= f.label :image, class: "uploader-conteiner" do %>
+                  <div class="uploader-inner">
+                    <i class="sl sl-icon-plus"></i>ここをクリックして画像をアッsプロードしてください
+                  </div>
+                  <%= f.file_field :image, class: "dropzone dz-clickable", onchange: "previewImage(this)" %>
+                <% end %>
+              </div>
+            </div>
+            <!-- Row / End -->
+
+            <!-- Row -->
+              <div class="row with-forms margin-bottom-20">
+                <!-- Images preview -->
+                <div class="col-md-12">
+                  <div id="preview">
+                    <% if post.image.attached? %>
+                      <%= image_tag post.image.variant(resize: '300x200').processed %>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            <!-- Row / End -->
+
+
+            <!-- Row -->
+            <div class="row with-forms margin-bottom-20">
+              <!-- Status -->
+              <div class="col-md-12">
+                <h5><%= f.label :status %></h5>
+                <p>この投稿を「公開」にするか、一旦「下書き」として保存するかを選択できます。<br>
+                「下書き」にすると同じ組織のユーザー以外には投稿が表示されません。</p>
+                <%= f.select :status, Post.statuses_i18n.invert, {}, { class: "chosen-select" } %>
+              </div>
+            </div>
+            <!-- Row / End -->
+
+          </div>
+          <!-- Section / End -->
+
+          <%= f.submit nil, class: "button margin-top-40" %>
+
+        </div>
+    <% end %>
+  </div>
