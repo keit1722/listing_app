@@ -26,5 +26,5 @@ class Post < ApplicationRecord
 
   enum status: { published: 1, draft: 2 }
 
-  scope :recent, -> { order(id: DESC) }
+  scope :recent, -> { order(created_at: :desc) }
 end
