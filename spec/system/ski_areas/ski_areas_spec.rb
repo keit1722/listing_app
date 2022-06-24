@@ -35,9 +35,9 @@ RSpec.describe 'CRUD機能', type: :system do
     it 'マイページに自分のスキー場は表示される' do
       visit organization_ski_area_path(organization_a, ski_area_a)
       expect(page).to have_current_path organization_ski_area_path(
-        organization_a,
-        ski_area_a
-      )
+                          organization_a,
+                          ski_area_a,
+                        )
     end
 
     it 'マイページには自分のスキー場以外は表示されない' do
@@ -54,8 +54,8 @@ RSpec.describe 'CRUD機能', type: :system do
       it '登録フォームに進めること' do
         visit new_organization_ski_area_path(organization_a)
         expect(page).to have_current_path new_organization_ski_area_path(
-          organization_a
-        )
+                            organization_a,
+                          )
       end
     end
 
@@ -74,7 +74,7 @@ RSpec.describe 'CRUD機能', type: :system do
         find('#ski_area_create_form_district_id_chosen').click
         find(
           '#ski_area_create_form_district_id_chosen .active-result',
-          text: '内山'
+          text: '内山',
         ).click
         fill_in '住所', with: 'サンプルスキー場住所'
         fill_in 'スラッグ', with: 'sample-ski-area'
@@ -101,9 +101,9 @@ RSpec.describe 'CRUD機能', type: :system do
       it '編集フォームに進めること' do
         visit edit_organization_ski_area_path(organization_a, ski_area_a)
         expect(page).to have_current_path edit_organization_ski_area_path(
-          organization_a,
-          ski_area_a
-        )
+                            organization_a,
+                            ski_area_a,
+                          )
       end
     end
 
@@ -123,7 +123,7 @@ RSpec.describe 'CRUD機能', type: :system do
         find('#ski_area_update_form_district_id_chosen').click
         find(
           '#ski_area_update_form_district_id_chosen .active-result',
-          text: '佐野'
+          text: '佐野',
         ).click
         fill_in '住所', with: '更新サンプルスキー場住所'
         fill_in 'スキー場の紹介',
@@ -141,7 +141,7 @@ RSpec.describe 'CRUD機能', type: :system do
         expect(page).to have_content '佐野'
         expect(page).to have_content '更新サンプルスキー場住所'
         expect(
-          page
+          page,
         ).to have_content 'Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
       end
     end
@@ -271,6 +271,127 @@ RSpec.describe 'CRUD機能', type: :system do
         expect(page).not_to have_content ski_area_a.name
         expect(page).not_to have_content ski_area_b.name
       end
+    end
+  end
+
+  describe '投稿の新規作成' do
+    before { login_as user_a }
+
+    context '自分の所属組織のものであれば' do
+      it '投稿の新規作成ページが表示されること' do
+        visit new_organization_ski_area_post_path(organization_a, ski_area_a)
+        expect(page).to have_content '新規投稿作成'
+      end
+    end
+
+    context '自分の所属組織のものでなければ' do
+      it '投稿の新規作成ページが表示されなずにエラーになる' do
+        Capybara.raise_server_errors = false
+        visit new_organization_ski_area_post_path(organization_b, ski_area_b)
+        assert_text 'ActiveRecord::RecordNotFound'
+      end
+    end
+
+    context '入力情報が正しい場合' do
+      it '新規登録できること' do
+        visit new_organization_ski_area_post_path(organization_a, ski_area_a)
+        fill_in 'タイトル', with: 'サンプル投稿名'
+        fill_in '内容', with: 'サンプル投稿内容'
+        attach_file '画像',
+                    Rails.root.join('spec/fixtures/fixture.png'),
+                    make_visible: true
+        find('#post_status_chosen').click
+        find('#post_status_chosen .active-result', text: '公開').click
+        click_button '登録する'
+
+        expect(page).to have_content '作成しました'
+        expect(page).to have_content 'サンプル投稿名'
+      end
+    end
+  end
+
+  describe '投稿の詳細表示' do
+    let(:post_a) { create(:post_published, postable: ski_area_a) }
+    let(:post_b) { create(:post_published, postable: ski_area_b) }
+    before { login_as user_a }
+
+    context '自分の所属組織のものであれば' do
+      it '投稿詳細ページが表示される' do
+        visit organization_ski_area_post_path(
+                organization_a,
+                ski_area_a,
+                post_a,
+              )
+        expect(page).to have_content post_a.title
+        expect(page).to have_content post_a.body
+      end
+    end
+
+    context '自分の所属組織のものであれば' do
+      it '投稿詳細ページが表示される' do
+        Capybara.raise_server_errors = false
+        visit organization_ski_area_post_path(
+                organization_b,
+                ski_area_b,
+                post_b,
+              )
+        assert_text 'ActiveRecord::RecordNotFound'
+      end
+    end
+  end
+
+  describe '投稿情報編集' do
+    let(:post_a) { create(:post_published, postable: ski_area_a) }
+
+    context '入力情報が正しい場合' do
+      it '情報更新できること' do
+        login_as user_a
+        visit edit_organization_ski_area_post_path(
+                organization_a,
+                ski_area_a,
+                post_a,
+              )
+        fill_in 'タイトル', with: '更新サンプル投稿名'
+        fill_in '内容', with: '更新サンプル投稿内容'
+        attach_file '画像',
+                    Rails.root.join('spec/fixtures/fixture.png'),
+                    make_visible: true
+        find('#post_status_chosen').click
+        find('#post_status_chosen .active-result', text: '下書き').click
+        click_button '更新する'
+
+        expect(page).to have_content '更新しました'
+        expect(page).to have_content '更新サンプル投稿名'
+      end
+    end
+  end
+
+  describe '投稿情報編集' do
+    let!(:post_a) { create(:post_published, postable: ski_area_a) }
+    let!(:post_b) { create(:post_published, postable: ski_area_b) }
+
+    context 'a context' do
+      it '自分の組織の投稿のみ表示される' do
+        login_as user_a
+        visit organization_ski_area_posts_path(organization_a, ski_area_a)
+        expect(page).to have_content post_a.title
+        expect(page).not_to have_content post_b.title
+      end
+    end
+  end
+
+  describe '投稿削除' do
+    let(:post_a) { create(:post_published, postable: ski_area_a) }
+
+    it '投稿を削除できること' do
+      login_as user_a
+      visit organization_ski_area_post_path(organization_a, ski_area_a, post_a)
+
+      expect do
+        find('a.button', text: '削除').click
+        page.driver.browser.switch_to.alert.accept
+        expect(page).to have_content '削除しました'
+      end.to change(ski_area_a.posts, :count).by(-1)
     end
   end
 end
