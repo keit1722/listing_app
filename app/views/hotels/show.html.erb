@@ -29,6 +29,9 @@
         <div id="listing-nav" class="listing-nav-container">
           <ul class="listing-nav">
             <li><a href="#listing-overview" class="active">概要</a></li>
+            <% if @three_posts.present? %>
+              <li><a href="#listing-reviews">NEWS</a></li>
+            <% end %>
             <li><a href="#listing-location">地図</a></li>
           </ul>
         </div>
@@ -38,6 +41,11 @@
             <!-- Description -->
             <p><%= @hotel.decorate.format_description %></p>
           </div>
+
+        <!-- News -->
+        <% if @three_posts.present? %>
+          <%= render "listings/show_post", { list: @hotel, three_posts: @three_posts } %>
+        <% end %>
 
         <!-- Location -->
         <div id="listing-location" class="listing-section">

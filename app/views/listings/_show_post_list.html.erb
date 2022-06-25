@@ -1,0 +1,17 @@
+<li>
+  <div class="comment-content padding-left-0">
+    <div class="arrow-comment"></div>
+    <div class="comment-by"><%= post.title %><span class="date"><%= post.decorate.format_created_at %></span>
+    </div>
+    <p><%= post.decorate.truncate_body(80) %></p>
+
+    <% if post.image.attached? %>
+    <div class="review-images mfp-gallery-container">
+      <%= link_to image_tag(post.image), [post.postable, post] %>
+    </div>
+    <% end %>
+    <%= link_to [post.postable, post], class: "rate-review" do %>
+      続きを読む
+    <% end %>
+  </div>
+</li>
