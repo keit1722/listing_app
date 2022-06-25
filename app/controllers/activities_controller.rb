@@ -7,6 +7,7 @@ class ActivitiesController < ApplicationController
 
   def show
     @activity = Activity.with_attached_images.find_by!(slug: params[:slug])
+    @three_posts = @activity.posts.with_attached_image.published.recent.first(3)
     render layout: 'listings_single'
   end
 

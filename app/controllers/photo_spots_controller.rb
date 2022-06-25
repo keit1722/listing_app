@@ -7,6 +7,8 @@ class PhotoSpotsController < ApplicationController
 
   def show
     @photo_spot = PhotoSpot.with_attached_images.find_by!(slug: params[:slug])
+    @three_posts =
+      @photo_spot.posts.with_attached_image.published.recent.first(3)
     render layout: 'listings_single'
   end
 

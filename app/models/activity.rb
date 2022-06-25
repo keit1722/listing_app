@@ -30,6 +30,7 @@ class Activity < ApplicationRecord
 
   include Districtable
   include Bookmarkable
+  include Postable
   has_one :reservation_link, as: :reservation_linkable, dependent: :destroy
   has_many :opening_hours, as: :opening_hourable, dependent: :destroy
 

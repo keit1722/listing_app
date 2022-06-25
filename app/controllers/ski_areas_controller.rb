@@ -7,6 +7,7 @@ class SkiAreasController < ApplicationController
 
   def show
     @ski_area = SkiArea.with_attached_images.find_by!(slug: params[:slug])
+    @three_posts = @ski_area.posts.with_attached_image.published.recent.first(3)
     render layout: 'listings_single'
   end
 

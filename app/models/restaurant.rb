@@ -30,6 +30,7 @@ class Restaurant < ApplicationRecord
 
   include Districtable
   include Bookmarkable
+  include Postable
   has_many :restaurant_category_mappings, dependent: :destroy
   has_many :restaurant_categories, through: :restaurant_category_mappings
   has_one :reservation_link, as: :reservation_linkable, dependent: :destroy

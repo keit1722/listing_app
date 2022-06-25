@@ -38,5 +38,5 @@ class OpeningHour < ApplicationRecord
     holiday: 8
   }
 
-  scope :early, -> { order(id: :ASC) }
+  scope :early, -> { order(created_at: :asc) }
 end

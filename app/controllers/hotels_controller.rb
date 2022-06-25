@@ -7,6 +7,7 @@ class HotelsController < ApplicationController
 
   def show
     @hotel = Hotel.with_attached_images.find_by!(slug: params[:slug])
+    @three_posts = @hotel.posts.with_attached_image.published.recent.first(3)
     render layout: 'listings_single'
   end
 
