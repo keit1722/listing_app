@@ -27,4 +27,22 @@ class Post < ApplicationRecord
   enum status: { published: 1, draft: 2 }
 
   scope :recent, -> { order(created_at: :desc) }
+
+  def previous
+    postable
+      .posts
+      .published
+      .where('created_at < ?', self.created_at)
+      .order('created_at DESC')
+      .first
+  end
+
+  def next
+    postable
+      .posts
+      .published
+      .where('created_at > ?', self.created_at)
+      .order('created_at ASC')
+      .first
+  end
 end
