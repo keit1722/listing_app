@@ -54,14 +54,14 @@
             <% if post.previous.present? %>
               <li class="next-post">
                 <%= link_to [post.postable, post.previous], class: "btn_arrow_back" do %>
-                <span>前の記事</span><%= post.previous.title %>
+                <span>次の記事</span><%= post.previous.title %>
                 <% end %>
               </li>
             <% end %>
             <% if post.next.present? %>
               <li class="prev-post">
                 <%= link_to [post.postable, post.next], class: "btn_arrow" do %>
-                <span>次の記事</span><%= post.next.title %>
+                <span>前の記事</span><%= post.next.title %>
                 <% end %>
               </li>
             <% end %>
