@@ -8,6 +8,7 @@ class PostsController < ApplicationController
         .page(params[:page])
         .per(5)
         .recent
+    @three_posts = @posts.first(3)
   end
 
   def show
