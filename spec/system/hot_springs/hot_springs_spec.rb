@@ -406,4 +406,42 @@ RSpec.describe 'CRUD機能', type: :system do
       end.to change(hot_spring_a.posts, :count).by(-1)
     end
   end
+
+  describe '投稿の表示' do
+    let!(:post_a) { create(:post_published, postable: hot_spring_a) }
+    let!(:post_b) { create(:post_draft, postable: hot_spring_a) }
+    let!(:post_c) { create(:post_published, postable: hot_spring_a) }
+
+    it '温泉の詳細ページに公開の投稿のみが表示されている' do
+      visit hot_spring_path(hot_spring_a)
+      expect(page).to have_content post_a.title
+      expect(page).not_to have_content post_b.title
+      expect(page).to have_content post_c.title
+    end
+
+    it '温泉の投稿一覧ページに公開の投稿のみが表示されている' do
+      visit hot_spring_posts_path(hot_spring_a)
+      expect(page).to have_content post_a.title
+      expect(page).not_to have_content post_b.title
+      expect(page).to have_content post_c.title
+    end
+
+    it '下書きの投稿はエラーになり表示されない' do
+      Capybara.raise_server_errors = false
+      visit hot_spring_post_path(hot_spring_a, post_b)
+      assert_text 'ActiveRecord::RecordNotFound'
+    end
+
+    it '投稿の詳細ページには下書きではない次の投稿名が表示されてクリックできる' do
+      visit hot_spring_post_path(hot_spring_a, post_a)
+      find('li.next-post a', text: post_c.title).click
+      expect(page).to have_content post_c.title
+    end
+
+    it '投稿の詳細ページには下書きではない前の投稿名が表示されてクリックできる' do
+      visit hot_spring_post_path(hot_spring_a, post_c)
+      find('li.prev-post a', text: post_a.title).click
+      expect(page).to have_content post_a.title
+    end
+  end
 end
