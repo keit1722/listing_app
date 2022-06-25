@@ -1,0 +1,85 @@
+<div id="wrapper">
+
+  <!-- Header Container -->
+  <header id="header-container">
+    <!-- Header -->
+    <div id="header">
+      <div class="container">
+        <%= render "shared/header" %>
+      </div>
+    </div>
+    <!-- Header / End -->
+  </header>
+  <div class="clearfix"></div>
+  <!-- Header Container / End -->
+
+  <!-- Titlebar -->
+  <div id="titlebar" class="gradient">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <%= render "shared/breadcrumbs", { icon_name: "docs", page_name: "NEWS" } %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <% if posts.exists? %>
+    <!-- Content -->
+    <div class="container">
+      <div class="blog-page">
+        <div class="row">
+          <div class="col-lg-9 col-md-8 padding-right-30">
+
+            <%= render partial: 'listings/posts/post', collection: posts %>
+
+            <!-- Pagination -->
+            <div class="clearfix"></div>
+            <div class="row">
+              <div class="col-md-12">
+                <!-- Pagination -->
+                <div class="pagination-container margin-bottom-40">
+                  <%= paginate posts %>
+                </div>
+              </div>
+            </div>
+            <!-- Pagination / End -->
+
+          </div>
+          <!-- Blog Posts / End -->
+
+
+          <!-- Widgets -->
+          <div class="col-lg-3 col-md-4">
+            <div class="sidebar right">
+
+              <!-- Widget -->
+              <div class="widget margin-top-40">
+                <h3>最近の投稿</h3>
+                <ul class="widget-tabs">
+                  <%= render partial: "listings/posts/widget_post", collection: three_posts, as: "post" %>
+                </ul>
+              </div>
+              <!-- Widget / End-->
+
+              <div class="clearfix"></div>
+              <div class="margin-bottom-40"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% else %>
+    <p class="centered-content margin-bottom-70">投稿がありません</p>
+  <% end %>
+
+  <!-- Footer -->
+  <div id="footer" class="margin-top-15">
+    <%= render "shared/footer" %>
+  </div>
+  <!-- Footer / End -->
+
+  <!-- Back To Top Button -->
+  <div id="backtotop"><a href="#"></a></div>
+
+</div>
