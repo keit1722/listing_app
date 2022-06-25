@@ -1,0 +1,7 @@
+<div class="listing-share margin-top-40 margin-bottom-40 no-border" id="bookmark-area">
+  <% if current_user.bookmark?(listing) %>
+    <%= render 'listings/unbookmark', listing: listing %>
+  <% else %>
+    <%= render 'listings/bookmark', listing: listing %>
+  <% end %>
+</div>

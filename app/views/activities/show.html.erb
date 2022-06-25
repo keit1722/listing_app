@@ -36,22 +36,16 @@
           </ul>
         </div>
 
-           <!-- Overview -->
-          <div id="listing-overview" class="listing-section">
-            <!-- Description -->
-            <p><%= @activity.decorate.format_description %></p>
-          </div>
+        <!-- Description -->
+        <%= render "listings/show_description", { listing: @activity } %>
 
         <!-- News -->
         <% if @three_posts.present? %>
-          <%= render "listings/show_post", { list: @activity, three_posts: @three_posts } %>
+          <%= render "listings/show_post", { listing: @activity, three_posts: @three_posts } %>
         <% end %>
 
         <!-- Location -->
-        <div id="listing-location" class="listing-section">
-          <h3 class="listing-desc-headline margin-top-60 margin-bottom-30">地図</h3>
-          <div id="map-location-display" class="margin-top-25 margin-bottom-25" data-lat="<%= @activity.lat %>" data-lng="<%= @activity.lng %>"></div>
-        </div>
+        <%= render "listings/show_location", { listing: @activity } %>
 
       </div>
 
@@ -60,40 +54,17 @@
 
         <!-- Opening Hours -->
         <% if @activity.opening_hours.exists? %>
-          <div class="boxed-widget opening-hours margin-top-35">
-            <h3><i class="sl sl-icon-clock"></i> 営業時間</h3>
-            <ul>
-              <%= render partial: "listings/opening_hour", collection: @activity.opening_hours.early %>
-            </ul>
-          </div>
+          <%= render "listings/show_opening_hour", { listing: @activity } %>
         <% end %>
-        <!-- Opening Hours / End -->
 
-        <!-- Book Now -->
+        <!-- Reservation Link -->
         <% if @activity.reservation_link.present? %>
-          <div id="booking-widget-anchor" class="boxed-widget booking-widget margin-top-35">
-            <h3><i class="fa fa-calendar-check-o "></i> 予約</h3>
-            <div class="row with-forms  margin-top-0">
-              <div class="col-lg-12">
-                <p>以下のボタンをクリックすると外部予約サイトへ移動します。</p>
-              </div>
-            </div>
-
-            <!-- Book Now -->
-            <%= link_to "予約サイトはこちら", @activity.reservation_link.link, class: "button book-now fullwidth margin-top-5", target: :_blank, rel: "noopener noreferrer" %>
-          </div>
+          <%= render "listings/show_reservation_link", { listing: @activity } %>
         <% end %>
-        <!-- Book Now / End -->
 
         <!-- Bookmark -->
         <% if current_user %>
-          <div class="listing-share margin-top-40 margin-bottom-40 no-border" id="bookmark-area">
-            <% if current_user.bookmark?(@activity) %>
-              <%= render 'listings/unbookmark', listing: @activity %>
-            <% else %>
-              <%= render 'listings/bookmark', listing: @activity %>
-            <% end %>
-          </div>
+          <%= render "listings/show_bookmark", { listing: @activity } %>
         <% end %>
 
       </div>
