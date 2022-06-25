@@ -30,6 +30,7 @@ class Hotel < ApplicationRecord
 
   include Districtable
   include Bookmarkable
+  include Postable
   has_one :reservation_link, as: :reservation_linkable, dependent: :destroy
 
   has_many_attached :images

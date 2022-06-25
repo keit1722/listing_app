@@ -1,0 +1,21 @@
+<li class="<%= "unread" if post.draft? %>">
+  <%= link_to [post.postable.organization, post.postable, post] do %>
+    <% if post.image.attached? %>
+      <div class="message-avatar">
+        <%= image_tag post.image %>
+      </div>
+    <% end %>
+    <div class="message-by">
+      <div class="message-by-headline">
+        <h5>
+          <%= post.title %>
+          <% if post.draft? %>
+            <i>下書き</i>
+          <% end %>
+        </h5>
+        <span><%= post.decorate.format_created_at %></span>
+      </div>
+      <p><%= post.decorate.truncate_body(100) %></p>
+    </div>
+  <% end %>
+</li>

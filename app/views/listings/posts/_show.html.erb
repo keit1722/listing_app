@@ -1,0 +1,102 @@
+<div id="wrapper">
+
+  <!-- Header Container -->
+  <header id="header-container">
+    <!-- Header -->
+    <div id="header">
+      <div class="container">
+        <%= render "shared/header" %>
+      </div>
+    </div>
+    <!-- Header / End -->
+  </header>
+  <div class="clearfix"></div>
+  <!-- Header Container / End -->
+
+  <!-- Titlebar -->
+  <div id="titlebar" class="gradient">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <%= render "shared/breadcrumbs", { icon_name: "doc", page_name: "NEWS詳細" } %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="container">
+    <!-- Blog Posts -->
+    <div class="blog-page">
+      <div class="row">
+
+        <!-- Post Content -->
+        <div class="col-lg-9 col-md-8 padding-right-30">
+          <!-- Blog Post -->
+          <div class="blog-post single-post">
+            <!-- Img -->
+            <% if post.image.attached? %>
+              <%= image_tag post.image %>
+            <% end %>
+            <!-- Content -->
+            <div class="post-content">
+              <h3><%= post.title %></h3>
+              <ul class="post-meta">
+                <li><%= post.decorate.format_created_at %></li>
+              </ul>
+              <p><%= post.decorate.format_body %></p>
+            </div>
+          </div>
+          <!-- Blog Post / End -->
+
+          <!-- Post Navigation -->
+          <ul id="posts-nav" class="margin-top-0 margin-bottom-45">
+            <% if post.previous.present? %>
+              <li class="next-post">
+                <%= link_to [post.postable, post.previous], class: "btn_arrow_back" do %>
+                <span>次の記事</span><%= post.previous.title %>
+                <% end %>
+              </li>
+            <% end %>
+            <% if post.next.present? %>
+              <li class="prev-post">
+                <%= link_to [post.postable, post.next], class: "btn_arrow" do %>
+                <span>前の記事</span><%= post.next.title %>
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+        <!-- Content / End -->
+
+
+        <!-- Widgets -->
+        <div class="col-lg-3 col-md-4">
+          <div class="sidebar right">
+            <!-- Widget -->
+            <div class="widget margin-top-40">
+              <h3>最近の投稿</h3>
+              <ul class="widget-tabs">
+                <%= render partial: "listings/posts/widget_post", collection: three_posts, as: "post" %>
+              </ul>
+            </div>
+            <!-- Widget / End-->
+            <div class="clearfix"></div>
+            <div class="margin-bottom-40"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div id="footer" class="margin-top-15">
+    <%= render "shared/footer" %>
+  </div>
+  <!-- Footer / End -->
+
+  <!-- Back To Top Button -->
+  <div id="backtotop"><a href="#"></a></div>
+
+</div>

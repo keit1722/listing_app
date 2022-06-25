@@ -30,6 +30,7 @@ class PhotoSpot < ApplicationRecord
 
   include Districtable
   include Bookmarkable
+  include Postable
 
   has_many_attached :images
 

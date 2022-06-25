@@ -10529,31 +10529,6 @@ section.fullwidth .blog-post { margin: 5px 0 0 0; }
 }
 
 
-/* Post Hover Icon */
-.post-img:before {
-	opacity: 0;
-	visibility: hidden;
-	position: absolute;
-	display: block;
-	top: 50%;
-	right: 0;
-	left: 0;
-	margin: 0 auto;
-	text-align: center;
-	content: "";
-	z-index: 119;
-	transition: 0.3s;
-	transform: translateY(-80%);
-	width: 50px;
-	height: 50px;
-	text-align: center;
-	border-radius: 50%;
-	background-color: #66676b;
-  background-image: url('plus-icon.svg');
-	background-repeat: no-repeat;
-	background-position: 50%
-}
-
 .post-img:hover:before {
 	opacity: 1;
 	visibility: visible;
@@ -14748,7 +14723,7 @@ a.dashboard-responsive-nav-trigger { display: none; }
 	display: inline-block;
 	width: 54px;
 	height: 54px;
-	border-radius: 50%;
+	border-radius: 4%;
 }
 
 .messages-inbox ul li a {
