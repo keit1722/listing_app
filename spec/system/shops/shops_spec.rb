@@ -10,7 +10,7 @@ RSpec.describe 'CRUD機能', type: :system do
       :shop,
       organization: organization_a,
       shop_categories: [shop_category],
-      districts: [district],
+      districts: [district]
     )
   end
   let!(:user_b) { create(:business_user) }
@@ -20,7 +20,7 @@ RSpec.describe 'CRUD機能', type: :system do
       :shop,
       organization: organization_b,
       shop_categories: [shop_category],
-      districts: [district],
+      districts: [district]
     )
   end
   let(:district_c) { create(:district_meitetsu) }
@@ -47,9 +47,9 @@ RSpec.describe 'CRUD機能', type: :system do
     it 'マイページに自分のショップは表示されること' do
       visit organization_shop_path(organization_a, shop_a)
       expect(page).to have_current_path organization_shop_path(
-                          organization_a,
-                          shop_a,
-                        )
+        organization_a,
+        shop_a
+      )
     end
 
     it 'マイページには自分のショップ以外は表示されないこと' do
@@ -66,8 +66,8 @@ RSpec.describe 'CRUD機能', type: :system do
       it '登録フォームに進めること' do
         visit new_organization_shop_path(organization_a)
         expect(page).to have_current_path new_organization_shop_path(
-                            organization_a,
-                          )
+          organization_a
+        )
       end
     end
 
@@ -86,7 +86,7 @@ RSpec.describe 'CRUD機能', type: :system do
         find('#shop_create_form_district_id_chosen').click
         find(
           '#shop_create_form_district_id_chosen .active-result',
-          text: '内山',
+          text: '内山'
         ).click
         fill_in '住所', with: 'サンプルショップ住所'
         fill_in 'スラッグ', with: 'sample-shop'
@@ -100,7 +100,7 @@ RSpec.describe 'CRUD機能', type: :system do
         find('#shop_create_form_shop_category_ids_chosen').click
         find(
           '#shop_create_form_shop_category_ids_chosen .active-result',
-          text: 'お土産',
+          text: 'お土産'
         ).click
         click_button '登録する'
 
@@ -118,9 +118,9 @@ RSpec.describe 'CRUD機能', type: :system do
       it '編集フォームに進めること' do
         visit edit_organization_shop_path(organization_a, shop_a)
         expect(page).to have_current_path edit_organization_shop_path(
-                            organization_a,
-                            shop_a,
-                          )
+          organization_a,
+          shop_a
+        )
       end
     end
 
@@ -142,7 +142,7 @@ RSpec.describe 'CRUD機能', type: :system do
         find('#shop_update_form_district_id_chosen').click
         find(
           '#shop_update_form_district_id_chosen .active-result',
-          text: '佐野',
+          text: '佐野'
         ).click
         fill_in '住所', with: '更新サンプルショップ住所'
         fill_in 'ショップの紹介',
@@ -155,7 +155,7 @@ RSpec.describe 'CRUD機能', type: :system do
         find('#shop_update_form_shop_category_ids_chosen').click
         find(
           '#shop_update_form_shop_category_ids_chosen .active-result',
-          text: 'スポーツショップ',
+          text: 'スポーツショップ'
         ).click
         click_button '更新する'
 
@@ -164,7 +164,7 @@ RSpec.describe 'CRUD機能', type: :system do
         expect(page).to have_content '佐野'
         expect(page).to have_content '更新サンプルショップ住所'
         expect(
-          page,
+          page
         ).to have_content 'Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
         expect(page).to have_content 'スポーツショップ'
       end
@@ -177,7 +177,7 @@ RSpec.describe 'CRUD機能', type: :system do
         :shop,
         organization: organization_a,
         shop_categories: [shop_category_b],
-        districts: [district_c],
+        districts: [district_c]
       )
     end
 
@@ -220,7 +220,7 @@ RSpec.describe 'CRUD機能', type: :system do
         :shop,
         organization: organization_a,
         shop_categories: [shop_category_b],
-        districts: [district_c],
+        districts: [district_c]
       )
     end
 
@@ -358,6 +358,7 @@ RSpec.describe 'CRUD機能', type: :system do
   describe '投稿の詳細表示' do
     let(:post_a) { create(:post_published, postable: shop_a) }
     let(:post_b) { create(:post_published, postable: shop_b) }
+
     before { login_as user_a }
 
     context '自分の所属組織のものであれば' do
@@ -368,8 +369,8 @@ RSpec.describe 'CRUD機能', type: :system do
       end
     end
 
-    context '自分の所属組織のものであれば' do
-      it '投稿詳細ページが表示される' do
+    context '自分の所属組織のものでなければ' do
+      it '投稿詳細ページが表示されずにエラーになる' do
         Capybara.raise_server_errors = false
         visit organization_shop_post_path(organization_b, shop_b, post_b)
         assert_text 'ActiveRecord::RecordNotFound'
@@ -377,7 +378,7 @@ RSpec.describe 'CRUD機能', type: :system do
     end
   end
 
-  describe '投稿情報編集' do
+  describe '投稿情報更新' do
     let(:post_a) { create(:post_published, postable: shop_a) }
 
     context '入力情報が正しい場合' do

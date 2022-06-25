@@ -15,11 +15,11 @@ class HotSpringsController < ApplicationController
   def search
     @hot_springs =
       SearchForm
-        .new(search_hot_springs_params)
-        .search
-        .with_attached_images
-        .page(params[:page])
-        .per(20)
+      .new(search_hot_springs_params)
+      .search
+      .with_attached_images
+      .page(params[:page])
+      .per(20)
     @hot_spring_all = SearchForm.new(search_hot_springs_params).search
     @selected_area_groups = params[:q][:area_groups]
     render layout: 'listings_index'

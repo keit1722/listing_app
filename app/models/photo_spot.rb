@@ -39,20 +39,20 @@ class PhotoSpot < ApplicationRecord
   validates_with CoordinateValidator
   validates :slug,
             length: {
-              maximum: 100,
+              maximum: 100
             },
             uniqueness: true,
             presence: true,
             format: {
-              with: /\A[a-z0-9\-]+\z/,
+              with: /\A[a-z0-9\-]+\z/
             }
   validates :description, length: { maximum: 10_000 }, presence: true
   validates :images,
             attached: true,
             limit: {
-              max: 5,
+              max: 5
             },
-            content_type: %i[png jpg jpeg]
+            content_type: [:png, :jpg, :jpeg]
 
   scope :search_with_district,
         lambda { |district_ids|
@@ -65,8 +65,8 @@ class PhotoSpot < ApplicationRecord
             [
               'description LIKE(?) OR Photo_spots.name LIKE(?)',
               "%#{keyword}%",
-              "%#{keyword}%",
-            ],
+              "%#{keyword}%"
+            ]
           )
         }
 

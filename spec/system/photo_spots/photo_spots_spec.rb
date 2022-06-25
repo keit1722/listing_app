@@ -35,9 +35,9 @@ RSpec.describe 'CRUD機能', type: :system do
     it 'マイページに自分のフォトスポットは表示されること' do
       visit organization_photo_spot_path(organization_a, photo_spot_a)
       expect(page).to have_current_path organization_photo_spot_path(
-                          organization_a,
-                          photo_spot_a,
-                        )
+        organization_a,
+        photo_spot_a
+      )
     end
 
     it 'マイページには自分のフォトスポット以外は表示されないこと' do
@@ -54,8 +54,8 @@ RSpec.describe 'CRUD機能', type: :system do
       it '登録フォームに進めること' do
         visit new_organization_photo_spot_path(organization_a)
         expect(page).to have_current_path new_organization_photo_spot_path(
-                            organization_a,
-                          )
+          organization_a
+        )
       end
     end
 
@@ -74,7 +74,7 @@ RSpec.describe 'CRUD機能', type: :system do
         find('#photo_spot_create_form_district_id_chosen').click
         find(
           '#photo_spot_create_form_district_id_chosen .active-result',
-          text: '内山',
+          text: '内山'
         ).click
         fill_in '住所', with: 'サンプルフォトスポット住所'
         fill_in 'スラッグ', with: 'sample-photo-spot'
@@ -101,9 +101,9 @@ RSpec.describe 'CRUD機能', type: :system do
       it '編集フォームに進めること' do
         visit edit_organization_photo_spot_path(organization_a, photo_spot_a)
         expect(page).to have_current_path edit_organization_photo_spot_path(
-                            organization_a,
-                            photo_spot_a,
-                          )
+          organization_a,
+          photo_spot_a
+        )
       end
     end
 
@@ -123,7 +123,7 @@ RSpec.describe 'CRUD機能', type: :system do
         find('#photo_spot_update_form_district_id_chosen').click
         find(
           '#photo_spot_update_form_district_id_chosen .active-result',
-          text: '佐野',
+          text: '佐野'
         ).click
         fill_in '住所', with: '更新サンプルフォトスポット住所'
         fill_in 'フォトスポットの紹介',
@@ -140,7 +140,7 @@ RSpec.describe 'CRUD機能', type: :system do
         expect(page).to have_content '佐野'
         expect(page).to have_content '更新サンプルフォトスポット住所'
         expect(
-          page,
+          page
         ).to have_content 'Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
       end
     end
@@ -279,9 +279,9 @@ RSpec.describe 'CRUD機能', type: :system do
     context '自分の所属組織のものであれば' do
       it '投稿の新規作成ページが表示されること' do
         visit new_organization_photo_spot_post_path(
-                organization_a,
-                photo_spot_a,
-              )
+          organization_a,
+          photo_spot_a
+        )
         expect(page).to have_content '新規投稿作成'
       end
     end
@@ -290,9 +290,9 @@ RSpec.describe 'CRUD機能', type: :system do
       it '投稿の新規作成ページが表示されなずにエラーになる' do
         Capybara.raise_server_errors = false
         visit new_organization_photo_spot_post_path(
-                organization_b,
-                photo_spot_b,
-              )
+          organization_b,
+          photo_spot_b
+        )
         assert_text 'ActiveRecord::RecordNotFound'
       end
     end
@@ -300,9 +300,9 @@ RSpec.describe 'CRUD機能', type: :system do
     context '入力情報が正しい場合' do
       it '新規登録できること' do
         visit new_organization_photo_spot_post_path(
-                organization_a,
-                photo_spot_a,
-              )
+          organization_a,
+          photo_spot_a
+        )
         fill_in 'タイトル', with: 'サンプル投稿名'
         fill_in '内容', with: 'サンプル投稿内容'
         attach_file '画像',
@@ -321,44 +321,45 @@ RSpec.describe 'CRUD機能', type: :system do
   describe '投稿の詳細表示' do
     let(:post_a) { create(:post_published, postable: photo_spot_a) }
     let(:post_b) { create(:post_published, postable: photo_spot_b) }
+
     before { login_as user_a }
 
     context '自分の所属組織のものであれば' do
       it '投稿詳細ページが表示される' do
         visit organization_photo_spot_post_path(
-                organization_a,
-                photo_spot_a,
-                post_a,
-              )
+          organization_a,
+          photo_spot_a,
+          post_a
+        )
         expect(page).to have_content post_a.title
         expect(page).to have_content post_a.body
       end
     end
 
-    context '自分の所属組織のものであれば' do
-      it '投稿詳細ページが表示される' do
+    context '自分の所属組織のものでなければ' do
+      it '投稿詳細ページが表示されずにエラーになる' do
         Capybara.raise_server_errors = false
         visit organization_photo_spot_post_path(
-                organization_b,
-                photo_spot_b,
-                post_b,
-              )
+          organization_b,
+          photo_spot_b,
+          post_b
+        )
         assert_text 'ActiveRecord::RecordNotFound'
       end
     end
   end
 
-  describe '投稿情報編集' do
+  describe '投稿情報更新' do
     let(:post_a) { create(:post_published, postable: photo_spot_a) }
 
     context '入力情報が正しい場合' do
       it '情報更新できること' do
         login_as user_a
         visit edit_organization_photo_spot_post_path(
-                organization_a,
-                photo_spot_a,
-                post_a,
-              )
+          organization_a,
+          photo_spot_a,
+          post_a
+        )
         fill_in 'タイトル', with: '更新サンプル投稿名'
         fill_in '内容', with: '更新サンプル投稿内容'
         attach_file '画像',
@@ -394,10 +395,10 @@ RSpec.describe 'CRUD機能', type: :system do
     it '投稿を削除できること' do
       login_as user_a
       visit organization_photo_spot_post_path(
-              organization_a,
-              photo_spot_a,
-              post_a,
-            )
+        organization_a,
+        photo_spot_a,
+        post_a
+      )
 
       expect do
         find('a.button', text: '削除').click

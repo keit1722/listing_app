@@ -15,11 +15,11 @@ class PhotoSpotsController < ApplicationController
   def search
     @photo_spots =
       SearchForm
-        .new(search_photo_spots_params)
-        .search
-        .with_attached_images
-        .page(params[:page])
-        .per(20)
+      .new(search_photo_spots_params)
+      .search
+      .with_attached_images
+      .page(params[:page])
+      .per(20)
     @photo_spot_all = SearchForm.new(search_photo_spots_params).search
     @selected_area_groups = params[:q][:area_groups]
     render layout: 'listings_index'

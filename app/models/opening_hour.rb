@@ -28,15 +28,15 @@ class OpeningHour < ApplicationRecord
   validates :day, presence: true
 
   enum day: {
-         monday: 1,
-         tuesday: 2,
-         wednesday: 3,
-         thursday: 4,
-         friday: 5,
-         saturday: 6,
-         sunday: 7,
-         holiday: 8,
-       }
+    monday: 1,
+    tuesday: 2,
+    wednesday: 3,
+    thursday: 4,
+    friday: 5,
+    saturday: 6,
+    sunday: 7,
+    holiday: 8
+  }
 
   scope :early, -> { order(created_at: :asc) }
 end

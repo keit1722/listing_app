@@ -8,7 +8,7 @@ class PostDecorator < ApplicationDecorator
   def format_body
     ActionController::Base.helpers.safe_join(
       object.body.split("\n"),
-      ActionController::Base.helpers.tag(:br),
+      ActionController::Base.helpers.tag(:br)
     )
   end
 

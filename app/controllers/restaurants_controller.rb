@@ -1,13 +1,13 @@
 class RestaurantsController < ApplicationController
-  before_action :set_restaurant_categories, only: %i[index search]
+  before_action :set_restaurant_categories, only: [:index, :search]
 
   def index
     @restaurants =
       Restaurant
-        .with_attached_images
-        .includes(:restaurant_categories)
-        .page(params[:page])
-        .per(20)
+      .with_attached_images
+      .includes(:restaurant_categories)
+      .page(params[:page])
+      .per(20)
     @restaurant_all = Restaurant.all
     render layout: 'listings_index'
   end
@@ -22,12 +22,12 @@ class RestaurantsController < ApplicationController
   def search
     @restaurants =
       SearchWithCategoriesForm
-        .new(search_restaurants_params)
-        .search
-        .with_attached_images
-        .includes(:restaurant_categories, :restaurant_category_mappings)
-        .page(params[:page])
-        .per(20)
+      .new(search_restaurants_params)
+      .search
+      .with_attached_images
+      .includes(:restaurant_categories, :restaurant_category_mappings)
+      .page(params[:page])
+      .per(20)
     @restaurant_all =
       SearchWithCategoriesForm.new(search_restaurants_params).search
     @selected_categories = params[:q][:category_ids]
