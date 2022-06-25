@@ -2,13 +2,13 @@
 
   <!-- Img -->
   <% if post.image.attached? %>
-    <%= link_to image_tag(post.image), polymorphic_path([post.postable, post]), class: "post-img" %>
+    <%= link_to image_tag(post.image), [post.postable, post], class: "post-img" %>
   <% end %>
 
   <!-- Content -->
   <div class="post-content">
     <h3>
-      <%= link_to polymorphic_path([post.postable, post]) do %>
+      <%= link_to [post.postable, post] do %>
         <%= post.title %>
       <% end %>
     </h3>
@@ -19,7 +19,7 @@
 
     <p><%= post.decorate.truncate_body(100) %></p>
 
-    <%= link_to polymorphic_path([post.postable, post]), class: "read-more" do %>
+    <%= link_to [post.postable, post], class: "read-more" do %>
       続きを読む <i class="fa fa-angle-right"></i>
     <% end %>
   </div>

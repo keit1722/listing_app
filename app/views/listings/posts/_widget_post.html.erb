@@ -2,7 +2,7 @@
   <div class="widget-content">
     <% if post.image.attached? %>
       <div class="widget-thumb">
-        <%= link_to image_tag(post.image), polymorphic_path([post.postable, post]) %>
+        <%= link_to image_tag(post.image), [post.postable, post] %>
       </div>
     <% end %>
     <div class="widget-text">
