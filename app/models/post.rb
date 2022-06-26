@@ -5,7 +5,7 @@
 #  id            :bigint           not null, primary key
 #  body          :text             not null
 #  postable_type :string
-#  status        :integer          default(1), not null
+#  status        :integer          default("published"), not null
 #  title         :string           not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
@@ -17,6 +17,8 @@
 #
 class Post < ApplicationRecord
   belongs_to :postable, polymorphic: true
+  has_many :notices, as: :noticeable, dependent: :destroy
+  has_many :users, through: :notices
 
   has_one_attached :image
 

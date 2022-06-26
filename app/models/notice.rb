@@ -21,6 +21,9 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Notice < ApplicationRecord
+  belongs_to :user
+  belongs_to :noticeable, polymorphic: true
+
   validates :noticeable_id, uniqueness: { scope: %i[noticeable_type user_id] }
 
   enum read: { unread: false, read: true }

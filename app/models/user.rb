@@ -59,10 +59,15 @@ class User < ApplicationRecord
            through: :bookmarks,
            source: :bookmarkable,
            source_type: 'Shop'
+  has_many :notices, dependent: :destroy
+  has_many :post_notices,
+           through: :notices,
+           source: :noticeable,
+           source_type: 'Post'
 
   validates :password,
             length: {
-              minimum: 3
+              minimum: 3,
             },
             if: -> { new_record? || changes[:crypted_password] }
   validates :password,
@@ -76,17 +81,17 @@ class User < ApplicationRecord
             uniqueness: true,
             presence: true,
             length: {
-              maximum: 100
+              maximum: 100,
             },
             format: {
-              with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+              with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i,
             }
   validates :first_name, presence: true, length: { maximum: 50 }
   validates :last_name, presence: true, length: { maximum: 50 }
   validates :username,
             presence: true,
             length: {
-              maximum: 100
+              maximum: 100,
             },
             uniqueness: true
 
