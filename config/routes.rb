@@ -50,6 +50,9 @@ Rails.application.routes.draw do
     delete 'profile', to: 'users#destroy'
     get 'profile/edit', to: 'users#edit'
     resources :bookmarks, only: %i[index]
+    resources :notices, only: %i[index] do
+      patch :read, on: :member
+    end
   end
 
   resources :organizations, param: :slug do
