@@ -30,6 +30,8 @@ class Post < ApplicationRecord
 
   scope :recent, -> { order(created_at: :desc) }
 
+  after_create_commit :create_notices
+
   def previous
     postable
       .posts
@@ -46,5 +48,15 @@ class Post < ApplicationRecord
       .where('created_at < ?', created_at)
       .order('created_at DESC')
       .first
+  end
+
+  private
+
+  def create_notices
+    notices =
+      self.postable.bookmarks.map do |bookmark|
+        Notice.new(user: bookmark.user, noticeable: self)
+      end
+    Notice.import notices
   end
 end
