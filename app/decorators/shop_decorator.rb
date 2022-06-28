@@ -1,4 +1,4 @@
-class ShopDecorator < ApplicationDecorator
+class ShopDecorator < ListingsDecorator
   delegate_all
 
   def arranged_categories

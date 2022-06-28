@@ -1,4 +1,4 @@
-class RestaurantDecorator < ApplicationDecorator
+class RestaurantDecorator < ListingsDecorator
   delegate_all
 
   def arranged_categories

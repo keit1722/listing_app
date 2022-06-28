@@ -4,6 +4,6 @@
       <i>未読</i>
     <% end %>
   </h5>
-  <span><%= notice.decorate.format_created_at %></span>
+  <span><%= l notice.created_at, format: :short %></span>
 </div>
 <p><%= "【#{notice.noticeable.title}】 #{notice.noticeable.decorate.truncate_body(80)}" %></p>

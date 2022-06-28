@@ -42,7 +42,7 @@
             <div class="post-content">
               <h3><%= post.title %></h3>
               <ul class="post-meta">
-                <li><%= post.decorate.format_created_at %></li>
+                <li><%= l post.created_at, format: :short %></li>
               </ul>
               <p><%= post.decorate.format_body %></p>
             </div>

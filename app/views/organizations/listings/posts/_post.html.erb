@@ -13,7 +13,7 @@
             <i>下書き</i>
           <% end %>
         </h5>
-        <span><%= post.decorate.format_created_at %></span>
+        <span><%= l post.created_at, format: :short %></span>
       </div>
       <p><%= post.decorate.truncate_body(100) %></p>
     </div>
