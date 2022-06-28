@@ -27,4 +27,14 @@ class Notice < ApplicationRecord
   validates :noticeable_id, uniqueness: { scope: %i[noticeable_type user_id] }
 
   enum read: { unread: false, read: true }
+
+  scope :ordered, -> { order(created_at: :desc) }
+  scope :recent, ->(count) { ordered.limit(count) }
+
+  def redirect_path
+    case noticeable_type
+    when 'Post'
+      [noticeable.postable, noticeable]
+    end
+  end
 end
