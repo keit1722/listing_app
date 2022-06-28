@@ -1,27 +1,28 @@
 class Organizations::PhotoSpotsController < Organizations::BaseController
-  layout :determine_mypage_layout
+  layout 'mypage_maps', only: %i[show new edit]
 
-  before_action :set_districts, only: [:new, :create, :edit, :update]
+  before_action :set_districts, only: %i[new create edit update]
 
   def index
     @photo_spots =
       current_user
-      .organizations
-      .find_by!(slug: params[:organization_slug])
-      .photo_spots
-      .page(params[:page])
-      .per(20)
-      .with_attached_images
+        .organizations
+        .find_by!(slug: params[:organization_slug])
+        .photo_spots
+        .page(params[:page])
+        .per(20)
+        .with_attached_images
+    render layout: 'mypage_maps'
   end
 
   def show
     @photo_spot =
       current_user
-      .organizations
-      .find_by!(slug: params[:organization_slug])
-      .photo_spots
-      .with_attached_images
-      .find_by!(slug: params[:slug])
+        .organizations
+        .find_by!(slug: params[:organization_slug])
+        .photo_spots
+        .with_attached_images
+        .find_by!(slug: params[:slug])
   end
 
   def new
@@ -47,22 +48,22 @@ class Organizations::PhotoSpotsController < Organizations::BaseController
   def edit
     @photo_spot =
       current_user
-      .organizations
-      .find_by!(slug: params[:organization_slug])
-      .photo_spots
-      .with_attached_images
-      .find_by!(slug: params[:slug])
+        .organizations
+        .find_by!(slug: params[:organization_slug])
+        .photo_spots
+        .with_attached_images
+        .find_by!(slug: params[:slug])
     @photo_spot_update_form = PhotoSpotUpdateForm.new(@photo_spot)
   end
 
   def update
     @photo_spot =
       current_user
-      .organizations
-      .find_by!(slug: params[:organization_slug])
-      .photo_spots
-      .with_attached_images
-      .find_by!(slug: params[:slug])
+        .organizations
+        .find_by!(slug: params[:organization_slug])
+        .photo_spots
+        .with_attached_images
+        .find_by!(slug: params[:slug])
     @photo_spot_update_form =
       PhotoSpotUpdateForm.new(@photo_spot, photo_spot_update_params)
 
@@ -77,10 +78,10 @@ class Organizations::PhotoSpotsController < Organizations::BaseController
   def destroy
     @photo_spot =
       current_user
-      .organizations
-      .find_by(slug: params[:organization_slug])
-      .photo_spots
-      .find_by(slug: params[:slug])
+        .organizations
+        .find_by(slug: params[:organization_slug])
+        .photo_spots
+        .find_by(slug: params[:slug])
 
     @photo_spot.destroy!
     redirect_to organization_photo_spots_path, success: '削除しました'
@@ -100,8 +101,8 @@ class Organizations::PhotoSpotsController < Organizations::BaseController
           :slug,
           :description,
           :address,
-          { images: [] }
-        ]
+          { images: [] },
+        ],
       )
   end
 
@@ -116,8 +117,8 @@ class Organizations::PhotoSpotsController < Organizations::BaseController
           :lng,
           :description,
           :address,
-          { images: [] }
-        ]
+          { images: [] },
+        ],
       )
   end
 end

@@ -1,28 +1,29 @@
 class Organizations::RestaurantsController < Organizations::BaseController
-  layout :determine_mypage_layout
+  layout 'mypage_maps', only: %i[show new edit]
 
-  before_action :set_districts_restaurant_categories,
-                only: [:new, :create, :edit, :update]
+  before_action :set_districts, only: %i[new create edit update]
+  before_action :set_restaurant_categories, only: %i[new create edit update]
 
   def index
     @restaurants =
       current_user
-      .organizations
-      .find_by!(slug: params[:organization_slug])
-      .restaurants
-      .page(params[:page])
-      .per(20)
-      .with_attached_images
+        .organizations
+        .find_by!(slug: params[:organization_slug])
+        .restaurants
+        .page(params[:page])
+        .per(20)
+        .with_attached_images
+    render layout: 'mypage_maps'
   end
 
   def show
     @restaurant =
       current_user
-      .organizations
-      .find_by!(slug: params[:organization_slug])
-      .restaurants
-      .with_attached_images
-      .find_by!(slug: params[:slug])
+        .organizations
+        .find_by!(slug: params[:organization_slug])
+        .restaurants
+        .with_attached_images
+        .find_by!(slug: params[:slug])
   end
 
   def new
@@ -48,22 +49,22 @@ class Organizations::RestaurantsController < Organizations::BaseController
   def edit
     @restaurant =
       current_user
-      .organizations
-      .find_by!(slug: params[:organization_slug])
-      .restaurants
-      .with_attached_images
-      .find_by!(slug: params[:slug])
+        .organizations
+        .find_by!(slug: params[:organization_slug])
+        .restaurants
+        .with_attached_images
+        .find_by!(slug: params[:slug])
     @restaurant_update_form = RestaurantUpdateForm.new(@restaurant)
   end
 
   def update
     @restaurant =
       current_user
-      .organizations
-      .find_by!(slug: params[:organization_slug])
-      .restaurants
-      .with_attached_images
-      .find_by!(slug: params[:slug])
+        .organizations
+        .find_by!(slug: params[:organization_slug])
+        .restaurants
+        .with_attached_images
+        .find_by!(slug: params[:slug])
     @restaurant_update_form =
       RestaurantUpdateForm.new(@restaurant, restaurant_update_params)
 
@@ -78,10 +79,10 @@ class Organizations::RestaurantsController < Organizations::BaseController
   def destroy
     @restaurant =
       current_user
-      .organizations
-      .find_by(slug: params[:organization_slug])
-      .restaurants
-      .find_by(slug: params[:slug])
+        .organizations
+        .find_by(slug: params[:organization_slug])
+        .restaurants
+        .find_by(slug: params[:slug])
 
     @restaurant.destroy!
     redirect_to organization_restaurants_path, success: '削除しました'
@@ -95,8 +96,14 @@ class Organizations::RestaurantsController < Organizations::BaseController
       .permit(
         :district_id,
         reservation_link_attributes: [:link],
-        opening_hours_attributes: [:start_time_hour, :start_time_minute, :end_time_hour, :end_time_minute, :closed,
-                                   :day],
+        opening_hours_attributes: %i[
+          start_time_hour
+          start_time_minute
+          end_time_hour
+          end_time_minute
+          closed
+          day
+        ],
         restaurant_category_ids: [],
         restaurant_attributes: [
           :name,
@@ -105,8 +112,8 @@ class Organizations::RestaurantsController < Organizations::BaseController
           :slug,
           :description,
           :address,
-          { images: [] }
-        ]
+          { images: [] },
+        ],
       )
   end
 
@@ -116,8 +123,14 @@ class Organizations::RestaurantsController < Organizations::BaseController
       .permit(
         :district_id,
         reservation_link_attributes: [:link],
-        opening_hours_attributes: [:start_time_hour, :start_time_minute, :end_time_hour, :end_time_minute, :closed,
-                                   :day],
+        opening_hours_attributes: %i[
+          start_time_hour
+          start_time_minute
+          end_time_hour
+          end_time_minute
+          closed
+          day
+        ],
         restaurant_category_ids: [],
         restaurant_attributes: [
           :name,
@@ -125,13 +138,12 @@ class Organizations::RestaurantsController < Organizations::BaseController
           :lng,
           :description,
           :address,
-          { images: [] }
-        ]
+          { images: [] },
+        ],
       )
   end
 
-  def set_districts_restaurant_categories
-    @districts = District.all
+  def set_restaurant_categories
     @restaurant_categories = RestaurantCategory.all
   end
 end

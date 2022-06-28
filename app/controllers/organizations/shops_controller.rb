@@ -1,27 +1,29 @@
 class Organizations::ShopsController < Organizations::BaseController
-  layout :determine_mypage_layout
+  layout 'mypage_maps', only: %i[show new edit]
 
-  before_action :set_districts_shop_categories, only: [:new, :create, :edit, :update]
+  before_action :set_districts, only: %i[new create edit update]
+  before_action :set_shop_categories, only: %i[new create edit update]
 
   def index
     @shops =
       current_user
-      .organizations
-      .find_by!(slug: params[:organization_slug])
-      .shops
-      .page(params[:page])
-      .per(20)
-      .with_attached_images
+        .organizations
+        .find_by!(slug: params[:organization_slug])
+        .shops
+        .page(params[:page])
+        .per(20)
+        .with_attached_images
+    render layout: 'mypage_maps'
   end
 
   def show
     @shop =
       current_user
-      .organizations
-      .find_by!(slug: params[:organization_slug])
-      .shops
-      .with_attached_images
-      .find_by!(slug: params[:slug])
+        .organizations
+        .find_by!(slug: params[:organization_slug])
+        .shops
+        .with_attached_images
+        .find_by!(slug: params[:slug])
   end
 
   def new
@@ -46,22 +48,22 @@ class Organizations::ShopsController < Organizations::BaseController
   def edit
     @shop =
       current_user
-      .organizations
-      .find_by!(slug: params[:organization_slug])
-      .shops
-      .with_attached_images
-      .find_by!(slug: params[:slug])
+        .organizations
+        .find_by!(slug: params[:organization_slug])
+        .shops
+        .with_attached_images
+        .find_by!(slug: params[:slug])
     @shop_update_form = ShopUpdateForm.new(@shop)
   end
 
   def update
     @shop =
       current_user
-      .organizations
-      .find_by!(slug: params[:organization_slug])
-      .shops
-      .with_attached_images
-      .find_by!(slug: params[:slug])
+        .organizations
+        .find_by!(slug: params[:organization_slug])
+        .shops
+        .with_attached_images
+        .find_by!(slug: params[:slug])
     @shop_update_form = ShopUpdateForm.new(@shop, shop_update_params)
 
     if @shop_update_form.update
@@ -75,10 +77,10 @@ class Organizations::ShopsController < Organizations::BaseController
   def destroy
     @shop =
       current_user
-      .organizations
-      .find_by(slug: params[:organization_slug])
-      .shops
-      .find_by(slug: params[:slug])
+        .organizations
+        .find_by(slug: params[:organization_slug])
+        .shops
+        .find_by(slug: params[:slug])
 
     @shop.destroy!
     redirect_to organization_shops_path, success: '削除しました'
@@ -91,8 +93,14 @@ class Organizations::ShopsController < Organizations::BaseController
       .require(:shop_create_form)
       .permit(
         :district_id,
-        opening_hours_attributes: [:start_time_hour, :start_time_minute, :end_time_hour, :end_time_minute, :closed,
-                                   :day],
+        opening_hours_attributes: %i[
+          start_time_hour
+          start_time_minute
+          end_time_hour
+          end_time_minute
+          closed
+          day
+        ],
         shop_category_ids: [],
         shop_attributes: [
           :name,
@@ -101,8 +109,8 @@ class Organizations::ShopsController < Organizations::BaseController
           :slug,
           :description,
           :address,
-          { images: [] }
-        ]
+          { images: [] },
+        ],
       )
   end
 
@@ -111,8 +119,14 @@ class Organizations::ShopsController < Organizations::BaseController
       .require(:shop_update_form)
       .permit(
         :district_id,
-        opening_hours_attributes: [:start_time_hour, :start_time_minute, :end_time_hour, :end_time_minute, :closed,
-                                   :day],
+        opening_hours_attributes: %i[
+          start_time_hour
+          start_time_minute
+          end_time_hour
+          end_time_minute
+          closed
+          day
+        ],
         shop_category_ids: [],
         shop_attributes: [
           :name,
@@ -120,13 +134,12 @@ class Organizations::ShopsController < Organizations::BaseController
           :lng,
           :description,
           :address,
-          { images: [] }
-        ]
+          { images: [] },
+        ],
       )
   end
 
-  def set_districts_shop_categories
-    @districts = District.all
+  def set_shop_categories
     @shop_categories = ShopCategory.all
   end
 end
