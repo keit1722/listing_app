@@ -1008,7 +1008,7 @@ body #navigation.style-1 ul ul li:hover ul li a:hover { color: #66676b; }
 	transform: translate3d(0,0,0);
 }
 
-.user-name span:after {
+.notice span:after {
     position: absolute;
     content: "";
     height: 12px;
@@ -3527,7 +3527,7 @@ body.modal-open .mm-slideout {
         position: relative;
         margin: 0;
         margin-top: 5px;
-        width: calc(100% - 70px);
+        width: calc(100% - 70px);-
         text-align: left;
 	}
 
@@ -14464,6 +14464,7 @@ a.dashboard-responsive-nav-trigger { display: none; }
 
 
 /* Nav Tag */
+.user-menu .unread-number,
 .dashboard-nav ul li span.nav-tag {
 	background-color: rgba(255,255,255,0.2);
 	font-family: "Open Sans";
@@ -14484,7 +14485,9 @@ a.dashboard-responsive-nav-trigger { display: none; }
 	margin-left: 4px;
 }
 
+.user-menu .unread-number,
 .dashboard-nav ul li span.nav-tag.messages {top: -2px; position: relative; }
+.user-menu .unread-number,
 .dashboard-nav ul li span.nav-tag.messages,
 .dashboard-nav ul li span.nav-tag.green { background-color: #64bc36; }
 .dashboard-nav ul li span.nav-tag.yellow { background-color: #b9be1c; }

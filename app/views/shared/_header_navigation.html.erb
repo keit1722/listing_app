@@ -133,14 +133,21 @@
     <% if logged_in? %>
     <!-- User Menu -->
     <div class="user-menu">
-      <div class="user-name"><span><%= image_tag 'blank-profile-picture.png' %></span>ログイン中</div>
+      <div class="user-name <%= "notice" if current_user.notices.unread.exists? %>"><span><%= image_tag 'blank-profile-picture.png' %></span>ログイン中</div>
       <ul>
         <li>
           <%= link_to mypage_profile_path do %>
             <i class="sl sl-icon-user"></i> プロフィール</a>
           <% end %>
         </li>
-        <li><a href="dashboard-messages.html"><i class="sl sl-icon-envelope-open"></i> Messages</a></li>
+        <li>
+          <%= link_to mypage_notices_path do %>
+            <i class="sl sl-icon-envelope-open"></i> 通知一覧 
+            <% if current_user.notices.unread.exists? %>
+            <span class="unread-number"><%= current_user.notices.unread.size %></span>
+            <% end %>
+          <% end %>
+        </li>
         <li><a href="dashboard-bookings.html"><i class="fa fa-calendar-check-o"></i> Bookings</a></li>
         <li>
           <%= link_to logout_path, method: :delete do %>
