@@ -28,7 +28,8 @@ class Post < ApplicationRecord
 
   enum status: { published: 1, draft: 2 }
 
-  scope :recent, -> { order(created_at: :desc) }
+  scope :ordered, -> { order(created_at: :desc) }
+  scope :recent, ->(count) { ordered.limit(count) }
 
   after_create_commit :create_notices
 

@@ -14,8 +14,7 @@ class RestaurantsController < ApplicationController
 
   def show
     @restaurant = Restaurant.with_attached_images.find_by!(slug: params[:slug])
-    @three_posts =
-      @restaurant.posts.with_attached_image.published.recent.first(3)
+    @three_posts = @restaurant.posts.with_attached_image.published.recent(3)
     render layout: 'listings_single'
   end
 
