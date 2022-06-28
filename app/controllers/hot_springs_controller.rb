@@ -1,7 +1,7 @@
 class HotSpringsController < ApplicationController
   def index
     @hot_springs = HotSpring.with_attached_images.page(params[:page]).per(20)
-    @hot_spring_all = HotSpring.all
+    @hot_springs_count = HotSpring.count
     render layout: 'listings_index'
   end
 
@@ -15,12 +15,12 @@ class HotSpringsController < ApplicationController
   def search
     @hot_springs =
       SearchForm
-      .new(search_hot_springs_params)
-      .search
-      .with_attached_images
-      .page(params[:page])
-      .per(20)
-    @hot_spring_all = SearchForm.new(search_hot_springs_params).search
+        .new(search_hot_springs_params)
+        .search
+        .with_attached_images
+        .page(params[:page])
+        .per(20)
+    @hot_springs_count = SearchForm.new(search_hot_springs_params).search.count
     @selected_area_groups = params[:q][:area_groups]
     render layout: 'listings_index'
   end

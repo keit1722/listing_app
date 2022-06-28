@@ -1,7 +1,7 @@
 class ActivitiesController < ApplicationController
   def index
     @activities = Activity.with_attached_images.page(params[:page]).per(20)
-    @activity_all = Activity.all
+    @activities_count = Activity.count
     render layout: 'listings_index'
   end
 
@@ -14,12 +14,12 @@ class ActivitiesController < ApplicationController
   def search
     @activities =
       SearchForm
-      .new(search_activities_params)
-      .search
-      .with_attached_images
-      .page(params[:page])
-      .per(20)
-    @activity_all = SearchForm.new(search_activities_params).search
+        .new(search_activities_params)
+        .search
+        .with_attached_images
+        .page(params[:page])
+        .per(20)
+    @activities_count = SearchForm.new(search_activities_params).search.count
     @selected_area_groups = params[:q][:area_groups]
     render layout: 'listings_index'
   end

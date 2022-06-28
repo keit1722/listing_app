@@ -12,13 +12,12 @@ class PagesController < ApplicationController
       resolve_n1(category, listings)
         .with_attached_images
         .page(params[:page])
-        .per(20)
+        .per(20),
     )
-    instance_variable_set("@#{category.singularize}_all", listings)
+    instance_variable_set("@#{category}_count", listings.count)
 
     @selected_categories = 'all'
-    @selected_area_groups =
-      params[:q][:area].presence || 'all'
+    @selected_area_groups = params[:q][:area].presence || 'all'
     @keyword = params[:q][:keyword]
 
     render template: "#{category}/search", layout: 'listings_index'
