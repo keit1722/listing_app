@@ -43,6 +43,9 @@ Rails.application.routes.draw do
     resource :bookmarks, only: %i[create destroy], module: :photo_spots
     resources :posts, only: %i[index show], module: :photo_spots
   end
+  resources :notices, only: [] do
+    patch :read, on: :member
+  end
 
   namespace :mypage do
     get 'profile', to: 'users#show'
@@ -50,9 +53,7 @@ Rails.application.routes.draw do
     delete 'profile', to: 'users#destroy'
     get 'profile/edit', to: 'users#edit'
     resources :bookmarks, only: %i[index]
-    resources :notices, only: %i[index] do
-      patch :read, on: :member
-    end
+    resources :notices, only: %i[index]
   end
 
   resources :organizations, param: :slug do
