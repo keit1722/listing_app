@@ -5,7 +5,7 @@ class Mypage::NoticesController < ApplicationController
     @notices =
       current_user
         .notices
-        .includes([noticeable: %i[postable]])
+        .includes([noticeable: [:postable]])
         .page(params[:page])
         .per(20)
         .ordered
