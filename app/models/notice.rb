@@ -29,7 +29,6 @@ class Notice < ApplicationRecord
   enum read: { unread: false, read: true }
 
   scope :ordered, -> { order(created_at: :desc) }
-  scope :recent, ->(count) { ordered.limit(count) }
 
   def redirect_path
     case noticeable_type
