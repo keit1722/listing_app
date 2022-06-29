@@ -1,7 +1,7 @@
 <li>
   <div class="comment-content padding-left-0">
     <div class="arrow-comment"></div>
-    <div class="comment-by"><%= post.title %><span class="date"><%= post.decorate.format_created_at %></span>
+    <div class="comment-by"><%= post.title %><span class="date"><%= l post.created_at, format: :short %></span>
     </div>
     <p><%= post.decorate.truncate_body(80) %></p>
 

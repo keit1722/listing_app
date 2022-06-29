@@ -437,4 +437,25 @@ RSpec.describe 'CRUD機能', type: :system do
       expect(page).to have_content post_a.title
     end
   end
+
+  describe '通知一覧表示' do
+    before { login_as user_a }
+
+    context 'お気に入りをしているアクティビティの場合' do
+      it '投稿がされるとアクティビティの名前が追加される' do
+        user_a.bookmark(activity_a)
+        create(:post_published, postable: activity_a)
+        visit mypage_notices_path
+        expect(page).to have_content activity_a.name
+      end
+    end
+
+    context 'お気に入りをしていないアクティビティの場合' do
+      it '投稿がされるとアクティビティの名前が追加されない' do
+        create(:post_published, postable: activity_a)
+        visit mypage_notices_path
+        expect(page).not_to have_content activity_a.name
+      end
+    end
+  end
 end

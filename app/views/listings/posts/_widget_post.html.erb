@@ -9,7 +9,7 @@
       <h5>
         <%= link_to post.title, [post.postable, post] %>
       </h5>
-      <span><%= post.decorate.format_created_at %></span>
+      <span><%= l post.created_at, format: :short %></span>
     </div>
     <div class="clearfix"></div>
   </div>

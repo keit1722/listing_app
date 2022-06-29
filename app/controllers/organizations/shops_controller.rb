@@ -1,7 +1,8 @@
 class Organizations::ShopsController < Organizations::BaseController
-  layout :determine_mypage_layout
+  layout 'mypage_maps', only: [:show, :new, :edit]
 
-  before_action :set_districts_shop_categories, only: [:new, :create, :edit, :update]
+  before_action :set_districts, only: [:new, :create, :edit, :update]
+  before_action :set_shop_categories, only: [:new, :create, :edit, :update]
 
   def index
     @shops =
@@ -12,6 +13,7 @@ class Organizations::ShopsController < Organizations::BaseController
       .page(params[:page])
       .per(20)
       .with_attached_images
+    render layout: 'mypage_maps'
   end
 
   def show
@@ -91,8 +93,7 @@ class Organizations::ShopsController < Organizations::BaseController
       .require(:shop_create_form)
       .permit(
         :district_id,
-        opening_hours_attributes: [:start_time_hour, :start_time_minute, :end_time_hour, :end_time_minute, :closed,
-                                   :day],
+        opening_hours_attributes: [:start_time_hour, :start_time_minute, :end_time_hour, :end_time_minute, :closed, :day],
         shop_category_ids: [],
         shop_attributes: [
           :name,
@@ -111,8 +112,7 @@ class Organizations::ShopsController < Organizations::BaseController
       .require(:shop_update_form)
       .permit(
         :district_id,
-        opening_hours_attributes: [:start_time_hour, :start_time_minute, :end_time_hour, :end_time_minute, :closed,
-                                   :day],
+        opening_hours_attributes: [:start_time_hour, :start_time_minute, :end_time_hour, :end_time_minute, :closed, :day],
         shop_category_ids: [],
         shop_attributes: [
           :name,
@@ -125,8 +125,7 @@ class Organizations::ShopsController < Organizations::BaseController
       )
   end
 
-  def set_districts_shop_categories
-    @districts = District.all
+  def set_shop_categories
     @shop_categories = ShopCategory.all
   end
 end

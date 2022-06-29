@@ -1,3 +1,3 @@
-class HotSpringDecorator < ApplicationDecorator
+class HotSpringDecorator < ListingsDecorator
   delegate_all
 end

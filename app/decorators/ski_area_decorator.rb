@@ -1,3 +1,3 @@
-class SkiAreaDecorator < ApplicationDecorator
+class SkiAreaDecorator < ListingsDecorator
   delegate_all
 end

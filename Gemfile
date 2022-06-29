@@ -33,6 +33,7 @@ gem 'active_storage_validations'
 gem 'kaminari'
 gem 'enum_help'
 gem 'dotenv-rails'
+gem 'activerecord-import'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false

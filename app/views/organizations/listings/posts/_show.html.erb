@@ -29,7 +29,7 @@
             </tr>
             <tr>
               <td data-label="項目"><%= Post.human_attribute_name("created_at") %></td>
-              <td data-label="内容"><%= post.decorate.format_created_at %></td>
+              <td data-label="内容"><%= l post.created_at, format: :short %></td>
             </tr>
           </tbody>
         </table>

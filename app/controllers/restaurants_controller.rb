@@ -8,14 +8,13 @@ class RestaurantsController < ApplicationController
       .includes(:restaurant_categories)
       .page(params[:page])
       .per(20)
-    @restaurant_all = Restaurant.all
+    @restaurants_count = Restaurant.count
     render layout: 'listings_index'
   end
 
   def show
     @restaurant = Restaurant.with_attached_images.find_by!(slug: params[:slug])
-    @three_posts =
-      @restaurant.posts.with_attached_image.published.recent.first(3)
+    @three_posts = @restaurant.posts.with_attached_image.published.recent(3)
     render layout: 'listings_single'
   end
 
@@ -28,8 +27,8 @@ class RestaurantsController < ApplicationController
       .includes(:restaurant_categories, :restaurant_category_mappings)
       .page(params[:page])
       .per(20)
-    @restaurant_all =
-      SearchWithCategoriesForm.new(search_restaurants_params).search
+    @restaurants_count =
+      SearchWithCategoriesForm.new(search_restaurants_params).search.count
     @selected_categories = params[:q][:category_ids]
     @selected_area_groups = params[:q][:area_groups]
     render layout: 'listings_index'
