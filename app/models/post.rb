@@ -5,7 +5,7 @@
 #  id            :bigint           not null, primary key
 #  body          :text             not null
 #  postable_type :string
-#  status        :integer          default(1), not null
+#  status        :integer          default("published"), not null
 #  title         :string           not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
@@ -17,6 +17,8 @@
 #
 class Post < ApplicationRecord
   belongs_to :postable, polymorphic: true
+  has_many :notices, as: :noticeable, dependent: :destroy
+  has_many :users, through: :notices
 
   has_one_attached :image
 
@@ -26,7 +28,10 @@ class Post < ApplicationRecord
 
   enum status: { published: 1, draft: 2 }
 
-  scope :recent, -> { order(created_at: :desc) }
+  scope :ordered, -> { order(created_at: :desc) }
+  scope :recent, ->(count) { ordered.limit(count) }
+
+  after_create_commit :create_notices
 
   def previous
     postable
@@ -44,5 +49,15 @@ class Post < ApplicationRecord
       .where('created_at < ?', created_at)
       .order('created_at DESC')
       .first
+  end
+
+  private
+
+  def create_notices
+    notices =
+      postable.bookmarks.map do |bookmark|
+        Notice.new(user: bookmark.user, noticeable: self)
+      end
+    Notice.import notices
   end
 end

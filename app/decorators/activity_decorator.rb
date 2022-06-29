@@ -1,3 +1,3 @@
-class ActivityDecorator < ApplicationDecorator
+class ActivityDecorator < ListingsDecorator
   delegate_all
 end

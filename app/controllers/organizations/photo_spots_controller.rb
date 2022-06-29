@@ -1,5 +1,5 @@
 class Organizations::PhotoSpotsController < Organizations::BaseController
-  layout :determine_mypage_layout
+  layout 'mypage_maps', only: [:show, :new, :edit]
 
   before_action :set_districts, only: [:new, :create, :edit, :update]
 
@@ -12,6 +12,7 @@ class Organizations::PhotoSpotsController < Organizations::BaseController
       .page(params[:page])
       .per(20)
       .with_attached_images
+    render layout: 'mypage_maps'
   end
 
   def show

@@ -1,5 +1,5 @@
 class Organizations::SkiAreasController < Organizations::BaseController
-  layout :determine_mypage_layout
+  layout 'mypage_maps', only: [:show, :new, :edit]
 
   before_action :set_districts, only: [:new, :create, :edit, :update]
 
@@ -12,6 +12,7 @@ class Organizations::SkiAreasController < Organizations::BaseController
       .page(params[:page])
       .per(20)
       .with_attached_images
+    render layout: 'mypage_maps'
   end
 
   def show
@@ -93,8 +94,7 @@ class Organizations::SkiAreasController < Organizations::BaseController
       .require(:ski_area_create_form)
       .permit(
         :district_id,
-        opening_hours_attributes: [:start_time_hour, :start_time_minute, :end_time_hour, :end_time_minute, :closed,
-                                   :day],
+        opening_hours_attributes: [:start_time_hour, :start_time_minute, :end_time_hour, :end_time_minute, :closed, :day],
         ski_area_attributes: [
           :name,
           :lat,
@@ -112,8 +112,7 @@ class Organizations::SkiAreasController < Organizations::BaseController
       .require(:ski_area_update_form)
       .permit(
         :district_id,
-        opening_hours_attributes: [:start_time_hour, :start_time_minute, :end_time_hour, :end_time_minute, :closed,
-                                   :day],
+        opening_hours_attributes: [:start_time_hour, :start_time_minute, :end_time_hour, :end_time_minute, :closed, :day],
         ski_area_attributes: [
           :name,
           :lat,

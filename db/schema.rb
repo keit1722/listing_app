@@ -118,6 +118,18 @@ ActiveRecord::Schema.define(version: 2022_05_30_045102) do
     t.index ["slug"], name: "index_hotels_on_slug", unique: true
   end
 
+  create_table "notices", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "noticeable_id"
+    t.string "noticeable_type"
+    t.boolean "read", default: false, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.index ["noticeable_type", "noticeable_id"], name: "index_notices_on_noticeable_type_and_noticeable_id"
+    t.index ["user_id", "noticeable_id", "noticeable_type"], name: "index_bookmarks_on_user_id_and_noticeable_id_and_type", unique: true
+    t.index ["user_id"], name: "index_notices_on_user_id"
+  end
+
   create_table "opening_hours", force: :cascade do |t|
     t.bigint "opening_hourable_id"
     t.string "opening_hourable_type"
@@ -290,6 +302,7 @@ ActiveRecord::Schema.define(version: 2022_05_30_045102) do
   add_foreign_key "district_mappings", "districts"
   add_foreign_key "hot_springs", "organizations"
   add_foreign_key "hotels", "organizations"
+  add_foreign_key "notices", "users"
   add_foreign_key "organization_users", "organizations"
   add_foreign_key "organization_users", "users"
   add_foreign_key "photo_spots", "organizations"

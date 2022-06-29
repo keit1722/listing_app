@@ -8,13 +8,13 @@ class ShopsController < ApplicationController
       .includes(:shop_categories)
       .page(params[:page])
       .per(20)
-    @shop_all = Shop.all
+    @shops_count = Shop.count
     render layout: 'listings_index'
   end
 
   def show
     @shop = Shop.with_attached_images.find_by!(slug: params[:slug])
-    @three_posts = @shop.posts.with_attached_image.published.recent.first(3)
+    @three_posts = @shop.posts.with_attached_image.published.recent(3)
     render layout: 'listings_single'
   end
 
@@ -27,7 +27,8 @@ class ShopsController < ApplicationController
       .includes(:shop_categories, :shop_category_mappings)
       .page(params[:page])
       .per(20)
-    @shop_all = SearchWithCategoriesForm.new(search_shops_params).search
+    @shops_count =
+      SearchWithCategoriesForm.new(search_shops_params).search.count
     @selected_categories = params[:q][:category_ids]
     @selected_area_groups = params[:q][:area_groups]
     render layout: 'listings_index'

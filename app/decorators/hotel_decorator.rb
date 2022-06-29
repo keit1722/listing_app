@@ -1,3 +1,3 @@
-class HotelDecorator < ApplicationDecorator
+class HotelDecorator < ListingsDecorator
   delegate_all
 end

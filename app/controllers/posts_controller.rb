@@ -7,13 +7,13 @@ class PostsController < ApplicationController
       .published
       .page(params[:page])
       .per(5)
-      .recent
+      .ordered
     @three_posts = @posts.first(3)
   end
 
   def show
     @post = @postable.posts.published.find(params[:id])
-    @posts = @postable.posts.with_attached_image.published.recent
-    @three_posts = @posts.first(3)
+    @posts = @postable.posts.with_attached_image.published.ordered
+    @three_posts = @posts.limit(3)
   end
 end

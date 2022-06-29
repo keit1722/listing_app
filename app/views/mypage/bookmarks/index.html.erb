@@ -1,7 +1,7 @@
 <div id="titlebar">
   <div class="row">
     <div class="col-md-12">
-      <%= render 'shared/breadcrumbs_mypage', { icon_name: "list", page_name: "お気に入り" } %>
+      <%= render 'shared/breadcrumbs_mypage', { icon_name: "heart", page_name: "お気に入り" } %>
     </div>
   </div>
 </div>
@@ -9,7 +9,7 @@
   <!-- Listings -->
   <div class="col-lg-12 col-md-12">
     <div class="dashboard-list-box margin-top-0">
-      <% if @bookmarks.size == 0 %>
+      <% if @bookmarks.blank? %>
         <h4><%= "お気に入り登録はありません" %></h4>
       <% elsif %>
         <ul>

@@ -59,6 +59,11 @@ class User < ApplicationRecord
            through: :bookmarks,
            source: :bookmarkable,
            source_type: 'Shop'
+  has_many :notices, dependent: :destroy
+  has_many :post_notices,
+           through: :notices,
+           source: :noticeable,
+           source_type: 'Post'
 
   validates :password,
             length: {

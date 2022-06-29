@@ -3,7 +3,7 @@ class Organizations::PostsController < ApplicationController
 
   def index
     @posts =
-      @postable.posts.with_attached_image.page(params[:page]).per(20).recent
+      @postable.posts.with_attached_image.page(params[:page]).per(20).ordered
   end
 
   def show

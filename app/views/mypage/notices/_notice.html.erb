@@ -1,0 +1,7 @@
+<li class="unread">
+  <%= link_to read_notice_path(notice), method: :patch do %>
+    <div class="message-by margin-left-0">
+      <%= render "mypage/notices/notice_#{notice.noticeable_type.downcase}", {notice: notice} %>
+    </div>
+  <% end %>
+</li>
