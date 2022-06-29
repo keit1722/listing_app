@@ -35,9 +35,9 @@ RSpec.describe 'CRUD機能', type: :system do
     it 'マイページに自分のアクティビティは表示されること' do
       visit organization_activity_path(organization_a, activity_a)
       expect(page).to have_current_path organization_activity_path(
-        organization_a,
-        activity_a
-      )
+                          organization_a,
+                          activity_a,
+                        )
     end
 
     it 'マイページには自分のアクティビティ以外は表示されないこと' do
@@ -54,8 +54,8 @@ RSpec.describe 'CRUD機能', type: :system do
       it '登録フォームに進めること' do
         visit new_organization_activity_path(organization_a)
         expect(page).to have_current_path new_organization_activity_path(
-          organization_a
-        )
+                            organization_a,
+                          )
       end
     end
 
@@ -74,7 +74,7 @@ RSpec.describe 'CRUD機能', type: :system do
         find('#activity_create_form_district_id_chosen').click
         find(
           '#activity_create_form_district_id_chosen .active-result',
-          text: '内山'
+          text: '内山',
         ).click
         fill_in '住所', with: 'サンプルアクティビティ住所'
         fill_in 'スラッグ', with: 'sample-activity'
@@ -103,9 +103,9 @@ RSpec.describe 'CRUD機能', type: :system do
       it '編集フォームに進めること' do
         visit edit_organization_activity_path(organization_a, activity_a)
         expect(page).to have_current_path edit_organization_activity_path(
-          organization_a,
-          activity_a
-        )
+                            organization_a,
+                            activity_a,
+                          )
       end
     end
 
@@ -125,7 +125,7 @@ RSpec.describe 'CRUD機能', type: :system do
         find('#activity_update_form_district_id_chosen').click
         find(
           '#activity_update_form_district_id_chosen .active-result',
-          text: '佐野'
+          text: '佐野',
         ).click
         fill_in '住所', with: '更新サンプルアクティビティ住所'
         fill_in 'アクティビティの紹介',
@@ -144,7 +144,7 @@ RSpec.describe 'CRUD機能', type: :system do
         expect(page).to have_content '佐野'
         expect(page).to have_content '更新サンプルアクティビティ住所'
         expect(
-          page
+          page,
         ).to have_content 'Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
         expect(page).to have_content 'https://yahoo.com'
       end
@@ -323,10 +323,10 @@ RSpec.describe 'CRUD機能', type: :system do
     context '自分の所属組織のものであれば' do
       it '投稿詳細ページが表示される' do
         visit organization_activity_post_path(
-          organization_a,
-          activity_a,
-          post_a
-        )
+                organization_a,
+                activity_a,
+                post_a,
+              )
         expect(page).to have_content post_a.title
         expect(page).to have_content post_a.body
       end
@@ -336,10 +336,10 @@ RSpec.describe 'CRUD機能', type: :system do
       it '投稿詳細ページが表示されずエラーになる' do
         Capybara.raise_server_errors = false
         visit organization_activity_post_path(
-          organization_b,
-          activity_b,
-          post_b
-        )
+                organization_b,
+                activity_b,
+                post_b,
+              )
         assert_text 'ActiveRecord::RecordNotFound'
       end
     end
@@ -352,10 +352,10 @@ RSpec.describe 'CRUD機能', type: :system do
       it '情報更新できること' do
         login_as user_a
         visit edit_organization_activity_post_path(
-          organization_a,
-          activity_a,
-          post_a
-        )
+                organization_a,
+                activity_a,
+                post_a,
+              )
         fill_in 'タイトル', with: '更新サンプル投稿名'
         fill_in '内容', with: '更新サンプル投稿内容'
         attach_file '画像',
@@ -435,6 +435,27 @@ RSpec.describe 'CRUD機能', type: :system do
       visit activity_post_path(activity_a, post_c)
       find('li.prev-post a', text: post_a.title).click
       expect(page).to have_content post_a.title
+    end
+  end
+
+  describe '通知一覧表示' do
+    before { login_as user_a }
+
+    context 'お気に入りをしているアクティビティの場合' do
+      it '投稿がされるとアクティビティの名前が追加される' do
+        user_a.bookmark(activity_a)
+        create(:post_published, postable: activity_a)
+        visit mypage_notices_path
+        expect(page).to have_content activity_a.name
+      end
+    end
+
+    context 'お気に入りをしていないアクティビティの場合' do
+      it '投稿がされるとアクティビティの名前が追加されない' do
+        create(:post_published, postable: activity_a)
+        visit mypage_notices_path
+        expect(page).not_to have_content activity_a.name
+      end
     end
   end
 end

@@ -3527,7 +3527,7 @@ body.modal-open .mm-slideout {
         position: relative;
         margin: 0;
         margin-top: 5px;
-        width: calc(100% - 70px);-
+        width: calc(100% - 70px);
         text-align: left;
 	}
 
