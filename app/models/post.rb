@@ -55,7 +55,7 @@ class Post < ApplicationRecord
 
   def create_notices
     notices =
-      self.postable.bookmarks.map do |bookmark|
+      postable.bookmarks.map do |bookmark|
         Notice.new(user: bookmark.user, noticeable: self)
       end
     Notice.import notices

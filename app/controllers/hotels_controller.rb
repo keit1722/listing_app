@@ -14,11 +14,11 @@ class HotelsController < ApplicationController
   def search
     @hotels =
       SearchForm
-        .new(search_hotels_params)
-        .search
-        .with_attached_images
-        .page(params[:page])
-        .per(20)
+      .new(search_hotels_params)
+      .search
+      .with_attached_images
+      .page(params[:page])
+      .per(20)
     @hotels_count = SearchForm.new(search_hotels_params).search.count
     @selected_area_groups = params[:q][:area_groups]
     render layout: 'listings_index'
