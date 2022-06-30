@@ -59,5 +59,9 @@ class Post < ApplicationRecord
         Notice.new(user: bookmark.user, noticeable: self)
       end
     Notice.import notices
+
+    postable.bookmarks.each do |bookmark|
+      NoticeMailer.with(user_to: bookmark.user, post: self).post.deliver_later
+    end
   end
 end

@@ -1,3 +1,5 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
   root 'pages#home'
   get 'login', to: 'sessions#new'
@@ -80,5 +82,10 @@ Rails.application.routes.draw do
         resources :posts, module: :photo_spots
       end
     end
+  end
+
+  if Rails.env.development?
+    mount LetterOpenerWeb::Engine, at: '/letter_opener'
+    mount Sidekiq::Web, at: '/sidekiq'
   end
 end
