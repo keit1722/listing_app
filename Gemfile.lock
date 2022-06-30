@@ -184,6 +184,8 @@ GEM
     msgpack (1.5.1)
     multi_json (1.15.0)
     multi_xml (0.6.0)
+    mustermann (1.1.1)
+      ruby2_keywords (~> 0.0.1)
     nio4r (2.5.8)
     nokogiri (1.13.6-x86_64-darwin)
       racc (~> 1.4)
@@ -215,6 +217,8 @@ GEM
     rack (2.2.3)
     rack-mini-profiler (2.3.4)
       rack (>= 1.2.0)
+    rack-protection (2.2.0)
+      rack
     rack-proxy (0.7.2)
       rack
     rack-test (1.1.0)
@@ -338,6 +342,11 @@ GEM
       connection_pool (>= 2.2.2)
       rack (~> 2.0)
       redis (>= 4.2.0)
+    sinatra (2.2.0)
+      mustermann (~> 1.0)
+      rack (~> 2.2)
+      rack-protection (= 2.2.0)
+      tilt (~> 2.0)
     sorcery (0.16.3)
       bcrypt (~> 3.1)
       oauth (~> 0.5, >= 0.5.5)
@@ -417,6 +426,7 @@ DEPENDENCIES
   rubocop-rspec
   sass-rails (>= 6)
   sidekiq
+  sinatra
   sorcery
   spring
   tzinfo-data
