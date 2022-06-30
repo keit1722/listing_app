@@ -34,6 +34,9 @@ gem 'kaminari'
 gem 'enum_help'
 gem 'dotenv-rails'
 gem 'activerecord-import'
+gem 'redis-rails'
+gem 'sidekiq'
+gem 'sinatra'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
@@ -66,6 +69,7 @@ group :development do
   gem 'pry-byebug'
   gem 'pry-rails'
   gem 'bullet'
+  gem 'letter_opener_web'
 end
 
 group :test do

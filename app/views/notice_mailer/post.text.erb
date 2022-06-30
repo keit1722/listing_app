@@ -1,0 +1,9 @@
+<%=  @user_to.username %>  さん
+
+<%= @post.postable.name %> が新しく投稿をしました。
+
+<%= polymorphic_url([@post.postable, @post]) %>
+
+===============================================
+
+listing_app
