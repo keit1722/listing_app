@@ -5,7 +5,7 @@ class NoticeMailer < ApplicationMailer
 
     mail(
       to: @user_to.email,
-      subject: "#{@post.postable.name} が新しく投稿をしました",
+      subject: "#{@post.postable.name} が新しく投稿をしました"
     )
   end
 end
