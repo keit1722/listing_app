@@ -13,6 +13,8 @@ Rails.application.routes.draw do
 
   get 'search', to: 'pages#search'
 
+  resources :password_resets, only: %i[new create edit update]
+
   resources :restaurants, param: :slug, only: %i[index show] do
     collection { get 'search' }
     resource :bookmarks, only: %i[create destroy], module: :restaurants
