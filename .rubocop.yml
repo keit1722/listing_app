@@ -54,4 +54,5 @@ RSpec/MultipleMemoizedHelpers:
   Enabled: false
 Rails/LexicallyScopedActionFilter:
   Enabled: false
-  
+Rails/I18nLocaleTexts:
+  Enabled: false
