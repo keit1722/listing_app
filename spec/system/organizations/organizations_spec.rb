@@ -14,7 +14,7 @@ RSpec.describe '組織CRUD機能', type: :system do
 
       it '登録フォームに進めないこと' do
         visit new_organization_path
-        expect(page).to have_current_path root_path, ignore_query: true
+        expect(page).to have_current_path root_path
         expect(page).to have_content 'ビジネスユーザー専用の機能です'
       end
     end
@@ -24,8 +24,7 @@ RSpec.describe '組織CRUD機能', type: :system do
 
       it '登録フォームに進めること' do
         visit new_organization_path
-        expect(page).to have_current_path new_organization_path,
-                                          ignore_query: true
+        expect(page).to have_current_path new_organization_path
       end
     end
   end
