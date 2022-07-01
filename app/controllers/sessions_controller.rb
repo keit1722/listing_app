@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
   before_action :require_login, only: [:destroy]
-  before_action :require_logout, only: [:new, :create]
+  before_action :require_logout, only: %i[new create]
 
   def new; end
 
@@ -9,7 +9,8 @@ class SessionsController < ApplicationController
     if @user
       redirect_back_or_to root_path, success: 'ログインしました'
     else
-      flash.now[:error] = 'ログインできませんでした'
+      flash.now[:error] =
+        'ログインできませんでした。メールアドレスまたはパスワードを確認してください。'
       render :new
     end
   end
