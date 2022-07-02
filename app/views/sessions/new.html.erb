@@ -1,25 +1,18 @@
 <!-- Wrapper -->
 <div id="wrapper">
 
-  <!-- Header Container
-================================================== -->
+  <!-- Header Container -->
   <header id="header-container">
-
-    <!-- Header -->
     <div id="header">
       <div class="container">
         <%= render 'shared/header' %>
       <div>
     <div>
-    <!-- Header / End -->
-
   </header>
   <div class="clearfix"></div>
   <!-- Header Container / End -->
 
-
-  <!-- Titlebar
-================================================== -->
+  <!-- Titlebar -->
   <div id="titlebar" class="gradient">
     <div class="container">
       <div class="row">
@@ -30,17 +23,12 @@
     </div>
   </div>
 
-
-  <!-- Content
-================================================== -->
-
-
   <!-- Container -->
   <div class="container">
-
     <div class="row">
       <div class="col-lg-12">
         <div id="add-listing" class="separated-form">
+
           <%= form_with model: @user do |f| %>
             <%= render 'shared/flash_messages' %>
 
@@ -48,8 +36,7 @@
             <div class="add-listing-section">
 
               <!-- Headline -->
-              <div class="add-listing-headline">
-              </div>
+              <div class="add-listing-headline"></div>
 
               <!-- Row -->
               <div class="row with-forms margin-bottom-20">
@@ -61,10 +48,9 @@
               </div>
               <!-- Row / End -->
 
-
               <!-- Row -->
               <div class="row with-forms margin-bottom-20">
-                <!-- Slug -->
+                <!-- Password -->
                 <div class="col-md-12">
                   <h5><%= f.label :password, "パスワード" %></h5>
                   <%= f.password_field :password %>
@@ -72,23 +58,21 @@
               </div>
               <!-- Row / End -->
 
+              <%= f.submit "ログイン", class: "button" %>
             </div>
             <!-- Section / End -->
 
-            <%= f.submit "ログイン", class: "button margin-top-40" %>
           <% end %>
+
         </div>
+
+        <%= link_to "パスワードを忘れた", new_password_reset_path, class: "button border margin-top-50" %>
       </div>
     </div>
-
   </div>
-  <!-- Content / End -->
   <!-- Container / End -->
 
-
-
-  <!-- Footer
-================================================== -->
+  <!-- Footer -->
   <div id="footer" class="margin-top-60">
     <!-- Main -->
     <%= render 'shared/footer' %>
@@ -96,10 +80,8 @@
   </div>
   <!-- Footer / End -->
 
-
   <!-- Back To Top Button -->
   <div id="backtotop"><a href="#"></a></div>
-
 
 </div>
 <!-- Wrapper / End -->
