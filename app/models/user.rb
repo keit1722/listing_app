@@ -75,8 +75,9 @@ class User < ApplicationRecord
            source_type: 'Post'
 
   validates :password,
+            presence: true,
             length: {
-              minimum: 3
+              minimum: 3,
             },
             if: -> { new_record? || changes[:crypted_password] }
   validates :password,
@@ -90,19 +91,21 @@ class User < ApplicationRecord
             uniqueness: true,
             presence: true,
             length: {
-              maximum: 100
+              maximum: 100,
             },
             format: {
-              with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+              with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i,
             }
   validates :first_name, presence: true, length: { maximum: 50 }
   validates :last_name, presence: true, length: { maximum: 50 }
   validates :username,
             presence: true,
             length: {
-              maximum: 100
+              maximum: 100,
             },
             uniqueness: true
+
+  validates :reset_password_token, uniqueness: true, allow_nil: true
 
   enum role: { general: 1, business: 2, admin: 9 }
 
