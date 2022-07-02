@@ -1,7 +1,6 @@
 module SystemHelper
   def login
     user = create(:general_user)
-    user.activate!
     visit login_path
     fill_in 'メールアドレス', with: user.email
     fill_in 'パスワード', with: '12345678'
@@ -9,7 +8,6 @@ module SystemHelper
   end
 
   def login_as(user)
-    user.activate!
     visit login_path
     fill_in 'メールアドレス', with: user.email
     fill_in 'パスワード', with: '12345678'

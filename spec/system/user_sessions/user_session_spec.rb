@@ -6,7 +6,6 @@ RSpec.describe 'ログイン・ログアウト', type: :system do
   describe 'ログイン' do
     context '認証情報が正しい場合' do
       it 'ログインできること' do
-        user.activate!
         visit login_path
         fill_in 'メールアドレス', with: user.email
         fill_in 'パスワード', with: '12345678'
