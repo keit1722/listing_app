@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'CRUD機能', type: :system do
+RSpec.describe 'アクティビティ', type: :system do
   let!(:district) { create(:district_uchiyama) }
   let!(:user_a) { create(:business_user, :activated) }
   let!(:organization_a) { create(:organization, users: [user_a]) }

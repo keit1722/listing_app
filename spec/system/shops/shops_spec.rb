@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'CRUD機能', type: :system do
+RSpec.describe 'ショップ', type: :system do
   let!(:shop_category) { create(:shop_category_souvenir) }
   let!(:district) { create(:district_uchiyama) }
   let!(:user_a) { create(:business_user, :activated) }

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'CRUD機能', type: :system do
+RSpec.describe '飲食店', type: :system do
   let!(:restaurant_category) { create(:restaurant_category_japanese_food) }
   let!(:district) { create(:district_uchiyama) }
   let!(:user_a) { create(:business_user, :activated) }
