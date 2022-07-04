@@ -48,7 +48,7 @@ RSpec.describe '組織', type: :system do
 
     it '自分の組織以外は表示されない' do
       expect { visit organization_path organization_b }.to raise_error(
-        ActiveRecord::RecordNotFound,
+        ActiveRecord::RecordNotFound
       )
     end
   end
@@ -63,7 +63,7 @@ RSpec.describe '組織', type: :system do
 
     it '自分の組織以外は表示されないこと' do
       expect { visit edit_organization_path organization_b }.to raise_error(
-        ActiveRecord::RecordNotFound,
+        ActiveRecord::RecordNotFound
       )
     end
   end
