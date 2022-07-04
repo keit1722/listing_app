@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-RSpec.describe 'CRUD機能', type: :system do
+RSpec.describe '宿泊施設', type: :system do
   let!(:district) { create(:district_uchiyama) }
-  let!(:user_a) { create(:business_user) }
+  let!(:user_a) { create(:business_user, :activated) }
   let!(:organization_a) { create(:organization, users: [user_a]) }
   let!(:hotel_a) do
     create(:hotel, organization: organization_a, districts: [district])
   end
-  let!(:user_b) { create(:business_user) }
+  let!(:user_b) { create(:business_user, :activated) }
   let!(:organization_b) { create(:organization, users: [user_b]) }
   let!(:hotel_b) do
     create(:hotel, organization: organization_b, districts: [district])

@@ -1,18 +1,18 @@
 require 'rails_helper'
 
-RSpec.describe '組織CRUD機能', type: :system do
-  let!(:user_a) { create(:business_user) }
+RSpec.describe '組織', type: :system do
+  let!(:user_a) { create(:business_user, :activated) }
   let!(:organization_a) { create(:organization, users: [user_a]) }
-  let!(:user_b) { create(:business_user) }
+  let!(:user_b) { create(:business_user, :activated) }
   let!(:organization_b) { create(:organization, users: [user_b]) }
+  let(:user_general) { create(:general_user, :activated) }
 
   before { driven_by(:rack_test) }
 
   describe '組織新規登録' do
     context 'ビジネスユーザーではない場合' do
-      before { login }
-
       it '登録フォームに進めないこと' do
+        login_as user_general
         visit new_organization_path
         expect(page).to have_current_path root_path
         expect(page).to have_content 'ビジネスユーザー専用の機能です'
@@ -20,9 +20,8 @@ RSpec.describe '組織CRUD機能', type: :system do
     end
 
     context 'ビジネスユーザーの場合' do
-      before { login_as user_a }
-
       it '登録フォームに進めること' do
+        login_as user_a
         visit new_organization_path
         expect(page).to have_current_path new_organization_path
       end

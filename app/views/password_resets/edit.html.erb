@@ -3,11 +3,13 @@
 
   <!-- Header Container -->
   <header id="header-container">
+    <!-- Header -->
     <div id="header">
       <div class="container">
         <%= render 'shared/header' %>
       <div>
     <div>
+    <!-- Header / End -->
   </header>
   <div class="clearfix"></div>
   <!-- Header Container / End -->
@@ -17,7 +19,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <%= render 'shared/breadcrumbs', { icon_name: "login", page_name: "ログイン" } %>
+          <%= render 'shared/breadcrumbs', { icon_name: "plus", page_name: "パスワード再設定" } %>
         </div>
       </div>
     </div>
@@ -25,11 +27,13 @@
 
   <!-- Container -->
   <div class="container">
+
     <div class="row">
       <div class="col-lg-12">
         <div id="add-listing" class="separated-form">
 
-          <%= form_with model: @user do |f| %>
+          <%= form_with model: @user, url: password_reset_path(@token), local: true do |f| %>
+            <%= render 'shared/error_messages', model: f.object %>
             <%= render 'shared/flash_messages' %>
 
             <!-- Section -->
@@ -42,41 +46,47 @@
               <div class="row with-forms margin-bottom-20">
                 <!-- Email -->
                 <div class="col-md-12">
-                  <h5><%= f.label :email, "メールアドレス" %></h5>
-                  <%= f.email_field :email %>
+                  <h5><%= f.label :email %></h5>
+                  <p>※ 変更できません</p>
+                  <%= f.email_field :email, disabled: true %>
                 </div>
               </div>
               <!-- Row / End -->
 
               <!-- Row -->
-              <div class="row with-forms margin-bottom-20">
+              <div class="row with-forms">
                 <!-- Password -->
-                <div class="col-md-12">
-                  <h5><%= f.label :password, "パスワード" %></h5>
+                <div class="col-md-6">
+                  <h5><%= f.label :password %></h5>
+                  <p>3文字以上でパスワードを決めてください。</p>
                   <%= f.password_field :password %>
+                </div>
+
+                <!-- Password confirmation -->
+                <div class="col-md-6">
+                  <h5><%= f.label :password_confirmation %></h5>
+                  <p>パスワードを再度入力してください。</p>
+                  <%= f.password_field :password_confirmation %>
                 </div>
               </div>
               <!-- Row / End -->
 
-              <%= f.submit "ログイン", class: "button" %>
+            <%= f.submit class: 'btn btn-primary' %>
             </div>
             <!-- Section / End -->
 
           <% end %>
 
         </div>
-
-        <%= link_to "パスワードを忘れた", new_password_reset_path, class: "button border margin-top-50" %>
       </div>
     </div>
+
   </div>
   <!-- Container / End -->
 
   <!-- Footer -->
   <div id="footer" class="margin-top-60">
-    <!-- Main -->
     <%= render 'shared/footer' %>
-
   </div>
   <!-- Footer / End -->
 
