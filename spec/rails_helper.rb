@@ -3,7 +3,9 @@ require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
 # Prevent database truncation if the environment is production
-abort('The Rails environment is running in production mode!') if Rails.env.production?
+if Rails.env.production?
+  abort('The Rails environment is running in production mode!')
+end
 require 'rspec/rails'
 require 'factory_bot'
 require 'capybara/rspec'
@@ -70,4 +72,5 @@ RSpec.configure do |config|
 
   config.include FactoryBot::Syntax::Methods
   config.include SystemHelper, type: :system
+  config.include ActiveJob::TestHelper
 end

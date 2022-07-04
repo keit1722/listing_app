@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'ログイン・ログアウト', type: :system do
-  let(:user) { create(:general_user) }
+  let(:user) { create(:general_user, :activated) }
 
   describe 'ログイン' do
     context '認証情報が正しい場合' do
@@ -28,10 +28,9 @@ RSpec.describe 'ログイン・ログアウト', type: :system do
   end
 
   describe 'ログアウト' do
-    before { login }
-
     it 'ログアウトできること' do
-      find('div.user-menu').click
+      login_as user
+      find('.user-menu').click
       click_link 'ログアウト'
       expect(page).to have_current_path root_path
       expect(page).to have_content 'ログアウトしました'

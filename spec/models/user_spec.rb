@@ -71,5 +71,14 @@ RSpec.describe User, type: :model do
       same_email_user.valid?
       expect(same_email_user.errors[:email]).to include('はすでに存在します')
     end
+
+    it 'アカウントが作成されたらアクティベーションメールが送信されること' do
+      allow(UserMailer).to receive_message_chain(
+        :activation_needed_email,
+        :deliver_later,
+      )
+      user = create(:general_user)
+      expect(UserMailer).to have_received(:activation_needed_email).with(user)
+    end
   end
 end
