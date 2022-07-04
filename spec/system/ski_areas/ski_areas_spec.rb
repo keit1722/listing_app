@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-RSpec.describe 'CRUD機能', type: :system do
+RSpec.describe 'スキー', type: :system do
   let!(:district) { create(:district_uchiyama) }
-  let!(:user_a) { create(:business_user) }
+  let!(:user_a) { create(:business_user, :activated) }
   let!(:organization_a) { create(:organization, users: [user_a]) }
   let!(:ski_area_a) do
     create(:ski_area, organization: organization_a, districts: [district])
   end
-  let!(:user_b) { create(:business_user) }
+  let!(:user_b) { create(:business_user, :activated) }
   let!(:organization_b) { create(:organization, users: [user_b]) }
   let!(:ski_area_b) do
     create(:ski_area, organization: organization_b, districts: [district])

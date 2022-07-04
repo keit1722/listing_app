@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe 'CRUD機能', type: :system do
+RSpec.describe 'ショップ', type: :system do
   let!(:shop_category) { create(:shop_category_souvenir) }
   let!(:district) { create(:district_uchiyama) }
-  let!(:user_a) { create(:business_user) }
+  let!(:user_a) { create(:business_user, :activated) }
   let!(:organization_a) { create(:organization, users: [user_a]) }
   let!(:shop_a) do
     create(
@@ -13,7 +13,7 @@ RSpec.describe 'CRUD機能', type: :system do
       districts: [district]
     )
   end
-  let!(:user_b) { create(:business_user) }
+  let!(:user_b) { create(:business_user, :activated) }
   let!(:organization_b) { create(:organization, users: [user_b]) }
   let!(:shop_b) do
     create(
