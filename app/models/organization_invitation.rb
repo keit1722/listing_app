@@ -24,9 +24,15 @@
 class OrganizationInvitation < ApplicationRecord
   belongs_to :organization
 
-  validates :email, presence: true
+  validates :email,
+            presence: true,
+            format: {
+              with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i,
+            }
   validates :inviter_id, presence: true
   validates :token, presence: true, uniqueness: true
   validates :expires_at, presence: true
   validates :accepted, presence: true
+
+  before_save { self.email = email.downcase }
 end
