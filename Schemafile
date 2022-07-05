@@ -212,3 +212,14 @@ create_table 'notices', force: :cascade do |t|
           unique: true,
           name: 'index_bookmarks_on_user_id_and_noticeable_id_and_type'
 end
+
+create_table 'organization_invitations', force: :cascade do |t|
+  t.references 'organization', foreign_key: true
+  t.integer 'inviter_id', null: false
+  t.string 'email', null: false
+  t.string 'token', null: false, index: { unique: true }
+  t.datetime 'expires_at', precision: 6, null: false
+  t.boolean 'accepted', default: false, null: false
+  t.datetime 'updated_at', precision: 6, null: false
+  t.datetime 'created_at', precision: 6, null: false
+end
