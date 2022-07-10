@@ -3,9 +3,9 @@
 # Table name: organization_invitations
 #
 #  id              :bigint           not null, primary key
-#  accepted        :boolean          default(FALSE), not null
 #  email           :string           not null
 #  expires_at      :datetime         not null
+#  status          :integer          default(1), not null
 #  token           :string           not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
@@ -24,14 +24,47 @@
 class OrganizationInvitation < ApplicationRecord
   belongs_to :organization
 
+  has_many :notices, as: :noticeable, dependent: :destroy
+  has_many :users, through: :notices
+
   validates :email,
             presence: true,
             format: {
               with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i,
             }
   validates :inviter_id, presence: true
-  validates :token, presence: true, uniqueness: true
   validates :expires_at, presence: true
+  validate :belonged_user
 
+  enum status: { untouched: 1, accepted: 2, rejected: 3 }
+
+  before_create :create_token
   before_save { self.email = email.downcase }
+
+  scope :ordered, -> { order(created_at: :desc) }
+
+  def find_invitee(email)
+    User.find_by(email: email)
+  end
+
+  def create_notice
+    user = User.find_by(email: email)
+    Notice.create(user: user, noticeable: self)
+  end
+
+  def to_param
+    token
+  end
+
+  private
+
+  def belonged_user
+    if organization.users.where(email: email).exists?
+      errors.add(:email, 'を利用しているユーザーは既にメンバーです。')
+    end
+  end
+
+  def create_token
+    self.token = SecureRandom.uuid
+  end
 end
