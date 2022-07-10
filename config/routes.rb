@@ -54,6 +54,13 @@ Rails.application.routes.draw do
     patch :read, on: :member
   end
 
+  resources :organization_invitations, param: :token, only: %i[show] do
+    member do
+      patch :accepted
+      patch :unaccepted
+    end
+  end
+
   namespace :mypage do
     get 'profile', to: 'users#show'
     patch 'profile', to: 'users#update'
@@ -65,6 +72,7 @@ Rails.application.routes.draw do
 
   resources :organizations, param: :slug do
     scope module: :organizations do
+      resources :organization_invitations, only: %i[index new create]
       resources :restaurants, param: :slug do
         resources :posts, module: :restaurants
       end
