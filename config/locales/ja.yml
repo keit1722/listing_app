@@ -77,6 +77,10 @@ ja:
         body: '内容'
         image: '画像'
         status: 'ステータス'
+      organization_invitation:
+        email: 'メールアドレス'
+        expires_at: '有効期限'
+        token: 'トークン'
   activemodel:
     attributes:
       restaurant_create_form:
@@ -126,6 +130,11 @@ ja:
       status:
         published: "公開"
         draft: "下書き"
+    organization_invitation:
+      status:
+        untouched: "未実施"
+        accepted: "承諾"
+        rejected: "拒否"
   attributes:
     created_at: 作成日時
     updated_at: 更新日時
