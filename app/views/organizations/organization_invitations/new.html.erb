@@ -1,0 +1,43 @@
+<div id="titlebar">
+  <div class="row">
+    <div class="col-md-12">
+      <%= render 'shared/breadcrumbs_mypage', { icon_name: "plus", page_name: "組織へ招待" } %>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+
+    <div id="add-listing">
+      <%= form_with model: @organization_invitation, url: organization_organization_invitations_path do |f| %>
+      <%= render 'shared/error_messages', model: f.object %>
+
+        <!-- Section -->
+        <div class="add-listing-section">
+
+          <!-- Headline -->
+          <div class="add-listing-headline">
+          </div>
+
+          <!-- Row -->
+          <div class="row with-forms margin-bottom-20">
+            <!-- Email -->
+            <div class="col-md-12">
+              <p><%= "#{@organization_invitation.organization.name}" %> に招待したいユーザーのメールアドレスを入力してください。<br>
+              そのユーザーは本サイトに既にユーザー登録されている必要があります。</p>
+              <p>招待するとその相手に通知が送られます。相手が承認するとメンバーに追加されます。</p>
+              <h5><%= f.label :email %></h5>
+              <%= f.text_field :email %>
+            </div>
+          </div>
+          <!-- Row / End -->
+
+        </div>
+        <!-- Section / End -->
+
+        <%= f.submit "招待する", class: "button margin-top-40" %>
+      <% end %>
+
+    </div>
+  </div>
