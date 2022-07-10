@@ -33,11 +33,13 @@
           <i class="sl sl-icon-heart"></i> お気に入り
         <% end %>
       </li>
-      <li>
-        <%= link_to organizations_path do %>
-          <i class="sl sl-icon-list"></i> 所属組織
-        <% end %>
-      </li>
+      <% if current_user.organizations.exists? %>
+        <li>
+          <%= link_to organizations_path do %>
+            <i class="sl sl-icon-list"></i> 所属組織
+          <% end %>
+        </li>
+      <% end %>
     </ul>
 
     <ul data-submenu-title="Account">
