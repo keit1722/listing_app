@@ -148,11 +148,11 @@ ActiveRecord::Schema.define(version: 2022_07_01_083140) do
     t.bigint "organization_id"
     t.string "token", null: false
     t.datetime "expires_at", precision: 6, null: false
-    t.boolean "accepted", default: false, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "created_at", precision: 6, null: false
     t.integer "inviter_id", null: false
     t.string "email", null: false
+    t.integer "status", default: 1, null: false
     t.index ["organization_id"], name: "index_organization_invitations_on_organization_id"
     t.index ["token"], name: "index_organization_invitations_on_token", unique: true
   end
