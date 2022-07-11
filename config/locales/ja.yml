@@ -23,6 +23,7 @@ ja:
         username: 'ユーザーネーム'
         password: 'パスワード'
         password_confirmation: 'パスワード確認'
+        role: 'アカウントタイプ'
       organization:
         name: '会社名・屋号'
         address: '住所'
@@ -116,6 +117,11 @@ ja:
       photo_spot_update_form:
         district_id: '地区'
   enums:
+    user:
+      role:
+        general: "一般"
+        business: "ビジネス"
+        admin: "管理者"
     opening_hour:
       day:
         monday: '月曜日'
