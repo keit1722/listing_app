@@ -8,6 +8,7 @@ class OrganizationInvitationsController < ApplicationController
   def accepted
     @organization_invitation.accepted!
     current_user.business! if current_user.general?
+    @organization_invitation.organization.create_notices
     @organization_invitation.organization.users << current_user
     redirect_to mypage_notices_path, success: '組織へ参加しました'
   end

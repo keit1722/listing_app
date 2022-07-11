@@ -50,6 +50,10 @@ class OrganizationInvitation < ApplicationRecord
   def create_notice
     user = User.find_by(email: email)
     Notice.create(user: user, noticeable: self)
+    NoticeMailer
+      .with(user_to: user, organization_invitation: self)
+      .organization_invitation
+      .deliver_later
   end
 
   def to_param
