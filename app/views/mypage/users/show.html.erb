@@ -20,21 +20,24 @@
               <td data-label="項目"><%= User.human_attribute_name("last_name") %></td>
               <td data-label="内容"><%= @user.last_name %></td>
             </tr>
-
             <tr>
               <td data-label="項目"><%= User.human_attribute_name("first_name") %></td>
               <td data-label="内容"><%= @user.first_name %></td>
             </tr>
-
             <tr>
               <td data-label="項目"><%= User.human_attribute_name("username") %></td>
               <td data-label="内容"><%= @user.username %></td>
             </tr>
-
             <tr>
               <td data-label="項目"><%= User.human_attribute_name("email") %></td>
               <td data-label="内容"><%= @user.email %></td>
             </tr>
+            <% if !@user.general? %>
+              <tr>
+                <td data-label="項目"><%= User.human_attribute_name("role") %></td>
+                <td data-label="内容"><%= @user.role_i18n %></td>
+              </tr>
+            <% end %>
 
           </tbody>
         </table>
