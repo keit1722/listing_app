@@ -25,7 +25,7 @@ class Organization < ApplicationRecord
   has_many :hot_springs, dependent: :destroy
   has_many :ski_areas, dependent: :destroy
   has_many :photo_spots, dependent: :destroy
-  has_many :organization_invitations
+  has_many :organization_invitations, dependent: :destroy
   has_many :notices, as: :noticeable, dependent: :destroy
 
   validates :name, length: { maximum: 100 }, uniqueness: true, presence: true
@@ -33,12 +33,12 @@ class Organization < ApplicationRecord
   validates :phone, numericality: true, length: { in: 10..11 }, presence: true
   validates :slug,
             length: {
-              maximum: 30,
+              maximum: 30
             },
             uniqueness: true,
             presence: true,
             format: {
-              with: /\A[a-z0-9\-]+\z/,
+              with: /\A[a-z0-9\-]+\z/
             }
 
   def create_notices

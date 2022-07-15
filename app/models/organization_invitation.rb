@@ -30,7 +30,7 @@ class OrganizationInvitation < ApplicationRecord
   validates :email,
             presence: true,
             format: {
-              with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i,
+              with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
             }
   validates :inviter_id, presence: true
   validates :expires_at, presence: true
@@ -46,6 +46,7 @@ class OrganizationInvitation < ApplicationRecord
   def create_notice
     user = User.find_by(email: email)
     return if user.nil?
+
     Notice.create(user: user, noticeable: self)
     NoticeMailer
       .with(user_to: user, organization_invitation: self)
@@ -60,9 +61,7 @@ class OrganizationInvitation < ApplicationRecord
   private
 
   def belonged_user
-    if organization.users.where(email: email).exists?
-      errors.add(:email, 'を利用しているユーザーは既にメンバーです。')
-    end
+    errors.add(:email, 'を利用しているユーザーは既にメンバーです。') if organization.users.exists?(email: email)
   end
 
   def create_token

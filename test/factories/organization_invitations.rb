@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :organization_invitation do
     email { Faker::Internet.unique.email }
-    expires_at { Time.current + 6.hours }
+    expires_at { 6.hours.from_now }
   end
 end
