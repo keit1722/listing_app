@@ -21,6 +21,9 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class OrganizationRegistration < ApplicationRecord
+  belongs_to :user
+  has_one :organization_registration_status
+
   validates :organization_name, presence: true
   validates :organization_address, presence: true
   validates :organization_phone, presence: true

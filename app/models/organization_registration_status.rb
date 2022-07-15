@@ -17,4 +17,5 @@
 #  fk_rails_...  (organization_registration_id => organization_registrations.id)
 #
 class OrganizationRegistrationStatus < ApplicationRecord
+  belongs_to :organization_registration
 end
