@@ -1,0 +1,28 @@
+<li class="<%= organization_invitation.accepted? ? "approved" : "canceled" %>-booking">
+  <div class="list-box-listing bookings">
+    <div class="list-box-listing-content">
+      <div class="inner">
+        <h3><%= organization_invitation.email %> <span class="booking-status"><%= organization_invitation.accepted? ? "承諾済" : "未認証" %></span></h3>
+        <div class="inner-booking-list">
+          <h5>招待日時：</h5>
+          <ul class="booking-list">
+            <li class="highlighted"><%= l organization_invitation.created_at, format: :long %></li>
+          </ul>
+        </div>
+
+        <div class="inner-booking-list">
+          <h5><%= organization_invitation.accepted? ? "承認日時" : "承認期限" %>：</h5>
+          <ul class="booking-list">
+            <li class="highlighted">
+              <% if  organization_invitation.accepted? %>
+                <%= l organization_invitation.updated_at, format: :long %>
+              <% else %>
+                <%= l organization_invitation.expires_at, format: :long %>
+              <% end %>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</li>

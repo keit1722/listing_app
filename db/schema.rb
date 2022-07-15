@@ -144,6 +144,19 @@ ActiveRecord::Schema.define(version: 2022_07_01_083140) do
     t.index ["opening_hourable_type", "opening_hourable_id"], name: "index_polymorphic_opening_hour_mappings_on_id_and_type"
   end
 
+  create_table "organization_invitations", force: :cascade do |t|
+    t.bigint "organization_id"
+    t.string "token", null: false
+    t.datetime "expires_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.integer "inviter_id", null: false
+    t.string "email", null: false
+    t.integer "status", default: 1, null: false
+    t.index ["organization_id"], name: "index_organization_invitations_on_organization_id"
+    t.index ["token"], name: "index_organization_invitations_on_token", unique: true
+  end
+
   create_table "organization_users", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "organization_id"
@@ -312,6 +325,7 @@ ActiveRecord::Schema.define(version: 2022_07_01_083140) do
   add_foreign_key "hot_springs", "organizations"
   add_foreign_key "hotels", "organizations"
   add_foreign_key "notices", "users"
+  add_foreign_key "organization_invitations", "organizations"
   add_foreign_key "organization_users", "organizations"
   add_foreign_key "organization_users", "users"
   add_foreign_key "photo_spots", "organizations"

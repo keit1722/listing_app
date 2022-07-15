@@ -25,6 +25,8 @@ class Organization < ApplicationRecord
   has_many :hot_springs, dependent: :destroy
   has_many :ski_areas, dependent: :destroy
   has_many :photo_spots, dependent: :destroy
+  has_many :organization_invitations, dependent: :destroy
+  has_many :notices, as: :noticeable, dependent: :destroy
 
   validates :name, length: { maximum: 100 }, uniqueness: true, presence: true
   validates :address, length: { maximum: 100 }, presence: true
@@ -38,6 +40,17 @@ class Organization < ApplicationRecord
             format: {
               with: /\A[a-z0-9\-]+\z/
             }
+
+  def create_notices
+    notices = users.map { |user| Notice.new(user: user, noticeable: self) }
+    Notice.import notices
+    users.each do |user|
+      NoticeMailer
+        .with(user_to: user, organization: self)
+        .organization
+        .deliver_later
+    end
+  end
 
   def to_param
     slug

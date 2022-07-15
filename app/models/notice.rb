@@ -21,6 +21,8 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Notice < ApplicationRecord
+  include Rails.application.routes.url_helpers
+
   belongs_to :user
   belongs_to :noticeable, polymorphic: true
 
@@ -34,6 +36,10 @@ class Notice < ApplicationRecord
     case noticeable_type
     when 'Post'
       [noticeable.postable, noticeable]
+    when 'OrganizationInvitation'
+      organization_invitation_path(noticeable)
+    when 'Organization'
+      organization_path(noticeable)
     end
   end
 end

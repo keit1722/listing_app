@@ -1,0 +1,10 @@
+<%=  @user_to.username %>  さん
+
+<%= @organization_invitation.organization.name %> への参加招待が届いています。以下のリンクから「承諾」または「拒否」を選択してください。
+有効期限：<%= l @organization_invitation.expires_at, format: :long %>
+
+<%= organization_invitation_url(@organization_invitation) %>
+
+===============================================
+
+listing_app

@@ -1,0 +1,26 @@
+<div id="titlebar">
+  <div class="row">
+    <div class="col-md-12">
+      <%= render 'shared/breadcrumbs_mypage', { icon_name: "doc", page_name: "招待情報" } %>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="dashboard-list-box margin-top-0">
+      <div class="dashboard-list-box-static">
+
+        <p><%= @organization_invitation.organization.name %>への参加招待が届いています。<br>
+        以下のボタンから「承諾」または「拒否」を選択してください。</p>
+        <p><mark><%= "有効期限：#{l @organization_invitation.expires_at, format: :long}" %></mark></p>
+
+        <div class="margin-top-30">
+          <%= link_to accepted_organization_invitation_path(@organization_invitation), method: :patch, data: { confirm: "一度承諾すると元には戻せません。よろしいですか？" }, class: "button border" do %><i class="sl sl-icon-check"></i> 承諾<% end %>
+          <%= link_to unaccepted_organization_invitation_path(@organization_invitation), method: :patch, data: { confirm: "一度拒否すると元には戻せません。よろしいですか？" }, class: "button border" do %><i class="sl sl-icon-close"></i> 拒否<% end %>
+        </div>
+
+      </div>
+    </div>
+    <%= link_to "通知一覧へ戻る", mypage_notices_path, class: "button margin-top-15" %>
+  </div>
