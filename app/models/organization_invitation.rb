@@ -43,12 +43,9 @@ class OrganizationInvitation < ApplicationRecord
 
   scope :ordered, -> { order(created_at: :desc) }
 
-  def find_invitee(email)
-    User.find_by(email: email)
-  end
-
   def create_notice
     user = User.find_by(email: email)
+    return if user.nil?
     Notice.create(user: user, noticeable: self)
     NoticeMailer
       .with(user_to: user, organization_invitation: self)
