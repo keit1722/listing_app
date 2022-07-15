@@ -15,7 +15,7 @@
 #  reset_password_email_sent_at        :datetime
 #  reset_password_token                :string
 #  reset_password_token_expires_at     :datetime
-#  role                                :integer          default(1), not null
+#  role                                :integer          default("general"), not null
 #  salt                                :string
 #  username                            :string           not null
 #  created_at                          :datetime         not null
@@ -70,15 +70,6 @@ RSpec.describe User, type: :model do
       same_email_user = build(:general_user, email: user.email)
       same_email_user.valid?
       expect(same_email_user.errors[:email]).to include('はすでに存在します')
-    end
-
-    it 'アカウントが作成されたらアクティベーションメールが送信されること' do
-      allow(UserMailer).to receive_message_chain(
-        :activation_needed_email,
-        :deliver_later
-      )
-      user = create(:general_user)
-      expect(UserMailer).to have_received(:activation_needed_email).with(user)
     end
   end
 end

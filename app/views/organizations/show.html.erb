@@ -28,6 +28,10 @@
               <td data-label="項目"><%= Organization.human_attribute_name("phone") %></td>
               <td data-label="内容"><%= @organization.phone %></td>
             </tr>
+            <tr>
+              <td data-label="項目">メンバー</td>
+              <td data-label="内容"><%= @organization.decorate.arranged_users %></td>
+            </tr>
           </tbody>
         </table>
 

@@ -1,0 +1,21 @@
+<div class="message-by-headline">
+  <h5><%= "#{notice.noticeable.organization.name} への参加招待" %> 
+    <% if notice.unread? %>
+      <i>未読</i>
+    <% end %>
+    <% if notice.noticeable.accepted? %>
+      <i class="bgc-blue">承認済</i>
+    <% elsif notice.noticeable.rejected? %>
+      <i class="bgc-red">拒否済</i>
+    <% elsif notice.noticeable.untouched? %>
+      <% if notice.noticeable.expires_at > Time.current %>
+      <i>未実施</i>
+      <% end %>
+    <% end %>
+  </h5>
+  <span><%= l notice.created_at, format: :short %></span>
+</div>
+<% if notice.noticeable.untouched? %>
+  <p><%= "#{notice.noticeable.organization.name} からの招待が届いています。" %><br>
+  <mark><%= "有効期限：#{l notice.noticeable.expires_at, format: :long}" %></mark></p>
+<% end %>

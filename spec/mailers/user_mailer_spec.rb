@@ -4,7 +4,7 @@ RSpec.describe UserMailer, type: :mailer do
   describe 'UserMailer' do
     let(:user_inactivated) { create(:general_user) }
     let(:activation_needed_email) do
-      UserMailer.activation_needed_email(user_inactivated)
+      described_class.activation_needed_email(user_inactivated)
     end
 
     it 'アクティベーションメールが送られること' do

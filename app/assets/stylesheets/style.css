@@ -21100,6 +21100,22 @@ body .category-box-btn:hover {
   visibility: hidden !important;
 }
 
+.padding-30 {
+  padding: 30px !important;
+}
+
+.bgc-blue {
+  background-color: #61b2db !important;
+}
+
+.bgc-red {
+  background-color: #ee3535 !important;
+}
+
+.bgc-green {
+  background-color: #64bc36 !important;
+}
+
 /* image uploader */
 
 .uploader-conteiner {
