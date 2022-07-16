@@ -3,7 +3,7 @@
 # Table name: organization_registration_statuses
 #
 #  id                           :bigint           not null, primary key
-#  status                       :boolean          not null
+#  status                       :integer          not null
 #  created_at                   :datetime         not null
 #  updated_at                   :datetime         not null
 #  organization_registration_id :bigint
