@@ -18,4 +18,8 @@
 #
 class OrganizationRegistrationStatus < ApplicationRecord
   belongs_to :organization_registration
+
+  validates :status, presence: true
+
+  enum status: { accepted: 1, rejected: 2 }
 end
