@@ -72,8 +72,9 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    resources :organization_registration_statuses,
-              only: %i[index show new create]
+    resources :organization_registrations, only: %i[index show] do
+      resources :organization_registration_statuses, only: %i[create]
+    end
   end
 
   resources :organizations, param: :slug do
