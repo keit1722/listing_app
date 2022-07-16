@@ -2,7 +2,13 @@ class Mypage::OrganizationRegistrationsController < ApplicationController
   layout 'mypage'
 
   def index
-    @organization_registrations = current_user.organization_registrations
+    @organization_registrations =
+      current_user
+        .organization_registrations
+        .includes(:organization_registration_status)
+        .page(params[:page])
+        .per(20)
+        .ordered
   end
 
   def new
@@ -15,7 +21,7 @@ class Mypage::OrganizationRegistrationsController < ApplicationController
         organization_registration_params,
       )
     if @organization_registration.save
-      redirect_to organization_registration_path,
+      redirect_to mypage_organization_registrations_path,
                   success: '組織登録の申請をしました'
     else
       flash.now[:error] = '組織登録の申請ができませんでした'
