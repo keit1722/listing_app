@@ -24,8 +24,33 @@ class OrganizationRegistration < ApplicationRecord
   belongs_to :user
   has_one :organization_registration_status
 
-  validates :organization_name, presence: true
-  validates :organization_address, presence: true
-  validates :organization_phone, presence: true
-  validates :business_detail, presence: true
+  validates :organization_name, length: { maximum: 100 }, presence: true
+  validates :organization_address, length: { maximum: 100 }, presence: true
+  validates :organization_phone,
+            numericality: true,
+            length: {
+              in: 10..11,
+            },
+            presence: true
+  validates :business_detail, length: { maximum: 10_000 }, presence: true
+  validate :used_organization_name
+
+  before_create :create_token
+
+  scope :ordered, -> { order(created_at: :desc) }
+
+  private
+
+  def used_organization_name
+    if Organization.exists?(name: organization_name)
+      errors.add(
+        :organization_name,
+        'は既に利用されています。別のものをご入力ください。',
+      )
+    end
+  end
+
+  def create_token
+    self.token = SecureRandom.uuid
+  end
 end
