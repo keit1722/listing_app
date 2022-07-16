@@ -21116,6 +21116,10 @@ body .category-box-btn:hover {
   background-color: #64bc36 !important;
 }
 
+.child-display-inline > form {
+  display: inline !important;
+}
+
 /* image uploader */
 
 .uploader-conteiner {
