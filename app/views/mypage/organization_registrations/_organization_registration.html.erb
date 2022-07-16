@@ -7,7 +7,7 @@
           <% if organization_registration.organization_registration_status.nil? %>
             <i>承認待ち</i>
           <% else  %>
-            <i><%= organization_registration.organization_registration_status.status_i18n %></i>
+            <i class="<%= organization_registration.organization_registration_status.accepted? ? "bgc-blue" : "bgc-red" %>"><%= organization_registration.organization_registration_status.status_i18n %></i>
           <% end %>
         </h5>
         <span><%= l organization_registration.created_at, format: :short %></span>
