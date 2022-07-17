@@ -22,7 +22,8 @@ class Mypage::OrganizationRegistrationsController < ApplicationController
       )
     if @organization_registration.save
       redirect_to mypage_organization_registrations_path,
-                  success: '組織登録の申請をしました'
+                  success:
+                    '組織登録の申請をしました。結果が出るまで今しばらくお待ちください。'
     else
       flash.now[:error] = '組織登録の申請ができませんでした'
       render :new
