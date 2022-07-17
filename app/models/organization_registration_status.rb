@@ -21,5 +21,5 @@ class OrganizationRegistrationStatus < ApplicationRecord
 
   validates :status, presence: true
 
-  enum status: { accepted: 1, rejected: 2 }
+  enum status: { accepted: 1, rejected: 2, completed: 3 }
 end
