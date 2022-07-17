@@ -13,11 +13,23 @@ class OrganizationsController < ApplicationController
 
   def new
     @organization = Organization.new
+    @organization_registration =
+      OrganizationRegistration.accepted.find_by!(
+        user_id: current_user.id,
+        token: params[:token],
+      )
   end
 
   def create
     @organization = Organization.new(organization_create_params)
+    @organization_registration =
+      OrganizationRegistration.accepted.find_by!(
+        user_id: current_user.id,
+        token: params[:token],
+      )
+
     if @organization.save
+      @organization_registration.organization_registration_status.completed!
       redirect_to organizations_path, success: '作成しました'
     else
       flash.now[:error] = '作成できませんでした'
@@ -59,6 +71,8 @@ class OrganizationsController < ApplicationController
   end
 
   def only_business
-    redirect_to root_path, error: 'ビジネスユーザー専用の機能です' unless current_user&.business?
+    unless current_user&.business?
+      redirect_to root_path, error: 'ビジネスユーザー専用の機能です'
+    end
   end
 end

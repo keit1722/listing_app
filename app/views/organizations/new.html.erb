@@ -10,7 +10,7 @@
   <div class="col-lg-12">
 
     <div id="add-listing">
-      <%= form_with model: @organization do |f| %>
+      <%= form_with model: @organization, url: organizations_path(token: @organization_registration.token) do |f| %>
       <%= render 'shared/error_messages', model: f.object %>
 
         <!-- Section -->
@@ -25,7 +25,7 @@
             <!-- Name -->
             <div class="col-md-12">
               <h5><%= f.label :name %></h5>
-              <%= f.text_field :name %>
+              <%= f.text_field :name, value: @organization_registration.organization_name %>
             </div>
           </div>
           <!-- Row / End -->
@@ -35,7 +35,7 @@
             <!-- Address -->
             <div class="col-md-12">
               <h5><%= f.label :address %></h5>
-              <%= f.text_field :address %>
+              <%= f.text_field :address, value: @organization_registration.organization_address %>
             </div>
           </div>
           <!-- Row / End -->
@@ -47,7 +47,7 @@
               <h5><%= f.label :phone %></h5>
               <p>半角数字で入力してください。<br>
               ハイフン（-）も必要ありません。</p>
-              <%= f.text_field :phone, inputmode: "numeric" %>
+              <%= f.text_field :phone, value: @organization_registration.organization_phone, inputmode: "numeric" %>
             </div>
           </div>
           <!-- Row / End -->
