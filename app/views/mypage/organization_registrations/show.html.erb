@@ -47,4 +47,8 @@
 
       </div>
     </div>
+
+    <% if @organization_registration.organization_registration_status&.accepted? %>
+      <%= link_to "本登録に進む", new_organization_path(token: @organization_registration.token), class: "button margin-top-20" %>
+    <% end %>
   </div>
