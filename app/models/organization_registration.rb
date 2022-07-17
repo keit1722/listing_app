@@ -38,6 +38,12 @@ class OrganizationRegistration < ApplicationRecord
   before_create :create_token
 
   scope :ordered, -> { order(created_at: :desc) }
+  scope :accepted,
+        -> {
+          joins(:organization_registration_status).merge(
+            OrganizationRegistrationStatus.accepted,
+          )
+        }
 
   private
 
