@@ -40,9 +40,9 @@ RSpec.describe '組織登録申請結果', type: :system do
         find('.button-accepted').click
         page.accept_confirm
         expect(page).to have_content '申請の回答を作成しました'
-      end.to change { OrganizationRegistrationStatus.count }.by(1)
+      end.to change(OrganizationRegistrationStatus, :count).by(1)
       expect(
-        organization_registration.organization_registration_status.status,
+        organization_registration.organization_registration_status.status
       ).to eq 'accepted'
     end
 
@@ -52,9 +52,9 @@ RSpec.describe '組織登録申請結果', type: :system do
         find('.button-rejected').click
         page.accept_confirm
         expect(page).to have_content '申請の回答を作成しました'
-      end.to change { OrganizationRegistrationStatus.count }.by(1)
+      end.to change(OrganizationRegistrationStatus, :count).by(1)
       expect(
-        organization_registration.organization_registration_status.status,
+        organization_registration.organization_registration_status.status
       ).to eq 'rejected'
     end
   end

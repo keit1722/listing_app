@@ -29,11 +29,11 @@ RSpec.describe OrganizationRegistrationStatus, type: :model do
       organization_registration_status =
         build(
           :organization_registration_status,
-          organization_registration: organization_registration,
+          organization_registration: organization_registration
         )
       organization_registration_status.valid?
       expect(organization_registration_status.errors[:status]).to include(
-        'を入力してください',
+        'を入力してください'
       )
     end
   end

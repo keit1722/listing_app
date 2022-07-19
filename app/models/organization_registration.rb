@@ -22,14 +22,14 @@
 #
 class OrganizationRegistration < ApplicationRecord
   belongs_to :user
-  has_one :organization_registration_status
+  has_one :organization_registration_status, dependent: :destroy
 
   validates :organization_name, length: { maximum: 100 }, presence: true
   validates :organization_address, length: { maximum: 100 }, presence: true
   validates :organization_phone,
             numericality: true,
             length: {
-              in: 10..11,
+              in: 10..11
             },
             presence: true
   validates :business_detail, length: { maximum: 10_000 }, presence: true
@@ -39,21 +39,21 @@ class OrganizationRegistration < ApplicationRecord
 
   scope :ordered, -> { order(created_at: :desc) }
   scope :accepted,
-        -> {
+        lambda {
           joins(:organization_registration_status).merge(
-            OrganizationRegistrationStatus.accepted,
+            OrganizationRegistrationStatus.accepted
           )
         }
 
   private
 
   def used_organization_name
-    if Organization.exists?(name: organization_name)
-      errors.add(
-        :organization_name,
-        'は既に利用されています。別のものをご入力ください。',
-      )
-    end
+    return unless Organization.exists?(name: organization_name)
+
+    errors.add(
+      :organization_name,
+      'は既に利用されています。別のものをご入力ください。'
+    )
   end
 
   def create_token

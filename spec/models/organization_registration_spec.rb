@@ -31,24 +31,11 @@ RSpec.describe OrganizationRegistration, type: :model do
         build(
           :organization_registration,
           organization_name: nil,
-          user: general_user,
+          user: general_user
         )
       organization_registration.valid?
       expect(organization_registration.errors[:organization_name]).to include(
-        'を入力してください',
-      )
-    end
-
-    it '組織名が必要なこと' do
-      organization_registration =
-        build(
-          :organization_registration,
-          organization_name: nil,
-          user: general_user,
-        )
-      organization_registration.valid?
-      expect(organization_registration.errors[:organization_name]).to include(
-        'を入力してください',
+        'を入力してください'
       )
     end
 
@@ -57,11 +44,11 @@ RSpec.describe OrganizationRegistration, type: :model do
         build(
           :organization_registration,
           organization_address: nil,
-          user: general_user,
+          user: general_user
         )
       organization_registration.valid?
       expect(
-        organization_registration.errors[:organization_address],
+        organization_registration.errors[:organization_address]
       ).to include('を入力してください')
     end
 
@@ -70,11 +57,11 @@ RSpec.describe OrganizationRegistration, type: :model do
         build(
           :organization_registration,
           organization_phone: nil,
-          user: general_user,
+          user: general_user
         )
       organization_registration.valid?
       expect(organization_registration.errors[:organization_phone]).to include(
-        'を入力してください',
+        'を入力してください'
       )
     end
 
@@ -83,11 +70,11 @@ RSpec.describe OrganizationRegistration, type: :model do
         build(
           :organization_registration,
           organization_phone: '０１２０００００００',
-          user: general_user,
+          user: general_user
         )
       organization_registration.valid?
       expect(organization_registration.errors[:organization_phone]).to include(
-        'は数値で入力してください',
+        'は数値で入力してください'
       )
     end
 
@@ -96,11 +83,11 @@ RSpec.describe OrganizationRegistration, type: :model do
         build(
           :organization_registration,
           organization_phone: '0120-000-000',
-          user: general_user,
+          user: general_user
         )
       organization_registration.valid?
       expect(organization_registration.errors[:organization_phone]).to include(
-        'は数値で入力してください',
+        'は数値で入力してください'
       )
     end
 
@@ -109,11 +96,11 @@ RSpec.describe OrganizationRegistration, type: :model do
         build(
           :organization_registration,
           business_detail: nil,
-          user: general_user,
+          user: general_user
         )
       organization_registration.valid?
       expect(organization_registration.errors[:business_detail]).to include(
-        'を入力してください',
+        'を入力してください'
       )
     end
 
@@ -125,17 +112,19 @@ RSpec.describe OrganizationRegistration, type: :model do
         build(
           :organization_registration,
           organization_name: organization.name,
-          user: general_user,
+          user: general_user
         )
       organization_registration.valid?
       expect(organization_registration.errors[:organization_name]).to include(
-        'は既に利用されています。別のものをご入力ください。',
+        'は既に利用されています。別のものをご入力ください。'
       )
     end
   end
 
   describe 'スコープ' do
     describe 'accepted' do
+      subject(:accepted) { described_class.accepted }
+
       let(:organization_registration_accepted_a) do
         create(:organization_registration, user: general_user)
       end
@@ -145,29 +134,30 @@ RSpec.describe OrganizationRegistration, type: :model do
       let(:organization_registration_rejected) do
         create(:organization_registration, user: general_user)
       end
-      let!(:organization_registration_status_a) do
+
+      it do
         create(
           :organization_registration_status_accepted,
-          organization_registration: organization_registration_accepted_a,
+          organization_registration: organization_registration_accepted_a
         )
-      end
-      let!(:organization_registration_status_b) do
-        create(
-          :organization_registration_status_accepted,
-          organization_registration: organization_registration_accepted_b,
-        )
-      end
-      let!(:organization_registration_status_c) do
-        create(
-          :organization_registration_status_rejected,
-          organization_registration: organization_registration_rejected,
-        )
+        expect(accepted).to include organization_registration_accepted_a
       end
 
-      subject { OrganizationRegistration.accepted }
-      it { is_expected.to include organization_registration_accepted_a }
-      it { is_expected.to include organization_registration_accepted_a }
-      it { is_expected.not_to include organization_registration_rejected }
+      it do
+        create(
+          :organization_registration_status_accepted,
+          organization_registration: organization_registration_accepted_b
+        )
+        expect(accepted).to include organization_registration_accepted_b
+      end
+
+      it do
+        create(
+          :organization_registration_status_rejected,
+          organization_registration: organization_registration_rejected
+        )
+        expect(accepted).not_to include organization_registration_rejected
+      end
     end
   end
 
@@ -177,7 +167,7 @@ RSpec.describe OrganizationRegistration, type: :model do
         it 'トークンが作成される' do
           organization_registration =
             create(:organization_registration, user: general_user)
-          expect(organization_registration.token).not_to be nil
+          expect(organization_registration.token).not_to be_nil
         end
       end
 
@@ -185,7 +175,7 @@ RSpec.describe OrganizationRegistration, type: :model do
         it 'トークンは作成されない' do
           organization_registration =
             build(:organization_registration, user: general_user)
-          expect(organization_registration.token).to be nil
+          expect(organization_registration.token).to be_nil
         end
       end
     end

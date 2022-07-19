@@ -6,7 +6,7 @@ class OrganizationRegistrationMailer < ApplicationMailer
     mail(
       to: @user_to.email,
       subject:
-        "#{@organization_registration.organization_name} の登録申請が承認されました",
+        "#{@organization_registration.organization_name} の登録申請が承認されました"
     )
   end
 
@@ -17,7 +17,7 @@ class OrganizationRegistrationMailer < ApplicationMailer
     mail(
       to: @user_to.email,
       subject:
-        "#{@organization_registration.organization_name} の登録申請が否認されました",
+        "#{@organization_registration.organization_name} の登録申請が否認されました"
     )
   end
 end

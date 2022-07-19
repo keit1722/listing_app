@@ -16,7 +16,7 @@ class OrganizationsController < ApplicationController
     @organization_registration =
       OrganizationRegistration.accepted.find_by!(
         user_id: current_user.id,
-        token: params[:token],
+        token: params[:token]
       )
   end
 
@@ -25,7 +25,7 @@ class OrganizationsController < ApplicationController
     @organization_registration =
       OrganizationRegistration.accepted.find_by!(
         user_id: current_user.id,
-        token: params[:token],
+        token: params[:token]
       )
 
     if @organization.save
@@ -71,8 +71,6 @@ class OrganizationsController < ApplicationController
   end
 
   def only_business
-    unless current_user&.business?
-      redirect_to root_path, error: 'ビジネスユーザー専用の機能です'
-    end
+    redirect_to root_path, error: 'ビジネスユーザー専用の機能です' unless current_user&.business?
   end
 end

@@ -5,7 +5,7 @@
 #  id              :bigint           not null, primary key
 #  email           :string           not null
 #  expires_at      :datetime         not null
-#  status          :integer          default(1), not null
+#  status          :integer          default("untouched"), not null
 #  token           :string           not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
