@@ -19,9 +19,18 @@ RSpec.describe '組織', type: :system do
 
     context 'ビジネスユーザーの場合' do
       it '登録フォームに進めること' do
+        organization_registration =
+          create(:organization_registration, user: user_a)
+        organization_registration_status =
+          create(
+            :organization_registration_status_accepted,
+            organization_registration: organization_registration,
+          )
         login_as user_a
-        visit new_organization_path
-        expect(page).to have_current_path new_organization_path
+        visit new_organization_path(token: organization_registration.token)
+        expect(page).to have_current_path new_organization_path(
+                            token: organization_registration.token,
+                          )
       end
     end
   end
