@@ -40,6 +40,7 @@ class User < ApplicationRecord
   has_many :organization_users, dependent: :destroy
   has_many :organizations, through: :organization_users
   has_many :bookmarks, dependent: :destroy
+  has_many :organization_registrations, dependent: :destroy
   has_many :restaurant_bookmarks,
            through: :bookmarks,
            source: :bookmarkable,

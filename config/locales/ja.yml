@@ -24,6 +24,7 @@ ja:
         password: 'パスワード'
         password_confirmation: 'パスワード確認'
         role: 'アカウントタイプ'
+        full_name: '名前'
       organization:
         name: '会社名・屋号'
         address: '住所'
@@ -82,6 +83,11 @@ ja:
         email: 'メールアドレス'
         expires_at: '有効期限'
         token: 'トークン'
+      organization_registration:
+        organization_name: '会社名・屋号'
+        organization_address: '住所'
+        organization_phone: '電話番号'
+        business_detail: '事業内容'
   activemodel:
     attributes:
       restaurant_create_form:
@@ -141,6 +147,11 @@ ja:
         untouched: "未実施"
         accepted: "承諾"
         rejected: "拒否"
+    organization_registration_status:
+      status:
+        accepted: "承認"
+        rejected: "否認"
+        completed: "組織登録済み"
   attributes:
     created_at: 作成日時
     updated_at: 更新日時

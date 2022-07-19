@@ -1,0 +1,54 @@
+<div id="titlebar">
+  <div class="row">
+    <div class="col-md-12">
+      <%= render 'shared/breadcrumbs_mypage', { icon_name: "doc", page_name: "申請内容" } %>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+
+  <!-- Profile -->
+  <div class="col-md-12">
+    <div class="dashboard-list-box margin-top-0">
+      <div class="dashboard-list-box-static">
+        <!-- table -->
+        <table class="basic-table">
+          <tbody>
+
+            <tr>
+              <td data-label="項目"><%= OrganizationRegistration.human_attribute_name("organization_name") %></td>
+              <td data-label="内容"><%= @organization_registration.organization_name %></td>
+            </tr>
+            <tr>
+              <td data-label="項目"><%= OrganizationRegistration.human_attribute_name("organization_address") %></td>
+              <td data-label="内容"><%= @organization_registration.organization_address %></td>
+            </tr>
+            <tr>
+              <td data-label="項目"><%= OrganizationRegistration.human_attribute_name("organization_phone") %></td>
+              <td data-label="内容"><%= @organization_registration.organization_phone %></td>
+            </tr>
+            <tr>
+              <td data-label="項目"><%= OrganizationRegistration.human_attribute_name("business_detail") %></td>
+              <td data-label="内容"><%= @organization_registration.business_detail %></td>
+            </tr>
+            <tr>
+              <td data-label="項目">申請状況</td>
+              <td data-label="内容">
+                <% if @organization_registration.organization_registration_status.nil? %>
+                  承認待ち
+                <% else %>
+                  <%= @organization_registration.organization_registration_status.status_i18n %>
+                <% end %>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+
+    <% if @organization_registration.organization_registration_status&.accepted? %>
+      <%= link_to "本登録へ進む", new_organization_path(token: @organization_registration.token), class: "button margin-top-20" %>
+    <% end %>
+  </div>

@@ -14,6 +14,26 @@
           <% end %>
         <% end %>
       </li>
+      <% if OrganizationRegistration.exists? %>
+        <li>
+          <%= link_to admin_organization_registrations_path do %>
+            <i class="sl sl-icon-folder-alt"></i> 組織登録申請一覧 
+              <% if OrganizationRegistration.where.missing(:organization_registration_status).size != 0 %>
+                <span class="nav-tag messages"><%= OrganizationRegistration.where.missing(:organization_registration_status).size %></span>
+              <% end %>
+            <% end %>
+        </li>
+      <% end %>
+      <% if current_user.organization_registrations.exists? %>
+        <li>
+          <%= link_to mypage_organization_registrations_path do %>
+            <i class="sl sl-icon-folder-alt"></i> 組織登録申請結果 
+            <% if current_user.organization_registrations.accepted.size != 0 %>
+              <span class="nav-tag messages bgc-blue"><%= current_user.organization_registrations.accepted.size %></span>
+            <% end %>
+          <% end %>
+        </li>
+      <% end %>
       <li><a href="dashboard-bookings.html"><i class="fa fa-calendar-check-o"></i> Bookings</a></li>
       <li><a href="dashboard-wallet.html"><i class="sl sl-icon-wallet"></i> Wallet</a></li>
     </ul>
