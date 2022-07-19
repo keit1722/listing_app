@@ -7,7 +7,7 @@ FactoryBot.define do
     password { '12345678' }
     password_confirmation { '12345678' }
 
-    trait :genereal do
+    trait :general do
       role { :general }
     end
 
@@ -19,7 +19,7 @@ FactoryBot.define do
       after(:create) { |user| user.activate! }
     end
 
-    factory :general_user, traits: [:genereal]
+    factory :general_user, traits: [:general]
     factory :business_user, traits: [:business]
   end
 end
