@@ -147,22 +147,19 @@ RSpec.describe OrganizationRegistration, type: :model do
       end
       let!(:organization_registration_status_a) do
         create(
-          :organization_registration_status,
-          status: :accepted,
+          :organization_registration_status_accepted,
           organization_registration: organization_registration_accepted_a,
         )
       end
       let!(:organization_registration_status_b) do
         create(
-          :organization_registration_status,
-          status: :accepted,
+          :organization_registration_status_accepted,
           organization_registration: organization_registration_accepted_b,
         )
       end
       let!(:organization_registration_status_c) do
         create(
-          :organization_registration_status,
-          status: :rejected,
+          :organization_registration_status_rejected,
           organization_registration: organization_registration_rejected,
         )
       end
