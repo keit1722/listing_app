@@ -68,6 +68,13 @@ Rails.application.routes.draw do
     get 'profile/edit', to: 'users#edit'
     resources :bookmarks, only: %i[index]
     resources :notices, only: %i[index]
+    resources :organization_registrations, only: %i[index show new create]
+  end
+
+  namespace :admin do
+    resources :organization_registrations, only: %i[index show] do
+      resources :organization_registration_statuses, only: %i[create]
+    end
   end
 
   resources :organizations, param: :slug do

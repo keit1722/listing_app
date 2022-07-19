@@ -1,0 +1,7 @@
+<p><%=  @user_to.username %>  さん</p>
+<p><%= @organization_registration.organization_name %> の登録申請が承認されました。<br>
+以下のリンクから本登録を進めてください。</p>
+<%= link_to nil, mypage_organization_registration_url(@organization_registration) %>
+<br>
+<p>===============================================</p>
+<p>listing_app</p>

@@ -7,8 +7,6 @@ RSpec.describe '組織', type: :system do
   let!(:organization_b) { create(:organization, users: [user_b]) }
   let(:user_general) { create(:general_user, :activated) }
 
-  before { driven_by(:rack_test) }
-
   describe '組織新規登録' do
     context 'ビジネスユーザーではない場合' do
       it '登録フォームに進めないこと' do
@@ -21,9 +19,17 @@ RSpec.describe '組織', type: :system do
 
     context 'ビジネスユーザーの場合' do
       it '登録フォームに進めること' do
+        organization_registration =
+          create(:organization_registration, user: user_a)
+        create(
+          :organization_registration_status_accepted,
+          organization_registration: organization_registration
+        )
         login_as user_a
-        visit new_organization_path
-        expect(page).to have_current_path new_organization_path
+        visit new_organization_path(token: organization_registration.token)
+        expect(page).to have_current_path new_organization_path(
+          token: organization_registration.token
+        )
       end
     end
   end
@@ -47,9 +53,9 @@ RSpec.describe '組織', type: :system do
     end
 
     it '自分の組織以外は表示されない' do
-      expect { visit organization_path organization_b }.to raise_error(
-        ActiveRecord::RecordNotFound
-      )
+      Capybara.raise_server_errors = false
+      visit organization_path organization_b
+      assert_text 'ActiveRecord::RecordNotFound'
     end
   end
 
@@ -62,9 +68,9 @@ RSpec.describe '組織', type: :system do
     end
 
     it '自分の組織以外は表示されないこと' do
-      expect { visit edit_organization_path organization_b }.to raise_error(
-        ActiveRecord::RecordNotFound
-      )
+      Capybara.raise_server_errors = false
+      visit edit_organization_path organization_b
+      assert_text 'ActiveRecord::RecordNotFound'
     end
   end
 end

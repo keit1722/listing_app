@@ -157,6 +157,26 @@ ActiveRecord::Schema.define(version: 2022_07_01_083140) do
     t.index ["token"], name: "index_organization_invitations_on_token", unique: true
   end
 
+  create_table "organization_registration_statuses", force: :cascade do |t|
+    t.bigint "organization_registration_id"
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.integer "status", null: false
+    t.index ["organization_registration_id"], name: "index_org_registration_statuses_on_org_registration_id"
+  end
+
+  create_table "organization_registrations", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "organization_name", null: false
+    t.string "organization_address", null: false
+    t.string "organization_phone", null: false
+    t.text "business_detail", null: false
+    t.string "token", null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_organization_registrations_on_user_id"
+  end
+
   create_table "organization_users", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "organization_id"
@@ -326,6 +346,8 @@ ActiveRecord::Schema.define(version: 2022_07_01_083140) do
   add_foreign_key "hotels", "organizations"
   add_foreign_key "notices", "users"
   add_foreign_key "organization_invitations", "organizations"
+  add_foreign_key "organization_registration_statuses", "organization_registrations"
+  add_foreign_key "organization_registrations", "users"
   add_foreign_key "organization_users", "organizations"
   add_foreign_key "organization_users", "users"
   add_foreign_key "photo_spots", "organizations"

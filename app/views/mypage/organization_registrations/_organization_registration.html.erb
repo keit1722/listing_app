@@ -1,0 +1,17 @@
+<li class="unread">
+  <%= link_to mypage_organization_registration_path(organization_registration) do %>
+    <div class="message-by margin-left-0">
+      <div class="message-by-headline">
+        <h5>
+          <%= organization_registration.organization_name %> 
+          <% if organization_registration.organization_registration_status.nil? %>
+            <i>承認待ち</i>
+          <% else  %>
+            <i class="<%= organization_registration.organization_registration_status.accepted? ? "bgc-blue" : "bgc-red" %>"><%= organization_registration.organization_registration_status.status_i18n %></i>
+          <% end %>
+        </h5>
+        <span><%= l organization_registration.created_at, format: :short %></span>
+      </div>
+    </div>
+  <% end %>
+</li>

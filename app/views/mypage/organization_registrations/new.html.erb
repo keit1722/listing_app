@@ -1,7 +1,7 @@
 <div id="titlebar">
   <div class="row">
     <div class="col-md-12">
-      <%= render 'shared/breadcrumbs_mypage', { icon_name: "plus", page_name: "新規組織作成" } %>
+      <%= render 'shared/breadcrumbs_mypage', { icon_name: "plus", page_name: "組織登録申請" } %>
     </div>
   </div>
 </div>
@@ -10,8 +10,8 @@
   <div class="col-lg-12">
 
     <div id="add-listing">
-      <%= form_with model: @organization, url: organizations_path(token: @organization_registration.token) do |f| %>
-      <%= render 'shared/error_messages', model: f.object %>
+      <%= form_with model: @organization_registration, url: mypage_organization_registrations_path do |f| %>
+        <%= render 'shared/error_messages', model: f.object %>
 
         <!-- Section -->
         <div class="add-listing-section">
@@ -22,53 +22,52 @@
 
           <!-- Row -->
           <div class="row with-forms margin-bottom-20">
-            <!-- Name -->
+            <!-- Organization Name -->
             <div class="col-md-12">
-              <h5><%= f.label :name %></h5>
-              <%= f.text_field :name, value: @organization_registration.organization_name %>
+              <h5><%= f.label :organization_name %></h5>
+              <%= f.text_field :organization_name %>
             </div>
           </div>
           <!-- Row / End -->
 
           <!-- Row -->
           <div class="row with-forms margin-bottom-20">
-            <!-- Address -->
+            <!-- Organization Address -->
             <div class="col-md-12">
-              <h5><%= f.label :address %></h5>
-              <%= f.text_field :address, value: @organization_registration.organization_address %>
+              <h5><%= f.label :organization_address %></h5>
+              <%= f.text_field :organization_address %>
             </div>
           </div>
           <!-- Row / End -->
 
           <!-- Row -->
           <div class="row with-forms margin-bottom-20">
-            <!-- Phone -->
+            <!-- Organization Phone -->
             <div class="col-md-12">
-              <h5><%= f.label :phone %></h5>
+              <h5><%= f.label :organization_phone %></h5>
               <p>半角数字で入力してください。<br>
               ハイフン（-）も必要ありません。</p>
-              <%= f.text_field :phone, value: @organization_registration.organization_phone, inputmode: "numeric" %>
+              <%= f.text_field :organization_phone %>
             </div>
           </div>
           <!-- Row / End -->
-
+          
           <!-- Row -->
           <div class="row with-forms margin-bottom-20">
-            <!-- Slug -->
+            <!-- Business Detail -->
             <div class="col-md-12">
-              <h5><%= f.label :slug %></h5>
-              <p>他のユーザーの目に触れる箇所になります。<br>
-              50文字以内で入力してください。後から変更が可能です。</p>
-              <%= f.text_field :slug, inputmode: "numeric" %>
+              <h5><%= f.label :business_detail %></h5>
+              <p>簡単に事業内をご入力ください。<br>
+              経営している店舗名などがあれば合わせてご入力ください。</p>
+              <%= f.text_area :business_detail, class: "WYSIWYG", cols: 40, rows: 3 %>
             </div>
           </div>
           <!-- Row / End -->
-
 
         </div>
         <!-- Section / End -->
 
-        <%= f.submit nil, class: "button margin-top-40" %>
+        <%= f.submit "申請する", class: "button margin-top-40" %>
       <% end %>
 
     </div>

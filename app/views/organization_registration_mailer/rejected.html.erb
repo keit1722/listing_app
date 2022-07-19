@@ -1,0 +1,7 @@
+<p><%=  @user_to.username %>  さん</p>
+<p><%= @organization_registration.organization_name %> の登録申請が否認されました。<br>
+以下のリンクから申請内容をご確認いただけます。</p>
+<%= link_to nil, mypage_organization_registration_url(@organization_registration) %>
+<br>
+<p>===============================================</p>
+<p>listing_app</p>
