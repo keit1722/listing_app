@@ -72,6 +72,41 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
+    get 'login', to: 'sessions#new'
+    post 'login', to: 'sessions#create'
+
+    resources :organizations,
+              param: :slug,
+              only: %i[index edit update show destroy] do
+      resources :restaurants, param: :slug do
+        resources :posts, module: :restaurants
+      end
+      resources :shops, param: :slug do
+        resources :posts, module: :shops
+      end
+      resources :hotels, param: :slug do
+        resources :posts, module: :hotels
+      end
+      resources :activities, param: :slug do
+        resources :posts, module: :activities
+      end
+      resources :hot_springs, param: :slug do
+        resources :posts, module: :hot_springs
+      end
+      resources :ski_areas, param: :slug do
+        resources :posts, module: :ski_areas
+      end
+      resources :photo_spots, param: :slug do
+        resources :posts, module: :photo_spots
+      end
+    end
+
+    resources :users, param: :public_uid do
+      resources :bookmarks, only: %i[index]
+      resources :notices, only: %i[index]
+      resources :organization_registrations, only: %i[index show new create]
+    end
+
     resources :organization_registrations, only: %i[index show] do
       resources :organization_registration_statuses, only: %i[create]
     end
