@@ -1,7 +1,7 @@
 class Admin::Organizations::PhotoSpotsController < ApplicationController
-  layout 'mypage_maps', only: %i[show new edit]
+  layout 'mypage_maps', only: %i[show edit]
 
-  before_action :set_districts, only: %i[new create edit update]
+  before_action :set_districts, only: %i[edit update]
 
   def index
     @photo_spots =
@@ -23,8 +23,6 @@ class Admin::Organizations::PhotoSpotsController < ApplicationController
         .find_by!(slug: params[:slug])
   end
 
-  def new; end
-
   def edit
     @photo_spot =
       Organization
@@ -43,7 +41,7 @@ class Admin::Organizations::PhotoSpotsController < ApplicationController
         .with_attached_images
         .find_by!(slug: params[:slug])
     @photo_spot_update_form =
-      PhotoSpotUpdateForm.new(@photo_spot, photo_spot_update_params)
+      PhotoSpotUpdateForm.new(@photo_spot, photo_spot_params)
 
     if @photo_spot_update_form.update
       redirect_to admin_organization_photo_spot_path,
@@ -56,24 +54,7 @@ class Admin::Organizations::PhotoSpotsController < ApplicationController
 
   private
 
-  def photo_spot_create_params
-    params
-      .require(:photo_spot_create_form)
-      .permit(
-        :district_id,
-        photo_spot_attributes: [
-          :name,
-          :lat,
-          :lng,
-          :slug,
-          :description,
-          :address,
-          { images: [] },
-        ],
-      )
-  end
-
-  def photo_spot_update_params
+  def photo_spot_params
     params
       .require(:photo_spot_update_form)
       .permit(

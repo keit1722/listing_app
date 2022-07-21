@@ -1,7 +1,7 @@
 class Admin::Organizations::HotelsController < ApplicationController
-  layout 'mypage_maps', only: %i[show new edit]
+  layout 'mypage_maps', only: %i[show edit]
 
-  before_action :set_districts, only: %i[new create edit update]
+  before_action :set_districts, only: %i[edit update]
 
   def index
     @hotels =
@@ -23,8 +23,6 @@ class Admin::Organizations::HotelsController < ApplicationController
         .find_by!(slug: params[:slug])
   end
 
-  def new; end
-
   def edit
     @hotel =
       Organization
@@ -42,7 +40,7 @@ class Admin::Organizations::HotelsController < ApplicationController
         .hotels
         .with_attached_images
         .find_by!(slug: params[:slug])
-    @hotel_update_form = HotelUpdateForm.new(@hotel, hotel_update_params)
+    @hotel_update_form = HotelUpdateForm.new(@hotel, hotel_params)
 
     if @hotel_update_form.update
       redirect_to admin_organization_hotel_path, success: '情報を更新しました'
@@ -54,33 +52,7 @@ class Admin::Organizations::HotelsController < ApplicationController
 
   private
 
-  def hotel_create_params
-    params
-      .require(:hotel_create_form)
-      .permit(
-        :district_id,
-        reservation_link_attributes: [:link],
-        opening_hours_attributes: %i[
-          start_time_hour
-          start_time_minute
-          end_time_hour
-          end_time_minute
-          closed
-          day
-        ],
-        hotel_attributes: [
-          :name,
-          :lat,
-          :lng,
-          :slug,
-          :description,
-          :address,
-          { images: [] },
-        ],
-      )
-  end
-
-  def hotel_update_params
+  def hotel_params
     params
       .require(:hotel_update_form)
       .permit(

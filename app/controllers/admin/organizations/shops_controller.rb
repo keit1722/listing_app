@@ -1,8 +1,8 @@
 class Admin::Organizations::ShopsController < ApplicationController
-  layout 'mypage_maps', only: %i[show new edit]
+  layout 'mypage_maps', only: %i[show edit]
 
-  before_action :set_districts, only: %i[new create edit update]
-  before_action :set_shop_categories, only: %i[new create edit update]
+  before_action :set_districts, only: %i[edit update]
+  before_action :set_shop_categories, only: %i[edit update]
 
   def index
     @shops =
@@ -24,8 +24,6 @@ class Admin::Organizations::ShopsController < ApplicationController
         .find_by!(slug: params[:slug])
   end
 
-  def new; end
-
   def edit
     @shop =
       Organization
@@ -43,7 +41,7 @@ class Admin::Organizations::ShopsController < ApplicationController
         .shops
         .with_attached_images
         .find_by!(slug: params[:slug])
-    @shop_update_form = ShopUpdateForm.new(@shop, shop_update_params)
+    @shop_update_form = ShopUpdateForm.new(@shop, shop_params)
 
     if @shop_update_form.update
       redirect_to admin_organization_shop_path, success: '情報を更新しました'
@@ -55,33 +53,7 @@ class Admin::Organizations::ShopsController < ApplicationController
 
   private
 
-  def shop_create_params
-    params
-      .require(:shop_create_form)
-      .permit(
-        :district_id,
-        opening_hours_attributes: %i[
-          start_time_hour
-          start_time_minute
-          end_time_hour
-          end_time_minute
-          closed
-          day
-        ],
-        shop_category_ids: [],
-        shop_attributes: [
-          :name,
-          :lat,
-          :lng,
-          :slug,
-          :description,
-          :address,
-          { images: [] },
-        ],
-      )
-  end
-
-  def shop_update_params
+  def shop_params
     params
       .require(:shop_update_form)
       .permit(

@@ -1,7 +1,7 @@
 class Admin::Organizations::SkiAreasController < ApplicationController
-  layout 'mypage_maps', only: %i[show new edit]
+  layout 'mypage_maps', only: %i[show edit]
 
-  before_action :set_districts, only: %i[new create edit update]
+  before_action :set_districts, only: %i[edit update]
 
   def index
     @ski_areas =
@@ -23,8 +23,6 @@ class Admin::Organizations::SkiAreasController < ApplicationController
         .find_by!(slug: params[:slug])
   end
 
-  def new; end
-
   def edit
     @ski_area =
       Organization
@@ -42,8 +40,7 @@ class Admin::Organizations::SkiAreasController < ApplicationController
         .ski_areas
         .with_attached_images
         .find_by!(slug: params[:slug])
-    @ski_area_update_form =
-      SkiAreaUpdateForm.new(@ski_area, ski_area_update_params)
+    @ski_area_update_form = SkiAreaUpdateForm.new(@ski_area, ski_area_params)
 
     if @ski_area_update_form.update
       redirect_to admin_organization_ski_area_path,
@@ -56,32 +53,7 @@ class Admin::Organizations::SkiAreasController < ApplicationController
 
   private
 
-  def ski_area_create_params
-    params
-      .require(:ski_area_create_form)
-      .permit(
-        :district_id,
-        opening_hours_attributes: %i[
-          start_time_hour
-          start_time_minute
-          end_time_hour
-          end_time_minute
-          closed
-          day
-        ],
-        ski_area_attributes: [
-          :name,
-          :lat,
-          :lng,
-          :slug,
-          :description,
-          :address,
-          { images: [] },
-        ],
-      )
-  end
-
-  def ski_area_update_params
+  def ski_area_params
     params
       .require(:ski_area_update_form)
       .permit(

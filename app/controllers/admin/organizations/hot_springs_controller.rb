@@ -1,7 +1,7 @@
 class Admin::Organizations::HotSpringsController < ApplicationController
-  layout 'mypage_maps', only: %i[show new edit]
+  layout 'mypage_maps', only: %i[show edit]
 
-  before_action :set_districts, only: %i[new create edit update]
+  before_action :set_districts, only: %i[edit update]
 
   def index
     @hot_springs =
@@ -23,8 +23,6 @@ class Admin::Organizations::HotSpringsController < ApplicationController
         .find_by!(slug: params[:slug])
   end
 
-  def new; end
-
   def edit
     @hot_spring =
       Organization
@@ -43,7 +41,7 @@ class Admin::Organizations::HotSpringsController < ApplicationController
         .with_attached_images
         .find_by!(slug: params[:slug])
     @hot_spring_update_form =
-      HotSpringUpdateForm.new(@hot_spring, hot_spring_update_params)
+      HotSpringUpdateForm.new(@hot_spring, hot_spring_params)
 
     if @hot_spring_update_form.update
       redirect_to admin_organization_hot_spring_path,
@@ -56,32 +54,7 @@ class Admin::Organizations::HotSpringsController < ApplicationController
 
   private
 
-  def hot_spring_create_params
-    params
-      .require(:hot_spring_create_form)
-      .permit(
-        :district_id,
-        opening_hours_attributes: %i[
-          start_time_hour
-          start_time_minute
-          end_time_hour
-          end_time_minute
-          closed
-          day
-        ],
-        hot_spring_attributes: [
-          :name,
-          :lat,
-          :lng,
-          :slug,
-          :description,
-          :address,
-          { images: [] },
-        ],
-      )
-  end
-
-  def hot_spring_update_params
+  def hot_spring_params
     params
       .require(:hot_spring_update_form)
       .permit(

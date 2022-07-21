@@ -1,8 +1,8 @@
 class Admin::Organizations::RestaurantsController < ApplicationController
-  layout 'mypage_maps', only: %i[show new edit]
+  layout 'mypage_maps', only: %i[show edit]
 
-  before_action :set_districts, only: %i[new create edit update]
-  before_action :set_restaurant_categories, only: %i[new create edit update]
+  before_action :set_districts, only: %i[edit update]
+  before_action :set_restaurant_categories, only: %i[edit update]
 
   def index
     @restaurants =
@@ -24,8 +24,6 @@ class Admin::Organizations::RestaurantsController < ApplicationController
         .find_by!(slug: params[:slug])
   end
 
-  def new; end
-
   def edit
     @restaurant =
       Organization
@@ -44,7 +42,7 @@ class Admin::Organizations::RestaurantsController < ApplicationController
         .with_attached_images
         .find_by!(slug: params[:slug])
     @restaurant_update_form =
-      RestaurantUpdateForm.new(@restaurant, restaurant_update_params)
+      RestaurantUpdateForm.new(@restaurant, restaurant_params)
 
     if @restaurant_update_form.update
       redirect_to admin_organization_restaurant_path,
@@ -57,34 +55,7 @@ class Admin::Organizations::RestaurantsController < ApplicationController
 
   private
 
-  def restaurant_create_params
-    params
-      .require(:restaurant_create_form)
-      .permit(
-        :district_id,
-        reservation_link_attributes: [:link],
-        opening_hours_attributes: %i[
-          start_time_hour
-          start_time_minute
-          end_time_hour
-          end_time_minute
-          closed
-          day
-        ],
-        restaurant_category_ids: [],
-        restaurant_attributes: [
-          :name,
-          :lat,
-          :lng,
-          :slug,
-          :description,
-          :address,
-          { images: [] },
-        ],
-      )
-  end
-
-  def restaurant_update_params
+  def restaurant_params
     params
       .require(:restaurant_update_form)
       .permit(
