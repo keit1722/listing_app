@@ -101,7 +101,9 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :users, param: :public_uid do
+    resources :users,
+              param: :public_uid,
+              only: %i[index edit update show destroy] do
       resources :bookmarks, only: %i[index]
       resources :notices, only: %i[index]
       resources :organization_registrations, only: %i[index show new create]
