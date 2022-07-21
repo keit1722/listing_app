@@ -58,12 +58,12 @@
             <div class="col-md-12">
               <h5><%= f.label :slug %></h5>
               <p>他のユーザーの目に触れる箇所になります。<br>
-              50文字以内で入力してください。後から変更が可能です。</p>
-              <%= f.text_field :slug, inputmode: "numeric" %>
+              半角英数字（アルファベットは小文字のみ）とハイフン（-）が利用可能です。<br>
+              50文字以内で入力してください。後から変更ができません。</p>
+              <%= f.text_field :slug %>
             </div>
           </div>
           <!-- Row / End -->
-
 
         </div>
         <!-- Section / End -->
