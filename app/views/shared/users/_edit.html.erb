@@ -1,0 +1,45 @@
+<div id="titlebar">
+  <div class="row">
+    <div class="col-md-12">
+      <%= render 'shared/breadcrumbs', { icon_name: "pencil", page_name: page_name } %>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+
+  <!-- Profile -->
+  <div class="col-md-12">
+    <%= form_with model: user, url: send(update_path) do |f| %>
+      <%= render 'shared/error_messages', model: f.object %>
+      <div class="dashboard-list-box margin-top-0">
+        <div class="dashboard-list-box-static">
+
+          <!-- Details -->
+          <div class="my-profile">
+
+            <%= f.label :last_name %>
+            <%= f.text_field :last_name %>
+            <%= f.label :first_name %>
+            <%= f.text_field :first_name %>
+            <%= f.label :username %>
+            <%= f.text_field :username %>
+            <% if current_page?(edit_admin_user_path(user)) %>
+              <%= f.label :public_uid %>
+              <%= f.text_field :public_uid %>
+            <% end %>
+            <%= f.label :email %>
+            <%= f.email_field :email %>
+            <%= f.label :password %>
+            <%= f.password_field :password %>
+            <%= f.label :password_confirmation %>
+            <%= f.password_field :password_confirmation %>
+
+          </div>
+
+          <%= f.submit nil, class: "button margin-top-15" %>
+
+        </div>
+      </div>
+    <% end %>
+  </div>
