@@ -17,7 +17,7 @@
       <% elsif %>
         <div class="messages-inbox">
           <ul>
-            <%= render partial: 'shared/organizations/organization', collection: organizations, locals: { organization_path: organization_path } %>
+            <%= render partial: 'shared/organizations/organization', collection: organizations, locals: { show_path: show_path } %>
           </ul>
         </div>
       <% end %>
