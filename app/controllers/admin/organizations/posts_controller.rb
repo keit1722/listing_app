@@ -17,7 +17,7 @@ class Admin::Organizations::PostsController < ApplicationController
   def update
     @post = @postable.posts.find(params[:id])
     if @post.update(post_params)
-      redirect_to [@postable.organization, @postable, @post],
+      redirect_to [:admin, @postable.organization, @postable, @post],
                   success: '内容を更新しました'
     else
       flash.now[:danger] = '内容を更新できませんでした'
@@ -28,7 +28,7 @@ class Admin::Organizations::PostsController < ApplicationController
   def destroy
     @post = @postable.posts.find(params[:id])
     @post.destroy!
-    redirect_to [@postable.organization, @postable, :posts],
+    redirect_to [:admin, @postable.organization, @postable, :posts],
                 success: '削除しました'
   end
 
