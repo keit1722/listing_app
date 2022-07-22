@@ -8,7 +8,7 @@
 
 <div class="row">
   <div class="col-lg-12">
-    <%= form_with model: [post.postable.organization, post.postable, post], url: [post.postable.organization, post.postable, post] do |f| %>
+    <%= form_with model: post, url: send(update_path, post.postable.organization, post.postable, post) do |f| %>
         <div id="add-listing">
           <%= render 'shared/error_messages', model: f.object %>
           <!-- Section -->
