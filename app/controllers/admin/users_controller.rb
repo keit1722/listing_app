@@ -42,6 +42,7 @@ class Admin::UsersController < ApplicationController
         :password_confirmation,
         :username,
         :public_uid,
+        :role,
       )
   end
 end
