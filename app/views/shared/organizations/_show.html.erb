@@ -34,7 +34,7 @@
             </tr>
             <tr>
               <td data-label="項目">メンバー</td>
-              <td data-label="内容"><%= organization.users.exists? ? organization.decorate.send(organization_users) : "メンバーはいません" %></td>
+              <td data-label="内容"><%= organization.users.exists? ? organization.decorate.arranged_users : "メンバーはいません" %></td>
             </tr>
           </tbody>
         </table>
