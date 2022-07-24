@@ -1,4 +1,4 @@
-class Admin::Organizations::HotSpringsController < ApplicationController
+class Admin::Organizations::HotSpringsController < Admin::BaseController
   layout 'mypage_maps', only: %i[show edit]
 
   before_action :set_districts, only: %i[edit update]

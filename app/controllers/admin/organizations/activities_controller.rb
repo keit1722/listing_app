@@ -1,4 +1,4 @@
-class Admin::Organizations::ActivitiesController < ApplicationController
+class Admin::Organizations::ActivitiesController < Admin::BaseController
   layout 'mypage_maps', only: %i[show edit]
 
   before_action :set_districts, only: %i[edit update]

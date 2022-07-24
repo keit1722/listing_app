@@ -1,4 +1,5 @@
-class Admin::SessionsController < ApplicationController
+class Admin::SessionsController < Admin::BaseController
+  skip_before_action :only_admin, only: %i[new create]
   before_action :require_logout, only: %i[new create]
 
   def new; end

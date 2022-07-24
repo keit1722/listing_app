@@ -1,4 +1,4 @@
-class Admin::Organizations::RestaurantsController < ApplicationController
+class Admin::Organizations::RestaurantsController < Admin::BaseController
   layout 'mypage_maps', only: %i[show edit]
 
   before_action :set_districts, only: %i[edit update]

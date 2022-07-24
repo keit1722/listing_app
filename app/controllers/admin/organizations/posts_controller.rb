@@ -1,4 +1,4 @@
-class Admin::Organizations::PostsController < ApplicationController
+class Admin::Organizations::PostsController < Admin::BaseController
   layout 'mypage'
 
   def index

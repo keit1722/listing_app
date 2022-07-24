@@ -1,4 +1,4 @@
-class Admin::Organizations::HotelsController < ApplicationController
+class Admin::Organizations::HotelsController < Admin::BaseController
   layout 'mypage_maps', only: %i[show edit]
 
   before_action :set_districts, only: %i[edit update]

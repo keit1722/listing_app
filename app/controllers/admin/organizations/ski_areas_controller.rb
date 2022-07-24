@@ -1,4 +1,4 @@
-class Admin::Organizations::SkiAreasController < ApplicationController
+class Admin::Organizations::SkiAreasController < Admin::BaseController
   layout 'mypage_maps', only: %i[show edit]
 
   before_action :set_districts, only: %i[edit update]

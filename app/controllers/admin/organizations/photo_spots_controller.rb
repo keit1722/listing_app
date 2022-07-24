@@ -1,4 +1,4 @@
-class Admin::Organizations::PhotoSpotsController < ApplicationController
+class Admin::Organizations::PhotoSpotsController < Admin::BaseController
   layout 'mypage_maps', only: %i[show edit]
 
   before_action :set_districts, only: %i[edit update]
