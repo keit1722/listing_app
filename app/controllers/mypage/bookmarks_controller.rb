@@ -1,4 +1,4 @@
-class Mypage::BookmarksController < ApplicationController
+class Mypage::BookmarksController < Mypage::BaseController
   layout 'mypage'
 
   def index

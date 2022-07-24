@@ -1,6 +1,4 @@
-class Mypage::UsersController < ApplicationController
-  before_action :require_login
-
+class Mypage::UsersController < Mypage::BaseController
   layout 'mypage'
 
   def show
@@ -38,7 +36,7 @@ class Mypage::UsersController < ApplicationController
         :email,
         :password,
         :password_confirmation,
-        :username
+        :username,
       )
   end
 end
