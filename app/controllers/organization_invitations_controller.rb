@@ -1,5 +1,5 @@
 class OrganizationInvitationsController < ApplicationController
-  layout 'mypage', only: [:show]
+  layout 'mypage'
 
   before_action :check_valid_action, only: [:show, :accepted, :unaccepted]
 

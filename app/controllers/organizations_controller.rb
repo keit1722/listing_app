@@ -1,5 +1,5 @@
 class OrganizationsController < ApplicationController
-  before_action :only_business
+  before_action :only_business_or_admin
 
   layout 'mypage'
 
@@ -68,9 +68,5 @@ class OrganizationsController < ApplicationController
 
   def organization_update_params
     params.require(:organization).permit(:name, :address, :phone)
-  end
-
-  def only_business
-    redirect_to root_path, error: 'ビジネスユーザー専用の機能です' unless current_user&.business?
   end
 end

@@ -1,2 +1,1 @@
-<%= render 'organizations/listings/index', { listings: @activities, page: "アクティビティ" } %>
-
+<%= render 'shared/organizations/listings/index', { listings: @activities, page: "アクティビティ", show_path: :organization_activity_path, edit_path: :edit_organization_activity_path } %>

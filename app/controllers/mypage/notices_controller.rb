@@ -1,6 +1,4 @@
-class Mypage::NoticesController < ApplicationController
-  layout 'mypage', only: [:index]
-
+class Mypage::NoticesController < Mypage::BaseController
   def index
     @notices =
       current_user
