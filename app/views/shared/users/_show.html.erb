@@ -1,0 +1,61 @@
+<div id="titlebar">
+  <div class="row">
+    <div class="col-md-12">
+      <%= render 'shared/breadcrumbs', { icon_name: "user", page_name: page_name } %>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+
+  <!-- Profile -->
+  <div class="col-md-12">
+    <div class="dashboard-list-box margin-top-0">
+      <div class="dashboard-list-box-static">
+        <!-- table -->
+        <table class="basic-table">
+          <tbody>
+            <tr>
+              <td data-label="項目"><%= User.human_attribute_name("last_name") %></td>
+              <td data-label="内容"><%= user.last_name %></td>
+            </tr>
+            <tr>
+              <td data-label="項目"><%= User.human_attribute_name("first_name") %></td>
+              <td data-label="内容"><%= user.first_name %></td>
+            </tr>
+            <tr>
+              <td data-label="項目"><%= User.human_attribute_name("username") %></td>
+              <td data-label="内容"><%= user.username %></td>
+            </tr>
+            <tr>
+              <td data-label="項目"><%= User.human_attribute_name("email") %></td>
+              <td data-label="内容"><%= user.email %></td>
+            </tr>
+            <tr>
+              <td data-label="項目"><%= User.human_attribute_name("role") %></td>
+              <td data-label="内容"><%= user.role_i18n %></td>
+            </tr>
+            <% if current_page?(admin_user_path(user)) %>
+              <tr>
+                <td data-label="項目"><%= User.human_attribute_name("public_uid") %></td>
+                <td data-label="内容"><%= user.public_uid %></td>
+              </tr>
+            <% end %>
+            <tr>
+              <td data-label="項目"><%= User.human_attribute_name("created_at") %></td>
+              <td data-label="内容"><%= l user.created_at, format: :long %></td>
+            </tr>
+          </tbody>
+        </table>
+        <!-- table -->
+      </div>
+    </div>
+
+    <%= link_to send(edit_path), class: "button margin-top-20" do %>
+      <i class="sl sl-icon-pencil"></i> 編集
+    <% end %>
+    <%= link_to send(destroy_path), method: :delete, data: { confirm: "アカウントを削除すると復旧はできません。よろしいですか？" }, class: "border button" do %>
+      <i class="sl sl-icon-trash"></i> 削除
+    <% end %>
+    
+  </div>

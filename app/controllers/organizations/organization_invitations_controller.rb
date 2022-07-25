@@ -1,6 +1,4 @@
-class Organizations::OrganizationInvitationsController < ApplicationController
-  layout 'mypage', only: [:index, :new, :create]
-
+class Organizations::OrganizationInvitationsController < Organizations::BaseController
   def index
     @organization_invitations =
       current_user

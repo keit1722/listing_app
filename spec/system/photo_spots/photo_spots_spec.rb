@@ -16,7 +16,7 @@ RSpec.describe 'フォトスポット', type: :system do
 
   describe 'フォトスポット一覧表示' do
     it 'マイページに自分のフォトスポットだけが表示されること' do
-      login_as user_a
+      business_login_as user_a
       visit organization_photo_spots_path(organization_a)
       expect(page).to have_content photo_spot_a.name
       expect(page).not_to have_content photo_spot_b.name
@@ -30,7 +30,7 @@ RSpec.describe 'フォトスポット', type: :system do
   end
 
   describe 'フォトスポット詳細表示' do
-    before { login_as user_a }
+    before { business_login_as user_a }
 
     it 'マイページに自分のフォトスポットは表示されること' do
       visit organization_photo_spot_path(organization_a, photo_spot_a)
@@ -48,7 +48,7 @@ RSpec.describe 'フォトスポット', type: :system do
   end
 
   describe 'フォトスポット新規登録' do
-    before { login_as user_a }
+    before { business_login_as user_a }
 
     context '自分の組織に関するものの場合' do
       it '登録フォームに進めること' do
@@ -70,7 +70,7 @@ RSpec.describe 'フォトスポット', type: :system do
     context '入力情報が正しい場合' do
       it '新規登録できること' do
         visit new_organization_photo_spot_path(organization_a)
-        fill_in 'フォトスポットの名前', with: 'サンプルフォトスポットの名前'
+        fill_in '名称', with: 'サンプルフォトスポットの名前'
         find('#photo_spot_create_form_district_id_chosen').click
         find(
           '#photo_spot_create_form_district_id_chosen .active-result',
@@ -78,7 +78,7 @@ RSpec.describe 'フォトスポット', type: :system do
         ).click
         fill_in '住所', with: 'サンプルフォトスポット住所'
         fill_in 'スラッグ', with: 'sample-photo-spot'
-        fill_in 'フォトスポットの紹介',
+        fill_in '紹介',
                 with:
                   'Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua.'
         find('#map-location-registration').click
@@ -95,7 +95,7 @@ RSpec.describe 'フォトスポット', type: :system do
   end
 
   describe 'フォトスポット情報編集' do
-    before { login_as user_a }
+    before { business_login_as user_a }
 
     context '自分の組織に関するものの場合' do
       it '編集フォームに進めること' do
@@ -119,14 +119,14 @@ RSpec.describe 'フォトスポット', type: :system do
       it '情報更新ができること' do
         create(:district_sano)
         visit edit_organization_photo_spot_path(organization_a, photo_spot_a)
-        fill_in 'フォトスポットの名前', with: '更新サンプルフォトスポットの名前'
+        fill_in '名称', with: '更新サンプルフォトスポットの名前'
         find('#photo_spot_update_form_district_id_chosen').click
         find(
           '#photo_spot_update_form_district_id_chosen .active-result',
           text: '佐野'
         ).click
         fill_in '住所', with: '更新サンプルフォトスポット住所'
-        fill_in 'フォトスポットの紹介',
+        fill_in '紹介',
                 with:
                   'Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
         find('#map-location-registration').click
@@ -235,7 +235,7 @@ RSpec.describe 'フォトスポット', type: :system do
   end
 
   describe 'お気に入り' do
-    before { login_as user_a }
+    before { business_login_as user_a }
 
     it 'お気に入り登録ができること' do
       visit photo_spot_path(photo_spot_a)
@@ -274,7 +274,7 @@ RSpec.describe 'フォトスポット', type: :system do
   end
 
   describe '投稿の新規作成' do
-    before { login_as user_a }
+    before { business_login_as user_a }
 
     context '自分の所属組織のものであれば' do
       it '投稿の新規作成ページが表示されること' do
@@ -322,7 +322,7 @@ RSpec.describe 'フォトスポット', type: :system do
     let(:post_a) { create(:post_published, postable: photo_spot_a) }
     let(:post_b) { create(:post_published, postable: photo_spot_b) }
 
-    before { login_as user_a }
+    before { business_login_as user_a }
 
     context '自分の所属組織のものであれば' do
       it '投稿詳細ページが表示される' do
@@ -354,7 +354,7 @@ RSpec.describe 'フォトスポット', type: :system do
 
     context '入力情報が正しい場合' do
       it '情報更新できること' do
-        login_as user_a
+        business_login_as user_a
         visit edit_organization_photo_spot_post_path(
           organization_a,
           photo_spot_a,
@@ -379,13 +379,11 @@ RSpec.describe 'フォトスポット', type: :system do
     let!(:post_a) { create(:post_published, postable: photo_spot_a) }
     let!(:post_b) { create(:post_published, postable: photo_spot_b) }
 
-    context 'a context' do
-      it '自分の組織の投稿のみ表示される' do
-        login_as user_a
-        visit organization_photo_spot_posts_path(organization_a, photo_spot_a)
-        expect(page).to have_content post_a.title
-        expect(page).not_to have_content post_b.title
-      end
+    it '自分の組織の投稿のみ表示される' do
+      business_login_as user_a
+      visit organization_photo_spot_posts_path(organization_a, photo_spot_a)
+      expect(page).to have_content post_a.title
+      expect(page).not_to have_content post_b.title
     end
   end
 
@@ -393,7 +391,7 @@ RSpec.describe 'フォトスポット', type: :system do
     let(:post_a) { create(:post_published, postable: photo_spot_a) }
 
     it '投稿を削除できること' do
-      login_as user_a
+      business_login_as user_a
       visit organization_photo_spot_post_path(
         organization_a,
         photo_spot_a,
@@ -447,7 +445,7 @@ RSpec.describe 'フォトスポット', type: :system do
   end
 
   describe '通知一覧表示' do
-    before { login_as user_a }
+    before { business_login_as user_a }
 
     context 'お気に入りをしているフォトスポットの場合' do
       it '投稿がされるとフォトスポットの名前が追加される' do

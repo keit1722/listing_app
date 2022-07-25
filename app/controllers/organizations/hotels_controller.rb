@@ -1,6 +1,4 @@
 class Organizations::HotelsController < Organizations::BaseController
-  layout 'mypage_maps', only: [:show, :new, :edit]
-
   before_action :set_districts, only: [:new, :create, :edit, :update]
 
   def index
@@ -12,7 +10,6 @@ class Organizations::HotelsController < Organizations::BaseController
       .page(params[:page])
       .per(20)
       .with_attached_images
-    render layout: 'mypage_maps'
   end
 
   def show
@@ -23,12 +20,14 @@ class Organizations::HotelsController < Organizations::BaseController
       .hotels
       .with_attached_images
       .find_by!(slug: params[:slug])
+    render layout: 'mypage_maps'
   end
 
   def new
     organization =
       current_user.organizations.find_by(slug: params[:organization_slug])
     @hotel_create_form = HotelCreateForm.new(organization)
+    render layout: 'mypage_maps'
   end
 
   def create
@@ -53,6 +52,7 @@ class Organizations::HotelsController < Organizations::BaseController
       .with_attached_images
       .find_by!(slug: params[:slug])
     @hotel_update_form = HotelUpdateForm.new(@hotel)
+    render layout: 'mypage_maps'
   end
 
   def update

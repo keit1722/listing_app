@@ -1,8 +1,4 @@
-class Mypage::UsersController < ApplicationController
-  before_action :require_login
-
-  layout 'mypage'
-
+class Mypage::UsersController < Mypage::BaseController
   def show
     @user = User.find_by(public_uid: current_user.public_uid)
   end

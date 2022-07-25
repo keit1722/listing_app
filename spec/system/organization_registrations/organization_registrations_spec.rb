@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe '組織登録申請', type: :system do
   let(:user) { create(:general_user, :activated) }
 
-  before { login_as user }
+  before { general_login_as user }
 
   describe '登録申請' do
     context '入力情報が正しい場合' do

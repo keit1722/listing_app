@@ -1,0 +1,69 @@
+<div id="titlebar">
+  <div class="row">
+    <div class="col-md-12">
+      <%= render 'shared/breadcrumbs_mypage', { icon_name: "doc", page_name: "フォトスポット詳細" } %>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+
+  <!-- Profile -->
+  <div class="col-md-12">
+    <div class="dashboard-list-box margin-top-0">
+      <div class="dashboard-list-box-static">
+        <!-- table -->
+        <table class="basic-table">
+          <tbody>
+            <tr>
+              <td data-label="項目"><%= PhotoSpot.human_attribute_name("name") %></td>
+              <td data-label="内容"><%= photo_spot.name %></td>
+            </tr>
+            <tr>
+              <td data-label="項目"><%= PhotoSpot.human_attribute_name("address") %></td>
+              <td data-label="内容"><%= photo_spot.address %></td>
+            </tr>
+            <tr>
+              <td data-label="項目"><%= District.model_name.human %></td>
+              <td data-label="内容"><%= photo_spot.districts.first.name %></td>
+            </tr>
+            <tr>
+              <td data-label="項目"><%= PhotoSpot.human_attribute_name("description") %></td>
+              <td data-label="内容"><%= photo_spot.decorate.format_description %></td>
+            </tr>
+          </tbody>
+        </table>
+        <!-- table end -->
+
+        <!-- Row -->
+        <div class="row with-forms margin-bottom-20">
+          <!-- Map -->
+          <div class="col-md-12">
+            <div id="map-location-display" class="margin-top-25 margin-bottom-25" data-lat="<%= photo_spot.lat %>" data-lng="<%= photo_spot.lng %>"></div>
+          </div>
+        </div>
+        <!-- Row / End -->
+
+        <!-- Row -->
+        <% if photo_spot.images.attached? %>
+          <div class="row with-forms margin-bottom-20">
+            <!-- Images preview -->
+            <div class="col-md-12">
+              <div id="preview">
+                <% photo_spot.images.each do |image| %>
+                  <%= image_tag image.variant(resize: '300x200').processed %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+        <!-- Row / End -->
+      </div>
+    </div>
+    <%= link_to send(edit_path), class: "button margin-top-15" do %>
+      <i class="sl sl-icon-pencil"></i> 編集
+    <% end %>
+    <%= link_to send(destroy_path), method: :delete, data: { confirm: "削除すると復旧はできません。よろしいですか？" }, class: "border button" do %>
+      <i class="sl sl-icon-trash"></i> 削除
+    <% end %>
+  </div>

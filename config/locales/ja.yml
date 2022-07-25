@@ -25,52 +25,53 @@ ja:
         password_confirmation: 'パスワード確認'
         role: 'アカウントタイプ'
         full_name: '名前'
+        public_uid: 'パブリックUID'
       organization:
         name: '会社名・屋号'
         address: '住所'
         phone: '電話番号'
         slug: 'スラッグ'
       restaurant:
-        name: '店名'
+        name: '名称'
         address: '住所'
         slug: 'スラッグ'
-        description: 店の紹介
+        description: '紹介'
         images: '画像'
       activity:
-        name: 'アクティビティの名前'
+        name: '名称'
         address: '住所'
         slug: 'スラッグ'
-        description: アクティビティの紹介
+        description: '紹介'
         images: '画像'
       hotel:
-        name: '宿泊施設の名前'
+        name: '名称'
         address: '住所'
         slug: 'スラッグ'
-        description: 宿泊施設の紹介
+        description: '紹介'
         images: '画像'
       shop:
-        name: '店名'
+        name: '名称'
         address: '住所'
         slug: 'スラッグ'
-        description: ショップの紹介
+        description: '紹介'
         images: '画像'
       hot_spring:
-        name: '温泉の名前'
+        name: '名称'
         address: '住所'
         slug: 'スラッグ'
-        description: 温泉の紹介
+        description: '紹介'
         images: '画像'
       ski_area:
-        name: 'スキー場の名前'
+        name: '名称'
         address: '住所'
         slug: 'スラッグ'
-        description: スキー場の紹介
+        description: '紹介'
         images: '画像'
       photo_spot:
-        name: 'フォトスポットの名前'
+        name: '名称'
         address: '住所'
         slug: 'スラッグ'
-        description: フォトスポットの紹介
+        description: '紹介'
         images: '画像'
       reservation_link:
         link: '予約ページのURL'

@@ -21100,6 +21100,10 @@ body .category-box-btn:hover {
   visibility: hidden !important;
 }
 
+.padding-0 {
+  padding: 0 !important;
+}
+
 .padding-30 {
   padding: 30px !important;
 }

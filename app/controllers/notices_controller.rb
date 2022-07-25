@@ -1,5 +1,5 @@
 class NoticesController < ApplicationController
-  before_action :require_login, only: [:read]
+  before_action :require_login
 
   def read
     notice = current_user.notices.find(params[:id])

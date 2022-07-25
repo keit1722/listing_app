@@ -16,7 +16,7 @@ RSpec.describe 'スキー', type: :system do
 
   describe 'スキー場一覧表示' do
     it 'マイページに自分のスキー場だけが表示されること' do
-      login_as user_a
+      business_login_as user_a
       visit organization_ski_areas_path(organization_a)
       expect(page).to have_content ski_area_a.name
       expect(page).not_to have_content ski_area_b.name
@@ -30,7 +30,7 @@ RSpec.describe 'スキー', type: :system do
   end
 
   describe 'スキー場詳細表示' do
-    before { login_as user_a }
+    before { business_login_as user_a }
 
     it 'マイページに自分のスキー場は表示される' do
       visit organization_ski_area_path(organization_a, ski_area_a)
@@ -48,7 +48,7 @@ RSpec.describe 'スキー', type: :system do
   end
 
   describe 'スキー場新規登録' do
-    before { login_as user_a }
+    before { business_login_as user_a }
 
     context '自分の組織に関するものの場合' do
       it '登録フォームに進めること' do
@@ -70,7 +70,7 @@ RSpec.describe 'スキー', type: :system do
     context '入力情報が正しい場合' do
       it '新規登録できること' do
         visit new_organization_ski_area_path(organization_a)
-        fill_in 'スキー場の名前', with: 'サンプルスキー場の名前'
+        fill_in '名称', with: 'サンプルスキー場の名前'
         find('#ski_area_create_form_district_id_chosen').click
         find(
           '#ski_area_create_form_district_id_chosen .active-result',
@@ -78,7 +78,7 @@ RSpec.describe 'スキー', type: :system do
         ).click
         fill_in '住所', with: 'サンプルスキー場住所'
         fill_in 'スラッグ', with: 'sample-ski-area'
-        fill_in 'スキー場の紹介',
+        fill_in '紹介',
                 with:
                   'Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua.'
         find('#map-location-registration').click
@@ -95,7 +95,7 @@ RSpec.describe 'スキー', type: :system do
   end
 
   describe 'スキー場情報編集' do
-    before { login_as user_a }
+    before { business_login_as user_a }
 
     context '自分の組織に関するものの場合' do
       it '編集フォームに進めること' do
@@ -119,14 +119,14 @@ RSpec.describe 'スキー', type: :system do
       it '情報更新ができること' do
         create(:district_sano)
         visit edit_organization_ski_area_path(organization_a, ski_area_a)
-        fill_in 'スキー場の名前', with: '更新サンプルスキー場の名前'
+        fill_in '名称', with: '更新サンプルスキー場の名前'
         find('#ski_area_update_form_district_id_chosen').click
         find(
           '#ski_area_update_form_district_id_chosen .active-result',
           text: '佐野'
         ).click
         fill_in '住所', with: '更新サンプルスキー場住所'
-        fill_in 'スキー場の紹介',
+        fill_in '紹介',
                 with:
                   'Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
         find('#map-location-registration').click
@@ -236,7 +236,7 @@ RSpec.describe 'スキー', type: :system do
   end
 
   describe 'お気に入り' do
-    before { login_as user_a }
+    before { business_login_as user_a }
 
     it 'お気に入り登録ができること' do
       visit ski_area_path(ski_area_a)
@@ -275,7 +275,7 @@ RSpec.describe 'スキー', type: :system do
   end
 
   describe '投稿の新規作成' do
-    before { login_as user_a }
+    before { business_login_as user_a }
 
     context '自分の所属組織のものであれば' do
       it '投稿の新規作成ページが表示されること' do
@@ -314,7 +314,7 @@ RSpec.describe 'スキー', type: :system do
     let(:post_a) { create(:post_published, postable: ski_area_a) }
     let(:post_b) { create(:post_published, postable: ski_area_b) }
 
-    before { login_as user_a }
+    before { business_login_as user_a }
 
     context '自分の所属組織のものであれば' do
       it '投稿詳細ページが表示される' do
@@ -346,7 +346,7 @@ RSpec.describe 'スキー', type: :system do
 
     context '入力情報が正しい場合' do
       it '情報更新できること' do
-        login_as user_a
+        business_login_as user_a
         visit edit_organization_ski_area_post_path(
           organization_a,
           ski_area_a,
@@ -371,13 +371,11 @@ RSpec.describe 'スキー', type: :system do
     let!(:post_a) { create(:post_published, postable: ski_area_a) }
     let!(:post_b) { create(:post_published, postable: ski_area_b) }
 
-    context 'a context' do
-      it '自分の組織の投稿のみ表示される' do
-        login_as user_a
-        visit organization_ski_area_posts_path(organization_a, ski_area_a)
-        expect(page).to have_content post_a.title
-        expect(page).not_to have_content post_b.title
-      end
+    it '自分の組織の投稿のみ表示される' do
+      business_login_as user_a
+      visit organization_ski_area_posts_path(organization_a, ski_area_a)
+      expect(page).to have_content post_a.title
+      expect(page).not_to have_content post_b.title
     end
   end
 
@@ -385,7 +383,7 @@ RSpec.describe 'スキー', type: :system do
     let(:post_a) { create(:post_published, postable: ski_area_a) }
 
     it '投稿を削除できること' do
-      login_as user_a
+      business_login_as user_a
       visit organization_ski_area_post_path(organization_a, ski_area_a, post_a)
 
       expect do
@@ -435,7 +433,7 @@ RSpec.describe 'スキー', type: :system do
   end
 
   describe '通知一覧表示' do
-    before { login_as user_a }
+    before { business_login_as user_a }
 
     context 'お気に入りをしているスキー場の場合' do
       it '投稿がされるとスキー場の名前が追加される' do

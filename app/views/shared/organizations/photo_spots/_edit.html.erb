@@ -1,0 +1,125 @@
+<div id="titlebar">
+  <div class="row">
+    <div class="col-md-12">
+      <%= render 'shared/breadcrumbs_mypage', { icon_name: "plus", page_name: "フォトスポット情報編集" } %>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <%= form_with model: photo_spot_update_form, url: send(update_path), method: :patch do |f| %>
+      <div id="add-listing">
+        <%= render 'shared/error_messages_multiple', models: [f.object, f.object.photo_spot] %>
+
+        <!-- Section -->
+        <%= f.fields_for :photo_spot do |ff| %>
+          <div class="add-listing-section">
+
+            <!-- Headline -->
+            <div class="add-listing-headline">
+              <h3><i class="sl sl-icon-doc"></i> 基本情報</h3>
+            </div>
+
+            <!-- Row -->
+            <div class="row with-forms margin-bottom-20">
+              <!-- Name -->
+              <div class="col-md-12">
+                <h5><%= ff.label :name %></h5>
+                <%= ff.text_field :name %>
+              </div>
+            </div>
+            <!-- Row / End -->
+
+            <% if current_page?(edit_admin_organization_photo_spot_path(photo_spot.organization, photo_spot)) %>
+              <!-- Row -->
+              <div class="row with-forms margin-bottom-20">
+                <!-- Slug -->
+                <div class="col-md-12">
+                  <h5><%= ff.label :slug %></h5>
+                  <%= ff.text_field :slug %>
+                </div>
+              </div>
+              <!-- Row / End -->
+            <% end %>
+
+            <!-- Row -->
+            <div class="row with-forms margin-bottom-20">
+              <!-- District -->
+              <div class="col-md-12">
+                 <h5><%= f.label :district_id %></h5>
+                <%= f.collection_select :district_id, districts, :id, :name, {prompt: ""}, {class: "chosen-select", data: {placeholder: "ここをクリックして地区を選択"}} %>
+              </div>
+            </div>
+            <!-- Row / End -->
+
+            <!-- Row -->
+            <div class="row with-forms margin-bottom-20">
+              <!-- Address -->
+              <div class="col-md-12">
+                <h5><%= ff.label :address %></h5>
+                <%= ff.text_field :address %>
+              </div>
+            </div>
+            <!-- Row / End -->
+
+            <!-- Row -->
+            <div class="row with-forms margin-bottom-20">
+              <!-- Description -->
+              <div class="col-md-12">
+                <h5><%= ff.label :description %></h5>
+                <%= ff.text_area :description, class: "WYSIWYG", cols: 40, rows: 3 %>
+              </div>
+            </div>
+            <!-- Row / End -->
+
+            <!-- Row -->
+            <div class="row with-forms" id="map-section" data-model="photo_spot" data-action="update">
+              <div class="col-md-12">
+                <h5>位置情報</h5>
+                <p>正確な地図を作成するために、以下のマップをクリックしてお店の正確な位置にピンを置いてください。<br>
+                マップを移動させたり拡大していただくことが可能です。</p>
+                <!-- Map -->
+                <div id="map-location-registration" class="margin-bottom-25"></div>
+                <%= ff.hidden_field :lat %>
+                <%= ff.hidden_field :lng %>
+              </div>
+            </div>
+            <!-- Row / End -->
+
+            <!-- Row -->
+            <div class="row with-forms margin-bottom-20">
+              <!-- Description -->
+              <div class="col-md-12">
+                <h5><%= ff.label :images %></h5>
+                <%= ff.label :images, class: "uploader-conteiner" do %>
+                  <div class="uploader-inner">
+                    <i class="sl sl-icon-plus"></i>ここをクリックして画像をアップロードしてください
+                  </div>
+                  <%= ff.file_field :images, multiple: true, class: "dropzone dz-clickable", onchange: "previewImage(this)" %>
+                <% end %>
+              </div>
+            </div>
+            <!-- Row / End -->
+
+            <!-- Row -->
+            <div class="row with-forms">
+              <!-- Images preview -->
+              <div class="col-md-12">
+                <div id="preview">
+                  <% photo_spot.images.each do |image| %>
+                    <%= image_tag image.variant(resize: '300x200').processed %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+            <!-- Row / End -->
+
+          </div>
+        <% end %>
+        <!-- Section / End -->
+
+        <%= f.submit "更新する", class: "button margin-top-40" %>
+      </div>
+    <% end %>
+  </div>

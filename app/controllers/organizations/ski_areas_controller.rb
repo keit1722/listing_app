@@ -1,6 +1,4 @@
 class Organizations::SkiAreasController < Organizations::BaseController
-  layout 'mypage_maps', only: [:show, :new, :edit]
-
   before_action :set_districts, only: [:new, :create, :edit, :update]
 
   def index
@@ -12,7 +10,6 @@ class Organizations::SkiAreasController < Organizations::BaseController
       .page(params[:page])
       .per(20)
       .with_attached_images
-    render layout: 'mypage_maps'
   end
 
   def show
@@ -23,12 +20,14 @@ class Organizations::SkiAreasController < Organizations::BaseController
       .ski_areas
       .with_attached_images
       .find_by!(slug: params[:slug])
+    render layout: 'mypage_maps'
   end
 
   def new
     organization =
       current_user.organizations.find_by(slug: params[:organization_slug])
     @ski_area_create_form = SkiAreaCreateForm.new(organization)
+    render layout: 'mypage_maps'
   end
 
   def create
@@ -54,6 +53,7 @@ class Organizations::SkiAreasController < Organizations::BaseController
       .with_attached_images
       .find_by!(slug: params[:slug])
     @ski_area_update_form = SkiAreaUpdateForm.new(@ski_area)
+    render layout: 'mypage_maps'
   end
 
   def update
