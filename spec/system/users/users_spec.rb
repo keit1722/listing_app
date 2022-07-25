@@ -1,16 +1,52 @@
 require 'rails_helper'
 
 RSpec.describe 'ユーザー', type: :system do
-  let(:user) { create(:general_user, :activated) }
+  let!(:general_user) { create(:general_user, :activated) }
+  let(:admin_user) { create(:admin_user, :activated) }
+  let(:business_user) { create(:business_user, :activated) }
 
-  context 'a context' do
+  describe 'ユーザ一覧表示' do
+    context '管理者の場合' do
+      it 'ユーザ一覧ページが表示される' do
+        admin_login_as admin_user
+        visit admin_users_path
+        expect(page).to have_content general_user.decorate.full_name
+        expect(page).to have_content admin_user.decorate.full_name
+      end
+    end
+
+    context 'ビジネスユーザの場合' do
+      it 'ユーザの一覧ページが表示されない' do
+        admin_login_as business_user
+        visit admin_users_path
+        expect(page).to have_current_path root_path
+        expect(page).to have_content '管理者専用の機能です'
+      end
+    end
+  end
+
+  describe 'ユーザー情報の詳細表示' do
+    context '管理者の場合' do
+      it '自分以外のユーザーの登録情報を表示できる' do
+        admin_login_as admin_user
+        visit admin_user_path(general_user)
+        expect(page).to have_content general_user.last_name
+        expect(page).to have_content general_user.first_name
+        expect(page).to have_content general_user.username
+        expect(page).to have_content general_user.email
+        expect(page).to have_content general_user.role_i18n
+      end
+    end
+  end
+
+  describe 'パスワード再設定' do
     it 'パスワードを忘れた場合の処理をするとメールが送られること' do
       visit new_password_reset_path
-      fill_in 'メールアドレス', with: user.email
+      fill_in 'メールアドレス', with: general_user.email
       perform_enqueued_jobs { click_button '送信' }
       mail = ActionMailer::Base.deliveries.last
 
-      expect(mail.to.first).to eq user.email
+      expect(mail.to.first).to eq general_user.email
       expect(mail.subject).to eq 'パスワード再設定メール'
     end
   end
