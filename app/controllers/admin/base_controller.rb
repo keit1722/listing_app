@@ -4,8 +4,6 @@ class Admin::BaseController < ApplicationController
   layout 'mypage'
 
   def only_admin
-    if !current_user&.admin?
-      redirect_to root_path, error: '管理者専用の機能です'
-    end
+    redirect_to root_path, error: '管理者専用の機能です' unless current_user&.admin?
   end
 end

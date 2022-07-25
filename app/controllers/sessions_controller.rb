@@ -1,11 +1,11 @@
 class SessionsController < ApplicationController
   before_action :require_login, only: [:destroy]
-  before_action :require_logout, only: %i[new create]
+  before_action :require_logout, only: [:new, :create]
 
   def new; end
 
   def create
-    if !User.find_by(email: params[:email].downcase)&.general?
+    unless User.find_by(email: params[:email].downcase)&.general?
       flash.now[:error] =
         'ログインできませんでした。メールアドレスまたはパスワードを確認してください。'
       render :new and return

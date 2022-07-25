@@ -1,33 +1,33 @@
 class Admin::Organizations::HotSpringsController < Admin::BaseController
-  before_action :set_districts, only: %i[edit update]
+  before_action :set_districts, only: [:edit, :update]
 
   def index
     @hot_springs =
       Organization
-        .find_by!(slug: params[:organization_slug])
-        .hot_springs
-        .page(params[:page])
-        .per(20)
-        .with_attached_images
+      .find_by!(slug: params[:organization_slug])
+      .hot_springs
+      .page(params[:page])
+      .per(20)
+      .with_attached_images
   end
 
   def show
     @hot_spring =
       Organization
-        .find_by!(slug: params[:organization_slug])
-        .hot_springs
-        .with_attached_images
-        .find_by!(slug: params[:slug])
+      .find_by!(slug: params[:organization_slug])
+      .hot_springs
+      .with_attached_images
+      .find_by!(slug: params[:slug])
     render layout: 'mypage_maps'
   end
 
   def edit
     @hot_spring =
       Organization
-        .find_by!(slug: params[:organization_slug])
-        .hot_springs
-        .with_attached_images
-        .find_by!(slug: params[:slug])
+      .find_by!(slug: params[:organization_slug])
+      .hot_springs
+      .with_attached_images
+      .find_by!(slug: params[:slug])
     @hot_spring_update_form = HotSpringUpdateForm.new(@hot_spring)
     render layout: 'mypage_maps'
   end
@@ -35,10 +35,10 @@ class Admin::Organizations::HotSpringsController < Admin::BaseController
   def update
     @hot_spring =
       Organization
-        .find_by!(slug: params[:organization_slug])
-        .hot_springs
-        .with_attached_images
-        .find_by!(slug: params[:slug])
+      .find_by!(slug: params[:organization_slug])
+      .hot_springs
+      .with_attached_images
+      .find_by!(slug: params[:slug])
     @hot_spring_update_form =
       HotSpringUpdateForm.new(@hot_spring, hot_spring_params)
 
@@ -58,22 +58,15 @@ class Admin::Organizations::HotSpringsController < Admin::BaseController
       .require(:hot_spring_update_form)
       .permit(
         :district_id,
-        opening_hours_attributes: %i[
-          start_time_hour
-          start_time_minute
-          end_time_hour
-          end_time_minute
-          closed
-          day
-        ],
+        opening_hours_attributes: [:start_time_hour, :start_time_minute, :end_time_hour, :end_time_minute, :closed, :day],
         hot_spring_attributes: [
           :name,
           :lat,
           :lng,
           :description,
           :address,
-          { images: [] },
-        ],
+          { images: [] }
+        ]
       )
   end
 

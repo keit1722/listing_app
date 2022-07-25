@@ -1,33 +1,33 @@
 class Admin::Organizations::PhotoSpotsController < Admin::BaseController
-  before_action :set_districts, only: %i[edit update]
+  before_action :set_districts, only: [:edit, :update]
 
   def index
     @photo_spots =
       Organization
-        .find_by!(slug: params[:organization_slug])
-        .photo_spots
-        .page(params[:page])
-        .per(20)
-        .with_attached_images
+      .find_by!(slug: params[:organization_slug])
+      .photo_spots
+      .page(params[:page])
+      .per(20)
+      .with_attached_images
   end
 
   def show
     @photo_spot =
       Organization
-        .find_by!(slug: params[:organization_slug])
-        .photo_spots
-        .with_attached_images
-        .find_by!(slug: params[:slug])
+      .find_by!(slug: params[:organization_slug])
+      .photo_spots
+      .with_attached_images
+      .find_by!(slug: params[:slug])
     render layout: 'mypage_maps'
   end
 
   def edit
     @photo_spot =
       Organization
-        .find_by!(slug: params[:organization_slug])
-        .photo_spots
-        .with_attached_images
-        .find_by!(slug: params[:slug])
+      .find_by!(slug: params[:organization_slug])
+      .photo_spots
+      .with_attached_images
+      .find_by!(slug: params[:slug])
     @photo_spot_update_form = PhotoSpotUpdateForm.new(@photo_spot)
     render layout: 'mypage_maps'
   end
@@ -35,10 +35,10 @@ class Admin::Organizations::PhotoSpotsController < Admin::BaseController
   def update
     @photo_spot =
       Organization
-        .find_by!(slug: params[:organization_slug])
-        .photo_spots
-        .with_attached_images
-        .find_by!(slug: params[:slug])
+      .find_by!(slug: params[:organization_slug])
+      .photo_spots
+      .with_attached_images
+      .find_by!(slug: params[:slug])
     @photo_spot_update_form =
       PhotoSpotUpdateForm.new(@photo_spot, photo_spot_params)
 
@@ -64,8 +64,8 @@ class Admin::Organizations::PhotoSpotsController < Admin::BaseController
           :lng,
           :description,
           :address,
-          { images: [] },
-        ],
+          { images: [] }
+        ]
       )
   end
 

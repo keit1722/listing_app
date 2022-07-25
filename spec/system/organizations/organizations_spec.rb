@@ -23,13 +23,13 @@ RSpec.describe '組織', type: :system do
           create(:organization_registration, user: user_a)
         create(
           :organization_registration_status_accepted,
-          organization_registration: organization_registration,
+          organization_registration: organization_registration
         )
         business_login_as user_a
         visit new_organization_path(token: organization_registration.token)
         expect(page).to have_current_path new_organization_path(
-                            token: organization_registration.token,
-                          )
+          token: organization_registration.token
+        )
       end
     end
   end

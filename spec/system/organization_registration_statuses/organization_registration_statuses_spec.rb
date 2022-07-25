@@ -42,7 +42,7 @@ RSpec.describe '組織登録申請結果', type: :system do
         expect(page).to have_content '申請の回答を作成しました'
       end.to change(OrganizationRegistrationStatus, :count).by(1)
       expect(
-        organization_registration.organization_registration_status.status,
+        organization_registration.organization_registration_status.status
       ).to eq 'accepted'
     end
 
@@ -54,7 +54,7 @@ RSpec.describe '組織登録申請結果', type: :system do
         expect(page).to have_content '申請の回答を作成しました'
       end.to change(OrganizationRegistrationStatus, :count).by(1)
       expect(
-        organization_registration.organization_registration_status.status,
+        organization_registration.organization_registration_status.status
       ).to eq 'rejected'
     end
   end

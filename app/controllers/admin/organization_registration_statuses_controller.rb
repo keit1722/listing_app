@@ -2,7 +2,7 @@ class Admin::OrganizationRegistrationStatusesController < Admin::BaseController
   def create
     @organization_registration_status =
       OrganizationRegistration.find(params[:organization_registration_id])
-        .build_organization_registration_status
+                              .build_organization_registration_status
     @organization_registration_status.status = params[:status]
 
     if @organization_registration_status.save
@@ -14,7 +14,7 @@ class Admin::OrganizationRegistrationStatusesController < Admin::BaseController
         OrganizationRegistrationMailer
           .with(
             user_to: user,
-            organization_registration: organization_registration,
+            organization_registration: organization_registration
           )
           .accepted
           .deliver_later
@@ -23,7 +23,7 @@ class Admin::OrganizationRegistrationStatusesController < Admin::BaseController
         OrganizationRegistrationMailer
           .with(
             user_to: user,
-            organization_registration: organization_registration,
+            organization_registration: organization_registration
           )
           .rejected
           .deliver_later

@@ -10,8 +10,6 @@ class ApplicationController < ActionController::Base
   end
 
   def only_business_or_admin
-    if !current_user&.business? && !current_user&.admin?
-      redirect_to root_path, error: 'ビジネスユーザー専用の機能です'
-    end
+    redirect_to root_path, error: 'ビジネスユーザー専用の機能です' if !current_user&.business? && !current_user&.admin?
   end
 end

@@ -2,30 +2,30 @@ class Organizations::OrganizationInvitationsController < Organizations::BaseCont
   def index
     @organization_invitations =
       current_user
-        .organizations
-        .find_by!(slug: params[:organization_slug])
-        .organization_invitations
-        .page(params[:page])
-        .per(20)
-        .ordered
+      .organizations
+      .find_by!(slug: params[:organization_slug])
+      .organization_invitations
+      .page(params[:page])
+      .per(20)
+      .ordered
   end
 
   def new
     @organization_invitation =
       current_user
-        .organizations
-        .find_by!(slug: params[:organization_slug])
-        .organization_invitations
-        .build
+      .organizations
+      .find_by!(slug: params[:organization_slug])
+      .organization_invitations
+      .build
   end
 
   def create
     @organization_invitation =
       current_user
-        .organizations
-        .find_by!(slug: params[:organization_slug])
-        .organization_invitations
-        .build(organization_invitation_params)
+      .organizations
+      .find_by!(slug: params[:organization_slug])
+      .organization_invitations
+      .build(organization_invitation_params)
 
     if @organization_invitation.save
       @organization_invitation.create_notice
@@ -48,7 +48,7 @@ class Organizations::OrganizationInvitationsController < Organizations::BaseCont
       .merge(
         organization: Organization.find_by(slug: params[:organization_slug]),
         inviter_id: current_user.id,
-        expires_at: 6.hours.from_now,
+        expires_at: 6.hours.from_now
       )
   end
 end

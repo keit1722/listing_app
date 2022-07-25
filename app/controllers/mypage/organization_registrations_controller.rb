@@ -2,11 +2,11 @@ class Mypage::OrganizationRegistrationsController < Mypage::BaseController
   def index
     @organization_registrations =
       current_user
-        .organization_registrations
-        .includes(:organization_registration_status)
-        .page(params[:page])
-        .per(20)
-        .ordered
+      .organization_registrations
+      .includes(:organization_registration_status)
+      .page(params[:page])
+      .per(20)
+      .ordered
   end
 
   def new
@@ -16,7 +16,7 @@ class Mypage::OrganizationRegistrationsController < Mypage::BaseController
   def create
     @organization_registration =
       current_user.organization_registrations.build(
-        organization_registration_params,
+        organization_registration_params
       )
     if @organization_registration.save
       redirect_to mypage_organization_registrations_path,
@@ -42,7 +42,7 @@ class Mypage::OrganizationRegistrationsController < Mypage::BaseController
         :organization_name,
         :organization_address,
         :organization_phone,
-        :business_detail,
+        :business_detail
       )
   end
 end

@@ -1,33 +1,33 @@
 class Admin::Organizations::HotelsController < Admin::BaseController
-  before_action :set_districts, only: %i[edit update]
+  before_action :set_districts, only: [:edit, :update]
 
   def index
     @hotels =
       Organization
-        .find_by!(slug: params[:organization_slug])
-        .hotels
-        .page(params[:page])
-        .per(20)
-        .with_attached_images
+      .find_by!(slug: params[:organization_slug])
+      .hotels
+      .page(params[:page])
+      .per(20)
+      .with_attached_images
   end
 
   def show
     @hotel =
       Organization
-        .find_by!(slug: params[:organization_slug])
-        .hotels
-        .with_attached_images
-        .find_by!(slug: params[:slug])
+      .find_by!(slug: params[:organization_slug])
+      .hotels
+      .with_attached_images
+      .find_by!(slug: params[:slug])
     render layout: 'mypage_maps'
   end
 
   def edit
     @hotel =
       Organization
-        .find_by!(slug: params[:organization_slug])
-        .hotels
-        .with_attached_images
-        .find_by!(slug: params[:slug])
+      .find_by!(slug: params[:organization_slug])
+      .hotels
+      .with_attached_images
+      .find_by!(slug: params[:slug])
     @hotel_update_form = HotelUpdateForm.new(@hotel)
     render layout: 'mypage_maps'
   end
@@ -35,10 +35,10 @@ class Admin::Organizations::HotelsController < Admin::BaseController
   def update
     @hotel =
       Organization
-        .find_by!(slug: params[:organization_slug])
-        .hotels
-        .with_attached_images
-        .find_by!(slug: params[:slug])
+      .find_by!(slug: params[:organization_slug])
+      .hotels
+      .with_attached_images
+      .find_by!(slug: params[:slug])
     @hotel_update_form = HotelUpdateForm.new(@hotel, hotel_params)
 
     if @hotel_update_form.update
@@ -57,22 +57,15 @@ class Admin::Organizations::HotelsController < Admin::BaseController
       .permit(
         :district_id,
         reservation_link_attributes: [:link],
-        opening_hours_attributes: %i[
-          start_time_hour
-          start_time_minute
-          end_time_hour
-          end_time_minute
-          closed
-          day
-        ],
+        opening_hours_attributes: [:start_time_hour, :start_time_minute, :end_time_hour, :end_time_minute, :closed, :day],
         hotel_attributes: [
           :name,
           :lat,
           :lng,
           :description,
           :address,
-          { images: [] },
-        ],
+          { images: [] }
+        ]
       )
   end
 

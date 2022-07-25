@@ -1,34 +1,34 @@
 class Admin::Organizations::ShopsController < Admin::BaseController
-  before_action :set_districts, only: %i[edit update]
-  before_action :set_shop_categories, only: %i[edit update]
+  before_action :set_districts, only: [:edit, :update]
+  before_action :set_shop_categories, only: [:edit, :update]
 
   def index
     @shops =
       Organization
-        .find_by!(slug: params[:organization_slug])
-        .shops
-        .page(params[:page])
-        .per(20)
-        .with_attached_images
+      .find_by!(slug: params[:organization_slug])
+      .shops
+      .page(params[:page])
+      .per(20)
+      .with_attached_images
   end
 
   def show
     @shop =
       Organization
-        .find_by!(slug: params[:organization_slug])
-        .shops
-        .with_attached_images
-        .find_by!(slug: params[:slug])
+      .find_by!(slug: params[:organization_slug])
+      .shops
+      .with_attached_images
+      .find_by!(slug: params[:slug])
     render layout: 'mypage_maps'
   end
 
   def edit
     @shop =
       Organization
-        .find_by!(slug: params[:organization_slug])
-        .shops
-        .with_attached_images
-        .find_by!(slug: params[:slug])
+      .find_by!(slug: params[:organization_slug])
+      .shops
+      .with_attached_images
+      .find_by!(slug: params[:slug])
     @shop_update_form = ShopUpdateForm.new(@shop)
     render layout: 'mypage_maps'
   end
@@ -36,10 +36,10 @@ class Admin::Organizations::ShopsController < Admin::BaseController
   def update
     @shop =
       Organization
-        .find_by!(slug: params[:organization_slug])
-        .shops
-        .with_attached_images
-        .find_by!(slug: params[:slug])
+      .find_by!(slug: params[:organization_slug])
+      .shops
+      .with_attached_images
+      .find_by!(slug: params[:slug])
     @shop_update_form = ShopUpdateForm.new(@shop, shop_params)
 
     if @shop_update_form.update
@@ -57,14 +57,7 @@ class Admin::Organizations::ShopsController < Admin::BaseController
       .require(:shop_update_form)
       .permit(
         :district_id,
-        opening_hours_attributes: %i[
-          start_time_hour
-          start_time_minute
-          end_time_hour
-          end_time_minute
-          closed
-          day
-        ],
+        opening_hours_attributes: [:start_time_hour, :start_time_minute, :end_time_hour, :end_time_minute, :closed, :day],
         shop_category_ids: [],
         shop_attributes: [
           :name,
@@ -72,8 +65,8 @@ class Admin::Organizations::ShopsController < Admin::BaseController
           :lng,
           :description,
           :address,
-          { images: [] },
-        ],
+          { images: [] }
+        ]
       )
   end
 

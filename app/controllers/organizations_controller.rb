@@ -16,7 +16,7 @@ class OrganizationsController < ApplicationController
     @organization_registration =
       OrganizationRegistration.accepted.find_by!(
         user_id: current_user.id,
-        token: params[:token],
+        token: params[:token]
       )
   end
 
@@ -25,7 +25,7 @@ class OrganizationsController < ApplicationController
     @organization_registration =
       OrganizationRegistration.accepted.find_by!(
         user_id: current_user.id,
-        token: params[:token],
+        token: params[:token]
       )
 
     if @organization.save
