@@ -1,6 +1,4 @@
 class Admin::Organizations::HotelsController < Admin::BaseController
-  layout 'mypage_maps', only: %i[show edit]
-
   before_action :set_districts, only: %i[edit update]
 
   def index
@@ -20,6 +18,7 @@ class Admin::Organizations::HotelsController < Admin::BaseController
         .hotels
         .with_attached_images
         .find_by!(slug: params[:slug])
+    render layout: 'mypage_maps'
   end
 
   def edit
@@ -30,6 +29,7 @@ class Admin::Organizations::HotelsController < Admin::BaseController
         .with_attached_images
         .find_by!(slug: params[:slug])
     @hotel_update_form = HotelUpdateForm.new(@hotel)
+    render layout: 'mypage_maps'
   end
 
   def update

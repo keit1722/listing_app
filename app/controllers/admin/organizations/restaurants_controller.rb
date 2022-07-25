@@ -1,6 +1,4 @@
 class Admin::Organizations::RestaurantsController < Admin::BaseController
-  layout 'mypage_maps', only: %i[show edit]
-
   before_action :set_districts, only: %i[edit update]
   before_action :set_restaurant_categories, only: %i[edit update]
 
@@ -21,6 +19,7 @@ class Admin::Organizations::RestaurantsController < Admin::BaseController
         .restaurants
         .with_attached_images
         .find_by!(slug: params[:slug])
+    render layout: 'mypage_maps'
   end
 
   def edit
@@ -31,6 +30,7 @@ class Admin::Organizations::RestaurantsController < Admin::BaseController
         .with_attached_images
         .find_by!(slug: params[:slug])
     @restaurant_update_form = RestaurantUpdateForm.new(@restaurant)
+    render layout: 'mypage_maps'
   end
 
   def update

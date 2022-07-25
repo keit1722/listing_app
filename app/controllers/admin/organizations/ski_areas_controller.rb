@@ -1,6 +1,4 @@
 class Admin::Organizations::SkiAreasController < Admin::BaseController
-  layout 'mypage_maps', only: %i[show edit]
-
   before_action :set_districts, only: %i[edit update]
 
   def index
@@ -20,6 +18,7 @@ class Admin::Organizations::SkiAreasController < Admin::BaseController
         .ski_areas
         .with_attached_images
         .find_by!(slug: params[:slug])
+    render layout: 'mypage_maps'
   end
 
   def edit
@@ -30,6 +29,7 @@ class Admin::Organizations::SkiAreasController < Admin::BaseController
         .with_attached_images
         .find_by!(slug: params[:slug])
     @ski_area_update_form = SkiAreaUpdateForm.new(@ski_area)
+    render layout: 'mypage_maps'
   end
 
   def update

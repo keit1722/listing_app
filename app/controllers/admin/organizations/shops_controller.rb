@@ -1,6 +1,4 @@
 class Admin::Organizations::ShopsController < Admin::BaseController
-  layout 'mypage_maps', only: %i[show edit]
-
   before_action :set_districts, only: %i[edit update]
   before_action :set_shop_categories, only: %i[edit update]
 
@@ -21,6 +19,7 @@ class Admin::Organizations::ShopsController < Admin::BaseController
         .shops
         .with_attached_images
         .find_by!(slug: params[:slug])
+    render layout: 'mypage_maps'
   end
 
   def edit
@@ -31,6 +30,7 @@ class Admin::Organizations::ShopsController < Admin::BaseController
         .with_attached_images
         .find_by!(slug: params[:slug])
     @shop_update_form = ShopUpdateForm.new(@shop)
+    render layout: 'mypage_maps'
   end
 
   def update

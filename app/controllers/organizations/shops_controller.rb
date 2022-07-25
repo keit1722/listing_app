@@ -1,6 +1,4 @@
 class Organizations::ShopsController < Organizations::BaseController
-  layout 'mypage_maps', only: %i[show new edit]
-
   before_action :set_districts, only: %i[new create edit update]
   before_action :set_shop_categories, only: %i[new create edit update]
 
@@ -23,12 +21,14 @@ class Organizations::ShopsController < Organizations::BaseController
         .shops
         .with_attached_images
         .find_by!(slug: params[:slug])
+    render layout: 'mypage_maps'
   end
 
   def new
     organization =
       current_user.organizations.find_by(slug: params[:organization_slug])
     @shop_create_form = ShopCreateForm.new(organization)
+    render layout: 'mypage_maps'
   end
 
   def create
@@ -53,6 +53,7 @@ class Organizations::ShopsController < Organizations::BaseController
         .with_attached_images
         .find_by!(slug: params[:slug])
     @shop_update_form = ShopUpdateForm.new(@shop)
+    render layout: 'mypage_maps'
   end
 
   def update

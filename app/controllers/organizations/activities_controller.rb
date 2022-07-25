@@ -1,6 +1,4 @@
 class Organizations::ActivitiesController < Organizations::BaseController
-  layout 'mypage_maps', only: %i[show new edit]
-
   before_action :set_districts, only: %i[new create edit update]
 
   def index
@@ -22,12 +20,14 @@ class Organizations::ActivitiesController < Organizations::BaseController
         .activities
         .with_attached_images
         .find_by!(slug: params[:slug])
+    render layout: 'mypage_maps'
   end
 
   def new
     organization =
       current_user.organizations.find_by(slug: params[:organization_slug])
     @activity_create_form = ActivityCreateForm.new(organization)
+    render layout: 'mypage_maps'
   end
 
   def create
@@ -53,6 +53,7 @@ class Organizations::ActivitiesController < Organizations::BaseController
         .with_attached_images
         .find_by!(slug: params[:slug])
     @activity_update_form = ActivityUpdateForm.new(@activity)
+    render layout: 'mypage_maps'
   end
 
   def update

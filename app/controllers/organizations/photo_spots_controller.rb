@@ -1,6 +1,4 @@
 class Organizations::PhotoSpotsController < Organizations::BaseController
-  layout 'mypage_maps', only: %i[show new edit]
-
   before_action :set_districts, only: %i[new create edit update]
 
   def index
@@ -22,12 +20,14 @@ class Organizations::PhotoSpotsController < Organizations::BaseController
         .photo_spots
         .with_attached_images
         .find_by!(slug: params[:slug])
+    render layout: 'mypage_maps'
   end
 
   def new
     organization =
       current_user.organizations.find_by(slug: params[:organization_slug])
     @photo_spot_create_form = PhotoSpotCreateForm.new(organization)
+    render layout: 'mypage_maps'
   end
 
   def create
@@ -53,6 +53,7 @@ class Organizations::PhotoSpotsController < Organizations::BaseController
         .with_attached_images
         .find_by!(slug: params[:slug])
     @photo_spot_update_form = PhotoSpotUpdateForm.new(@photo_spot)
+    render layout: 'mypage_maps'
   end
 
   def update
