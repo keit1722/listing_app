@@ -11,7 +11,6 @@ class Admin::Organizations::SkiAreasController < Admin::BaseController
         .page(params[:page])
         .per(20)
         .with_attached_images
-    render layout: 'mypage'
   end
 
   def show

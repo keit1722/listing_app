@@ -1,6 +1,4 @@
 class Admin::OrganizationRegistrationStatusesController < Admin::BaseController
-  layout 'mypage'
-
   def create
     @organization_registration_status =
       OrganizationRegistration.find(params[:organization_registration_id])

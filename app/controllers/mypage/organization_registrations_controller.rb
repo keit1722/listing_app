@@ -1,6 +1,4 @@
 class Mypage::OrganizationRegistrationsController < Mypage::BaseController
-  layout 'mypage'
-
   def index
     @organization_registrations =
       current_user

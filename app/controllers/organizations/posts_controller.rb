@@ -1,6 +1,4 @@
 class Organizations::PostsController < Organizations::BaseController
-  layout 'mypage'
-
   def index
     @posts =
       @postable.posts.with_attached_image.page(params[:page]).per(20).ordered

@@ -1,6 +1,4 @@
 class Organizations::OrganizationInvitationsController < Organizations::BaseController
-  layout 'mypage', only: %i[index new create]
-
   def index
     @organization_invitations =
       current_user

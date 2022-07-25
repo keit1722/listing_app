@@ -1,4 +1,6 @@
 class Admin::SessionsController < Admin::BaseController
+  layout 'application', only: :new
+
   skip_before_action :only_admin, only: %i[new create]
   before_action :require_logout, only: %i[new create]
 

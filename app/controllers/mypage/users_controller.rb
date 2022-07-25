@@ -1,6 +1,4 @@
 class Mypage::UsersController < Mypage::BaseController
-  layout 'mypage'
-
   def show
     @user = User.find_by(public_uid: current_user.public_uid)
   end

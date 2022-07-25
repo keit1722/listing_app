@@ -1,6 +1,4 @@
 class Admin::OrganizationRegistrationsController < Admin::BaseController
-  layout 'mypage'
-
   def index
     @organization_registrations =
       OrganizationRegistration

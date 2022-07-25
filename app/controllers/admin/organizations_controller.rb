@@ -1,6 +1,4 @@
 class Admin::OrganizationsController < Admin::BaseController
-  layout 'mypage'
-
   def index
     @organizations = Organization.page(params[:page]).per(20)
   end

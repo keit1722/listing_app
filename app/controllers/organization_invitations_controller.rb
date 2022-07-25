@@ -1,7 +1,7 @@
 class OrganizationInvitationsController < ApplicationController
-  layout 'mypage', only: [:show]
+  layout 'mypage'
 
-  before_action :check_valid_action, only: [:show, :accepted, :unaccepted]
+  before_action :check_valid_action, only: %i[show accepted unaccepted]
 
   def show; end
 
@@ -25,9 +25,9 @@ class OrganizationInvitationsController < ApplicationController
       OrganizationInvitation.find_by!(token: params[:token])
 
     if current_user != @organization_invitation.notices.first.user ||
-       Time.current > @organization_invitation.expires_at ||
-       !@organization_invitation.untouched? ||
-       @organization_invitation.organization.users.include?(current_user)
+         Time.current > @organization_invitation.expires_at ||
+         !@organization_invitation.untouched? ||
+         @organization_invitation.organization.users.include?(current_user)
       redirect_to mypage_notices_path, error: '無効なリンクです' and return
     end
   end
