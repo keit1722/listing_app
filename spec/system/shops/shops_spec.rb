@@ -10,7 +10,7 @@ RSpec.describe 'ショップ', type: :system do
       :shop,
       organization: organization_a,
       shop_categories: [shop_category],
-      districts: [district]
+      districts: [district],
     )
   end
   let!(:user_b) { create(:business_user, :activated) }
@@ -20,7 +20,7 @@ RSpec.describe 'ショップ', type: :system do
       :shop,
       organization: organization_b,
       shop_categories: [shop_category],
-      districts: [district]
+      districts: [district],
     )
   end
   let(:district_c) { create(:district_meitetsu) }
@@ -28,7 +28,7 @@ RSpec.describe 'ショップ', type: :system do
 
   describe 'ショップ一覧表示' do
     it 'マイページに自分のショップだけが表示されること' do
-      login_as user_a
+      business_login_as user_a
       visit organization_shops_path(organization_a)
       expect(page).to have_content shop_a.name
       expect(page).not_to have_content shop_b.name
@@ -42,14 +42,14 @@ RSpec.describe 'ショップ', type: :system do
   end
 
   describe 'ショップ詳細表示' do
-    before { login_as user_a }
+    before { business_login_as user_a }
 
     it 'マイページに自分のショップは表示されること' do
       visit organization_shop_path(organization_a, shop_a)
       expect(page).to have_current_path organization_shop_path(
-        organization_a,
-        shop_a
-      )
+                          organization_a,
+                          shop_a,
+                        )
     end
 
     it 'マイページには自分のショップ以外は表示されないこと' do
@@ -60,14 +60,14 @@ RSpec.describe 'ショップ', type: :system do
   end
 
   describe 'ショップ新規登録' do
-    before { login_as user_a }
+    before { business_login_as user_a }
 
     context '自分の組織に関するものの場合' do
       it '登録フォームに進めること' do
         visit new_organization_shop_path(organization_a)
         expect(page).to have_current_path new_organization_shop_path(
-          organization_a
-        )
+                            organization_a,
+                          )
       end
     end
 
@@ -82,15 +82,15 @@ RSpec.describe 'ショップ', type: :system do
     context '入力情報が正しい場合' do
       it '新規登録できること' do
         visit new_organization_shop_path(organization_a)
-        fill_in '店名', with: 'サンプルショップ店名'
+        fill_in '名称', with: 'サンプルショップ店名'
         find('#shop_create_form_district_id_chosen').click
         find(
           '#shop_create_form_district_id_chosen .active-result',
-          text: '内山'
+          text: '内山',
         ).click
         fill_in '住所', with: 'サンプルショップ住所'
         fill_in 'スラッグ', with: 'sample-shop'
-        fill_in 'ショップの紹介',
+        fill_in '紹介',
                 with:
                   'Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua.'
         find('#map-location-registration').click
@@ -100,7 +100,7 @@ RSpec.describe 'ショップ', type: :system do
         find('#shop_create_form_shop_category_ids_chosen').click
         find(
           '#shop_create_form_shop_category_ids_chosen .active-result',
-          text: 'お土産'
+          text: 'お土産',
         ).click
         click_button '登録する'
 
@@ -112,15 +112,15 @@ RSpec.describe 'ショップ', type: :system do
   end
 
   describe 'ショップ情報編集' do
-    before { login_as user_a }
+    before { business_login_as user_a }
 
     context '自分の組織に関するものの場合' do
       it '編集フォームに進めること' do
         visit edit_organization_shop_path(organization_a, shop_a)
         expect(page).to have_current_path edit_organization_shop_path(
-          organization_a,
-          shop_a
-        )
+                            organization_a,
+                            shop_a,
+                          )
       end
     end
 
@@ -138,14 +138,14 @@ RSpec.describe 'ショップ', type: :system do
         create(:shop_category_sports_shop)
         create(:district_sano)
         visit edit_organization_shop_path(organization_a, shop_a)
-        fill_in '店名', with: '更新サンプルショップ店名'
+        fill_in '名称', with: '更新サンプルショップ店名'
         find('#shop_update_form_district_id_chosen').click
         find(
           '#shop_update_form_district_id_chosen .active-result',
-          text: '佐野'
+          text: '佐野',
         ).click
         fill_in '住所', with: '更新サンプルショップ住所'
-        fill_in 'ショップの紹介',
+        fill_in '紹介',
                 with:
                   'Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
         find('#map-location-registration').click
@@ -155,7 +155,7 @@ RSpec.describe 'ショップ', type: :system do
         find('#shop_update_form_shop_category_ids_chosen').click
         find(
           '#shop_update_form_shop_category_ids_chosen .active-result',
-          text: 'スポーツショップ'
+          text: 'スポーツショップ',
         ).click
         click_button '更新する'
 
@@ -164,7 +164,7 @@ RSpec.describe 'ショップ', type: :system do
         expect(page).to have_content '佐野'
         expect(page).to have_content '更新サンプルショップ住所'
         expect(
-          page
+          page,
         ).to have_content 'Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
         expect(page).to have_content 'スポーツショップ'
       end
@@ -177,7 +177,7 @@ RSpec.describe 'ショップ', type: :system do
         :shop,
         organization: organization_a,
         shop_categories: [shop_category_b],
-        districts: [district_c]
+        districts: [district_c],
       )
     end
 
@@ -220,7 +220,7 @@ RSpec.describe 'ショップ', type: :system do
         :shop,
         organization: organization_a,
         shop_categories: [shop_category_b],
-        districts: [district_c]
+        districts: [district_c],
       )
     end
 
@@ -281,7 +281,7 @@ RSpec.describe 'ショップ', type: :system do
   end
 
   describe 'お気に入り' do
-    before { login_as user_a }
+    before { business_login_as user_a }
 
     it 'お気に入り登録ができること' do
       visit shop_path(shop_a)
@@ -320,7 +320,7 @@ RSpec.describe 'ショップ', type: :system do
   end
 
   describe '投稿の新規作成' do
-    before { login_as user_a }
+    before { business_login_as user_a }
 
     context '自分の所属組織のものであれば' do
       it '投稿の新規作成ページが表示されること' do
@@ -359,7 +359,7 @@ RSpec.describe 'ショップ', type: :system do
     let(:post_a) { create(:post_published, postable: shop_a) }
     let(:post_b) { create(:post_published, postable: shop_b) }
 
-    before { login_as user_a }
+    before { business_login_as user_a }
 
     context '自分の所属組織のものであれば' do
       it '投稿詳細ページが表示される' do
@@ -383,7 +383,7 @@ RSpec.describe 'ショップ', type: :system do
 
     context '入力情報が正しい場合' do
       it '情報更新できること' do
-        login_as user_a
+        business_login_as user_a
         visit edit_organization_shop_post_path(organization_a, shop_a, post_a)
         fill_in 'タイトル', with: '更新サンプル投稿名'
         fill_in '内容', with: '更新サンプル投稿内容'
@@ -404,13 +404,11 @@ RSpec.describe 'ショップ', type: :system do
     let!(:post_a) { create(:post_published, postable: shop_a) }
     let!(:post_b) { create(:post_published, postable: shop_b) }
 
-    context 'a context' do
-      it '自分の組織の投稿のみ表示される' do
-        login_as user_a
-        visit organization_shop_posts_path(organization_a, shop_a)
-        expect(page).to have_content post_a.title
-        expect(page).not_to have_content post_b.title
-      end
+    it '自分の組織の投稿のみ表示される' do
+      business_login_as user_a
+      visit organization_shop_posts_path(organization_a, shop_a)
+      expect(page).to have_content post_a.title
+      expect(page).not_to have_content post_b.title
     end
   end
 
@@ -418,7 +416,7 @@ RSpec.describe 'ショップ', type: :system do
     let(:post_a) { create(:post_published, postable: shop_a) }
 
     it '投稿を削除できること' do
-      login_as user_a
+      business_login_as user_a
       visit organization_shop_post_path(organization_a, shop_a, post_a)
 
       expect do
@@ -468,7 +466,7 @@ RSpec.describe 'ショップ', type: :system do
   end
 
   describe '通知一覧表示' do
-    before { login_as user_a }
+    before { business_login_as user_a }
 
     context 'お気に入りをしているショップの場合' do
       it '投稿がされるとショップの名前が追加される' do

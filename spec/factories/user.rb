@@ -15,11 +15,16 @@ FactoryBot.define do
       role { :business }
     end
 
+    trait :admin do
+      role { :admin }
+    end
+
     trait :activated do
       after(:create) { |user| user.activate! }
     end
 
     factory :general_user, traits: [:general]
     factory :business_user, traits: [:business]
+    factory :admin_user, traits: [:admin]
   end
 end

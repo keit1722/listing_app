@@ -2,12 +2,12 @@ require 'rails_helper'
 
 RSpec.describe '組織登録申請結果', type: :system do
   let(:general_user) { create(:general_user, :activated) }
-  let(:business_user) { create(:business_user, :activated) }
+  let(:admin_user) { create(:admin_user, :activated) }
   let!(:organization_registration) do
     create(:organization_registration, user: general_user)
   end
 
-  before { login_as business_user }
+  before { admin_login_as admin_user }
 
   describe '登録申請結果回答' do
     context '未回答の申請の場合' do
@@ -42,7 +42,7 @@ RSpec.describe '組織登録申請結果', type: :system do
         expect(page).to have_content '申請の回答を作成しました'
       end.to change(OrganizationRegistrationStatus, :count).by(1)
       expect(
-        organization_registration.organization_registration_status.status
+        organization_registration.organization_registration_status.status,
       ).to eq 'accepted'
     end
 
@@ -54,7 +54,7 @@ RSpec.describe '組織登録申請結果', type: :system do
         expect(page).to have_content '申請の回答を作成しました'
       end.to change(OrganizationRegistrationStatus, :count).by(1)
       expect(
-        organization_registration.organization_registration_status.status
+        organization_registration.organization_registration_status.status,
       ).to eq 'rejected'
     end
   end

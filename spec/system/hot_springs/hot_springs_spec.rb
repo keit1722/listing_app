@@ -16,7 +16,7 @@ RSpec.describe '温泉', type: :system do
 
   describe '温泉一覧表示' do
     it 'マイページに自分の温泉だけが表示されること' do
-      login_as user_a
+      business_login_as user_a
       visit organization_hot_springs_path(organization_a)
       expect(page).to have_content hot_spring_a.name
       expect(page).not_to have_content hot_spring_b.name
@@ -30,14 +30,14 @@ RSpec.describe '温泉', type: :system do
   end
 
   describe '温泉詳細表示' do
-    before { login_as user_a }
+    before { business_login_as user_a }
 
     it 'マイページに自分の温泉は表示されること' do
       visit organization_hot_spring_path(organization_a, hot_spring_a)
       expect(page).to have_current_path organization_hot_spring_path(
-        organization_a,
-        hot_spring_a
-      )
+                          organization_a,
+                          hot_spring_a,
+                        )
     end
 
     it 'マイページには自分の温泉以外は表示されないこと' do
@@ -48,14 +48,14 @@ RSpec.describe '温泉', type: :system do
   end
 
   describe '温泉新規登録' do
-    before { login_as user_a }
+    before { business_login_as user_a }
 
     context '自分の組織に関するものの場合' do
       it '登録フォームに進めること' do
         visit new_organization_hot_spring_path(organization_a)
         expect(page).to have_current_path new_organization_hot_spring_path(
-          organization_a
-        )
+                            organization_a,
+                          )
       end
     end
 
@@ -70,15 +70,15 @@ RSpec.describe '温泉', type: :system do
     context '入力情報が正しい場合' do
       it '新規登録できること' do
         visit new_organization_hot_spring_path(organization_a)
-        fill_in '温泉の名前', with: 'サンプル温泉の名前'
+        fill_in '名称', with: 'サンプル温泉の名前'
         find('#hot_spring_create_form_district_id_chosen').click
         find(
           '#hot_spring_create_form_district_id_chosen .active-result',
-          text: '内山'
+          text: '内山',
         ).click
         fill_in '住所', with: 'サンプル温泉住所'
         fill_in 'スラッグ', with: 'sample-hot-spring'
-        fill_in '温泉の紹介',
+        fill_in '紹介',
                 with:
                   'Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua.'
         find('#map-location-registration').click
@@ -95,15 +95,15 @@ RSpec.describe '温泉', type: :system do
   end
 
   describe '温泉情報編集' do
-    before { login_as user_a }
+    before { business_login_as user_a }
 
     context '自分の組織に関するものの場合' do
       it '編集フォームに進めること' do
         visit edit_organization_hot_spring_path(organization_a, hot_spring_a)
         expect(page).to have_current_path edit_organization_hot_spring_path(
-          organization_a,
-          hot_spring_a
-        )
+                            organization_a,
+                            hot_spring_a,
+                          )
       end
     end
 
@@ -119,14 +119,14 @@ RSpec.describe '温泉', type: :system do
       it '情報更新ができること' do
         create(:district_sano)
         visit edit_organization_hot_spring_path(organization_a, hot_spring_a)
-        fill_in '温泉の名前', with: '更新サンプル温泉の名前'
+        fill_in '名称', with: '更新サンプル温泉の名前'
         find('#hot_spring_update_form_district_id_chosen').click
         find(
           '#hot_spring_update_form_district_id_chosen .active-result',
-          text: '佐野'
+          text: '佐野',
         ).click
         fill_in '住所', with: '更新サンプル温泉住所'
-        fill_in '温泉の紹介',
+        fill_in '紹介',
                 with:
                   'Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
         find('#map-location-registration').click
@@ -140,7 +140,7 @@ RSpec.describe '温泉', type: :system do
         expect(page).to have_content '佐野'
         expect(page).to have_content '更新サンプル温泉住所'
         expect(
-          page
+          page,
         ).to have_content 'Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
       end
     end
@@ -235,7 +235,7 @@ RSpec.describe '温泉', type: :system do
   end
 
   describe 'お気に入り' do
-    before { login_as user_a }
+    before { business_login_as user_a }
 
     it 'お気に入り登録ができること' do
       visit hot_spring_path(hot_spring_a)
@@ -274,14 +274,14 @@ RSpec.describe '温泉', type: :system do
   end
 
   describe '投稿の新規作成' do
-    before { login_as user_a }
+    before { business_login_as user_a }
 
     context '自分の所属組織のものであれば' do
       it '投稿の新規作成ページが表示されること' do
         visit new_organization_hot_spring_post_path(
-          organization_a,
-          hot_spring_a
-        )
+                organization_a,
+                hot_spring_a,
+              )
         expect(page).to have_content '新規投稿作成'
       end
     end
@@ -290,9 +290,9 @@ RSpec.describe '温泉', type: :system do
       it '投稿の新規作成ページが表示されなずにエラーになる' do
         Capybara.raise_server_errors = false
         visit new_organization_hot_spring_post_path(
-          organization_b,
-          hot_spring_b
-        )
+                organization_b,
+                hot_spring_b,
+              )
         assert_text 'ActiveRecord::RecordNotFound'
       end
     end
@@ -300,9 +300,9 @@ RSpec.describe '温泉', type: :system do
     context '入力情報が正しい場合' do
       it '新規登録できること' do
         visit new_organization_hot_spring_post_path(
-          organization_a,
-          hot_spring_a
-        )
+                organization_a,
+                hot_spring_a,
+              )
         fill_in 'タイトル', with: 'サンプル投稿名'
         fill_in '内容', with: 'サンプル投稿内容'
         attach_file '画像',
@@ -322,15 +322,15 @@ RSpec.describe '温泉', type: :system do
     let(:post_a) { create(:post_published, postable: hot_spring_a) }
     let(:post_b) { create(:post_published, postable: hot_spring_b) }
 
-    before { login_as user_a }
+    before { business_login_as user_a }
 
     context '自分の所属組織のものであれば' do
       it '投稿詳細ページが表示される' do
         visit organization_hot_spring_post_path(
-          organization_a,
-          hot_spring_a,
-          post_a
-        )
+                organization_a,
+                hot_spring_a,
+                post_a,
+              )
         expect(page).to have_content post_a.title
         expect(page).to have_content post_a.body
       end
@@ -340,10 +340,10 @@ RSpec.describe '温泉', type: :system do
       it '投稿詳細ページが表示されずにエラーになる' do
         Capybara.raise_server_errors = false
         visit organization_hot_spring_post_path(
-          organization_b,
-          hot_spring_b,
-          post_b
-        )
+                organization_b,
+                hot_spring_b,
+                post_b,
+              )
         assert_text 'ActiveRecord::RecordNotFound'
       end
     end
@@ -354,12 +354,12 @@ RSpec.describe '温泉', type: :system do
 
     context '入力情報が正しい場合' do
       it '情報更新できること' do
-        login_as user_a
+        business_login_as user_a
         visit edit_organization_hot_spring_post_path(
-          organization_a,
-          hot_spring_a,
-          post_a
-        )
+                organization_a,
+                hot_spring_a,
+                post_a,
+              )
         fill_in 'タイトル', with: '更新サンプル投稿名'
         fill_in '内容', with: '更新サンプル投稿内容'
         attach_file '画像',
@@ -379,13 +379,11 @@ RSpec.describe '温泉', type: :system do
     let!(:post_a) { create(:post_published, postable: hot_spring_a) }
     let!(:post_b) { create(:post_published, postable: hot_spring_b) }
 
-    context 'a context' do
-      it '自分の組織の投稿のみ表示される' do
-        login_as user_a
-        visit organization_hot_spring_posts_path(organization_a, hot_spring_a)
-        expect(page).to have_content post_a.title
-        expect(page).not_to have_content post_b.title
-      end
+    it '自分の組織の投稿のみ表示される' do
+      business_login_as user_a
+      visit organization_hot_spring_posts_path(organization_a, hot_spring_a)
+      expect(page).to have_content post_a.title
+      expect(page).not_to have_content post_b.title
     end
   end
 
@@ -393,12 +391,12 @@ RSpec.describe '温泉', type: :system do
     let(:post_a) { create(:post_published, postable: hot_spring_a) }
 
     it '投稿を削除できること' do
-      login_as user_a
+      business_login_as user_a
       visit organization_hot_spring_post_path(
-        organization_a,
-        hot_spring_a,
-        post_a
-      )
+              organization_a,
+              hot_spring_a,
+              post_a,
+            )
 
       expect do
         find('a.button', text: '削除').click
@@ -447,7 +445,7 @@ RSpec.describe '温泉', type: :system do
   end
 
   describe '通知一覧表示' do
-    before { login_as user_a }
+    before { business_login_as user_a }
 
     context 'お気に入りをしている温泉の場合' do
       it '投稿がされると温泉の名前が追加される' do

@@ -10,7 +10,7 @@ RSpec.describe '組織', type: :system do
   describe '組織新規登録' do
     context 'ビジネスユーザーではない場合' do
       it '登録フォームに進めないこと' do
-        login_as user_general
+        general_login_as user_general
         visit new_organization_path
         expect(page).to have_current_path root_path
         expect(page).to have_content 'ビジネスユーザー専用の機能です'
@@ -23,19 +23,19 @@ RSpec.describe '組織', type: :system do
           create(:organization_registration, user: user_a)
         create(
           :organization_registration_status_accepted,
-          organization_registration: organization_registration
+          organization_registration: organization_registration,
         )
-        login_as user_a
+        business_login_as user_a
         visit new_organization_path(token: organization_registration.token)
         expect(page).to have_current_path new_organization_path(
-          token: organization_registration.token
-        )
+                            token: organization_registration.token,
+                          )
       end
     end
   end
 
   describe '組織一覧表示' do
-    before { login_as user_a }
+    before { business_login_as user_a }
 
     it '自分の組織だけが表示されること' do
       visit organizations_path
@@ -45,7 +45,7 @@ RSpec.describe '組織', type: :system do
   end
 
   describe '組織詳細表示' do
-    before { login_as user_a }
+    before { business_login_as user_a }
 
     it '自分の組織は表示される' do
       visit organization_path organization_a
@@ -60,7 +60,7 @@ RSpec.describe '組織', type: :system do
   end
 
   describe '組織編集画面表示' do
-    before { login_as user_a }
+    before { business_login_as user_a }
 
     it '自分の組織は表示される' do
       visit edit_organization_path organization_a

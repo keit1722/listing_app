@@ -16,7 +16,7 @@ RSpec.describe 'アクティビティ', type: :system do
 
   describe 'アクティビティ一覧表示' do
     it 'マイページに自分のアクティビティだけが表示されること' do
-      login_as user_a
+      business_login_as user_a
       visit organization_activities_path(organization_a)
       expect(page).to have_content activity_a.name
       expect(page).not_to have_content activity_b.name
@@ -30,14 +30,14 @@ RSpec.describe 'アクティビティ', type: :system do
   end
 
   describe 'アクティビティ詳細表示' do
-    before { login_as user_a }
+    before { business_login_as user_a }
 
     it 'マイページに自分のアクティビティは表示されること' do
       visit organization_activity_path(organization_a, activity_a)
       expect(page).to have_current_path organization_activity_path(
-        organization_a,
-        activity_a
-      )
+                          organization_a,
+                          activity_a,
+                        )
     end
 
     it 'マイページには自分のアクティビティ以外は表示されないこと' do
@@ -48,14 +48,14 @@ RSpec.describe 'アクティビティ', type: :system do
   end
 
   describe 'アクティビティ新規登録' do
-    before { login_as user_a }
+    before { business_login_as user_a }
 
     context '自分の組織に関するものの場合' do
       it '登録フォームに進めること' do
         visit new_organization_activity_path(organization_a)
         expect(page).to have_current_path new_organization_activity_path(
-          organization_a
-        )
+                            organization_a,
+                          )
       end
     end
 
@@ -70,15 +70,15 @@ RSpec.describe 'アクティビティ', type: :system do
     context '入力情報が正しい場合' do
       it '新規登録できること' do
         visit new_organization_activity_path(organization_a)
-        fill_in 'アクティビティの名前', with: 'サンプルアクティビティの名前'
+        fill_in '名称', with: 'サンプルアクティビティの名前'
         find('#activity_create_form_district_id_chosen').click
         find(
           '#activity_create_form_district_id_chosen .active-result',
-          text: '内山'
+          text: '内山',
         ).click
         fill_in '住所', with: 'サンプルアクティビティ住所'
         fill_in 'スラッグ', with: 'sample-activity'
-        fill_in 'アクティビティの紹介',
+        fill_in '紹介',
                 with:
                   'Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua.'
         find('#map-location-registration').click
@@ -97,15 +97,15 @@ RSpec.describe 'アクティビティ', type: :system do
   end
 
   describe 'アクティビティ情報編集' do
-    before { login_as user_a }
+    before { business_login_as user_a }
 
     context '自分の組織に関するものの場合' do
       it '編集フォームに進めること' do
         visit edit_organization_activity_path(organization_a, activity_a)
         expect(page).to have_current_path edit_organization_activity_path(
-          organization_a,
-          activity_a
-        )
+                            organization_a,
+                            activity_a,
+                          )
       end
     end
 
@@ -121,14 +121,14 @@ RSpec.describe 'アクティビティ', type: :system do
       it '情報更新ができること' do
         create(:district_sano)
         visit edit_organization_activity_path(organization_a, activity_a)
-        fill_in 'アクティビティの名前', with: '更新サンプルアクティビティの名前'
+        fill_in '名称', with: '更新サンプルアクティビティの名前'
         find('#activity_update_form_district_id_chosen').click
         find(
           '#activity_update_form_district_id_chosen .active-result',
-          text: '佐野'
+          text: '佐野',
         ).click
         fill_in '住所', with: '更新サンプルアクティビティ住所'
-        fill_in 'アクティビティの紹介',
+        fill_in '紹介',
                 with:
                   'Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
         find('#map-location-registration').click
@@ -144,7 +144,7 @@ RSpec.describe 'アクティビティ', type: :system do
         expect(page).to have_content '佐野'
         expect(page).to have_content '更新サンプルアクティビティ住所'
         expect(
-          page
+          page,
         ).to have_content 'Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
         expect(page).to have_content 'https://yahoo.com'
       end
@@ -240,7 +240,7 @@ RSpec.describe 'アクティビティ', type: :system do
   end
 
   describe 'お気に入り' do
-    before { login_as user_a }
+    before { business_login_as user_a }
 
     it 'お気に入り登録ができること' do
       visit activity_path(activity_a)
@@ -279,7 +279,7 @@ RSpec.describe 'アクティビティ', type: :system do
   end
 
   describe '投稿の新規作成' do
-    before { login_as user_a }
+    before { business_login_as user_a }
 
     context '自分の所属組織のものであれば' do
       it '投稿の新規作成ページが表示されること' do
@@ -318,15 +318,15 @@ RSpec.describe 'アクティビティ', type: :system do
     let(:post_a) { create(:post_published, postable: activity_a) }
     let(:post_b) { create(:post_published, postable: activity_b) }
 
-    before { login_as user_a }
+    before { business_login_as user_a }
 
     context '自分の所属組織のものであれば' do
       it '投稿詳細ページが表示される' do
         visit organization_activity_post_path(
-          organization_a,
-          activity_a,
-          post_a
-        )
+                organization_a,
+                activity_a,
+                post_a,
+              )
         expect(page).to have_content post_a.title
         expect(page).to have_content post_a.body
       end
@@ -336,10 +336,10 @@ RSpec.describe 'アクティビティ', type: :system do
       it '投稿詳細ページが表示されずエラーになる' do
         Capybara.raise_server_errors = false
         visit organization_activity_post_path(
-          organization_b,
-          activity_b,
-          post_b
-        )
+                organization_b,
+                activity_b,
+                post_b,
+              )
         assert_text 'ActiveRecord::RecordNotFound'
       end
     end
@@ -350,12 +350,12 @@ RSpec.describe 'アクティビティ', type: :system do
 
     context '入力情報が正しい場合' do
       it '情報更新できること' do
-        login_as user_a
+        business_login_as user_a
         visit edit_organization_activity_post_path(
-          organization_a,
-          activity_a,
-          post_a
-        )
+                organization_a,
+                activity_a,
+                post_a,
+              )
         fill_in 'タイトル', with: '更新サンプル投稿名'
         fill_in '内容', with: '更新サンプル投稿内容'
         attach_file '画像',
@@ -375,13 +375,11 @@ RSpec.describe 'アクティビティ', type: :system do
     let!(:post_a) { create(:post_published, postable: activity_a) }
     let!(:post_b) { create(:post_published, postable: activity_b) }
 
-    context 'a context' do
-      it '自分の組織の投稿のみ表示される' do
-        login_as user_a
-        visit organization_activity_posts_path(organization_a, activity_a)
-        expect(page).to have_content post_a.title
-        expect(page).not_to have_content post_b.title
-      end
+    it '自分の組織の投稿のみ表示される' do
+      business_login_as user_a
+      visit organization_activity_posts_path(organization_a, activity_a)
+      expect(page).to have_content post_a.title
+      expect(page).not_to have_content post_b.title
     end
   end
 
@@ -389,7 +387,7 @@ RSpec.describe 'アクティビティ', type: :system do
     let(:post_a) { create(:post_published, postable: activity_a) }
 
     it '投稿を削除できること' do
-      login_as user_a
+      business_login_as user_a
       visit organization_activity_post_path(organization_a, activity_a, post_a)
 
       expect do
@@ -439,7 +437,7 @@ RSpec.describe 'アクティビティ', type: :system do
   end
 
   describe '通知一覧表示' do
-    before { login_as user_a }
+    before { business_login_as user_a }
 
     context 'お気に入りをしているアクティビティの場合' do
       it '投稿がされるとアクティビティの名前が追加される' do

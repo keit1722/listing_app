@@ -7,8 +7,22 @@ module SystemHelper
     click_button 'ログイン'
   end
 
-  def login_as(user)
+  def general_login_as(user)
     visit login_path
+    fill_in 'メールアドレス', with: user.email
+    fill_in 'パスワード', with: '12345678'
+    click_button 'ログイン'
+  end
+
+  def business_login_as(user)
+    visit business_login_path
+    fill_in 'メールアドレス', with: user.email
+    fill_in 'パスワード', with: '12345678'
+    click_button 'ログイン'
+  end
+
+  def admin_login_as(user)
+    visit admin_login_path
     fill_in 'メールアドレス', with: user.email
     fill_in 'パスワード', with: '12345678'
     click_button 'ログイン'

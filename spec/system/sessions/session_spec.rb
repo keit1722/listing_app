@@ -29,7 +29,7 @@ RSpec.describe 'ログイン・ログアウト', type: :system do
 
   describe 'ログアウト' do
     it 'ログアウトできること' do
-      login_as user
+      general_login_as user
       find('.user-menu').click
       click_link 'ログアウト'
       expect(page).to have_current_path root_path
