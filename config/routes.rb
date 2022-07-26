@@ -61,7 +61,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :announcements, only: %i[index, show]
+  resources :announcements, only: %i[index show]
 
   namespace :mypage do
     get 'profile', to: 'users#show'
