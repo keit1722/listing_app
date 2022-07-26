@@ -16,4 +16,7 @@ class Announcement < ApplicationRecord
   validates :status, presence: true
 
   enum status: { published: 1, draft: 2 }
+
+  scope :ordered, -> { order(created_at: :desc) }
+  scope :recent, ->(count) { ordered.limit(count) }
 end
