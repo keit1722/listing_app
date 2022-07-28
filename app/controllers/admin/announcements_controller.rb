@@ -47,7 +47,7 @@ class Admin::AnnouncementsController < Admin::BaseController
   def announcement_params
     params
       .require(:announcement)
-      .permit(:title, :body, :status)
+      .permit(:title, :body, :status, :image)
       .merge(poster_id: current_user.id)
   end
 end
