@@ -26,7 +26,7 @@ class Notice < ApplicationRecord
   belongs_to :user
   belongs_to :noticeable, polymorphic: true
 
-  validates :noticeable_id, uniqueness: { scope: [:noticeable_type, :user_id] }
+  validates :noticeable_id, uniqueness: { scope: %i[noticeable_type user_id] }
 
   enum read: { unread: false, read: true }
 
@@ -40,6 +40,8 @@ class Notice < ApplicationRecord
       organization_invitation_path(noticeable)
     when 'Organization'
       organization_path(noticeable)
+    when 'Announcement'
+      announcement_path(noticeable)
     end
   end
 end
