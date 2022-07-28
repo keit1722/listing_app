@@ -80,6 +80,11 @@ ja:
         body: '内容'
         image: '画像'
         status: 'ステータス'
+      announcement:
+        title: 'タイトル'
+        body: '内容'
+        image: '画像'
+        status: 'ステータス'
       organization_invitation:
         email: 'メールアドレス'
         expires_at: '有効期限'
@@ -140,6 +145,10 @@ ja:
         sunday: '日曜日'
         holiday: '祝日'
     post:
+      status:
+        published: "公開"
+        draft: "下書き"
+    announcement:
       status:
         published: "公開"
         draft: "下書き"
