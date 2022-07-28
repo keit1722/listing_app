@@ -11,6 +11,6 @@ class AnnouncementsController < ApplicationController
 
   def show
     @announcement = Announcement.published.find(params[:id])
-    @announcement = Announcement.with_attached_image.published.ordered
+    @announcements = Announcement.with_attached_image.published.recent(3)
   end
 end
