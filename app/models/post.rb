@@ -54,6 +54,8 @@ class Post < ApplicationRecord
   private
 
   def create_notices
+    return if self.draft?
+
     notices =
       postable.bookmarks.map do |bookmark|
         Notice.new(user: bookmark.user, noticeable: self)
