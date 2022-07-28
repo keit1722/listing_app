@@ -46,7 +46,7 @@ module ListingApp
       g.skip_routes true
       g.assets false
       g.helper false
-      g.test_framework false
+      g.test_framework :rspec
     end
 
     config.active_job.queue_adapter = :sidekiq
