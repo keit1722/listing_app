@@ -51,17 +51,17 @@
 
           <!-- Post Navigation -->
           <ul id="posts-nav" class="margin-top-0 margin-bottom-45">
-            <% if @announcement.previous.present? %>
+            <% if @announcement.next.present? %>
               <li class="next-post">
-                <%= link_to @announcement.previous, class: "btn_arrow_back" do %>
-                <span>次の記事</span><%= @announcement.previous.title %>
+                <%= link_to @announcement.next, class: "btn_arrow_back" do %>
+                <span>次の記事</span><%= @announcement.next.title %>
                 <% end %>
               </li>
             <% end %>
-            <% if @announcement.next.present? %>
+            <% if @announcement.previous.present? %>
               <li class="prev-post">
-                <%= link_to @announcement.next, class: "btn_arrow" do %>
-                <span>前の記事</span><%= @announcement.next.title %>
+                <%= link_to @announcement.previous, class: "btn_arrow" do %>
+                <span>前の記事</span><%= @announcement.previous.title %>
                 <% end %>
               </li>
             <% end %>

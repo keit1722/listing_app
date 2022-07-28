@@ -25,16 +25,16 @@ class Announcement < ApplicationRecord
   def previous
     Announcement
       .published
-      .where('created_at > ?', created_at)
-      .order('created_at ASC')
+      .where('created_at < ?', created_at)
+      .order('created_at DESC')
       .first
   end
 
   def next
     Announcement
       .published
-      .where('created_at < ?', created_at)
-      .order('created_at DESC')
+      .where('created_at > ?', created_at)
+      .order('created_at ASC')
       .first
   end
 end
