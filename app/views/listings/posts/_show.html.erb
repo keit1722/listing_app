@@ -18,7 +18,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <%= render "shared/breadcrumbs", { icon_name: "doc", page_name: "NEWS詳細" } %>
+          <%= render "shared/breadcrumbs", { icon_name: "doc", page_name: "投稿詳細" } %>
         </div>
       </div>
     </div>
@@ -51,17 +51,17 @@
 
           <!-- Post Navigation -->
           <ul id="posts-nav" class="margin-top-0 margin-bottom-45">
-            <% if post.previous.present? %>
+            <% if post.next.present? %>
               <li class="next-post">
-                <%= link_to [post.postable, post.previous], class: "btn_arrow_back" do %>
-                <span>次の記事</span><%= post.previous.title %>
+                <%= link_to [post.postable, post.next], class: "btn_arrow_back" do %>
+                <span>次の記事</span><%= post.next.title %>
                 <% end %>
               </li>
             <% end %>
-            <% if post.next.present? %>
+            <% if post.previous.present? %>
               <li class="prev-post">
-                <%= link_to [post.postable, post.next], class: "btn_arrow" do %>
-                <span>前の記事</span><%= post.next.title %>
+                <%= link_to [post.postable, post.previous], class: "btn_arrow" do %>
+                <span>前の記事</span><%= post.previous.title %>
                 <% end %>
               </li>
             <% end %>
