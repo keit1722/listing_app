@@ -25,6 +25,8 @@ class Announcement < ApplicationRecord
   scope :ordered, -> { order(created_at: :desc) }
   scope :recent, ->(count) { ordered.limit(count) }
 
+  after_create_commit :create_notices
+
   def previous
     Announcement
       .published
@@ -39,5 +41,22 @@ class Announcement < ApplicationRecord
       .where('created_at > ?', created_at)
       .order('created_at ASC')
       .first
+  end
+
+  private
+
+  def create_notices
+    return if self.draft?
+
+    notices =
+      User.not_admin.map { |user| Notice.new(user: user, noticeable: self) }
+    Notice.import notices
+
+    User.not_admin.each do |user|
+      NoticeMailer
+        .with(user_to: user, announcement: self)
+        .announcement
+        .deliver_later
+    end
   end
 end
