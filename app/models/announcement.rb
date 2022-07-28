@@ -15,8 +15,26 @@ class Announcement < ApplicationRecord
   validates :body, length: { maximum: 10_000 }, presence: true
   validates :status, presence: true
 
+  has_one_attached :image
+
   enum status: { published: 1, draft: 2 }
 
   scope :ordered, -> { order(created_at: :desc) }
   scope :recent, ->(count) { ordered.limit(count) }
+
+  def previous
+    Announcement
+      .published
+      .where('created_at > ?', created_at)
+      .order('created_at ASC')
+      .first
+  end
+
+  def next
+    Announcement
+      .published
+      .where('created_at < ?', created_at)
+      .order('created_at DESC')
+      .first
+  end
 end
