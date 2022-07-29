@@ -46,7 +46,7 @@ class Announcement < ApplicationRecord
   private
 
   def create_notices
-    return if self.draft?
+    return if draft?
 
     notices =
       User.not_admin.map { |user| Notice.new(user: user, noticeable: self) }

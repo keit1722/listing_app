@@ -80,13 +80,16 @@ RSpec.describe User, type: :model do
       let(:user_general) { create(:general_user, :activated) }
 
       it do
-        expect(User.not_admin).not_to eq [
-             user_admin,
-             user_business,
-             user_general,
-           ]
+        expect(described_class.not_admin).not_to eq [
+          user_admin,
+          user_business,
+          user_general
+        ]
       end
-      it { expect(User.not_admin).to eq [user_business, user_general] }
+
+      it do
+        expect(described_class.not_admin).to eq [user_business, user_general]
+      end
     end
   end
 end

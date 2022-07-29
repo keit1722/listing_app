@@ -42,31 +42,33 @@ RSpec.describe Announcement, type: :model do
 
     describe 'ordered' do
       it do
-        expect(Announcement.ordered).to eq [
-             announcement_c,
-             announcement_b,
-             announcement_a,
-           ]
+        expect(described_class.ordered).to eq [
+          announcement_c,
+          announcement_b,
+          announcement_a
+        ]
       end
+
       it do
-        expect(Announcement.ordered).not_to eq [
-             announcement_a,
-             announcement_b,
-             announcement_c,
-           ]
+        expect(described_class.ordered).not_to eq [
+          announcement_a,
+          announcement_b,
+          announcement_c
+        ]
       end
     end
 
     describe 'recent' do
       it do
-        expect(Announcement.recent(2)).to eq [announcement_c, announcement_b]
+        expect(described_class.recent(2)).to eq [announcement_c, announcement_b]
       end
+
       it do
-        expect(Announcement.recent(3)).to eq [
-             announcement_c,
-             announcement_b,
-             announcement_a,
-           ]
+        expect(described_class.recent(3)).to eq [
+          announcement_c,
+          announcement_b,
+          announcement_a
+        ]
       end
     end
   end
@@ -86,7 +88,7 @@ RSpec.describe Announcement, type: :model do
 
       context 'ひとつ前に作成されたオブジェクトがない場合' do
         it 'nilが返ってくる' do
-          expect(announcement_a.previous).to be nil
+          expect(announcement_a.previous).to be_nil
         end
       end
     end
@@ -100,36 +102,35 @@ RSpec.describe Announcement, type: :model do
 
       context 'ひとつ後に作成されたオブジェクトがない場合' do
         it 'nilが返ってくる' do
-          expect(announcement_c.next).to be nil
+          expect(announcement_c.next).to be_nil
         end
       end
     end
 
     describe 'create_notice' do
-      let!(:user_general) { create(:general_user, :activated) }
-      let!(:user_business) { create(:business_user, :activated) }
+      before do
+        create(:general_user, :activated)
+        create(:business_user, :activated)
+      end
 
       context '作成した記事が公開用だった場合' do
         it '管理者以外に通知される' do
-          expect {
+          expect do
             create(:announcement_published, poster_id: user.id)
-          }.to change(Notice, :count).by(2).and have_enqueued_mail(
-                                               NoticeMailer,
-                                               :announcement,
-                                             )
-                                             .exactly(2)
-                                             .times
+          end.to change(Notice, :count).by(2).and have_enqueued_mail(
+            NoticeMailer,
+            :announcement
+          )
+            .exactly(2)
+            .times
         end
       end
 
       context '作成した記事が下書きだった場合' do
         it '誰にも通知されない' do
-          expect { create(:announcement_draft, poster_id: user.id) }.to change(
-            Notice,
-            :count,
-          ).by(0).and have_enqueued_mail(NoticeMailer, :announcement)
-                                             .exactly(0)
-                                             .times
+          expect do
+            create(:announcement_draft, poster_id: user.id)
+          end.not_to change(Notice, :count)
         end
       end
     end

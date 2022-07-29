@@ -73,8 +73,8 @@ RSpec.describe 'お知らせ', type: :system do
         click_button '更新する'
 
         expect(page).to have_current_path admin_announcement_path(
-                            announcement_published,
-                          )
+          announcement_published
+        )
         expect(page).to have_content '更新しました'
         expect(page).to have_content 'サンプル編集後タイトル'
       end
@@ -105,8 +105,8 @@ RSpec.describe 'お知らせ', type: :system do
       it '詳細ページが表示される' do
         visit announcement_path(announcement_published)
         expect(page).to have_current_path announcement_path(
-                            announcement_published,
-                          )
+          announcement_published
+        )
       end
     end
 

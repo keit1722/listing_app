@@ -2,11 +2,11 @@ class AnnouncementsController < ApplicationController
   def index
     @announcements =
       Announcement
-        .with_attached_image
-        .published
-        .page(params[:page])
-        .per(5)
-        .ordered
+      .with_attached_image
+      .published
+      .page(params[:page])
+      .per(5)
+      .ordered
   end
 
   def show
