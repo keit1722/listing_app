@@ -112,7 +112,7 @@ RSpec.describe Announcement, type: :model do
       context '作成した記事が公開用だった場合' do
         it '管理者以外に通知される' do
           expect {
-            create(:announcement, poster_id: user.id, status: :published)
+            create(:announcement_published, poster_id: user.id)
           }.to change(Notice, :count).by(2).and have_enqueued_mail(
                                                NoticeMailer,
                                                :announcement,
@@ -124,12 +124,10 @@ RSpec.describe Announcement, type: :model do
 
       context '作成した記事が下書きだった場合' do
         it '誰にも通知されない' do
-          expect {
-            create(:announcement, poster_id: user.id, status: :draft)
-          }.to change(Notice, :count).by(0).and have_enqueued_mail(
-                                               NoticeMailer,
-                                               :announcement,
-                                             )
+          expect { create(:announcement_draft, poster_id: user.id) }.to change(
+            Notice,
+            :count,
+          ).by(0).and have_enqueued_mail(NoticeMailer, :announcement)
                                              .exactly(0)
                                              .times
         end
