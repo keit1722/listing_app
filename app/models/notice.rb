@@ -40,6 +40,8 @@ class Notice < ApplicationRecord
       organization_invitation_path(noticeable)
     when 'Organization'
       organization_path(noticeable)
+    when 'Announcement'
+      announcement_path(noticeable)
     end
   end
 end

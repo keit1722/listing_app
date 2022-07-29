@@ -29,4 +29,11 @@ class NoticeMailer < ApplicationMailer
       subject: "#{@organization.name} にユーザーが参加しました"
     )
   end
+
+  def announcement
+    @user_to = params[:user_to]
+    @announcement = params[:announcement]
+
+    mail(to: @user_to.email, subject: 'お知らせがあります')
+  end
 end

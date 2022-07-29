@@ -61,6 +61,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :announcements, only: %i[index show]
+
   namespace :mypage do
     get 'profile', to: 'users#show'
     patch 'profile', to: 'users#update'
@@ -139,6 +141,8 @@ Rails.application.routes.draw do
     resources :organization_registrations, only: %i[index show] do
       resources :organization_registration_statuses, only: %i[create]
     end
+
+    resources :announcements
   end
 
   namespace :business do

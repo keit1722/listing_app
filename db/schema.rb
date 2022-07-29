@@ -58,6 +58,15 @@ ActiveRecord::Schema.define(version: 2022_07_01_083140) do
     t.index ["slug"], name: "index_activities_on_slug", unique: true
   end
 
+  create_table "announcements", force: :cascade do |t|
+    t.string "title", null: false
+    t.text "body", null: false
+    t.integer "status", default: 1, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.integer "poster_id", null: false
+  end
+
   create_table "bookmarks", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "bookmarkable_id"

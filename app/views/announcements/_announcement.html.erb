@@ -1,0 +1,27 @@
+<div class="blog-post">
+
+  <!-- Img -->
+  <% if announcement.image.attached? %>
+    <%= link_to image_tag(announcement.image), announcement_path(announcement), class: "post-img" %>
+  <% end %>
+
+  <!-- Content -->
+  <div class="post-content">
+    <h3>
+      <%= link_to announcement_path(announcement) do %>
+        <%= announcement.title %>
+      <% end %>
+    </h3>
+
+    <ul class="post-meta">
+      <li><%= l announcement.created_at, format: :short %></li>
+    </ul>
+
+    <p><%= announcement.decorate.truncate_body(100) %></p>
+
+    <%= link_to announcement_path(announcement), class: "read-more" do %>
+      続きを読む <i class="fa fa-angle-right"></i>
+    <% end %>
+  </div>
+
+</div>
