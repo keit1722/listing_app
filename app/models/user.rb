@@ -110,6 +110,8 @@ class User < ApplicationRecord
 
   enum role: { general: 1, business: 2, admin: 9 }
 
+  scope :not_admin, -> { where.not(role: :admin) }
+
   def to_param
     public_uid
   end

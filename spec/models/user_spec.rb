@@ -72,4 +72,24 @@ RSpec.describe User, type: :model do
       expect(same_email_user.errors[:email]).to include('はすでに存在します')
     end
   end
+
+  describe 'スコープ' do
+    describe 'not_admin' do
+      let(:user_admin) { create(:admin_user, :activated) }
+      let(:user_business) { create(:business_user, :activated) }
+      let(:user_general) { create(:general_user, :activated) }
+
+      it do
+        expect(described_class.not_admin).not_to eq [
+          user_admin,
+          user_business,
+          user_general
+        ]
+      end
+
+      it do
+        expect(described_class.not_admin).to eq [user_business, user_general]
+      end
+    end
+  end
 end

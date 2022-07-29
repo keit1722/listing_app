@@ -37,8 +37,8 @@ class Post < ApplicationRecord
     postable
       .posts
       .published
-      .where('created_at > ?', created_at)
-      .order('created_at ASC')
+      .where('created_at < ?', created_at)
+      .order('created_at DESC')
       .first
   end
 
@@ -46,14 +46,16 @@ class Post < ApplicationRecord
     postable
       .posts
       .published
-      .where('created_at < ?', created_at)
-      .order('created_at DESC')
+      .where('created_at > ?', created_at)
+      .order('created_at ASC')
       .first
   end
 
   private
 
   def create_notices
+    return if draft?
+
     notices =
       postable.bookmarks.map do |bookmark|
         Notice.new(user: bookmark.user, noticeable: self)

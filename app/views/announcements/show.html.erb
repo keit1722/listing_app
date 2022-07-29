@@ -18,7 +18,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <%= render "shared/breadcrumbs", { icon_name: "doc", page_name: "投稿詳細" } %>
+          <%= render "shared/breadcrumbs", { icon_name: "doc", page_name: "お知らせ詳細" } %>
         </div>
       </div>
     </div>
@@ -35,33 +35,33 @@
           <!-- Blog Post -->
           <div class="blog-post single-post">
             <!-- Img -->
-            <% if post.image.attached? %>
-              <%= image_tag post.image %>
+            <% if @announcement.image.attached? %>
+              <%= image_tag @announcement.image %>
             <% end %>
             <!-- Content -->
             <div class="post-content">
-              <h3><%= post.title %></h3>
+              <h3><%= @announcement.title %></h3>
               <ul class="post-meta">
-                <li><%= l post.created_at, format: :short %></li>
+                <li><%= l @announcement.created_at, format: :short %></li>
               </ul>
-              <p><%= post.decorate.format_body %></p>
+              <p><%= @announcement.decorate.format_body %></p>
             </div>
           </div>
           <!-- Blog Post / End -->
 
           <!-- Post Navigation -->
           <ul id="posts-nav" class="margin-top-0 margin-bottom-45">
-            <% if post.next.present? %>
+            <% if @announcement.next.present? %>
               <li class="next-post">
-                <%= link_to [post.postable, post.next], class: "btn_arrow_back" do %>
-                <span>次の記事</span><%= post.next.title %>
+                <%= link_to @announcement.next, class: "btn_arrow_back" do %>
+                <span>次の記事</span><%= @announcement.next.title %>
                 <% end %>
               </li>
             <% end %>
-            <% if post.previous.present? %>
+            <% if @announcement.previous.present? %>
               <li class="prev-post">
-                <%= link_to [post.postable, post.previous], class: "btn_arrow" do %>
-                <span>前の記事</span><%= post.previous.title %>
+                <%= link_to @announcement.previous, class: "btn_arrow" do %>
+                <span>前の記事</span><%= @announcement.previous.title %>
                 <% end %>
               </li>
             <% end %>
@@ -77,7 +77,7 @@
             <div class="widget margin-top-40">
               <h3>最近の投稿</h3>
               <ul class="widget-tabs">
-                <%= render partial: "listings/posts/widget_post", collection: three_posts, as: "post" %>
+                <%= render partial: "widget_announcement", collection: @announcements, as: "announcement" %>
               </ul>
             </div>
             <!-- Widget / End-->
