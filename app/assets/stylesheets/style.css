@@ -21124,6 +21124,14 @@ body .category-box-btn:hover {
   display: inline !important;
 }
 
+.width-auto {
+  width: auto !important;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
 /* image uploader */
 
 .uploader-conteiner {
