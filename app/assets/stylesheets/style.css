@@ -3548,9 +3548,9 @@ body.modal-open .mm-slideout {
 	}
 
 	.sign-in,
-	.user-menu { flex: 1; }
+	.user-menu { flex: 1; top: 0; }
 
-	.header-widget .sign-in { top: 9px; }
+	.header-widget .sign-in { top: 0; }
 
 	#header-container.header-style-2 .left-side,
 	#header-container.header-style-2 .right-side,
@@ -20945,7 +20945,7 @@ body .category-box-btn:hover {
 	    margin: 0;
 	}
 
-	.user-menu {  margin: 10px 0 -10px 25px; top: 0; display: inline-block; }
+	.user-menu { top: 0; display: inline-block; }
 
 	.dashboard-list-box .sort-by .sort-by-select {display: none;}
 
