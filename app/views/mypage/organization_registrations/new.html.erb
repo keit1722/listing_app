@@ -1,7 +1,7 @@
 <div id="titlebar">
   <div class="row">
     <div class="col-md-12">
-      <%= render 'shared/breadcrumbs_mypage', { icon_name: "plus", page_name: "組織登録申請" } %>
+      <%= render 'shared/breadcrumbs', { icon_name: "plus", page_name: "組織登録申請" } %>
     </div>
   </div>
 </div>
@@ -67,7 +67,7 @@
         </div>
         <!-- Section / End -->
 
-        <%= f.submit "申請する", class: "button margin-top-40" %>
+        <%= f.submit "申請する", class: "button margin-top-40", data: { confirm: "入力した内容で申請します。よろしいですか？" } %>
       <% end %>
 
     </div>
