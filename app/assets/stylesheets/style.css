@@ -21129,7 +21129,11 @@ body .category-box-btn:hover {
 }
 
 .underline {
-  text-decoration: underline;
+  text-decoration: underline !important;
+}
+
+.overflow-visible {
+  overflow: visible !important;
 }
 
 /* image uploader */
