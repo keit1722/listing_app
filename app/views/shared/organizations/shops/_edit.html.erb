@@ -8,7 +8,7 @@
 
 <div class="row">
   <div class="col-lg-12">
-    <%= form_with model: shop_update_form, url: send(update_path), method: :patch do |f| %>
+    <%= form_with model: shop_update_form, url: send(path), method: :patch do |f| %>
       <div id="add-listing">
         <%= render 'shared/error_messages_multiple', models: [f.object, f.object.shop] %>
 
@@ -186,7 +186,13 @@
         </div>
         <!-- Sect ion / End -->
 
-        <%= f.submit "更新する", class: "button margin-top-40" %>
+        <div class="margin-top-40">
+          <%= link_to send(path), class: "button border overflow-visible" do %>
+            <i class="sl sl-icon-arrow-left-circle"></i> 戻る
+          <% end %>
+
+          <%= f.submit '更新する', class: "button right-side" %>
+        </div>
       </div>
     <% end %>
   </div>
