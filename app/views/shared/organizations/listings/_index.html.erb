@@ -1,10 +1,19 @@
-<div id="titlebar">
+<div id="titlebar" class="<%="margin-bottom-20" if !new_path.nil? %>">
   <div class="row">
     <div class="col-md-12">
       <%= render 'shared/breadcrumbs_mypage', { icon_name: "list", page_name: "#{page}一覧" } %>
     </div>
   </div>
 </div>
+
+<% if !new_path.nil? %>
+  <div class="margin-bottom-20 text-align-right">
+    <%= link_to send(new_path), class: "button border" do %>
+      <i class="sl sl-icon-plus"></i> 新規作成
+    <% end %>
+  </div>
+<% end %>
+
 <div class="row">
   <!-- Listings -->
   <div class="col-lg-12 col-md-12">
