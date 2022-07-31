@@ -24,7 +24,7 @@ class Admin::UsersController < Admin::BaseController
   def destroy
     @user = User.find_by!(public_uid: params[:public_uid])
     @user.destroy!
-    redirect_to root_path, success: 'ユーザーアカウントを削除しました'
+    redirect_to admin_users_path, success: 'ユーザーアカウントを削除しました'
   end
 
   private
@@ -40,7 +40,7 @@ class Admin::UsersController < Admin::BaseController
         :password_confirmation,
         :username,
         :public_uid,
-        :role
+        :role,
       )
   end
 end
