@@ -184,7 +184,13 @@
         </div>
         <!-- Sect ion / End -->
 
-        <%= f.submit nil, class: "button margin-top-40" %>
+        <div class="margin-top-40">
+          <%= link_to organization_shops_path, class: "button border overflow-visible" do %>
+            <i class="sl sl-icon-arrow-left-circle"></i> 戻る
+          <% end %>
+
+          <%= f.submit nil, class: "button right-side" %>
+        </div>
       </div>
     <% end %>
   </div>
