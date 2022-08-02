@@ -1,33 +1,29 @@
 class Admin::Organizations::SkiAreasController < Admin::BaseController
-  before_action :set_districts, only: [:edit, :update]
+  before_action :set_districts, only: %i[edit update]
 
   def index
+    @organization = Organization.find_by!(slug: params[:organization_slug])
     @ski_areas =
-      Organization
-      .find_by!(slug: params[:organization_slug])
-      .ski_areas
-      .page(params[:page])
-      .per(20)
-      .with_attached_images
+      @organization.ski_areas.page(params[:page]).per(20).with_attached_images
   end
 
   def show
     @ski_area =
       Organization
-      .find_by!(slug: params[:organization_slug])
-      .ski_areas
-      .with_attached_images
-      .find_by!(slug: params[:slug])
+        .find_by!(slug: params[:organization_slug])
+        .ski_areas
+        .with_attached_images
+        .find_by!(slug: params[:slug])
     render layout: 'mypage_maps'
   end
 
   def edit
     @ski_area =
       Organization
-      .find_by!(slug: params[:organization_slug])
-      .ski_areas
-      .with_attached_images
-      .find_by!(slug: params[:slug])
+        .find_by!(slug: params[:organization_slug])
+        .ski_areas
+        .with_attached_images
+        .find_by!(slug: params[:slug])
     @ski_area_update_form = SkiAreaUpdateForm.new(@ski_area)
     render layout: 'mypage_maps'
   end
@@ -35,10 +31,10 @@ class Admin::Organizations::SkiAreasController < Admin::BaseController
   def update
     @ski_area =
       Organization
-      .find_by!(slug: params[:organization_slug])
-      .ski_areas
-      .with_attached_images
-      .find_by!(slug: params[:slug])
+        .find_by!(slug: params[:organization_slug])
+        .ski_areas
+        .with_attached_images
+        .find_by!(slug: params[:slug])
     @ski_area_update_form = SkiAreaUpdateForm.new(@ski_area, ski_area_params)
 
     if @ski_area_update_form.update
@@ -57,15 +53,22 @@ class Admin::Organizations::SkiAreasController < Admin::BaseController
       .require(:ski_area_update_form)
       .permit(
         :district_id,
-        opening_hours_attributes: [:start_time_hour, :start_time_minute, :end_time_hour, :end_time_minute, :closed, :day],
+        opening_hours_attributes: %i[
+          start_time_hour
+          start_time_minute
+          end_time_hour
+          end_time_minute
+          closed
+          day
+        ],
         ski_area_attributes: [
           :name,
           :lat,
           :lng,
           :description,
           :address,
-          { images: [] }
-        ]
+          { images: [] },
+        ],
       )
   end
 

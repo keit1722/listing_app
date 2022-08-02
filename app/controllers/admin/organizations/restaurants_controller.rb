@@ -1,34 +1,30 @@
 class Admin::Organizations::RestaurantsController < Admin::BaseController
-  before_action :set_districts, only: [:edit, :update]
-  before_action :set_restaurant_categories, only: [:edit, :update]
+  before_action :set_districts, only: %i[edit update]
+  before_action :set_restaurant_categories, only: %i[edit update]
 
   def index
+    @organization = Organization.find_by!(slug: params[:organization_slug])
     @restaurants =
-      Organization
-      .find_by!(slug: params[:organization_slug])
-      .restaurants
-      .page(params[:page])
-      .per(20)
-      .with_attached_images
+      @organization.restaurants.page(params[:page]).per(20).with_attached_images
   end
 
   def show
     @restaurant =
       Organization
-      .find_by!(slug: params[:organization_slug])
-      .restaurants
-      .with_attached_images
-      .find_by!(slug: params[:slug])
+        .find_by!(slug: params[:organization_slug])
+        .restaurants
+        .with_attached_images
+        .find_by!(slug: params[:slug])
     render layout: 'mypage_maps'
   end
 
   def edit
     @restaurant =
       Organization
-      .find_by!(slug: params[:organization_slug])
-      .restaurants
-      .with_attached_images
-      .find_by!(slug: params[:slug])
+        .find_by!(slug: params[:organization_slug])
+        .restaurants
+        .with_attached_images
+        .find_by!(slug: params[:slug])
     @restaurant_update_form = RestaurantUpdateForm.new(@restaurant)
     render layout: 'mypage_maps'
   end
@@ -36,10 +32,10 @@ class Admin::Organizations::RestaurantsController < Admin::BaseController
   def update
     @restaurant =
       Organization
-      .find_by!(slug: params[:organization_slug])
-      .restaurants
-      .with_attached_images
-      .find_by!(slug: params[:slug])
+        .find_by!(slug: params[:organization_slug])
+        .restaurants
+        .with_attached_images
+        .find_by!(slug: params[:slug])
     @restaurant_update_form =
       RestaurantUpdateForm.new(@restaurant, restaurant_params)
 
@@ -60,7 +56,14 @@ class Admin::Organizations::RestaurantsController < Admin::BaseController
       .permit(
         :district_id,
         reservation_link_attributes: [:link],
-        opening_hours_attributes: [:start_time_hour, :start_time_minute, :end_time_hour, :end_time_minute, :closed, :day],
+        opening_hours_attributes: %i[
+          start_time_hour
+          start_time_minute
+          end_time_hour
+          end_time_minute
+          closed
+          day
+        ],
         restaurant_category_ids: [],
         restaurant_attributes: [
           :name,
@@ -68,8 +71,8 @@ class Admin::Organizations::RestaurantsController < Admin::BaseController
           :lng,
           :description,
           :address,
-          { images: [] }
-        ]
+          { images: [] },
+        ],
       )
   end
 
