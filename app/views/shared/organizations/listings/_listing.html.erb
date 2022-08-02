@@ -13,8 +13,8 @@
           <%= link_to send(show_path, listing.organization, listing), class: "button" do %>
             <i class="sl sl-icon-doc"></i> 詳細
           <% end %>
-          <%= link_to send(edit_path, listing.organization, listing), class: "button" do %>
-            <i class="sl sl-icon-pencil"></i> 編集
+          <%= link_to send(post_index_path, listing.organization, listing), class: "button" do %>
+            <i class="sl sl-icon-list"></i> 投稿一覧
           <% end %>
         </div>
       </div>

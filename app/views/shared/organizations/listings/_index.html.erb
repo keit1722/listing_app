@@ -26,7 +26,7 @@
         <h4><%= "登録されている#{page}はありません" %></h4>
       <% elsif %>
         <ul>
-          <%= render partial: 'shared/organizations/listings/listing', collection: listings, as: 'listing', locals: {show_path: show_path, edit_path: edit_path} %>
+          <%= render partial: 'shared/organizations/listings/listing', collection: listings, as: 'listing', locals: {show_path: show_path, post_index_path: post_index_path} %>
         </ul>
       <% end %>
     </div>
