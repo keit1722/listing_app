@@ -6,17 +6,17 @@
   </div>
 </div>
 
-  <div class="margin-bottom-20 display-flex-space-between">
-    <%= link_to send(organization_show_path, organization), class: "button border" do %>
-      <i class="sl sl-icon-arrow-left-circle"></i> 戻る
-    <% end %>
+<div class="margin-bottom-20 display-flex-space-between">
+  <%= link_to send(organization_show_path, organization), class: "button border" do %>
+    <i class="sl sl-icon-arrow-left-circle"></i> 戻る
+  <% end %>
 
-    <% if !new_path.nil? %>
-      <%= link_to send(new_path), class: "button border" do %>
-        <i class="sl sl-icon-plus"></i> 新規作成
-      <% end %>
+  <% if !new_path.nil? %>
+    <%= link_to send(new_path), class: "button border" do %>
+      <i class="sl sl-icon-plus"></i> 新規作成
     <% end %>
-  </div>
+  <% end %>
+</div>
 
 <div class="row">
   <!-- Listings -->
