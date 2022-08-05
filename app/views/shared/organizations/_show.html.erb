@@ -36,6 +36,34 @@
               <td data-label="項目">メンバー</td>
               <td data-label="内容"><%= organization.users.exists? ? organization.decorate.arranged_users : "メンバーはいません" %></td>
             </tr>
+            <tr>
+              <td data-label="項目">飲食店 （<%= link_to " 一覧 ", send(restaurant_index_path, organization), class: "underline" %>）</td>
+              <td data-label="内容"><%= organization.restaurants.exists? ? organization.decorate.arranged_restaurants : " - " %> </td>
+            </tr>
+            <tr>
+              <td data-label="項目">宿泊施設 （<%= link_to " 一覧 ", send(hotel_index_path, organization), class: "underline" %>）</td>
+              <td data-label="内容"><%= organization.hotels.exists? ? organization.decorate.arranged_hotels : " - " %></td>
+            </tr>
+            <tr>
+              <td data-label="項目">アクティビティ （<%= link_to " 一覧 ", send(activity_index_path, organization), class: "underline" %>）</td>
+              <td data-label="内容"><%= organization.activities.exists? ? organization.decorate.arranged_activities : " - " %></td>
+            </tr>
+            <tr>
+              <td data-label="項目">温泉 （<%= link_to " 一覧 ", send(hot_spring_index_path, organization), class: "underline" %>）</td>
+              <td data-label="内容"><%= organization.hot_springs.exists? ? organization.decorate.arranged_hot_springs : " - " %></td>
+            </tr>
+            <tr>
+              <td data-label="項目">スキー場 （<%= link_to " 一覧 ", send(ski_area_index_path, organization), class: "underline" %>）</td>
+              <td data-label="内容"><%= organization.ski_areas.exists? ? organization.decorate.arranged_ski_areas : " - " %></td>
+            </tr>
+            <tr>
+              <td data-label="項目">フォトスポット （<%= link_to " 一覧 ", send(photo_spot_index_path, organization), class: "underline" %>）</td>
+              <td data-label="内容"><%= organization.photo_spots.exists? ? organization.decorate.arranged_photo_spots : " - " %></td>
+            </tr>
+            <tr>
+              <td data-label="項目">ショップ （<%= link_to " 一覧 ", send(shop_index_path, organization), class: "underline" %>）</td>
+              <td data-label="内容"><%= organization.shops.exists? ? organization.decorate.arranged_shops : " - " %></td>
+            </tr>
           </tbody>
         </table>
 
