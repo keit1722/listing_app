@@ -1,7 +1,7 @@
 <div id="titlebar">
   <div class="row">
     <div class="col-md-12">
-      <%= render 'shared/breadcrumbs_mypage', { icon_name: "list", page_name: "組織登録申請一覧" } %>
+      <h2><i class="sl sl-icon-list"></i> 組織登録申請一覧</h2>
     </div>
   </div>
 </div>
@@ -13,7 +13,7 @@
     <div class="messages-container margin-top-0">
       <% if @organization_registrations.empty? %>
         <div class="messages-headline">
-          <h4>申請した組織登録はありません</h4>
+          <h4>申請された組織登録はありません</h4>
         </div>
       <% elsif %>
         <div class="messages-inbox">

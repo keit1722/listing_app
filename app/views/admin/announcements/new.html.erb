@@ -1,7 +1,7 @@
 <div id="titlebar">
   <div class="row">
     <div class="col-md-12">
-      <%= render 'shared/breadcrumbs_mypage', { icon_name: "plus", page_name: "新規お知らせ作成" } %>
+      <h2><i class="sl sl-icon-plus"></i> お知らせ作成</h2>
     </div>
   </div>
 </div>
@@ -79,7 +79,13 @@
           </div>
           <!-- Section / End -->
 
-        <%= f.submit nil, class: "button margin-top-40" %>
+        <div class="margin-top-40">
+          <%= link_to admin_announcements_path, class: "button border overflow-visible" do %>
+            <i class="sl sl-icon-arrow-left-circle"></i> 戻る
+          <% end %>
+
+          <%= f.submit nil, class: "button right-side" %>
+        </div>
 
       </div>
     <% end %>

@@ -1,7 +1,7 @@
 <div id="titlebar">
   <div class="row">
     <div class="col-md-12">
-      <%= render 'shared/breadcrumbs_mypage', { icon_name: "doc", page_name: "申請内容" } %>
+      <h2><i class="sl sl-icon-doc"></i> 申請内容</h2>
     </div>
   </div>
 </div>
@@ -59,14 +59,21 @@
 
       </div>
     </div>
-    <% if @organization_registration.organization_registration_status.nil? %>
-      <div class="margin-top-30 child-display-inline">
-        <%= button_to admin_organization_registration_organization_registration_statuses_path(@organization_registration, status: :accepted), class: "button button-accepted", data: { confirm: "一度承認すると元には戻せません。よろしいですか？" } do %>
-          <i class="sl sl-icon-check"></i> 承認
-        <% end %>
-        <%= button_to admin_organization_registration_organization_registration_statuses_path(@organization_registration, status: :rejected), class: "button button-rejected", data: { confirm: "一度否認すると元には戻せません。よろしいですか？" } do %>
-          <i class="sl sl-icon-check"></i> 否認
-        <% end %>
-      </div>
-    <% end %>
+
+    <div class="margin-top-40 display-flex-space-between">
+      <%= link_to admin_organization_registrations_path, class: "button border margin-bottom-20 overflow-visible" do %>
+        <i class="sl sl-icon-arrow-left-circle"></i> 戻る
+      <% end %>
+
+      <% if @organization_registration.organization_registration_status.nil? %>
+        <div class="child-display-inline">
+          <%= button_to admin_organization_registration_organization_registration_statuses_path(@organization_registration, status: :accepted), class: "button button-accepted", data: { confirm: "一度承認すると元には戻せません。よろしいですか？" } do %>
+            <i class="sl sl-icon-check"></i> 承認
+          <% end %>
+          <%= button_to admin_organization_registration_organization_registration_statuses_path(@organization_registration, status: :rejected), class: "button button-rejected", data: { confirm: "一度否認すると元には戻せません。よろしいですか？" } do %>
+            <i class="sl sl-icon-close"></i> 否認
+          <% end %>
+        </div>
+      <% end %>
+    </div>
   </div>

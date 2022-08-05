@@ -1,7 +1,7 @@
 <div id="titlebar">
   <div class="row">
     <div class="col-md-12">
-      <%= render 'shared/breadcrumbs_mypage', { icon_name: "doc", page_name: "お知らせ詳細" } %>
+      <h2><i class="sl sl-icon-doc"></i> お知らせ詳細</h2>
     </div>
   </div>
 </div>
@@ -51,10 +51,14 @@
     </div>
 
     <div class="margin-top-40">
-      <%= link_to edit_admin_announcement_path(@announcement), class: "button" do %>
+      <%= link_to admin_announcements_path, class: "button border margin-bottom-20 overflow-visible" do %>
+        <i class="sl sl-icon-arrow-left-circle"></i> 戻る
+      <% end %>
+
+      <%= link_to edit_admin_announcement_path(@announcement), class: "button overflow-visible" do %>
         <i class="sl sl-icon-pencil"></i> 編集
-      <% end%>
-      <%= link_to admin_announcement_path(@announcement), method: :delete, data: { confirm: "削除すると復旧はできません。よろしいですか？" }, class: "button" do %>
+      <% end %>
+      <%= link_to admin_announcement_path(@announcement), method: :delete, data: { confirm: "削除すると復旧はできません。よろしいですか？" }, class: "border button right-side width-auto overflow-visible" do %>
         <i class="sl sl-icon-trash"></i> 削除
       <% end %>
     </div>
