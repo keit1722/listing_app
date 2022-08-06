@@ -1,28 +1,3 @@
-# == Schema Information
-#
-# Table name: hotels
-#
-#  id              :bigint           not null, primary key
-#  address         :string           not null
-#  description     :text             not null
-#  lat             :float            not null
-#  lng             :float            not null
-#  name            :string           not null
-#  slug            :string           not null
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  organization_id :bigint
-#
-# Indexes
-#
-#  index_hotels_on_name             (name) UNIQUE
-#  index_hotels_on_organization_id  (organization_id)
-#  index_hotels_on_slug             (slug) UNIQUE
-#
-# Foreign Keys
-#
-#  fk_rails_...  (organization_id => organizations.id)
-#
 class Hotel < ApplicationRecord
   include ActiveModel::Validations
 
@@ -75,3 +50,29 @@ class Hotel < ApplicationRecord
     slug
   end
 end
+
+# == Schema Information
+#
+# Table name: hotels
+#
+#  id              :bigint           not null, primary key
+#  address         :string           not null
+#  description     :text             not null
+#  lat             :float            not null
+#  lng             :float            not null
+#  name            :string           not null
+#  slug            :string           not null
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  organization_id :bigint
+#
+# Indexes
+#
+#  index_hotels_on_name             (name) UNIQUE
+#  index_hotels_on_organization_id  (organization_id)
+#  index_hotels_on_slug             (slug) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (organization_id => organizations.id)
+#

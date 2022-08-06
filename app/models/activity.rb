@@ -1,28 +1,3 @@
-# == Schema Information
-#
-# Table name: activities
-#
-#  id              :bigint           not null, primary key
-#  address         :string           not null
-#  description     :text             not null
-#  lat             :float            not null
-#  lng             :float            not null
-#  name            :string           not null
-#  slug            :string           not null
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  organization_id :bigint
-#
-# Indexes
-#
-#  index_activities_on_name             (name) UNIQUE
-#  index_activities_on_organization_id  (organization_id)
-#  index_activities_on_slug             (slug) UNIQUE
-#
-# Foreign Keys
-#
-#  fk_rails_...  (organization_id => organizations.id)
-#
 class Activity < ApplicationRecord
   include ActiveModel::Validations
 
@@ -76,3 +51,29 @@ class Activity < ApplicationRecord
     slug
   end
 end
+
+# == Schema Information
+#
+# Table name: activities
+#
+#  id              :bigint           not null, primary key
+#  address         :string           not null
+#  description     :text             not null
+#  lat             :float            not null
+#  lng             :float            not null
+#  name            :string           not null
+#  slug            :string           not null
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  organization_id :bigint
+#
+# Indexes
+#
+#  index_activities_on_name             (name) UNIQUE
+#  index_activities_on_organization_id  (organization_id)
+#  index_activities_on_slug             (slug) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (organization_id => organizations.id)
+#

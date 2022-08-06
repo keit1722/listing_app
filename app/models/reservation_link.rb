@@ -1,3 +1,14 @@
+class ReservationLink < ApplicationRecord
+  belongs_to :reservation_linkable, polymorphic: true
+
+  validates :link,
+            length: {
+              maximum: 100
+            },
+            presence: true,
+            format: /\A#{URI::DEFAULT_PARSER.make_regexp(%w[http https])}\z/
+end
+
 # == Schema Information
 #
 # Table name: reservation_links
@@ -13,13 +24,3 @@
 #
 #  index_polymorphic_reservation_link_mappings_on_id_and_type  (reservation_linkable_type,reservation_linkable_id)
 #
-class ReservationLink < ApplicationRecord
-  belongs_to :reservation_linkable, polymorphic: true
-
-  validates :link,
-            length: {
-              maximum: 100
-            },
-            presence: true,
-            format: /\A#{URI::DEFAULT_PARSER.make_regexp(%w[http https])}\z/
-end

@@ -1,3 +1,10 @@
+class OrganizationUser < ApplicationRecord
+  belongs_to :user
+  belongs_to :organization
+
+  validates :user_id, uniqueness: { scope: :organization_id }
+end
+
 # == Schema Information
 #
 # Table name: organization_users
@@ -19,9 +26,3 @@
 #  fk_rails_...  (organization_id => organizations.id)
 #  fk_rails_...  (user_id => users.id)
 #
-class OrganizationUser < ApplicationRecord
-  belongs_to :user
-  belongs_to :organization
-
-  validates :user_id, uniqueness: { scope: :organization_id }
-end
