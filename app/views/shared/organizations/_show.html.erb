@@ -1,10 +1,22 @@
-<div id="titlebar">
+<div id="titlebar" class="margin-bottom-20">
   <div class="row">
     <div class="col-md-12">
       <h2><i class="sl sl-icon-doc"></i> 組織詳細</h2>
     </div>
   </div>
 </div>
+
+<% if current_page?(organization_path) %>
+  <div class="margin-bottom-20 display-flex-end">
+    <%= link_to organization_organization_invitations_path(organization), class: "button border" do %>
+      <i class="sl sl-icon-list"></i> 招待状況一覧
+    <% end %>
+
+    <%= link_to new_organization_organization_invitation_path(organization), class: "button border" do %>
+      <i class="sl sl-icon-user-follow"></i> 招待
+    <% end %>
+  </div>
+<% end %>
 
 <div class="row">
   <!-- Profile -->

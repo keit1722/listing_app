@@ -1,7 +1,7 @@
 <div id="titlebar">
   <div class="row">
     <div class="col-md-12">
-      <h2><i class="sl sl-icon-plus"></i> 組織へ招待</h2>
+      <h2><i class="sl sl-icon-user-follow"></i> ユーザーを招待</h2>
     </div>
   </div>
 </div>
@@ -36,7 +36,12 @@
         </div>
         <!-- Section / End -->
 
-        <%= f.submit "招待する", class: "button margin-top-40" %>
+        <div class="margin-top-40">
+          <%= link_to organization_path(@organization_invitation.organization), class: "button border overflow-visible" do %>
+            <i class="sl sl-icon-arrow-left-circle"></i> 戻る
+          <% end %>
+          <%= f.submit '招待する', class: "button right-side" %>
+        </div>
       <% end %>
 
     </div>
