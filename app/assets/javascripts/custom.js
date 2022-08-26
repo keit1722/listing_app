@@ -1659,7 +1659,7 @@ function previewImage(obj) {
 		fileReader.onload = (function (e) {
       img = document.createElement("img");
       img.src = e.target.result;
-      img.style = "width: 300px; height: 200px;";
+      img.classList.add('image-preview');
 			document.getElementById('preview').appendChild(img);
 		});
 		fileReader.readAsDataURL(obj.files[i]);
