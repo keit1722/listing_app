@@ -87,7 +87,6 @@ Rails.application.routes.draw do
           resources :posts,
                     only: %i[index edit update show destroy],
                     module: :restaurants
-          resources :images, module: :restaurants, only: %i[destroy]
         end
         resources :shops,
                   param: :slug,
