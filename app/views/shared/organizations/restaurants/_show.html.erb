@@ -73,12 +73,12 @@
 
         <!-- Row -->
         <% if restaurant.images.attached? %>
-          <div class="row with-forms margin-bottom-20">
+          <div class="row margin-bottom-20">
             <!-- Images preview -->
             <div class="col-md-12">
-              <div id="preview">
+              <div id="preview" class="images-preview">
                 <% restaurant.images.each do |image| %>
-                  <%= image_tag image.variant(resize: '300x200').processed %>
+                  <%= image_tag image.variant(resize: '600x400').processed, class: "image-preview" %>
                 <% end %>
               </div>
             </div>

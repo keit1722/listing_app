@@ -103,12 +103,12 @@
             <!-- Row / End -->
 
             <!-- Row -->
-            <div class="row with-forms">
+            <div class="row with-forms margin-bottom-40">
               <!-- Images preview -->
               <div class="col-md-12">
-                <div id="preview">
+                <div id="preview" class="images-preview">
                   <% photo_spot.images.each do |image| %>
-                    <%= image_tag image.variant(resize: '300x200').processed %>
+                    <%= image_tag image.variant(resize: '600x400').processed, class: "image-preview" %>
                   <% end %>
                 </div>
               </div>

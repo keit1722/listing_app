@@ -74,7 +74,7 @@
             <!-- Row / End -->
 
             <!-- Row -->
-            <div class="row with-forms" id="map-section" data-model="restaurant" data-action="update">
+            <div class="row with-forms margin-bottom-20" id="map-section" data-model="restaurant" data-action="update">
               <div class="col-md-12">
                 <h5>位置情報</h5>
                 <p>正確な地図を作成するために、以下のマップをクリックしてお店の正確な位置にピンを置いてください。<br>
@@ -103,17 +103,12 @@
             <!-- Row / End -->
 
             <!-- Row -->
-            <div class="row with-forms">
+            <div class="row with-forms margin-bottom-40">
               <!-- Images preview -->
               <div class="col-md-12">
-                <div id="preview">
+                <div id="preview" class="images-preview">
                   <% restaurant.images.each do |image| %>
-                    <div id="image-area-<%= image.id %>">
-                      <%= image_tag image.variant(resize: '300x200').processed %>
-                      <%= link_to organization_restaurant_image_path(restaurant.organization, restaurant, image), method: :delete, remote: true, data: { confirm: "画像を削除すると復旧はできません。よろしいですか？" }, class: "button border" do %>
-                        <i class="sl sl-icon-close"></i> この画像を削除
-                      <% end %>
-                    </div>
+                    <%= image_tag image.variant(resize: '600x400').processed, class: "image-preview" %>
                   <% end %>
                 </div>
               </div>
