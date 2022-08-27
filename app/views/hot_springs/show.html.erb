@@ -1,9 +1,10 @@
   <!-- Slider -->
-  <% if @hot_spring.images.attached? %>
-    <div class="listing-slider mfp-gallery-container margin-bottom-0">
+  <div class="listing-slider mfp-gallery-container margin-bottom-0">
+    <%= link_to url_for(@hot_spring.main_image), class: "item mfp-gallery", data: { background_image: url_for(@hot_spring.main_image) } do %><% end %>
+    <% if @hot_spring.images.attached? %>
       <%= render partial: "listings/image", collection: @hot_spring.images %>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
 
   <!-- Content -->
   <div class="container">

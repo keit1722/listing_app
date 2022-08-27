@@ -5,7 +5,11 @@ class Organizations::ActivitiesController < Organizations::BaseController
     @organization =
       current_user.organizations.find_by!(slug: params[:organization_slug])
     @activities =
-      @organization.activities.page(params[:page]).per(20).with_attached_images
+      @organization
+        .activities
+        .page(params[:page])
+        .per(20)
+        .with_attached_main_image
   end
 
   def show
@@ -106,6 +110,7 @@ class Organizations::ActivitiesController < Organizations::BaseController
           :slug,
           :description,
           :address,
+          :main_image,
           { images: [] },
         ],
       )
@@ -131,6 +136,7 @@ class Organizations::ActivitiesController < Organizations::BaseController
           :lng,
           :description,
           :address,
+          :main_image,
           { images: [] },
         ],
       )

@@ -1,6 +1,6 @@
 class SkiAreasController < ApplicationController
   def index
-    @ski_areas = SkiArea.with_attached_images.page(params[:page]).per(20)
+    @ski_areas = SkiArea.with_attached_main_image.page(params[:page]).per(20)
     @ski_areas_count = SkiArea.count
     render layout: 'listings_index'
   end
@@ -14,11 +14,11 @@ class SkiAreasController < ApplicationController
   def search
     @ski_areas =
       SearchForm
-      .new(search_ski_areas_params)
-      .search
-      .with_attached_images
-      .page(params[:page])
-      .per(20)
+        .new(search_ski_areas_params)
+        .search
+        .with_attached_main_image
+        .page(params[:page])
+        .per(20)
     @ski_areas_count = SearchForm.new(search_ski_areas_params).search.count
     @selected_area_groups = params[:q][:area_groups]
     render layout: 'listings_index'

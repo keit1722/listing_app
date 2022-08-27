@@ -91,12 +91,44 @@
             <div class="row with-forms margin-bottom-20">
               <!-- Images -->
               <div class="col-md-12">
-                <h5><%= ff.label :images %></h5>
+                <h5><%= ff.label :main_image %></h5>
+                <p>メインとして利用される画像を1枚だけ選択してください。</p>
                 <div class="images-preview display-flex-end">
                   <div class="change-photo-btn position-static">
                     <div class="photoUpload">
                         <span><i class="fa fa-upload"></i> アップロードする画像を選択</span>
-                        <%= ff.file_field :images, multiple: true, class: "upload", onchange: "previewImage(this)" %>
+                        <%= ff.file_field :main_image, class: "upload", onchange: "previewImage(this, 'main-preview')" %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Row / End -->
+
+            <!-- Row -->
+            <div class="row with-forms margin-bottom-40">
+              <!-- Images preview -->
+              <div class="col-md-12">
+                <div id="main-preview" class="images-preview">
+                  <% if hotel.main_image.attached? %>
+                    <%= image_tag hotel.main_image.variant(resize: '600x400').processed, class: "image-preview" %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+            <!-- Row / End -->
+
+            <!-- Row -->
+            <div class="row with-forms margin-bottom-20">
+              <!-- Images -->
+              <div class="col-md-12">
+                <h5><%= ff.label :images %></h5>
+                <p>メイン画像以外に画像を4枚まで表示できます。ページの見栄えを良くするためにここでは2枚以上の画像選択をおすすめします。</p>
+                <div class="images-preview display-flex-end">
+                  <div class="change-photo-btn position-static">
+                    <div class="photoUpload">
+                      <span><i class="fa fa-upload"></i> アップロードする画像を選択</span>
+                      <%= ff.file_field :images, multiple: true, class: "upload", onchange: "previewImage(this, 'preview')" %>
                     </div>
                   </div>
                 </div>
@@ -109,8 +141,10 @@
               <!-- Images preview -->
               <div class="col-md-12">
                 <div id="preview" class="images-preview">
-                  <% hotel.images.each do |image| %>
-                    <%= image_tag image.variant(resize: '600x400').processed, class: "image-preview" %>
+                  <% if hotel.images.attached? %>
+                    <% hotel.images.each do |image| %>
+                      <%= image_tag image.variant(resize: '600x400').processed, class: "image-preview" %>
+                    <% end %>
                   <% end %>
                 </div>
               </div>

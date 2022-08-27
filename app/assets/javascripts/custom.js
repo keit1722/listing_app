@@ -1647,23 +1647,23 @@ function starRating(ratingElem) {
 
 /*  Images uploader preview
 /*--------------------------*/
-function previewImage(obj) {
-  const preview = document.getElementById("preview");
+function previewImage(obj, area) {
+  const preview = document.getElementById(area);
 
   while( preview.firstChild ){
     preview.removeChild( preview.firstChild );
   }
 
-	for (i = 0; i < obj.files.length; i++) {
-		var fileReader = new FileReader();
-		fileReader.onload = (function (e) {
+  for (i = 0; i < obj.files.length; i++) {
+    var fileReader = new FileReader();
+    fileReader.onload = (function (e) {
       img = document.createElement("img");
       img.src = e.target.result;
       img.classList.add('image-preview');
-			document.getElementById('preview').appendChild(img);
-		});
-		fileReader.readAsDataURL(obj.files[i]);
-	}
+      preview.appendChild(img);
+    });
+    fileReader.readAsDataURL(obj.files[i]);
+  }
 }
 
 /*  Home search button

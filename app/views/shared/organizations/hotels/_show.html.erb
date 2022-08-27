@@ -56,18 +56,19 @@
         <!-- Row / End -->
 
         <!-- Row -->
-        <% if hotel.images.attached? %>
-          <div class="row with-forms margin-bottom-20">
+          <div class="row margin-bottom-20">
             <!-- Images preview -->
             <div class="col-md-12">
               <div id="preview" class="images-preview">
-                <% hotel.images.each do |image| %>
-                  <%= image_tag image.variant(resize: '600x400').processed, class: "image-preview" %>
+                <%= image_tag hotel.main_image.variant(resize: '600x400').processed, class: "image-preview" %>
+                <% if hotel.images.attached? %>
+                  <% hotel.images.each do |image| %>
+                    <%= image_tag image.variant(resize: '600x400').processed, class: "image-preview" %>
+                  <% end %>
                 <% end %>
               </div>
             </div>
           </div>
-        <% end %>
         <!-- Row / End -->
       </div>
     </div>

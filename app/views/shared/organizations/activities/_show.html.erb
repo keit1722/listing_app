@@ -66,18 +66,19 @@
         <!-- Row / End -->
 
         <!-- Row -->
-        <% if activity.images.attached? %>
-          <div class="row with-forms margin-bottom-20">
+          <div class="row margin-bottom-20">
             <!-- Images preview -->
             <div class="col-md-12">
               <div id="preview" class="images-preview">
-                <% activity.images.each do |image| %>
-                  <%= image_tag image.variant(resize: '600x400').processed, class: "image-preview" %>
+                <%= image_tag activity.main_image.variant(resize: '600x400').processed, class: "image-preview" %>
+                <% if activity.images.attached? %>
+                  <% activity.images.each do |image| %>
+                    <%= image_tag image.variant(resize: '600x400').processed, class: "image-preview" %>
+                  <% end %>
                 <% end %>
               </div>
             </div>
           </div>
-        <% end %>
         <!-- Row / End -->
       </div>
     </div>

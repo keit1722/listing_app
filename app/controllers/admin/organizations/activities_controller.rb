@@ -4,7 +4,11 @@ class Admin::Organizations::ActivitiesController < Admin::BaseController
   def index
     @organization = Organization.find_by!(slug: params[:organization_slug])
     @activities =
-      @organization.activities.page(params[:page]).per(20).with_attached_images
+      @organization
+        .activities
+        .page(params[:page])
+        .per(20)
+        .with_attached_main_image
   end
 
   def show
@@ -68,6 +72,7 @@ class Admin::Organizations::ActivitiesController < Admin::BaseController
           :lng,
           :description,
           :address,
+          :main_image,
           { images: [] },
         ],
       )

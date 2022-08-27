@@ -4,7 +4,11 @@ class Admin::Organizations::PhotoSpotsController < Admin::BaseController
   def index
     @organization = Organization.find_by!(slug: params[:organization_slug])
     @photo_spots =
-      @organization.photo_spots.page(params[:page]).per(20).with_attached_images
+      @organization
+        .photo_spots
+        .page(params[:page])
+        .per(20)
+        .with_attached_main_image
   end
 
   def show
@@ -60,6 +64,7 @@ class Admin::Organizations::PhotoSpotsController < Admin::BaseController
           :lng,
           :description,
           :address,
+          :main_image,
           { images: [] },
         ],
       )

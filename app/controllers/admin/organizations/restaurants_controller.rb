@@ -5,7 +5,11 @@ class Admin::Organizations::RestaurantsController < Admin::BaseController
   def index
     @organization = Organization.find_by!(slug: params[:organization_slug])
     @restaurants =
-      @organization.restaurants.page(params[:page]).per(20).with_attached_images
+      @organization
+        .restaurants
+        .page(params[:page])
+        .per(20)
+        .with_attached_main_image
   end
 
   def show
@@ -71,6 +75,7 @@ class Admin::Organizations::RestaurantsController < Admin::BaseController
           :lng,
           :description,
           :address,
+          :main_image,
           { images: [] },
         ],
       )

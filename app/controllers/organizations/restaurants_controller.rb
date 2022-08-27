@@ -6,7 +6,11 @@ class Organizations::RestaurantsController < Organizations::BaseController
     @organization =
       current_user.organizations.find_by!(slug: params[:organization_slug])
     @restaurants =
-      @organization.restaurants.page(params[:page]).per(20).with_attached_images
+      @organization
+        .restaurants
+        .page(params[:page])
+        .per(20)
+        .with_attached_main_image
   end
 
   def show
@@ -108,6 +112,7 @@ class Organizations::RestaurantsController < Organizations::BaseController
           :slug,
           :description,
           :address,
+          :main_image,
           { images: [] },
         ],
       )
@@ -134,6 +139,7 @@ class Organizations::RestaurantsController < Organizations::BaseController
           :lng,
           :description,
           :address,
+          :main_image,
           { images: [] },
         ],
       )

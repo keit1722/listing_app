@@ -1,9 +1,10 @@
   <!-- Slider -->
-  <% if @shop.images.attached? %>
-    <div class="listing-slider mfp-gallery-container margin-bottom-0">
+  <div class="listing-slider mfp-gallery-container margin-bottom-0">
+    <%= link_to url_for(@shop.main_image), class: "item mfp-gallery", data: { background_image: url_for(@shop.main_image) } do %><% end %>
+    <% if @shop.images.attached? %>
       <%= render partial: "listings/image", collection: @shop.images %>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
 
   <!-- Content -->
   <div class="container">

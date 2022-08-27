@@ -60,18 +60,19 @@
         <!-- Row / End -->
 
         <!-- Row -->
-        <% if hot_spring.images.attached? %>
-          <div class="row with-forms margin-bottom-20">
+          <div class="row margin-bottom-20">
             <!-- Images preview -->
             <div class="col-md-12">
               <div id="preview" class="images-preview">
-                <% hot_spring.images.each do |image| %>
-                  <%= image_tag image.variant(resize: '600x400').processed, class: "image-preview" %>
+                <%= image_tag hot_spring.main_image.variant(resize: '600x400').processed, class: "image-preview" %>
+                <% if hot_spring.images.attached? %>
+                  <% hot_spring.images.each do |image| %>
+                    <%= image_tag image.variant(resize: '600x400').processed, class: "image-preview" %>
+                  <% end %>
                 <% end %>
               </div>
             </div>
           </div>
-        <% end %>
         <!-- Row / End -->
       </div>
     </div>

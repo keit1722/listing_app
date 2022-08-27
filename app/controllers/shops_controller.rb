@@ -1,13 +1,13 @@
 class ShopsController < ApplicationController
-  before_action :set_shop_categories, only: [:index, :search]
+  before_action :set_shop_categories, only: %i[index search]
 
   def index
     @shops =
       Shop
-      .with_attached_images
-      .includes(:shop_categories)
-      .page(params[:page])
-      .per(20)
+        .with_attached_main_image
+        .includes(:shop_categories)
+        .page(params[:page])
+        .per(20)
     @shops_count = Shop.count
     render layout: 'listings_index'
   end
@@ -21,12 +21,12 @@ class ShopsController < ApplicationController
   def search
     @shops =
       SearchWithCategoriesForm
-      .new(search_shops_params)
-      .search
-      .with_attached_images
-      .includes(:shop_categories, :shop_category_mappings)
-      .page(params[:page])
-      .per(20)
+        .new(search_shops_params)
+        .search
+        .with_attached_main_image
+        .includes(:shop_categories, :shop_category_mappings)
+        .page(params[:page])
+        .per(20)
     @shops_count =
       SearchWithCategoriesForm.new(search_shops_params).search.count
     @selected_categories = params[:q][:category_ids]

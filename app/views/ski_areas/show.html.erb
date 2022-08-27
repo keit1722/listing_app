@@ -1,9 +1,10 @@
   <!-- Slider -->
-  <% if @ski_area.images.attached? %>
-    <div class="listing-slider mfp-gallery-container margin-bottom-0">
+  <div class="listing-slider mfp-gallery-container margin-bottom-0">
+    <%= link_to url_for(@ski_area.main_image), class: "item mfp-gallery", data: { background_image: url_for(@ski_area.main_image) } do %><% end %>
+    <% if @ski_area.images.attached? %>
       <%= render partial: "listings/image", collection: @ski_area.images %>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
 
   <!-- Content -->
   <div class="container">

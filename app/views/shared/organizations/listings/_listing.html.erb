@@ -1,10 +1,8 @@
 <li>
   <div class="list-box-listing">
-    <% if listing.images.attached? %>
-      <div class="list-box-listing-img">
-        <%= link_to image_tag(listing.images.first), send(show_path, listing.organization, listing) %>
-      </div>
-    <% end %>
+    <div class="list-box-listing-img">
+      <%= link_to image_tag(listing.main_image), send(show_path, listing.organization, listing) %>
+    </div>
     <div class="list-box-listing-content">
       <div class="inner">
         <h3><%= link_to listing.name, send(show_path, listing.organization, listing) %></h3>
