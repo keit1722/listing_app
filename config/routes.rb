@@ -106,6 +106,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :organization_users, param: :slug, only: %i[destroy]
+
   draw(:admin)
 
   if Rails.env.development?
