@@ -37,16 +37,18 @@
 
             <!-- Row -->
             <div class="row with-forms margin-bottom-20">
-              <!-- Images -->
+              <!-- Image -->
               <div class="col-md-12">
                 <h5><%= f.label :image %></h5>
                 <p>画像を一枚添付することができます。</p>
-                <%= f.label :image, class: "uploader-conteiner" do %>
-                  <div class="uploader-inner">
-                    <i class="sl sl-icon-plus"></i>ここをクリックして画像をアップロードしてください
+                <div class="images-preview display-flex-end">
+                  <div class="change-photo-btn position-static">
+                    <div class="photoUpload">
+                        <span><i class="fa fa-upload"></i> アップロードする画像を選択</span>
+                        <%= f.file_field :image, class: "upload", onchange: "previewImage(this)" %>
+                    </div>
                   </div>
-                  <%= f.file_field :image, class: "dropzone dz-clickable", onchange: "previewImage(this)" %>
-                <% end %>
+                </div>
               </div>
             </div>
             <!-- Row / End -->
@@ -55,11 +57,7 @@
               <div class="row with-forms margin-bottom-20">
                 <!-- Images preview -->
                 <div class="col-md-12">
-                  <div id="preview">
-                    <% if post.image.attached? %>
-                      <%= image_tag post.image.variant(resize: '300x200').processed %>
-                    <% end %>
-                  </div>
+                  <div id="preview" class="images-preview"></div>
                 </div>
               </div>
             <!-- Row / End -->

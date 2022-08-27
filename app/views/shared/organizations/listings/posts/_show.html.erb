@@ -40,8 +40,8 @@
           <div class="row with-forms margin-top-30">
             <!-- Images preview -->
             <div class="col-md-12">
-              <div id="preview">
-                <%= image_tag post.image.variant(resize: '300x200').processed %>
+              <div id="preview" class="images-preview">
+                <%= image_tag post.image.variant(resize: '600x400').processed, class: "image-preview" %>
               </div>
             </div>
           </div>
