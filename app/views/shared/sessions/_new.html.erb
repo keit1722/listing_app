@@ -67,13 +67,9 @@
           <% end %>
         </div>
 
-        <% if current_page?(login_path) %>
+        <% if !other_user.nil? %>
           <div class="margin-top-50">
-            ビジネスユーザー用ログインは<%= link_to "こちら", business_login_path, class: "underline" %>
-          </div>
-        <% elsif current_page?(business_login_path) %>
-          <div class="margin-top-50">
-            一般ユーザー用ログインは<%= link_to "こちら", login_path, class: "underline" %>
+            <%= other_user %>用ログインは<%= link_to "こちら", send(other_path), class: "underline" %>
           </div>
         <% end %>
 
