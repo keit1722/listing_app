@@ -25,6 +25,6 @@ FactoryBot.define do
 
     factory :general_user, traits: [:general]
     factory :business_user, traits: [:business]
-    factory :admin_user, traits: [:admin]
+    factory :pvsuwimvsuoitmucvyku_user, traits: [:admin]
   end
 end

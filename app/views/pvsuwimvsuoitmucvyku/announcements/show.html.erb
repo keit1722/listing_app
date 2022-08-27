@@ -1,0 +1,65 @@
+<div id="titlebar">
+  <div class="row">
+    <div class="col-md-12">
+      <h2><i class="sl sl-icon-doc"></i> お知らせ詳細</h2>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+
+  <!-- Profile -->
+  <div class="col-md-12">
+    <div class="dashboard-list-box margin-top-0 margin-bottom-20">
+      <div class="dashboard-list-box-static">
+        <!-- table -->
+        <table class="basic-table">
+          <tbody>
+            <tr>
+              <td data-label="項目"><%= Announcement.human_attribute_name("title") %></td>
+              <td data-label="内容"><%= @announcement.title %></td>
+            </tr>
+            <tr>
+              <td data-label="項目"><%= Announcement.human_attribute_name("body") %></td>
+              <td data-label="内容"><%= @announcement.decorate.format_body %></td>
+            </tr>
+            <tr>
+              <td data-label="項目"><%= Announcement.human_attribute_name("status") %></td>
+              <td data-label="内容"><%= @announcement.status_i18n %></td>
+            </tr>
+            <tr>
+              <td data-label="項目"><%= Announcement.human_attribute_name("created_at") %></td>
+              <td data-label="内容"><%= l @announcement.created_at, format: :long %></td>
+            </tr>
+          </tbody>
+        </table>
+        <!-- table end -->
+
+        <!-- Row -->
+        <% if @announcement.image.attached? %>
+          <div class="row with-forms margin-top-30">
+            <!-- Images preview -->
+            <div class="col-md-12">
+              <div id="preview">
+                <%= image_tag @announcement.image.variant(resize: '300x200').processed %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+        <!-- Row / End -->
+      </div>
+    </div>
+
+    <div class="margin-top-40">
+      <%= link_to pvsuwimvsuoitmucvyku_announcements_path, class: "button border margin-bottom-20 overflow-visible" do %>
+        <i class="sl sl-icon-arrow-left-circle"></i> 戻る
+      <% end %>
+
+      <%= link_to edit_pvsuwimvsuoitmucvyku_announcement_path(@announcement), class: "button overflow-visible" do %>
+        <i class="sl sl-icon-pencil"></i> 編集
+      <% end %>
+      <%= link_to pvsuwimvsuoitmucvyku_announcement_path(@announcement), method: :delete, data: { confirm: "削除すると復旧はできません。よろしいですか？" }, class: "border button right-side width-auto overflow-visible" do %>
+        <i class="sl sl-icon-trash"></i> 削除
+      <% end %>
+    </div>
+  </div>

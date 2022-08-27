@@ -44,16 +44,16 @@ RSpec.describe User, type: :model do
 
   describe 'スコープ' do
     describe 'not_admin' do
-      let(:user_admin) { create(:admin_user, :activated) }
+      let(:user_admin) { create(:pvsuwimvsuoitmucvyku_user, :activated) }
       let(:user_business) { create(:business_user, :activated) }
       let(:user_general) { create(:general_user, :activated) }
 
       it do
         expect(described_class.not_admin).not_to eq [
-          user_admin,
-          user_business,
-          user_general
-        ]
+             user_admin,
+             user_business,
+             user_general,
+           ]
       end
 
       it do

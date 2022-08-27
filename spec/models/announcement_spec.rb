@@ -33,7 +33,7 @@ RSpec.describe Announcement, type: :model do
   end
 
   describe 'スコープ' do
-    let(:user) { create(:admin_user, :activated) }
+    let(:user) { create(:pvsuwimvsuoitmucvyku_user, :activated) }
     let!(:announcement_a) { create(:announcement, poster_id: user.id) }
     let!(:announcement_b) { create(:announcement, poster_id: user.id) }
     let!(:announcement_c) { create(:announcement, poster_id: user.id) }
@@ -41,18 +41,18 @@ RSpec.describe Announcement, type: :model do
     describe 'ordered' do
       it do
         expect(described_class.ordered).to eq [
-          announcement_c,
-          announcement_b,
-          announcement_a
-        ]
+             announcement_c,
+             announcement_b,
+             announcement_a,
+           ]
       end
 
       it do
         expect(described_class.ordered).not_to eq [
-          announcement_a,
-          announcement_b,
-          announcement_c
-        ]
+             announcement_a,
+             announcement_b,
+             announcement_c,
+           ]
       end
     end
 
@@ -63,16 +63,16 @@ RSpec.describe Announcement, type: :model do
 
       it do
         expect(described_class.recent(3)).to eq [
-          announcement_c,
-          announcement_b,
-          announcement_a
-        ]
+             announcement_c,
+             announcement_b,
+             announcement_a,
+           ]
       end
     end
   end
 
   describe 'インスタンスメソッド' do
-    let(:user) { create(:admin_user, :activated) }
+    let(:user) { create(:pvsuwimvsuoitmucvyku_user, :activated) }
     let!(:announcement_a) { create(:announcement, poster_id: user.id) }
     let!(:announcement_b) { create(:announcement, poster_id: user.id) }
     let!(:announcement_c) { create(:announcement, poster_id: user.id) }
@@ -116,11 +116,11 @@ RSpec.describe Announcement, type: :model do
           expect do
             create(:announcement_published, poster_id: user.id)
           end.to change(Notice, :count).by(2).and have_enqueued_mail(
-            NoticeMailer,
-            :announcement
-          )
-            .exactly(2)
-            .times
+                                               NoticeMailer,
+                                               :announcement,
+                                             )
+                                             .exactly(2)
+                                             .times
         end
       end
 
