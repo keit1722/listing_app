@@ -78,6 +78,114 @@
     </div>
   </div>
 
+  <!-- Content
+================================================== -->
+    <div class="container">
+      <div class="row">
+
+        <div class="col-md-12">
+          <h3 class="headline centered margin-top-75">
+            Popular Categories
+            <span>興味のある <i>カテゴリー</i> を閲覧する</span>
+          </h3>
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- Categories Carousel -->
+    <div class="fullwidth-carousel-container margin-top-25 margin-bottom-65">
+      <div class="fullwidth-slick-carousel category-carousel">
+
+        <!-- Item -->
+        <div class="fw-carousel-item">
+          <div class="category-box-container">
+            <%= link_to restaurants_path, class: "category-box", data: { background_image: image_url('restaurant-image.jpg') } do %>
+              <div class="category-box-content">
+                <h3>飲食店</h3>
+              </div>
+              <span class="category-box-btn">閲覧する</span>
+            <% end %>
+          </div>
+        </div>
+
+        <!-- Item -->
+        <div class="fw-carousel-item">
+          <div class="category-box-container">
+            <%= link_to hotels_path, class: "category-box", data: { background_image: image_url('hotel-image.jpg') } do %>
+              <div class="category-box-content">
+                <h3>宿泊</h3>
+              </div>
+              <span class="category-box-btn">閲覧する</span>
+            <% end %>
+          </div>
+        </div>
+
+        <!-- Item -->
+        <div class="fw-carousel-item">
+          <div class="category-box-container">
+            <%= link_to activities_path, class: "category-box", data: { background_image: image_url('activity-image.jpg') } do %>
+              <div class="category-box-content">
+                <h3>アクティビティ</h3>
+              </div>
+              <span class="category-box-btn">閲覧する</span>
+            <% end %>
+          </div>
+        </div>
+
+        <!-- Item -->
+        <div class="fw-carousel-item">
+          <div class="category-box-container">
+            <%= link_to hot_springs_path, class: "category-box", data: { background_image: image_url('hot-spring-image.jpg') } do %>
+              <div class="category-box-content">
+                <h3>温泉</h3>
+              </div>
+              <span class="category-box-btn">閲覧する</span>
+            <% end %>
+          </div>
+        </div>
+
+        <!-- Item -->
+        <div class="fw-carousel-item">
+          <div class="category-box-container">
+            <%= link_to ski_areas_path, class: "category-box", data: { background_image: image_url('ski-area-image.jpg') } do %>
+              <div class="category-box-content">
+                <h3>スキー場</h3>
+              </div>
+              <span class="category-box-btn">閲覧する</span>
+            <% end %>
+          </div>
+        </div>
+
+        <!-- Item -->
+        <div class="fw-carousel-item">
+          <div class="category-box-container">
+            <%= link_to photo_spots_path, class: "category-box", data: { background_image: image_url('photo-spot-image.jpg') } do %>
+              <div class="category-box-content">
+                <h3>フォトスポット</h3>
+              </div>
+              <span class="category-box-btn">閲覧する</span>
+            <% end %>
+          </div>
+        </div>
+
+        <!-- Item -->
+        <div class="fw-carousel-item">
+          <div class="category-box-container">
+            <%= link_to shops_path, class: "category-box", data: { background_image: image_url('shop-image.jpg') } do %>
+              <div class="category-box-content">
+                <h3>ショップ</h3>
+              </div>
+              <span class="category-box-btn">閲覧する</span>
+            <% end %>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- Categories Carousel / End -->
+
 
 <!-- Footer
 ================================================== -->
