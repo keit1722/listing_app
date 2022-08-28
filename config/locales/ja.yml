@@ -26,6 +26,7 @@ ja:
         role: 'アカウントタイプ'
         full_name: '名前'
         public_uid: 'パブリックUID'
+        avatar: 'プロフィール画像'
       organization:
         name: '会社名・屋号'
         address: '住所'

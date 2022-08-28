@@ -44,6 +44,8 @@ class User < ApplicationRecord
            source: :noticeable,
            source_type: 'Post'
 
+  has_one_attached :avatar
+
   validates :password,
             presence: true,
             length: {
@@ -76,6 +78,7 @@ class User < ApplicationRecord
             uniqueness: true
 
   validates :reset_password_token, uniqueness: true, allow_nil: true
+  validates :avatar, content_type: %i[png jpg jpeg]
 
   enum role: { general: 1, business: 2, admin: 9 }
 

@@ -104,10 +104,41 @@
           </div>
           <!-- Row / End -->
 
+          <!-- Row -->
+            <div class="row with-forms margin-bottom-20">
+              <!-- Images -->
+              <div class="col-md-12">
+                <h5><%= f.label :avatar %></h5>
+                <div class="change-photo-btn position-static">
+                  <div class="photoUpload">
+                    <span><i class="fa fa-upload"></i> プロフィール画像を変更</span>
+                    <%= f.file_field :avatar, class: "upload", onchange: "previewImage(this, 'avatar-preview')" %>
+                  </div>
+                </div>
+                <div class="images-preview"></div>
+              </div>
+            </div>
+            <!-- Row / End -->
+
+            <!-- Row -->
+            <div class="row margin-top-20 margin-bottom-40">
+              <!-- Images preview -->
+              <div class="col-md-12">
+                <div id="avatar-preview" class="avatar-preview">
+                   <% if user.avatar.attached? %>
+                    <%= image_tag user.avatar.variant(resize: '300x200').processed, class: "" %>
+                  <% else %>
+                    <%= image_tag 'blank-profile-picture.png' %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+            <!-- Row / End -->
+
         </div>
         <!-- Section / End -->
 
-        <div class="margin-top-40">
+        <div class="margin-top-20">
           <% if current_page?(edit_pvsuwimvsuoitmucvyku_user_path(user)) %>
             <%= link_to pvsuwimvsuoitmucvyku_user_path(user), class: "button border overflow-visible" do %>
               <i class="sl sl-icon-arrow-left-circle"></i> 戻る

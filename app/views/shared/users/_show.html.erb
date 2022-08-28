@@ -12,6 +12,16 @@
   <div class="col-md-12">
     <div class="dashboard-list-box margin-top-0">
       <div class="dashboard-list-box-static">
+        <!-- avatar -->
+        <div class="avatar-preview margin-bottom-30">
+          <% if user.avatar.attached? %>
+            <%= image_tag user.avatar %>
+          <% else %>
+            <%= image_tag 'blank-profile-picture.png' %>
+          <% end %>
+        </div>
+        <!-- avatar -->
+
         <!-- table -->
         <table class="basic-table">
           <tbody>
