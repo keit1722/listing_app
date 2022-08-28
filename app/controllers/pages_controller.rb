@@ -1,7 +1,7 @@
 class PagesController < ApplicationController
-  def home
-    render layout: 'home'
-  end
+  layout 'home'
+
+  def home; end
 
   def search
     category = params[:q][:category]
@@ -12,7 +12,7 @@ class PagesController < ApplicationController
       resolve_n1(category, listings)
         .with_attached_images
         .page(params[:page])
-        .per(20)
+        .per(20),
     )
     instance_variable_set("@#{category}_count", listings.count)
 
@@ -22,6 +22,12 @@ class PagesController < ApplicationController
 
     render template: "#{category}/search", layout: 'listings_index'
   end
+
+  def term; end
+
+  def privacy; end
+
+  def cookie; end
 
   private
 

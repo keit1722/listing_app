@@ -2,6 +2,9 @@ require 'sidekiq/web'
 
 Rails.application.routes.draw do
   root 'pages#home'
+  get 'term', to: 'pages#term'
+  get 'privacy', to: 'pages#privacy'
+  get 'cookie', to: 'pages#cookie'
   get 'login', to: 'sessions#new'
   post 'login', to: 'sessions#create'
   delete 'logout', to: 'sessions#destroy'
