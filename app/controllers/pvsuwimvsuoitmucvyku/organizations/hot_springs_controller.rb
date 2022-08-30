@@ -1,6 +1,4 @@
 class Pvsuwimvsuoitmucvyku::Organizations::HotSpringsController < Pvsuwimvsuoitmucvyku::BaseController
-  before_action :set_districts, only: %i[edit update]
-
   def index
     @organization = Organization.find_by!(slug: params[:organization_slug])
     @hot_springs =
@@ -29,6 +27,7 @@ class Pvsuwimvsuoitmucvyku::Organizations::HotSpringsController < Pvsuwimvsuoitm
         .with_attached_images
         .find_by!(slug: params[:slug])
     @hot_spring_update_form = HotSpringUpdateForm.new(@hot_spring)
+    @districts = District.all
     render layout: 'mypage_maps'
   end
 
@@ -41,6 +40,7 @@ class Pvsuwimvsuoitmucvyku::Organizations::HotSpringsController < Pvsuwimvsuoitm
         .find_by!(slug: params[:slug])
     @hot_spring_update_form =
       HotSpringUpdateForm.new(@hot_spring, hot_spring_params)
+    @districts = District.all
 
     if @hot_spring_update_form.update
       redirect_to pvsuwimvsuoitmucvyku_organization_hot_spring_path,
@@ -76,9 +76,5 @@ class Pvsuwimvsuoitmucvyku::Organizations::HotSpringsController < Pvsuwimvsuoitm
           { images: [] },
         ],
       )
-  end
-
-  def set_districts
-    @districts = District.all
   end
 end

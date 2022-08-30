@@ -1,6 +1,4 @@
 class Organizations::HotSpringsController < Organizations::BaseController
-  before_action :set_districts, only: %i[new create edit update]
-
   def index
     @organization =
       current_user.organizations.find_by!(slug: params[:organization_slug])
@@ -27,6 +25,7 @@ class Organizations::HotSpringsController < Organizations::BaseController
     organization =
       current_user.organizations.find_by(slug: params[:organization_slug])
     @hot_spring_create_form = HotSpringCreateForm.new(organization)
+    @districts = District.all
     render layout: 'mypage_maps'
   end
 
@@ -35,6 +34,7 @@ class Organizations::HotSpringsController < Organizations::BaseController
       current_user.organizations.find_by(slug: params[:organization_slug])
     @hot_spring_create_form =
       HotSpringCreateForm.new(organization, hot_spring_create_params)
+    @districts = District.all
 
     if @hot_spring_create_form.save
       redirect_to organization_hot_springs_path, success: '作成しました'
@@ -53,6 +53,7 @@ class Organizations::HotSpringsController < Organizations::BaseController
         .with_attached_images
         .find_by!(slug: params[:slug])
     @hot_spring_update_form = HotSpringUpdateForm.new(@hot_spring)
+    @districts = District.all
     render layout: 'mypage_maps'
   end
 
@@ -66,6 +67,7 @@ class Organizations::HotSpringsController < Organizations::BaseController
         .find_by!(slug: params[:slug])
     @hot_spring_update_form =
       HotSpringUpdateForm.new(@hot_spring, hot_spring_update_params)
+    @districts = District.all
 
     if @hot_spring_update_form.update
       redirect_to organization_hot_spring_path, success: '情報を更新しました'

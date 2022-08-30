@@ -1,6 +1,4 @@
 class Pvsuwimvsuoitmucvyku::Organizations::PhotoSpotsController < Pvsuwimvsuoitmucvyku::BaseController
-  before_action :set_districts, only: %i[edit update]
-
   def index
     @organization = Organization.find_by!(slug: params[:organization_slug])
     @photo_spots =
@@ -29,6 +27,7 @@ class Pvsuwimvsuoitmucvyku::Organizations::PhotoSpotsController < Pvsuwimvsuoitm
         .with_attached_images
         .find_by!(slug: params[:slug])
     @photo_spot_update_form = PhotoSpotUpdateForm.new(@photo_spot)
+    @districts = District.all
     render layout: 'mypage_maps'
   end
 
@@ -41,6 +40,7 @@ class Pvsuwimvsuoitmucvyku::Organizations::PhotoSpotsController < Pvsuwimvsuoitm
         .find_by!(slug: params[:slug])
     @photo_spot_update_form =
       PhotoSpotUpdateForm.new(@photo_spot, photo_spot_params)
+    @districts = District.all
 
     if @photo_spot_update_form.update
       redirect_to pvsuwimvsuoitmucvyku_organization_photo_spot_path,
@@ -68,9 +68,5 @@ class Pvsuwimvsuoitmucvyku::Organizations::PhotoSpotsController < Pvsuwimvsuoitm
           { images: [] },
         ],
       )
-  end
-
-  def set_districts
-    @districts = District.all
   end
 end

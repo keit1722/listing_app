@@ -1,7 +1,4 @@
 class Pvsuwimvsuoitmucvyku::Organizations::RestaurantsController < Pvsuwimvsuoitmucvyku::BaseController
-  before_action :set_districts, only: %i[edit update]
-  before_action :set_restaurant_categories, only: %i[edit update]
-
   def index
     @organization = Organization.find_by!(slug: params[:organization_slug])
     @restaurants =
@@ -30,6 +27,8 @@ class Pvsuwimvsuoitmucvyku::Organizations::RestaurantsController < Pvsuwimvsuoit
         .with_attached_images
         .find_by!(slug: params[:slug])
     @restaurant_update_form = RestaurantUpdateForm.new(@restaurant)
+    @districts = District.all
+    @restaurant_categories = RestaurantCategory.all
     render layout: 'mypage_maps'
   end
 
@@ -42,6 +41,8 @@ class Pvsuwimvsuoitmucvyku::Organizations::RestaurantsController < Pvsuwimvsuoit
         .find_by!(slug: params[:slug])
     @restaurant_update_form =
       RestaurantUpdateForm.new(@restaurant, restaurant_params)
+    @districts = District.all
+    @restaurant_categories = RestaurantCategory.all
 
     if @restaurant_update_form.update
       redirect_to pvsuwimvsuoitmucvyku_organization_restaurant_path,
@@ -79,13 +80,5 @@ class Pvsuwimvsuoitmucvyku::Organizations::RestaurantsController < Pvsuwimvsuoit
           { images: [] },
         ],
       )
-  end
-
-  def set_districts
-    @districts = District.all
-  end
-
-  def set_restaurant_categories
-    @restaurant_categories = RestaurantCategory.all
   end
 end

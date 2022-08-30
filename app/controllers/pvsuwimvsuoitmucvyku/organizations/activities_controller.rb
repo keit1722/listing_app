@@ -1,6 +1,4 @@
 class Pvsuwimvsuoitmucvyku::Organizations::ActivitiesController < Pvsuwimvsuoitmucvyku::BaseController
-  before_action :set_districts, only: %i[edit update]
-
   def index
     @organization = Organization.find_by!(slug: params[:organization_slug])
     @activities =
@@ -29,6 +27,7 @@ class Pvsuwimvsuoitmucvyku::Organizations::ActivitiesController < Pvsuwimvsuoitm
         .with_attached_images
         .find_by!(slug: params[:slug])
     @activity_update_form = ActivityUpdateForm.new(@activity)
+    @districts = District.all
     render layout: 'mypage_maps'
   end
 
@@ -40,6 +39,7 @@ class Pvsuwimvsuoitmucvyku::Organizations::ActivitiesController < Pvsuwimvsuoitm
         .with_attached_images
         .find_by!(slug: params[:slug])
     @activity_update_form = ActivityUpdateForm.new(@activity, activity_params)
+    @districts = District.all
 
     if @activity_update_form.update
       redirect_to pvsuwimvsuoitmucvyku_organization_activity_path,
@@ -76,9 +76,5 @@ class Pvsuwimvsuoitmucvyku::Organizations::ActivitiesController < Pvsuwimvsuoitm
           { images: [] },
         ],
       )
-  end
-
-  def set_districts
-    @districts = District.all
   end
 end

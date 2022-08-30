@@ -1,6 +1,4 @@
 class Pvsuwimvsuoitmucvyku::Organizations::HotelsController < Pvsuwimvsuoitmucvyku::BaseController
-  before_action :set_districts, only: %i[edit update]
-
   def index
     @organization = Organization.find_by!(slug: params[:organization_slug])
     @hotels =
@@ -25,6 +23,7 @@ class Pvsuwimvsuoitmucvyku::Organizations::HotelsController < Pvsuwimvsuoitmucvy
         .with_attached_images
         .find_by!(slug: params[:slug])
     @hotel_update_form = HotelUpdateForm.new(@hotel)
+    @districts = District.all
     render layout: 'mypage_maps'
   end
 
@@ -36,6 +35,7 @@ class Pvsuwimvsuoitmucvyku::Organizations::HotelsController < Pvsuwimvsuoitmucvy
         .with_attached_images
         .find_by!(slug: params[:slug])
     @hotel_update_form = HotelUpdateForm.new(@hotel, hotel_params)
+    @districts = District.all
 
     if @hotel_update_form.update
       redirect_to pvsuwimvsuoitmucvyku_organization_hotel_path,
@@ -72,9 +72,5 @@ class Pvsuwimvsuoitmucvyku::Organizations::HotelsController < Pvsuwimvsuoitmucvy
           { images: [] },
         ],
       )
-  end
-
-  def set_districts
-    @districts = District.all
   end
 end

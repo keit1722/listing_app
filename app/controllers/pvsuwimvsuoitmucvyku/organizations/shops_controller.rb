@@ -1,7 +1,4 @@
 class Pvsuwimvsuoitmucvyku::Organizations::ShopsController < Pvsuwimvsuoitmucvyku::BaseController
-  before_action :set_districts, only: %i[edit update]
-  before_action :set_shop_categories, only: %i[edit update]
-
   def index
     @organization = Organization.find_by!(slug: params[:organization_slug])
     @shops =
@@ -26,6 +23,8 @@ class Pvsuwimvsuoitmucvyku::Organizations::ShopsController < Pvsuwimvsuoitmucvyk
         .with_attached_images
         .find_by!(slug: params[:slug])
     @shop_update_form = ShopUpdateForm.new(@shop)
+    @districts = District.all
+    @shop_categories = ShopCategory.all
     render layout: 'mypage_maps'
   end
 
@@ -37,6 +36,8 @@ class Pvsuwimvsuoitmucvyku::Organizations::ShopsController < Pvsuwimvsuoitmucvyk
         .with_attached_images
         .find_by!(slug: params[:slug])
     @shop_update_form = ShopUpdateForm.new(@shop, shop_params)
+    @districts = District.all
+    @shop_categories = ShopCategory.all
 
     if @shop_update_form.update
       redirect_to pvsuwimvsuoitmucvyku_organization_shop_path,
@@ -73,13 +74,5 @@ class Pvsuwimvsuoitmucvyku::Organizations::ShopsController < Pvsuwimvsuoitmucvyk
           { images: [] },
         ],
       )
-  end
-
-  def set_districts
-    @districts = District.all
-  end
-
-  def set_shop_categories
-    @shop_categories = ShopCategory.all
   end
 end

@@ -1,6 +1,4 @@
 class Pvsuwimvsuoitmucvyku::Organizations::SkiAreasController < Pvsuwimvsuoitmucvyku::BaseController
-  before_action :set_districts, only: %i[edit update]
-
   def index
     @organization = Organization.find_by!(slug: params[:organization_slug])
     @ski_areas =
@@ -29,6 +27,7 @@ class Pvsuwimvsuoitmucvyku::Organizations::SkiAreasController < Pvsuwimvsuoitmuc
         .with_attached_images
         .find_by!(slug: params[:slug])
     @ski_area_update_form = SkiAreaUpdateForm.new(@ski_area)
+    @districts = District.all
     render layout: 'mypage_maps'
   end
 
@@ -40,6 +39,7 @@ class Pvsuwimvsuoitmucvyku::Organizations::SkiAreasController < Pvsuwimvsuoitmuc
         .with_attached_images
         .find_by!(slug: params[:slug])
     @ski_area_update_form = SkiAreaUpdateForm.new(@ski_area, ski_area_params)
+    @districts = District.all
 
     if @ski_area_update_form.update
       redirect_to pvsuwimvsuoitmucvyku_organization_ski_area_path,
@@ -75,9 +75,5 @@ class Pvsuwimvsuoitmucvyku::Organizations::SkiAreasController < Pvsuwimvsuoitmuc
           { images: [] },
         ],
       )
-  end
-
-  def set_districts
-    @districts = District.all
   end
 end
