@@ -61,8 +61,8 @@ Rails.application.routes.draw do
 
   resources :organization_invitations, param: :token, only: %i[show] do
     member do
-      patch :accepted
-      patch :unaccepted
+      patch :accepted, controller: 'organization_invitations/actions'
+      patch :unaccepted, controller: 'organization_invitations/actions'
     end
   end
 
