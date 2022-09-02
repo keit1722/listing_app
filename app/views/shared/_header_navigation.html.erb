@@ -31,6 +31,12 @@
         </ul>
       </li>
 
+      <li><a href="#">写真を撮る</a>
+        <ul>
+          <li><%= link_to "フォトスポット", photo_spots_path %></li>
+        </ul>
+      </li>
+
       <li><a href="#">買い物をする</a>
         <ul>
           <li><%= link_to "ショップ・お土産", shops_path %></li>
@@ -51,7 +57,16 @@
     <% if logged_in? %>
     <!-- User Menu -->
     <div class="user-menu">
-      <div class="user-name <%= "notice" if current_user.notices.unread.exists? %>"><span><%= image_tag 'blank-profile-picture.png' %></span>ログイン中</div>
+      <div class="user-name <%= "notice" if current_user.notices.unread.exists? %>">
+        <span>
+          <% if current_user.avatar.attached? %>
+            <%= image_tag current_user.avatar %>
+          <% else %>
+            <%= image_tag 'blank-profile-picture.png' %>
+          <% end %>
+        </span>
+        ログイン中
+      </div>
       <ul>
         <li>
           <%= link_to mypage_profile_path do %>

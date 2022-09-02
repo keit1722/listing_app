@@ -1,66 +1,86 @@
 <!-- Responsive Navigation Trigger -->
-<a href="#" class="dashboard-responsive-nav-trigger"><i class="fa fa-reorder"></i> Dashboard Navigation</a>
+<a href="#" class="dashboard-responsive-nav-trigger"><i class="fa fa-reorder"></i> メニュー</a>
 
 <div class="dashboard-nav">
   <div class="dashboard-nav-inner">
 
     <ul data-submenu-title="Main">
-      <li><a href="dashboard.html"><i class="sl sl-icon-settings"></i> Dashboard</a></li>
       <li>
         <%= link_to mypage_notices_path do %>
           <i class="sl sl-icon-envelope-open"></i> 通知一覧 
           <% if current_user.notices.unread.exists? %>
-          <span class="nav-tag messages"><%= current_user.notices.unread.size %></span>
+            <span class="nav-tag messages"><%= current_user.notices.unread.size %></span>
           <% end %>
         <% end %>
       </li>
-      <% if OrganizationRegistration.exists? %>
-        <li>
-          <%= link_to admin_organization_registrations_path do %>
-            <i class="sl sl-icon-folder-alt"></i> 組織登録申請一覧 
-              <% if OrganizationRegistration.where.missing(:organization_registration_status).size != 0 %>
-                <span class="nav-tag messages"><%= OrganizationRegistration.where.missing(:organization_registration_status).size %></span>
-              <% end %>
-            <% end %>
-        </li>
-      <% end %>
-      <% if current_user.organization_registrations.exists? %>
-        <li>
-          <%= link_to mypage_organization_registrations_path do %>
-            <i class="sl sl-icon-folder-alt"></i> 組織登録申請結果 
-            <% if current_user.organization_registrations.accepted.size != 0 %>
-              <span class="nav-tag messages bgc-blue"><%= current_user.organization_registrations.accepted.size %></span>
-            <% end %>
-          <% end %>
-        </li>
-      <% end %>
-      <li><a href="dashboard-bookings.html"><i class="fa fa-calendar-check-o"></i> Bookings</a></li>
-      <li><a href="dashboard-wallet.html"><i class="sl sl-icon-wallet"></i> Wallet</a></li>
-    </ul>
-
-    <ul data-submenu-title="Listings">
-      <li><a><i class="sl sl-icon-layers"></i> My Listings</a>
-        <ul>
-          <li><a href="dashboard-my-listings.html">Active <span class="nav-tag green">6</span></a></li>
-          <li><a href="dashboard-my-listings.html">Pending <span class="nav-tag yellow">1</span></a></li>
-          <li><a href="dashboard-my-listings.html">Expired <span class="nav-tag red">2</span></a></li>
-        </ul>
-      </li>
-      <li><a href="dashboard-reviews.html"><i class="sl sl-icon-star"></i> Reviews</a></li>
-      <li><a href="dashboard-add-listing.html"><i class="sl sl-icon-plus"></i> Add Listing</a></li>
       <li>
         <%= link_to mypage_bookmarks_path do %>
           <i class="sl sl-icon-heart"></i> お気に入り
         <% end %>
       </li>
+    </ul>
+
+    <ul data-submenu-title="Organizations">
+      <li><a><i class="sl sl-icon-plus"></i> 組織新規登録</a>
+        <ul>
+          <li>
+            <%= link_to new_mypage_organization_registration_path do %>
+              <i class="sl sl-icon-plus"></i> 登録申請
+            <% end %>
+          </li>
+          <% if current_user.organization_registrations.exists? %>
+            <li>
+              <%= link_to mypage_organization_registrations_path do %>
+                <i class="sl sl-icon-docs"></i> 申請結果 
+                <% if current_user.organization_registrations.accepted.exists? %>
+                  <span class="nav-tag messages bgc-blue"><%= current_user.organization_registrations.accepted.size %></span>
+                <% end %>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      </li>
+
+
       <% if current_user.organizations.exists? %>
         <li>
           <%= link_to organizations_path do %>
-            <i class="sl sl-icon-list"></i> 所属組織
+            <i class="sl sl-icon-globe"></i> 所属組織
           <% end %>
         </li>
       <% end %>
     </ul>
+
+    <% if current_user.admin? %>
+      <ul data-submenu-title="ADMIN">
+        <li>
+          <%= link_to pvsuwimvsuoitmucvyku_users_path do %>
+            <i class="sl sl-icon-people"></i> ユーザー一覧
+          <% end %>
+        </li>
+        <li>
+          <%= link_to pvsuwimvsuoitmucvyku_organizations_path do %>
+            <i class="sl sl-icon-globe"></i> 組織一覧
+          <% end %>
+        </li>
+        <li>
+          <%= link_to pvsuwimvsuoitmucvyku_announcements_path do %>
+            <i class="sl sl-icon-list"></i> お知らせ一覧
+          <% end %>
+        </li>
+        <% if OrganizationRegistration.exists? %>
+          <li>
+            <%= link_to pvsuwimvsuoitmucvyku_organization_registrations_path do %>
+              <i class="sl sl-icon-list"></i> 組織登録申請一覧 
+                <% if OrganizationRegistration.where.missing(:organization_registration_status).exists? %>
+                  <span class="nav-tag messages"><%= OrganizationRegistration.where.missing(:organization_registration_status).size %></span>
+                <% end %>
+              <% end %>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+    
 
     <ul data-submenu-title="Account">
       <li>
