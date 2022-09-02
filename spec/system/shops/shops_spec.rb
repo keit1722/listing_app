@@ -10,7 +10,7 @@ RSpec.describe 'ショップ', type: :system do
       :shop,
       organization: organization_a,
       shop_categories: [shop_category],
-      districts: [district]
+      districts: [district],
     )
   end
   let!(:user_b) { create(:business_user, :activated) }
@@ -20,7 +20,7 @@ RSpec.describe 'ショップ', type: :system do
       :shop,
       organization: organization_b,
       shop_categories: [shop_category],
-      districts: [district]
+      districts: [district],
     )
   end
   let(:district_c) { create(:district_meitetsu) }
@@ -47,9 +47,9 @@ RSpec.describe 'ショップ', type: :system do
     it 'マイページに自分のショップは表示されること' do
       visit organization_shop_path(organization_a, shop_a)
       expect(page).to have_current_path organization_shop_path(
-        organization_a,
-        shop_a
-      )
+                          organization_a,
+                          shop_a,
+                        )
     end
 
     it 'マイページには自分のショップ以外は表示されないこと' do
@@ -66,8 +66,8 @@ RSpec.describe 'ショップ', type: :system do
       it '登録フォームに進めること' do
         visit new_organization_shop_path(organization_a)
         expect(page).to have_current_path new_organization_shop_path(
-          organization_a
-        )
+                            organization_a,
+                          )
       end
     end
 
@@ -86,7 +86,7 @@ RSpec.describe 'ショップ', type: :system do
         find('#shop_create_form_district_id_chosen').click
         find(
           '#shop_create_form_district_id_chosen .active-result',
-          text: '内山'
+          text: '内山',
         ).click
         fill_in '住所', with: 'サンプルショップ住所'
         fill_in 'スラッグ', with: 'sample-shop'
@@ -94,13 +94,12 @@ RSpec.describe 'ショップ', type: :system do
                 with:
                   'Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua.'
         find('#map-location-registration').click
-        attach_file '画像',
-                    Rails.root.join('spec/fixtures/fixture.png'),
-                    make_visible: true
+        page.execute_script "$('input#shop_create_form_shop_attributes_main_image').css('opacity','1')"
+        attach_file('メイン画像', Rails.root.join('spec/fixtures/fixture.png'))
         find('#shop_create_form_shop_category_ids_chosen').click
         find(
           '#shop_create_form_shop_category_ids_chosen .active-result',
-          text: 'お土産'
+          text: 'お土産',
         ).click
         click_button '登録する'
 
@@ -118,9 +117,9 @@ RSpec.describe 'ショップ', type: :system do
       it '編集フォームに進めること' do
         visit edit_organization_shop_path(organization_a, shop_a)
         expect(page).to have_current_path edit_organization_shop_path(
-          organization_a,
-          shop_a
-        )
+                            organization_a,
+                            shop_a,
+                          )
       end
     end
 
@@ -142,20 +141,19 @@ RSpec.describe 'ショップ', type: :system do
         find('#shop_update_form_district_id_chosen').click
         find(
           '#shop_update_form_district_id_chosen .active-result',
-          text: '佐野'
+          text: '佐野',
         ).click
         fill_in '住所', with: '更新サンプルショップ住所'
         fill_in '紹介',
                 with:
                   'Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
         find('#map-location-registration').click
-        attach_file '画像',
-                    Rails.root.join('spec/fixtures/fixture.png'),
-                    make_visible: true
+        page.execute_script "$('input#shop_update_form_shop_attributes_main_image').css('opacity','1')"
+        attach_file('メイン画像', Rails.root.join('spec/fixtures/fixture.png'))
         find('#shop_update_form_shop_category_ids_chosen').click
         find(
           '#shop_update_form_shop_category_ids_chosen .active-result',
-          text: 'スポーツショップ'
+          text: 'スポーツショップ',
         ).click
         click_button '更新する'
 
@@ -164,7 +162,7 @@ RSpec.describe 'ショップ', type: :system do
         expect(page).to have_content '佐野'
         expect(page).to have_content '更新サンプルショップ住所'
         expect(
-          page
+          page,
         ).to have_content 'Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
         expect(page).to have_content 'スポーツショップ'
       end
@@ -177,7 +175,7 @@ RSpec.describe 'ショップ', type: :system do
         :shop,
         organization: organization_a,
         shop_categories: [shop_category_b],
-        districts: [district_c]
+        districts: [district_c],
       )
     end
 
@@ -220,7 +218,7 @@ RSpec.describe 'ショップ', type: :system do
         :shop,
         organization: organization_a,
         shop_categories: [shop_category_b],
-        districts: [district_c]
+        districts: [district_c],
       )
     end
 
@@ -342,9 +340,8 @@ RSpec.describe 'ショップ', type: :system do
         visit new_organization_shop_post_path(organization_a, shop_a)
         fill_in 'タイトル', with: 'サンプル投稿名'
         fill_in '内容', with: 'サンプル投稿内容'
-        attach_file '画像',
-                    Rails.root.join('spec/fixtures/fixture.png'),
-                    make_visible: true
+        page.execute_script "$('input#post_image').css('opacity','1')"
+        attach_file('画像', Rails.root.join('spec/fixtures/fixture.png'))
         find('#post_status_chosen').click
         find('#post_status_chosen .active-result', text: '公開').click
         click_button '登録する'
@@ -387,9 +384,8 @@ RSpec.describe 'ショップ', type: :system do
         visit edit_organization_shop_post_path(organization_a, shop_a, post_a)
         fill_in 'タイトル', with: '更新サンプル投稿名'
         fill_in '内容', with: '更新サンプル投稿内容'
-        attach_file '画像',
-                    Rails.root.join('spec/fixtures/fixture.png'),
-                    make_visible: true
+        page.execute_script "$('input#post_image').css('opacity','1')"
+        attach_file('画像', Rails.root.join('spec/fixtures/fixture.png'))
         find('#post_status_chosen').click
         find('#post_status_chosen .active-result', text: '下書き').click
         click_button '更新する'

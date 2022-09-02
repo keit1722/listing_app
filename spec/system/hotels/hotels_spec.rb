@@ -35,9 +35,9 @@ RSpec.describe '宿泊施設', type: :system do
     it 'マイページに自分の宿泊施設は表示されること' do
       visit organization_hotel_path(organization_a, hotel_a)
       expect(page).to have_current_path organization_hotel_path(
-        organization_a,
-        hotel_a
-      )
+                          organization_a,
+                          hotel_a,
+                        )
     end
 
     it 'マイページには自分の宿泊施設以外は表示されないこと' do
@@ -54,8 +54,8 @@ RSpec.describe '宿泊施設', type: :system do
       it '登録フォームに進めること' do
         visit new_organization_hotel_path(organization_a)
         expect(page).to have_current_path new_organization_hotel_path(
-          organization_a
-        )
+                            organization_a,
+                          )
       end
     end
 
@@ -74,7 +74,7 @@ RSpec.describe '宿泊施設', type: :system do
         find('#hotel_create_form_district_id_chosen').click
         find(
           '#hotel_create_form_district_id_chosen .active-result',
-          text: '内山'
+          text: '内山',
         ).click
         fill_in '住所', with: 'サンプル宿泊施設住所'
         fill_in 'スラッグ', with: 'sample-hotel'
@@ -82,9 +82,8 @@ RSpec.describe '宿泊施設', type: :system do
                 with:
                   'Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua.'
         find('#map-location-registration').click
-        attach_file '画像',
-                    Rails.root.join('spec/fixtures/fixture.png'),
-                    make_visible: true
+        page.execute_script "$('input#hotel_create_form_hotel_attributes_main_image').css('opacity','1')"
+        attach_file('メイン画像', Rails.root.join('spec/fixtures/fixture.png'))
         fill_in 'hotel_create_form_reservation_link_attributes_link',
                 with: 'https://google.com'
         click_button '登録する'
@@ -103,9 +102,9 @@ RSpec.describe '宿泊施設', type: :system do
       it '編集フォームに進めること' do
         visit edit_organization_hotel_path(organization_a, hotel_a)
         expect(page).to have_current_path edit_organization_hotel_path(
-          organization_a,
-          hotel_a
-        )
+                            organization_a,
+                            hotel_a,
+                          )
       end
     end
 
@@ -125,16 +124,15 @@ RSpec.describe '宿泊施設', type: :system do
         find('#hotel_update_form_district_id_chosen').click
         find(
           '#hotel_update_form_district_id_chosen .active-result',
-          text: '佐野'
+          text: '佐野',
         ).click
         fill_in '住所', with: '更新サンプル宿泊施設住所'
         fill_in '紹介',
                 with:
                   'Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
         find('#map-location-registration').click
-        attach_file '画像',
-                    Rails.root.join('spec/fixtures/fixture.png'),
-                    make_visible: true
+        page.execute_script "$('input#hotel_update_form_hotel_attributes_main_image').css('opacity','1')"
+        attach_file('メイン画像', Rails.root.join('spec/fixtures/fixture.png'))
         fill_in 'hotel_update_form_reservation_link_attributes_link',
                 with: 'https://yahoo.com'
         click_button '更新する'
@@ -144,7 +142,7 @@ RSpec.describe '宿泊施設', type: :system do
         expect(page).to have_content '佐野'
         expect(page).to have_content '更新サンプル宿泊施設住所'
         expect(
-          page
+          page,
         ).to have_content 'Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
         expect(page).to have_content 'https://yahoo.com'
       end
@@ -301,9 +299,8 @@ RSpec.describe '宿泊施設', type: :system do
         visit new_organization_hotel_post_path(organization_a, hotel_a)
         fill_in 'タイトル', with: 'サンプル投稿名'
         fill_in '内容', with: 'サンプル投稿内容'
-        attach_file '画像',
-                    Rails.root.join('spec/fixtures/fixture.png'),
-                    make_visible: true
+        page.execute_script "$('input#post_image').css('opacity','1')"
+        attach_file('画像', Rails.root.join('spec/fixtures/fixture.png'))
         find('#post_status_chosen').click
         find('#post_status_chosen .active-result', text: '公開').click
         click_button '登録する'
@@ -346,9 +343,8 @@ RSpec.describe '宿泊施設', type: :system do
         visit edit_organization_hotel_post_path(organization_a, hotel_a, post_a)
         fill_in 'タイトル', with: '更新サンプル投稿名'
         fill_in '内容', with: '更新サンプル投稿内容'
-        attach_file '画像',
-                    Rails.root.join('spec/fixtures/fixture.png'),
-                    make_visible: true
+        page.execute_script "$('input#post_image').css('opacity','1')"
+        attach_file('画像', Rails.root.join('spec/fixtures/fixture.png'))
         find('#post_status_chosen').click
         find('#post_status_chosen .active-result', text: '下書き').click
         click_button '更新する'

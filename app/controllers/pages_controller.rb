@@ -20,7 +20,7 @@ class PagesController < ApplicationController
     @selected_area_groups = params[:q][:area].presence || 'all'
     @keyword = params[:q][:keyword]
 
-    render template: "#{category}/search", layout: 'listings_index'
+    render template: "#{category}/search_forms/search", layout: 'listings_index'
   end
 
   def term; end

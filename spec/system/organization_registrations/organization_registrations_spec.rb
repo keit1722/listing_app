@@ -14,9 +14,10 @@ RSpec.describe '組織登録申請', type: :system do
         fill_in '電話番号', with: '0120123456'
         fill_in '事業内容', with: 'サンプル事業内容'
         click_button '申請する'
+        page.driver.browser.switch_to.alert.accept
 
         expect(
-          page
+          page,
         ).to have_content '組織登録の申請をしました。結果が出るまで今しばらくお待ちください。'
       end
     end
@@ -29,6 +30,7 @@ RSpec.describe '組織登録申請', type: :system do
         fill_in '電話番号', with: ''
         fill_in '事業内容', with: ''
         click_button '申請する'
+        page.driver.browser.switch_to.alert.accept
 
         expect(page).to have_content '組織登録の申請ができませんでした'
       end
@@ -44,7 +46,7 @@ RSpec.describe '組織登録申請', type: :system do
       it '本登録へ進むことができる' do
         create(
           :organization_registration_status_accepted,
-          organization_registration: organization_registration
+          organization_registration: organization_registration,
         )
         visit mypage_organization_registration_path(organization_registration)
         expect(page).to have_content '本登録へ進む'
@@ -55,7 +57,7 @@ RSpec.describe '組織登録申請', type: :system do
       it '本登録へ進むことができない' do
         create(
           :organization_registration_status_rejected,
-          organization_registration: organization_registration
+          organization_registration: organization_registration,
         )
         visit mypage_organization_registration_path(organization_registration)
         expect(page).not_to have_content '本登録へ進む'
