@@ -173,6 +173,59 @@
         <% end %>
         <!-- Section / End -->
 
+
+        <!-- Section -->
+        <div class="add-listing-section margin-top-45 switcher-on">
+
+          <!-- Headline -->
+          <div class="add-listing-headline">
+            <h3><i class="sl sl-icon-clock"></i> 営業時間</h3>
+          </div>
+
+          <!-- Switcher ON-OFF Content -->
+          <div class="switcher-content">
+            <%= f.fields_for :opening_hours, {}, [days_ja = OpeningHour.days_i18n.values, days_en = OpeningHour.days.keys] do |ff| %>
+              <!-- Day -->
+              <div class="row opening-day">
+                <div class="col-md-12">
+                  <h5><%= days_ja[ff.index] %></h5>
+                </div>
+
+                <div class="checkboxes in-row padding-left-15 margin-bottom-20">
+                  <%= ff.check_box :closed %>
+                  <%= ff.label :closed, "定休日" %>
+                </div>
+
+                <div class="col-md-2">
+                  <p class="margin-top-10">開始時間</p>
+                </div>
+                <div class="col-md-2">
+                  <%= ff.select :start_time_hour, [*0..23], {}, {class: "chosen-select"} %>
+                </div>
+                <div class="col-md-2">
+                  <%= ff.select :start_time_minute, ["00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55"], {}, {class: "chosen-select"} %>
+                </div>
+
+                <div class="col-md-2">
+                  <p class="margin-top-10">終了時間</p>
+                </div>
+                <div class="col-md-2">
+                  <%= ff.select :end_time_hour, [*0..23], {}, {class: "chosen-select"} %>
+                </div>
+                <div class="col-md-2">
+                  <%= ff.select :end_time_minute, ["00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55"], {}, {class: "chosen-select"} %>
+                </div>
+              </div>
+
+              <%= ff.hidden_field :day, value: days_en[ff.index] %>
+              <!-- Day / End -->
+            <% end %>
+          </div>
+          <!-- Switcher ON-OFF Content / End -->
+
+        </div>
+        <!-- Sect ion / End -->
+
         <div class="margin-top-40">
           <%= link_to organization_hotels_path, class: "button border overflow-visible" do %>
             <i class="sl sl-icon-arrow-left-circle"></i> 戻る
