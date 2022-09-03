@@ -43,16 +43,18 @@
               <td data-label="項目"><%= Shop.human_attribute_name("description") %></td>
               <td data-label="内容"><%= shop.decorate.format_description %></td>
             </tr>
-            <% if shop.opening_hours.exists? %>
-              <tr>
-                <td data-label="項目"><%= OpeningHour.model_name.human %></td>
-                <td data-label="内容">
-                  <ul class="bg-transparent">
-                    <%= render partial: "shared/organizations/listings/opening_hour", collection: shop.opening_hours.early %>
-                  </ul>
-                </td>
-              </tr>
-            <% end %>
+            <tr>
+              <td data-label="項目"><%= ReservationLink.human_attribute_name("link") %></td>
+              <td data-label="内容"><%= link_to nil, shop.reservation_link.link %></td>
+            </tr>
+            <tr>
+              <td data-label="項目"><%= OpeningHour.model_name.human %></td>
+              <td data-label="内容">
+                <ul class="bg-transparent">
+                  <%= render partial: "shared/organizations/listings/opening_hour", collection: shop.opening_hours.early %>
+                </ul>
+              </td>
+            </tr>
           </tbody>
         </table>
         <!-- table end -->
