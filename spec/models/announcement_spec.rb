@@ -1,5 +1,3 @@
-# == Schema Information
-
 #
 # Table name: announcements
 #
@@ -15,19 +13,19 @@ require 'rails_helper'
 
 RSpec.describe Announcement, type: :model do
   describe 'バリデーション' do
-    it '名字は必須であること' do
+    it 'タイトルは必須であること' do
       announcement = build(:announcement, title: nil)
       announcement.valid?
       expect(announcement.errors[:title]).to include('を入力してください')
     end
 
-    it '名前は必須であること' do
+    it '内容は必須であること' do
       announcement = build(:announcement, body: nil)
       announcement.valid?
       expect(announcement.errors[:body]).to include('を入力してください')
     end
 
-    it 'ユーザーネームは必須であること' do
+    it 'ステータスは必須であること' do
       announcement = build(:announcement, status: nil)
       announcement.valid?
       expect(announcement.errors[:status]).to include('を入力してください')
@@ -35,7 +33,7 @@ RSpec.describe Announcement, type: :model do
   end
 
   describe 'スコープ' do
-    let(:user) { create(:admin_user, :activated) }
+    let(:user) { create(:pvsuwimvsuoitmucvyku_user, :activated) }
     let!(:announcement_a) { create(:announcement, poster_id: user.id) }
     let!(:announcement_b) { create(:announcement, poster_id: user.id) }
     let!(:announcement_c) { create(:announcement, poster_id: user.id) }
@@ -74,7 +72,7 @@ RSpec.describe Announcement, type: :model do
   end
 
   describe 'インスタンスメソッド' do
-    let(:user) { create(:admin_user, :activated) }
+    let(:user) { create(:pvsuwimvsuoitmucvyku_user, :activated) }
     let!(:announcement_a) { create(:announcement, poster_id: user.id) }
     let!(:announcement_b) { create(:announcement, poster_id: user.id) }
     let!(:announcement_c) { create(:announcement, poster_id: user.id) }

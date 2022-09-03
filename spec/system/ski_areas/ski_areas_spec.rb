@@ -82,9 +82,8 @@ RSpec.describe 'スキー', type: :system do
                 with:
                   'Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua.'
         find('#map-location-registration').click
-        attach_file '画像',
-                    Rails.root.join('spec/fixtures/fixture.png'),
-                    make_visible: true
+        page.execute_script "$('input#ski_area_create_form_ski_area_attributes_main_image').css('opacity','1')"
+        attach_file('メイン画像', Rails.root.join('spec/fixtures/fixture.png'))
         click_button '登録する'
 
         expect(page).to have_content '作成しました'
@@ -130,9 +129,8 @@ RSpec.describe 'スキー', type: :system do
                 with:
                   'Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
         find('#map-location-registration').click
-        attach_file '画像',
-                    Rails.root.join('spec/fixtures/fixture.png'),
-                    make_visible: true
+        page.execute_script "$('input#ski_area_update_form_ski_area_attributes_main_image').css('opacity','1')"
+        attach_file('メイン画像', Rails.root.join('spec/fixtures/fixture.png'))
 
         click_button '更新する'
 
@@ -297,9 +295,8 @@ RSpec.describe 'スキー', type: :system do
         visit new_organization_ski_area_post_path(organization_a, ski_area_a)
         fill_in 'タイトル', with: 'サンプル投稿名'
         fill_in '内容', with: 'サンプル投稿内容'
-        attach_file '画像',
-                    Rails.root.join('spec/fixtures/fixture.png'),
-                    make_visible: true
+        page.execute_script "$('input#post_image').css('opacity','1')"
+        attach_file('画像', Rails.root.join('spec/fixtures/fixture.png'))
         find('#post_status_chosen').click
         find('#post_status_chosen .active-result', text: '公開').click
         click_button '登録する'
@@ -354,9 +351,8 @@ RSpec.describe 'スキー', type: :system do
         )
         fill_in 'タイトル', with: '更新サンプル投稿名'
         fill_in '内容', with: '更新サンプル投稿内容'
-        attach_file '画像',
-                    Rails.root.join('spec/fixtures/fixture.png'),
-                    make_visible: true
+        page.execute_script "$('input#post_image').css('opacity','1')"
+        attach_file('画像', Rails.root.join('spec/fixtures/fixture.png'))
         find('#post_status_chosen').click
         find('#post_status_chosen .active-result', text: '下書き').click
         click_button '更新する'

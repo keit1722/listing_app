@@ -1,15 +1,9 @@
 class Organizations::HotelsController < Organizations::BaseController
-  before_action :set_districts, only: [:new, :create, :edit, :update]
-
   def index
+    @organization =
+      current_user.organizations.find_by!(slug: params[:organization_slug])
     @hotels =
-      current_user
-      .organizations
-      .find_by!(slug: params[:organization_slug])
-      .hotels
-      .page(params[:page])
-      .per(20)
-      .with_attached_images
+      @organization.hotels.page(params[:page]).per(20).with_attached_main_image
   end
 
   def show
@@ -27,6 +21,7 @@ class Organizations::HotelsController < Organizations::BaseController
     organization =
       current_user.organizations.find_by(slug: params[:organization_slug])
     @hotel_create_form = HotelCreateForm.new(organization)
+    @districts = District.all
     render layout: 'mypage_maps'
   end
 
@@ -34,6 +29,7 @@ class Organizations::HotelsController < Organizations::BaseController
     organization =
       current_user.organizations.find_by(slug: params[:organization_slug])
     @hotel_create_form = HotelCreateForm.new(organization, hotel_create_params)
+    @districts = District.all
 
     if @hotel_create_form.save
       redirect_to organization_hotels_path, success: '作成しました'
@@ -52,6 +48,7 @@ class Organizations::HotelsController < Organizations::BaseController
       .with_attached_images
       .find_by!(slug: params[:slug])
     @hotel_update_form = HotelUpdateForm.new(@hotel)
+    @districts = District.all
     render layout: 'mypage_maps'
   end
 
@@ -64,6 +61,7 @@ class Organizations::HotelsController < Organizations::BaseController
       .with_attached_images
       .find_by!(slug: params[:slug])
     @hotel_update_form = HotelUpdateForm.new(@hotel, hotel_update_params)
+    @districts = District.all
 
     if @hotel_update_form.update
       redirect_to organization_hotel_path, success: '情報を更新しました'
@@ -101,6 +99,7 @@ class Organizations::HotelsController < Organizations::BaseController
           :slug,
           :description,
           :address,
+          :main_image,
           { images: [] }
         ]
       )
@@ -119,6 +118,7 @@ class Organizations::HotelsController < Organizations::BaseController
           :lng,
           :description,
           :address,
+          :main_image,
           { images: [] }
         ]
       )

@@ -14,6 +14,7 @@ RSpec.describe '組織登録申請', type: :system do
         fill_in '電話番号', with: '0120123456'
         fill_in '事業内容', with: 'サンプル事業内容'
         click_button '申請する'
+        page.driver.browser.switch_to.alert.accept
 
         expect(
           page
@@ -29,6 +30,7 @@ RSpec.describe '組織登録申請', type: :system do
         fill_in '電話番号', with: ''
         fill_in '事業内容', with: ''
         click_button '申請する'
+        page.driver.browser.switch_to.alert.accept
 
         expect(page).to have_content '組織登録の申請ができませんでした'
       end

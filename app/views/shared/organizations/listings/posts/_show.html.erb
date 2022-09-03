@@ -1,7 +1,7 @@
 <div id="titlebar">
   <div class="row">
     <div class="col-md-12">
-      <%= render 'shared/breadcrumbs_mypage', { icon_name: "doc", page_name: "投稿詳細" } %>
+      <h2><i class="sl sl-icon-doc"></i> 投稿詳細</h2>
     </div>
   </div>
 </div>
@@ -40,8 +40,8 @@
           <div class="row with-forms margin-top-30">
             <!-- Images preview -->
             <div class="col-md-12">
-              <div id="preview">
-                <%= image_tag post.image.variant(resize: '300x200').processed %>
+              <div id="preview" class="images-preview">
+                <%= image_tag post.image.variant(resize: '600x400').processed, class: "image-preview" %>
               </div>
             </div>
           </div>
@@ -51,10 +51,14 @@
     </div>
 
     <div class="margin-top-40">
-      <%= link_to send(edit_path, post.postable.organization, post.postable, post), class: "button" do %>
+      <%= link_to send(index_path), class: "button border margin-bottom-20 overflow-visible" do %>
+        <i class="sl sl-icon-arrow-left-circle"></i> 戻る
+      <% end %>
+
+      <%= link_to send(edit_path), class: "button overflow-visible" do %>
         <i class="sl sl-icon-pencil"></i> 編集
-      <% end%>
-      <%= link_to send(destroy_path, post.postable.organization, post.postable, post), method: :delete, data: { confirm: "削除すると復旧はできません。よろしいですか？" }, class: "button" do %>
+      <% end %>
+      <%= link_to send(destroy_path), method: :delete, data: { confirm: "削除すると復旧はできません。よろしいですか？" }, class: "border button right-side width-auto overflow-visible" do %>
         <i class="sl sl-icon-trash"></i> 削除
       <% end %>
     </div>

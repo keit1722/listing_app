@@ -1,49 +1,157 @@
 <div id="titlebar">
   <div class="row">
     <div class="col-md-12">
-      <%= render 'shared/breadcrumbs', { icon_name: "pencil", page_name: page_name } %>
+      <h2><i class="sl sl-icon-pencil"></i> <%= page_name %></h2>
     </div>
   </div>
 </div>
 
 <div class="row">
+  <div class="col-lg-12">
 
-  <!-- Profile -->
-  <div class="col-md-12">
-    <%= form_with model: user, url: send(update_path) do |f| %>
-      <%= render 'shared/error_messages', model: f.object %>
-      <div class="dashboard-list-box margin-top-0">
-        <div class="dashboard-list-box-static">
+    <div id="add-listing">
+      <%= form_with model: user, url: send(update_path) do |f| %>
+        <%= render 'shared/error_messages', model: f.object %>
 
-          <!-- Details -->
-          <div class="my-profile">
+        <!-- Section -->
+        <div class="add-listing-section">
 
-            <%= f.label :last_name %>
-            <%= f.text_field :last_name %>
-            <%= f.label :first_name %>
-            <%= f.text_field :first_name %>
-            <%= f.label :username %>
-            <%= f.text_field :username %>
-            <% if current_page?(edit_admin_user_path(user)) %>
-              <%= f.label :public_uid %>
-              <%= f.text_field :public_uid %>
-            <% end %>
-            <%= f.label :email %>
-            <%= f.email_field :email %>
-            <% if current_page?(edit_admin_user_path(user)) %>
-              <%= f.label :role %>
-              <%= f.select :role, User.roles_i18n.invert, {}, { class: "chosen-select" } %>
-            <% end %>
-            <%= f.label :password %>
-            <%= f.password_field :password %>
-            <%= f.label :password_confirmation %>
-            <%= f.password_field :password_confirmation %>
-
+          <!-- Headline -->
+          <div class="add-listing-headline">
           </div>
 
-          <%= f.submit nil, class: "button margin-top-15" %>
+          <!-- Row -->
+          <div class="row with-forms margin-bottom-20">
+            <!-- First Name -->
+            <div class="col-md-12">
+              <h5><%= f.label :first_name %></h5>
+              <%= f.text_field :first_name %>
+            </div>
+          </div>
+          <!-- Row / End -->
+
+          <!-- Row -->
+          <div class="row with-forms margin-bottom-20">
+            <!-- Last Name -->
+            <div class="col-md-12">
+              <h5><%= f.label :last_name %></h5>
+              <%= f.text_field :last_name %>
+            </div>
+          </div>
+          <!-- Row / End -->
+
+          <!-- Row -->
+          <div class="row with-forms margin-bottom-20">
+            <!-- Username -->
+            <div class="col-md-12">
+              <h5><%= f.label :username %></h5>
+              <%= f.text_field :username %>
+            </div>
+          </div>
+          <!-- Row / End -->
+
+          <% if current_page?(edit_pvsuwimvsuoitmucvyku_user_path(user)) %>
+            <!-- Row -->
+            <div class="row with-forms margin-bottom-20">
+              <!-- Public Uid -->
+              <div class="col-md-12">
+                <h5><%= f.label :public_uid %></h5>
+                <%= f.text_field :public_uid %>
+              </div>
+            </div>
+            <!-- Row / End -->
+          <% end %>
+
+          <!-- Row -->
+          <div class="row with-forms margin-bottom-20">
+            <!-- Email -->
+            <div class="col-md-12">
+              <h5><%= f.label :email %></h5>
+              <%= f.text_field :email %>
+            </div>
+          </div>
+          <!-- Row / End -->
+
+          <% if current_page?(edit_pvsuwimvsuoitmucvyku_user_path(user)) %>
+            <!-- Row -->
+            <div class="row with-forms margin-bottom-20">
+              <!-- Role -->
+              <div class="col-md-12">
+                <%= f.label :role %>
+                <%= f.select :role, User.roles_i18n.invert, {}, { class: "chosen-select" } %>
+              </div>
+            </div>
+            <!-- Row / End -->
+          <% end %>
+
+          <!-- Row -->
+          <div class="row with-forms margin-bottom-20">
+            <!-- Password -->
+            <div class="col-md-12">
+              <h5><%= f.label :password %></h5>
+              <%= f.password_field :password %>
+            </div>
+          </div>
+          <!-- Row / End -->
+
+          <!-- Row -->
+          <div class="row with-forms margin-bottom-20">
+            <!-- Password Confirmation -->
+            <div class="col-md-12">
+              <h5><%= f.label :password_confirmation %></h5>
+              <%= f.password_field :password_confirmation %>
+            </div>
+          </div>
+          <!-- Row / End -->
+
+          <!-- Row -->
+            <div class="row with-forms margin-bottom-20">
+              <!-- Images -->
+              <div class="col-md-12">
+                <h5><%= f.label :avatar %></h5>
+                <div class="change-photo-btn position-static">
+                  <div class="photoUpload">
+                    <span><i class="fa fa-upload"></i> プロフィール画像を変更</span>
+                    <%= f.file_field :avatar, class: "upload", onchange: "previewImage(this, 'avatar-preview')" %>
+                  </div>
+                </div>
+                <div class="images-preview"></div>
+              </div>
+            </div>
+            <!-- Row / End -->
+
+            <!-- Row -->
+            <div class="row margin-top-20 margin-bottom-40">
+              <!-- Images preview -->
+              <div class="col-md-12">
+                <div id="avatar-preview" class="avatar-preview">
+                   <% if user.avatar.attached? %>
+                    <%= image_tag user.avatar.variant(resize: '300x200').processed, class: "" %>
+                  <% else %>
+                    <%= image_tag 'blank-profile-picture.png' %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+            <!-- Row / End -->
 
         </div>
-      </div>
-    <% end %>
+        <!-- Section / End -->
+
+        <div class="margin-top-20">
+          <% if current_page?(edit_pvsuwimvsuoitmucvyku_user_path(user)) %>
+            <%= link_to pvsuwimvsuoitmucvyku_user_path(user), class: "button border overflow-visible" do %>
+              <i class="sl sl-icon-arrow-left-circle"></i> 戻る
+            <% end %>
+          <% else %>
+            <%= link_to mypage_profile_path, class: "button border overflow-visible" do %>
+              <i class="sl sl-icon-arrow-left-circle"></i> 戻る
+            <% end %>
+          <% end %>
+
+          <%= f.submit nil, class: "button right-side" %>
+        </div>
+      <% end %>
+
+    </div>
   </div>

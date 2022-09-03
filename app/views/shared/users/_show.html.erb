@@ -1,7 +1,7 @@
 <div id="titlebar">
   <div class="row">
     <div class="col-md-12">
-      <%= render 'shared/breadcrumbs', { icon_name: "user", page_name: page_name } %>
+      <h2><i class="sl sl-icon-user"></i> <%= page_name %></h2>
     </div>
   </div>
 </div>
@@ -12,6 +12,16 @@
   <div class="col-md-12">
     <div class="dashboard-list-box margin-top-0">
       <div class="dashboard-list-box-static">
+        <!-- avatar -->
+        <div class="avatar-preview margin-bottom-30">
+          <% if user.avatar.attached? %>
+            <%= image_tag user.avatar %>
+          <% else %>
+            <%= image_tag 'blank-profile-picture.png' %>
+          <% end %>
+        </div>
+        <!-- avatar -->
+
         <!-- table -->
         <table class="basic-table">
           <tbody>
@@ -35,7 +45,7 @@
               <td data-label="項目"><%= User.human_attribute_name("role") %></td>
               <td data-label="内容"><%= user.role_i18n %></td>
             </tr>
-            <% if current_page?(admin_user_path(user)) %>
+            <% if current_page?(pvsuwimvsuoitmucvyku_user_path(user)) %>
               <tr>
                 <td data-label="項目"><%= User.human_attribute_name("public_uid") %></td>
                 <td data-label="内容"><%= user.public_uid %></td>
@@ -51,11 +61,19 @@
       </div>
     </div>
 
-    <%= link_to send(edit_path), class: "button margin-top-20" do %>
-      <i class="sl sl-icon-pencil"></i> 編集
-    <% end %>
-    <%= link_to send(destroy_path), method: :delete, data: { confirm: "アカウントを削除すると復旧はできません。よろしいですか？" }, class: "border button" do %>
-      <i class="sl sl-icon-trash"></i> 削除
-    <% end %>
+    <div class="margin-top-40">
+      <% if current_page?(pvsuwimvsuoitmucvyku_user_path(user)) %>
+        <%= link_to pvsuwimvsuoitmucvyku_users_path, class: "button border margin-bottom-20 overflow-visible" do %>
+          <i class="sl sl-icon-arrow-left-circle"></i> 戻る
+        <% end %>
+      <% end %>
+
+      <%= link_to send(edit_path), class: "button overflow-visible" do %>
+        <i class="sl sl-icon-pencil"></i> 編集
+      <% end %>
+      <%= link_to send(destroy_path), method: :delete, data: { confirm: "アカウントを削除すると復旧はできません。よろしいですか？" }, class: "border button right-side width-auto overflow-visible" do %>
+        <i class="sl sl-icon-trash"></i> アカウント削除
+      <% end %>
+    </div>
     
   </div>

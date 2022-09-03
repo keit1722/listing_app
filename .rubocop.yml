@@ -38,8 +38,8 @@ Naming/PredicateName:
   Enabled: false
 Layout/LineLength:
   Max: 150
-MethodLength:
-  Enabled: false
+Metrics/MethodLength:
+    Enabled: false
 Metrics/ClassLength:
   Enabled: false
 Metrics/AbcSize:

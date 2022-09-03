@@ -1,15 +1,13 @@
 class Organizations::PhotoSpotsController < Organizations::BaseController
-  before_action :set_districts, only: [:new, :create, :edit, :update]
-
   def index
+    @organization =
+      current_user.organizations.find_by!(slug: params[:organization_slug])
     @photo_spots =
-      current_user
-      .organizations
-      .find_by!(slug: params[:organization_slug])
+      @organization
       .photo_spots
       .page(params[:page])
       .per(20)
-      .with_attached_images
+      .with_attached_main_image
   end
 
   def show
@@ -27,6 +25,7 @@ class Organizations::PhotoSpotsController < Organizations::BaseController
     organization =
       current_user.organizations.find_by(slug: params[:organization_slug])
     @photo_spot_create_form = PhotoSpotCreateForm.new(organization)
+    @districts = District.all
     render layout: 'mypage_maps'
   end
 
@@ -35,6 +34,7 @@ class Organizations::PhotoSpotsController < Organizations::BaseController
       current_user.organizations.find_by(slug: params[:organization_slug])
     @photo_spot_create_form =
       PhotoSpotCreateForm.new(organization, photo_spot_create_params)
+    @districts = District.all
 
     if @photo_spot_create_form.save
       redirect_to organization_photo_spots_path, success: '作成しました'
@@ -53,6 +53,7 @@ class Organizations::PhotoSpotsController < Organizations::BaseController
       .with_attached_images
       .find_by!(slug: params[:slug])
     @photo_spot_update_form = PhotoSpotUpdateForm.new(@photo_spot)
+    @districts = District.all
     render layout: 'mypage_maps'
   end
 
@@ -66,6 +67,7 @@ class Organizations::PhotoSpotsController < Organizations::BaseController
       .find_by!(slug: params[:slug])
     @photo_spot_update_form =
       PhotoSpotUpdateForm.new(@photo_spot, photo_spot_update_params)
+    @districts = District.all
 
     if @photo_spot_update_form.update
       redirect_to organization_photo_spot_path, success: '情報を更新しました'
@@ -101,6 +103,7 @@ class Organizations::PhotoSpotsController < Organizations::BaseController
           :slug,
           :description,
           :address,
+          :main_image,
           { images: [] }
         ]
       )
@@ -117,6 +120,7 @@ class Organizations::PhotoSpotsController < Organizations::BaseController
           :lng,
           :description,
           :address,
+          :main_image,
           { images: [] }
         ]
       )

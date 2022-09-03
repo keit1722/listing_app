@@ -2,17 +2,21 @@ require 'rails_helper'
 
 RSpec.describe '組織登録申請結果', type: :system do
   let(:general_user) { create(:general_user, :activated) }
-  let(:admin_user) { create(:admin_user, :activated) }
+  let(:pvsuwimvsuoitmucvyku_user) do
+    create(:pvsuwimvsuoitmucvyku_user, :activated)
+  end
   let!(:organization_registration) do
     create(:organization_registration, user: general_user)
   end
 
-  before { admin_login_as admin_user }
+  before { pvsuwimvsuoitmucvyku_login_as pvsuwimvsuoitmucvyku_user }
 
   describe '登録申請結果回答' do
     context '未回答の申請の場合' do
       it '承認・否認の回答ができる' do
-        visit admin_organization_registration_path(organization_registration)
+        visit pvsuwimvsuoitmucvyku_organization_registration_path(
+          organization_registration
+        )
         expect(page).to have_selector '.button-accepted'
         expect(page).to have_selector '.button-rejected'
       end
@@ -20,13 +24,17 @@ RSpec.describe '組織登録申請結果', type: :system do
 
     context '回答済みの申請の場合' do
       before do
-        visit admin_organization_registration_path(organization_registration)
+        visit pvsuwimvsuoitmucvyku_organization_registration_path(
+          organization_registration
+        )
         click_on '承認'
         page.accept_confirm
       end
 
       it '承認・否認ができない' do
-        visit admin_organization_registration_path(organization_registration)
+        visit pvsuwimvsuoitmucvyku_organization_registration_path(
+          organization_registration
+        )
         expect(page).not_to have_selector '.button-accepted'
         expect(page).not_to have_selector '.button-rejected'
       end
@@ -35,7 +43,9 @@ RSpec.describe '組織登録申請結果', type: :system do
 
   describe '登録申請の回答' do
     it '承認することができる' do
-      visit admin_organization_registration_path(organization_registration)
+      visit pvsuwimvsuoitmucvyku_organization_registration_path(
+        organization_registration
+      )
       expect do
         find('.button-accepted').click
         page.accept_confirm
@@ -47,7 +57,9 @@ RSpec.describe '組織登録申請結果', type: :system do
     end
 
     it '否認することができる' do
-      visit admin_organization_registration_path(organization_registration)
+      visit pvsuwimvsuoitmucvyku_organization_registration_path(
+        organization_registration
+      )
       expect do
         find('.button-rejected').click
         page.accept_confirm

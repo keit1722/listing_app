@@ -1,3 +1,10 @@
+class ShopCategoryMapping < ApplicationRecord
+  belongs_to :shop
+  belongs_to :shop_category
+
+  validates :shop_id, uniqueness: { scope: :shop_category_id }
+end
+
 # == Schema Information
 #
 # Table name: shop_category_mappings
@@ -19,9 +26,3 @@
 #  fk_rails_...  (shop_category_id => shop_categories.id)
 #  fk_rails_...  (shop_id => shops.id)
 #
-class ShopCategoryMapping < ApplicationRecord
-  belongs_to :shop
-  belongs_to :shop_category
-
-  validates :shop_id, uniqueness: { scope: :shop_category_id }
-end

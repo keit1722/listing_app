@@ -1,7 +1,7 @@
 <div id="titlebar">
   <div class="row">
     <div class="col-md-12">
-      <%= render 'shared/breadcrumbs_mypage', { icon_name: "plus", page_name: "組織へ招待" } %>
+      <h2><i class="sl sl-icon-user-follow"></i> ユーザーを招待</h2>
     </div>
   </div>
 </div>
@@ -28,7 +28,7 @@
               そのユーザーは本サイトに既にユーザー登録されている必要があります。</p>
               <p>招待するとその相手に通知が送られます。相手が承認するとメンバーに追加されます。</p>
               <h5><%= f.label :email %></h5>
-              <%= f.text_field :email %>
+              <%= f.text_field :email, class: "margin-bottom-0" %>
             </div>
           </div>
           <!-- Row / End -->
@@ -36,7 +36,12 @@
         </div>
         <!-- Section / End -->
 
-        <%= f.submit "招待する", class: "button margin-top-40" %>
+        <div class="margin-top-40">
+          <%= link_to organization_path(@organization_invitation.organization), class: "button border overflow-visible" do %>
+            <i class="sl sl-icon-arrow-left-circle"></i> 戻る
+          <% end %>
+          <%= f.submit '招待する', class: "button right-side" %>
+        </div>
       <% end %>
 
     </div>

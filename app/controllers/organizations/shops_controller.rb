@@ -1,16 +1,9 @@
 class Organizations::ShopsController < Organizations::BaseController
-  before_action :set_districts, only: [:new, :create, :edit, :update]
-  before_action :set_shop_categories, only: [:new, :create, :edit, :update]
-
   def index
+    @organization =
+      current_user.organizations.find_by!(slug: params[:organization_slug])
     @shops =
-      current_user
-      .organizations
-      .find_by!(slug: params[:organization_slug])
-      .shops
-      .page(params[:page])
-      .per(20)
-      .with_attached_images
+      @organization.shops.page(params[:page]).per(20).with_attached_main_image
   end
 
   def show
@@ -28,6 +21,8 @@ class Organizations::ShopsController < Organizations::BaseController
     organization =
       current_user.organizations.find_by(slug: params[:organization_slug])
     @shop_create_form = ShopCreateForm.new(organization)
+    @districts = District.all
+    @shop_categories = ShopCategory.all
     render layout: 'mypage_maps'
   end
 
@@ -35,6 +30,8 @@ class Organizations::ShopsController < Organizations::BaseController
     organization =
       current_user.organizations.find_by(slug: params[:organization_slug])
     @shop_create_form = ShopCreateForm.new(organization, shop_create_params)
+    @districts = District.all
+    @shop_categories = ShopCategory.all
 
     if @shop_create_form.save
       redirect_to organization_shops_path, success: '作成しました'
@@ -53,6 +50,8 @@ class Organizations::ShopsController < Organizations::BaseController
       .with_attached_images
       .find_by!(slug: params[:slug])
     @shop_update_form = ShopUpdateForm.new(@shop)
+    @districts = District.all
+    @shop_categories = ShopCategory.all
     render layout: 'mypage_maps'
   end
 
@@ -65,6 +64,8 @@ class Organizations::ShopsController < Organizations::BaseController
       .with_attached_images
       .find_by!(slug: params[:slug])
     @shop_update_form = ShopUpdateForm.new(@shop, shop_update_params)
+    @districts = District.all
+    @shop_categories = ShopCategory.all
 
     if @shop_update_form.update
       redirect_to organization_shop_path, success: '情報を更新しました'
@@ -102,6 +103,7 @@ class Organizations::ShopsController < Organizations::BaseController
           :slug,
           :description,
           :address,
+          :main_image,
           { images: [] }
         ]
       )
@@ -120,12 +122,9 @@ class Organizations::ShopsController < Organizations::BaseController
           :lng,
           :description,
           :address,
+          :main_image,
           { images: [] }
         ]
       )
-  end
-
-  def set_shop_categories
-    @shop_categories = ShopCategory.all
   end
 end

@@ -10,7 +10,7 @@
 
             <!-- Row With Forms -->
             <div class="row with-forms">
-              <%= form_with model: listings, url: [:search, category.to_sym], scope: :q, method: :get, local: true do |f| %>
+              <%= form_with model: listings, url: send(searches_path), scope: :q, method: :get, local: true do |f| %>
 
                 <!-- Main Search Input -->
                 <div class="col-fs-12">
@@ -24,10 +24,9 @@
                 <div class="col-fs-12">
                   <%= render "listings/selected_panels_area", { f: f, selected_area_groups: selected_area_groups } %>
                   <%= render "listings/selected_panels_category", { f: f, categories: categories, selected_categories: selected_categories, selected_area_groups: selected_area_groups } %>
+                  <%= f.submit '検索', class: "right-side margin-right-0 margin-bottom-0" %>
                 </div>
                 <!-- Filters / End -->
-
-                <%= f.submit '検索', class: "right-side margin-right-0 margin-bottom-0" %>
 
               <% end %>
             </div>
@@ -74,7 +73,7 @@
             <!-- Pagination / End -->
 
             <!-- Copyrights -->
-            <div class="copyrights margin-top-0">© 2021 Listeo. All Rights Reserved.</div>
+            <div class="copyrights margin-top-0"><%= copyrights %></div>
 
           </div>
         </div>

@@ -1,20 +1,3 @@
-# == Schema Information
-#
-# Table name: organizations
-#
-#  id         :bigint           not null, primary key
-#  address    :string           not null
-#  name       :string           not null
-#  phone      :string           not null
-#  slug       :string           not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#
-# Indexes
-#
-#  index_organizations_on_name  (name) UNIQUE
-#  index_organizations_on_slug  (slug) UNIQUE
-#
 require 'rails_helper'
 
 RSpec.describe Organization, type: :model do
@@ -90,3 +73,21 @@ RSpec.describe Organization, type: :model do
     end
   end
 end
+
+# == Schema Information
+#
+# Table name: organizations
+#
+#  id         :bigint           not null, primary key
+#  address    :string           not null
+#  name       :string           not null
+#  phone      :string           not null
+#  slug       :string           not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+# Indexes
+#
+#  index_organizations_on_name  (name) UNIQUE
+#  index_organizations_on_slug  (slug) UNIQUE
+#

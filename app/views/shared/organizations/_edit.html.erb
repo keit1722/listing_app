@@ -1,7 +1,7 @@
 <div id="titlebar">
   <div class="row">
     <div class="col-md-12">
-      <%= render 'shared/breadcrumbs_mypage', { icon_name: "pencil", page_name: "組織情報編集" } %>
+      <h2><i class="sl sl-icon-pencil"></i> 組織情報編集</h2>
     </div>
   </div>
 </div>
@@ -52,7 +52,7 @@
           </div>
           <!-- Row / End -->
 
-          <% if current_page?(edit_admin_organization_path) %>
+          <% if current_page?(edit_pvsuwimvsuoitmucvyku_organization_path) %>
             <!-- Row -->
             <div class="row with-forms margin-bottom-20">
               <!-- Slug -->
@@ -70,7 +70,13 @@
         </div>
         <!-- Section / End -->
 
-        <%= f.submit nil, class: "button margin-top-40" %>
+        <div class="margin-top-40">
+          <%= link_to send(show_path), class: "button border overflow-visible" do %>
+            <i class="sl sl-icon-arrow-left-circle"></i> 戻る
+          <% end %>
+          <%= f.submit nil, class: "button right-side" %>
+        </div>
+
       <% end %>
 
     </div>

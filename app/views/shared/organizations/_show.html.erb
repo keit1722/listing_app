@@ -1,13 +1,24 @@
-<div id="titlebar">
+<div id="titlebar" class="margin-bottom-20">
   <div class="row">
     <div class="col-md-12">
-      <%= render 'shared/breadcrumbs_mypage', { icon_name: "doc", page_name: "組織詳細" } %>
+      <h2><i class="sl sl-icon-doc"></i> 組織詳細</h2>
     </div>
   </div>
 </div>
 
-<div class="row">
+<% if current_page?(organization_path) %>
+  <div class="margin-bottom-20 display-flex-end">
+    <%= link_to organization_organization_invitations_path(organization), class: "button border" do %>
+      <i class="sl sl-icon-list"></i> 招待状況一覧
+    <% end %>
 
+    <%= link_to new_organization_organization_invitation_path(organization), class: "button border" do %>
+      <i class="sl sl-icon-user-follow"></i> 招待
+    <% end %>
+  </div>
+<% end %>
+
+<div class="row">
   <!-- Profile -->
   <div class="col-md-12">
     <div class="dashboard-list-box margin-top-0">
@@ -36,15 +47,50 @@
               <td data-label="項目">メンバー</td>
               <td data-label="内容"><%= organization.users.exists? ? organization.decorate.arranged_users : "メンバーはいません" %></td>
             </tr>
+            <tr>
+              <td data-label="項目">飲食店 （<%= link_to " 一覧 ", send(restaurant_index_path, organization), class: "underline" %>）</td>
+              <td data-label="内容"><%= organization.restaurants.exists? ? organization.decorate.arranged_restaurants : " - " %> </td>
+            </tr>
+            <tr>
+              <td data-label="項目">宿泊施設 （<%= link_to " 一覧 ", send(hotel_index_path, organization), class: "underline" %>）</td>
+              <td data-label="内容"><%= organization.hotels.exists? ? organization.decorate.arranged_hotels : " - " %></td>
+            </tr>
+            <tr>
+              <td data-label="項目">アクティビティ （<%= link_to " 一覧 ", send(activity_index_path, organization), class: "underline" %>）</td>
+              <td data-label="内容"><%= organization.activities.exists? ? organization.decorate.arranged_activities : " - " %></td>
+            </tr>
+            <tr>
+              <td data-label="項目">温泉 （<%= link_to " 一覧 ", send(hot_spring_index_path, organization), class: "underline" %>）</td>
+              <td data-label="内容"><%= organization.hot_springs.exists? ? organization.decorate.arranged_hot_springs : " - " %></td>
+            </tr>
+            <tr>
+              <td data-label="項目">スキー場 （<%= link_to " 一覧 ", send(ski_area_index_path, organization), class: "underline" %>）</td>
+              <td data-label="内容"><%= organization.ski_areas.exists? ? organization.decorate.arranged_ski_areas : " - " %></td>
+            </tr>
+            <tr>
+              <td data-label="項目">フォトスポット （<%= link_to " 一覧 ", send(photo_spot_index_path, organization), class: "underline" %>）</td>
+              <td data-label="内容"><%= organization.photo_spots.exists? ? organization.decorate.arranged_photo_spots : " - " %></td>
+            </tr>
+            <tr>
+              <td data-label="項目">ショップ （<%= link_to " 一覧 ", send(shop_index_path, organization), class: "underline" %>）</td>
+              <td data-label="内容"><%= organization.shops.exists? ? organization.decorate.arranged_shops : " - " %></td>
+            </tr>
           </tbody>
         </table>
 
       </div>
     </div>
-    <%= link_to send(edit_path), class: "button margin-top-20" do %>
-      <i class="sl sl-icon-pencil"></i> 編集
-    <% end %>
-    <%= link_to send(destroy_path), method: :delete, data: { confirm: "組織を削除すると復旧はできません。よろしいですか？" }, class: "border button" do %>
-      <i class="sl sl-icon-trash"></i> 削除
-    <% end %>
+
+    <div class="margin-top-40">
+      <%= link_to send(index_path), class: "button border margin-bottom-20 overflow-visible" do %>
+        <i class="sl sl-icon-arrow-left-circle"></i> 戻る
+      <% end %>
+      <%= link_to send(edit_path), class: "button overflow-visible" do %>
+        <i class="sl sl-icon-pencil"></i> 編集
+      <% end %>
+      <%= link_to send(destroy_path), method: :delete, data: { confirm: destroy_confirm }, class: "border button right-side width-auto overflow-visible" do %>
+        <i class="sl sl-icon-trash"></i> <%= destroy_button %>
+      <% end %>
+    </div>
+
   </div>
