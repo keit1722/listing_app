@@ -61,6 +61,18 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  describe 'インスタンスメソッド' do
+    let(:organization) { create(:organization) }
+    let(:user) do
+      create(:business_user, :activated, organizations: [organization])
+    end
+
+    it 'resign' do
+      user.resign(organization)
+      expect(user.organizations).to be_empty
+    end
+  end
 end
 
 # == Schema Information

@@ -13,19 +13,19 @@ require 'rails_helper'
 
 RSpec.describe Announcement, type: :model do
   describe 'バリデーション' do
-    it '名字は必須であること' do
+    it 'タイトルは必須であること' do
       announcement = build(:announcement, title: nil)
       announcement.valid?
       expect(announcement.errors[:title]).to include('を入力してください')
     end
 
-    it '名前は必須であること' do
+    it '内容は必須であること' do
       announcement = build(:announcement, body: nil)
       announcement.valid?
       expect(announcement.errors[:body]).to include('を入力してください')
     end
 
-    it 'ユーザーネームは必須であること' do
+    it 'ステータスは必須であること' do
       announcement = build(:announcement, status: nil)
       announcement.valid?
       expect(announcement.errors[:status]).to include('を入力してください')
