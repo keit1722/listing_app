@@ -3,29 +3,29 @@ class Pvsuwimvsuoitmucvyku::Organizations::HotSpringsController < Pvsuwimvsuoitm
     @organization = Organization.find_by!(slug: params[:organization_slug])
     @hot_springs =
       @organization
-      .hot_springs
-      .page(params[:page])
-      .per(20)
-      .with_attached_main_image
+        .hot_springs
+        .page(params[:page])
+        .per(20)
+        .with_attached_main_image
   end
 
   def show
     @hot_spring =
       Organization
-      .find_by!(slug: params[:organization_slug])
-      .hot_springs
-      .with_attached_images
-      .find_by!(slug: params[:slug])
+        .find_by!(slug: params[:organization_slug])
+        .hot_springs
+        .with_attached_images
+        .find_by!(slug: params[:slug])
     render layout: 'mypage_maps'
   end
 
   def edit
     @hot_spring =
       Organization
-      .find_by!(slug: params[:organization_slug])
-      .hot_springs
-      .with_attached_images
-      .find_by!(slug: params[:slug])
+        .find_by!(slug: params[:organization_slug])
+        .hot_springs
+        .with_attached_images
+        .find_by!(slug: params[:slug])
     @hot_spring_update_form = HotSpringUpdateForm.new(@hot_spring)
     @districts = District.all
     render layout: 'mypage_maps'
@@ -34,10 +34,10 @@ class Pvsuwimvsuoitmucvyku::Organizations::HotSpringsController < Pvsuwimvsuoitm
   def update
     @hot_spring =
       Organization
-      .find_by!(slug: params[:organization_slug])
-      .hot_springs
-      .with_attached_images
-      .find_by!(slug: params[:slug])
+        .find_by!(slug: params[:organization_slug])
+        .hot_springs
+        .with_attached_images
+        .find_by!(slug: params[:slug])
     @hot_spring_update_form =
       HotSpringUpdateForm.new(@hot_spring, hot_spring_params)
     @districts = District.all
@@ -58,7 +58,15 @@ class Pvsuwimvsuoitmucvyku::Organizations::HotSpringsController < Pvsuwimvsuoitm
       .require(:hot_spring_update_form)
       .permit(
         :district_id,
-        opening_hours_attributes: [:start_time_hour, :start_time_minute, :end_time_hour, :end_time_minute, :closed, :day],
+        reservation_link_attributes: [:link],
+        opening_hours_attributes: %i[
+          start_time_hour
+          start_time_minute
+          end_time_hour
+          end_time_minute
+          closed
+          day
+        ],
         hot_spring_attributes: [
           :name,
           :lat,
@@ -66,8 +74,8 @@ class Pvsuwimvsuoitmucvyku::Organizations::HotSpringsController < Pvsuwimvsuoitm
           :description,
           :address,
           :main_image,
-          { images: [] }
-        ]
+          { images: [] },
+        ],
       )
   end
 end

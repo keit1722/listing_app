@@ -1,7 +1,11 @@
 class ShopUpdateForm
   include ActiveModel::Model
 
-  attr_accessor :shop, :opening_hours, :district_id, :shop_category_ids
+  attr_accessor :shop,
+                :opening_hours,
+                :district_id,
+                :shop_category_ids,
+                :reservation_link
 
   validates :district_id, presence: true
   validates :shop_category_ids, presence: true
@@ -11,6 +15,7 @@ class ShopUpdateForm
 
     self.district_id = @shop.district_ids
     self.shop_category_ids = @shop.shop_category_ids
+    self.reservation_link = @shop.reservation_link
     self.opening_hours = @shop.opening_hours.early
 
     super params
@@ -26,6 +31,10 @@ class ShopUpdateForm
     end
   end
 
+  def reservation_link_attributes=(attributes)
+    reservation_link.assign_attributes(attributes)
+  end
+
   def update
     build_associationss
 
@@ -33,6 +42,7 @@ class ShopUpdateForm
 
     ActiveRecord::Base.transaction do
       shop.save!
+      reservation_link.save!
       opening_hours.each(&:save!)
     end
   rescue ActiveRecord::RecordInvalid
@@ -48,6 +58,10 @@ class ShopUpdateForm
 
   def valid?
     super
-    [@shop.valid?, opening_hours.map(&:valid?).all?].all?
+    [
+      @shop.valid?,
+      reservation_link.valid?,
+      opening_hours.map(&:valid?).all?,
+    ].all?
   end
 end

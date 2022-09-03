@@ -1,7 +1,7 @@
 class HotSpringUpdateForm
   include ActiveModel::Model
 
-  attr_accessor :hot_spring, :opening_hours, :district_id
+  attr_accessor :hot_spring, :opening_hours, :district_id, :reservation_link
 
   validates :district_id, presence: true
 
@@ -9,6 +9,7 @@ class HotSpringUpdateForm
     @hot_spring = hot_spring
 
     self.district_id = @hot_spring.district_ids
+    self.reservation_link = @hot_spring.reservation_link
     self.opening_hours = @hot_spring.opening_hours.early
 
     super params
@@ -24,6 +25,10 @@ class HotSpringUpdateForm
     end
   end
 
+  def reservation_link_attributes=(attributes)
+    reservation_link.assign_attributes(attributes)
+  end
+
   def update
     build_associationss
 
@@ -31,6 +36,7 @@ class HotSpringUpdateForm
 
     ActiveRecord::Base.transaction do
       hot_spring.save!
+      reservation_link.save!
       opening_hours.each(&:save!)
     end
   rescue ActiveRecord::RecordInvalid
@@ -45,6 +51,10 @@ class HotSpringUpdateForm
 
   def valid?
     super
-    [@hot_spring.valid?, opening_hours.map(&:valid?).all?].all?
+    [
+      @hot_spring.valid?,
+      reservation_link.valid?,
+      opening_hours.map(&:valid?).all?,
+    ].all?
   end
 end
