@@ -8,6 +8,7 @@ class Shop < ApplicationRecord
   include Postable
   has_many :shop_category_mappings, dependent: :destroy
   has_many :shop_categories, through: :shop_category_mappings
+  has_one :reservation_link, as: :reservation_linkable, dependent: :destroy
   has_many :opening_hours, as: :opening_hourable, dependent: :destroy
   has_one :page_show, as: :page_showable, dependent: :destroy
 

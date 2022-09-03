@@ -7,6 +7,7 @@ class Hotel < ApplicationRecord
   include Bookmarkable
   include Postable
   has_one :reservation_link, as: :reservation_linkable, dependent: :destroy
+  has_many :opening_hours, as: :opening_hourable, dependent: :destroy
   has_one :page_show, as: :page_showable, dependent: :destroy
 
   has_one_attached :main_image
