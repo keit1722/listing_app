@@ -246,7 +246,7 @@ ActiveRecord::Schema.define(version: 2022_07_01_083140) do
   create_table "reservation_links", force: :cascade do |t|
     t.bigint "reservation_linkable_id"
     t.string "reservation_linkable_type"
-    t.string "link", null: false
+    t.string "link"
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "created_at", precision: 6, null: false
     t.index ["reservation_linkable_type", "reservation_linkable_id"], name: "index_polymorphic_reservation_link_mappings_on_id_and_type"
