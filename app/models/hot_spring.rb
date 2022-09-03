@@ -1,3 +1,53 @@
+class HotSpring < ApplicationRecord
+  include ActiveModel::Validations
+
+  belongs_to :organization
+
+  include Districtable
+  include Bookmarkable
+  include Postable
+  has_many :opening_hours, as: :opening_hourable, dependent: :destroy
+
+  has_one_attached :main_image
+  has_many_attached :images
+
+  validates :name, length: { maximum: 100 }, uniqueness: true, presence: true
+  validates :address, length: { maximum: 100 }, presence: true
+  validates_with CoordinateValidator
+  validates :slug,
+            length: {
+              maximum: 100
+            },
+            uniqueness: true,
+            presence: true,
+            format: {
+              with: /\A[a-z0-9\-]+\z/
+            }
+  validates :description, length: { maximum: 10_000 }, presence: true
+  validates :main_image, attached: true, content_type: [:png, :jpg, :jpeg]
+  validates :images, limit: { max: 4 }, content_type: [:png, :jpg, :jpeg]
+
+  scope :search_with_district,
+        lambda { |district_ids|
+          joins(:districts).where(districts: { id: district_ids })
+        }
+
+  scope :keyword_contain,
+        lambda { |keyword|
+          where(
+            [
+              'description LIKE(?) OR Hot_springs.name LIKE(?)',
+              "%#{keyword}%",
+              "%#{keyword}%"
+            ]
+          )
+        }
+
+  def to_param
+    slug
+  end
+end
+
 # == Schema Information
 #
 # Table name: hot_springs
@@ -23,55 +73,3 @@
 #
 #  fk_rails_...  (organization_id => organizations.id)
 #
-class HotSpring < ApplicationRecord
-  include ActiveModel::Validations
-
-  belongs_to :organization
-
-  include Districtable
-  include Bookmarkable
-  include Postable
-  has_many :opening_hours, as: :opening_hourable, dependent: :destroy
-
-  has_many_attached :images
-
-  validates :name, length: { maximum: 100 }, uniqueness: true, presence: true
-  validates :address, length: { maximum: 100 }, presence: true
-  validates_with CoordinateValidator
-  validates :slug,
-            length: {
-              maximum: 100
-            },
-            uniqueness: true,
-            presence: true,
-            format: {
-              with: /\A[a-z0-9\-]+\z/
-            }
-  validates :description, length: { maximum: 10_000 }, presence: true
-  validates :images,
-            attached: true,
-            limit: {
-              max: 5
-            },
-            content_type: [:png, :jpg, :jpeg]
-
-  scope :search_with_district,
-        lambda { |district_ids|
-          joins(:districts).where(districts: { id: district_ids })
-        }
-
-  scope :keyword_contain,
-        lambda { |keyword|
-          where(
-            [
-              'description LIKE(?) OR Hot_springs.name LIKE(?)',
-              "%#{keyword}%",
-              "%#{keyword}%"
-            ]
-          )
-        }
-
-  def to_param
-    slug
-  end
-end

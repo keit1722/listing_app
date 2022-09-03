@@ -1,0 +1,79 @@
+<div id="titlebar">
+  <div class="row">
+    <div class="col-md-12">
+      <h2><i class="sl sl-icon-doc"></i> 申請内容</h2>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+
+  <!-- Profile -->
+  <div class="col-md-12">
+    <div class="dashboard-list-box margin-top-0">
+      <div class="dashboard-list-box-static">
+        <!-- table -->
+        <table class="basic-table">
+          <tbody>
+
+            <tr>
+              <td data-label="項目"><%= OrganizationRegistration.human_attribute_name("organization_name") %></td>
+              <td data-label="内容"><%= @organization_registration.organization_name %></td>
+            </tr>
+            <tr>
+              <td data-label="項目"><%= OrganizationRegistration.human_attribute_name("organization_address") %></td>
+              <td data-label="内容"><%= @organization_registration.organization_address %></td>
+            </tr>
+            <tr>
+              <td data-label="項目"><%= OrganizationRegistration.human_attribute_name("organization_phone") %></td>
+              <td data-label="内容"><%= @organization_registration.organization_phone %></td>
+            </tr>
+            <tr>
+              <td data-label="項目"><%= OrganizationRegistration.human_attribute_name("business_detail") %></td>
+              <td data-label="内容"><%= @organization_registration.business_detail %></td>
+            </tr>
+            <tr>
+              <td data-label="項目">申請者 <%= User.human_attribute_name("username") %></td>
+              <td data-label="内容"><%= @organization_registration.user.username %></td>
+            </tr>
+            <tr>
+              <td data-label="項目">申請者 <%= User.human_attribute_name("full_name") %></td>
+              <td data-label="内容"><%= @organization_registration.user.decorate.full_name %></td>
+            </tr>
+            <tr>
+              <td data-label="項目">申請者 <%= User.human_attribute_name("email") %></td>
+              <td data-label="内容"><%= @organization_registration.user.email %></td>
+            </tr>
+            <tr>
+              <td data-label="項目">申請状況</td>
+              <td data-label="内容">
+                <% if @organization_registration.organization_registration_status.nil? %>
+                  承認待ち
+                <% else %>
+                  <%= @organization_registration.organization_registration_status.status_i18n %>
+                <% end %>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+
+    <div class="margin-top-40 display-flex-space-between">
+      <%= link_to pvsuwimvsuoitmucvyku_organization_registrations_path, class: "button border margin-bottom-20 overflow-visible" do %>
+        <i class="sl sl-icon-arrow-left-circle"></i> 戻る
+      <% end %>
+
+      <% if @organization_registration.organization_registration_status.nil? %>
+        <div class="child-display-inline">
+          <%= button_to pvsuwimvsuoitmucvyku_organization_registration_organization_registration_statuses_path(@organization_registration, status: :accepted), class: "button button-accepted", data: { confirm: "一度承認すると元には戻せません。よろしいですか？" } do %>
+            <i class="sl sl-icon-check"></i> 承認
+          <% end %>
+          <%= button_to pvsuwimvsuoitmucvyku_organization_registration_organization_registration_statuses_path(@organization_registration, status: :rejected), class: "button button-rejected", data: { confirm: "一度否認すると元には戻せません。よろしいですか？" } do %>
+            <i class="sl sl-icon-close"></i> 否認
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>

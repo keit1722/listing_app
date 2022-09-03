@@ -1,3 +1,14 @@
+FactoryBot.define do
+  factory :organization_registration do
+    organization_name { Faker::Company.unique.name }
+    organization_address { Faker::Address.full_address }
+    organization_phone { Faker::PhoneNumber.phone_number.delete('-') }
+    business_detail do
+      Faker::Lorem.paragraph_by_chars(number: 200, supplemental: false)
+    end
+  end
+end
+
 # == Schema Information
 #
 # Table name: organization_registrations
@@ -20,13 +31,3 @@
 #
 #  fk_rails_...  (user_id => users.id)
 #
-FactoryBot.define do
-  factory :organization_registration do
-    organization_name { Faker::Company.unique.name }
-    organization_address { Faker::Address.full_address }
-    organization_phone { Faker::PhoneNumber.phone_number.delete('-') }
-    business_detail do
-      Faker::Lorem.paragraph_by_chars(number: 200, supplemental: false)
-    end
-  end
-end

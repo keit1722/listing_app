@@ -1,3 +1,10 @@
+class RestaurantCategoryMapping < ApplicationRecord
+  belongs_to :restaurant
+  belongs_to :restaurant_category
+
+  validates :restaurant_id, uniqueness: { scope: :restaurant_category_id }
+end
+
 # == Schema Information
 #
 # Table name: restaurant_category_mappings
@@ -19,9 +26,3 @@
 #  fk_rails_...  (restaurant_category_id => restaurant_categories.id)
 #  fk_rails_...  (restaurant_id => restaurants.id)
 #
-class RestaurantCategoryMapping < ApplicationRecord
-  belongs_to :restaurant
-  belongs_to :restaurant_category
-
-  validates :restaurant_id, uniqueness: { scope: :restaurant_category_id }
-end

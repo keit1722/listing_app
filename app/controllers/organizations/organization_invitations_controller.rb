@@ -1,13 +1,9 @@
 class Organizations::OrganizationInvitationsController < Organizations::BaseController
   def index
+    @organization =
+      current_user.organizations.find_by!(slug: params[:organization_slug])
     @organization_invitations =
-      current_user
-      .organizations
-      .find_by!(slug: params[:organization_slug])
-      .organization_invitations
-      .page(params[:page])
-      .per(20)
-      .ordered
+      @organization.organization_invitations.page(params[:page]).per(20).ordered
   end
 
   def new

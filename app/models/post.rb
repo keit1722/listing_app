@@ -1,20 +1,3 @@
-# == Schema Information
-#
-# Table name: posts
-#
-#  id            :bigint           not null, primary key
-#  body          :text             not null
-#  postable_type :string
-#  status        :integer          default("published"), not null
-#  title         :string           not null
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#  postable_id   :bigint
-#
-# Indexes
-#
-#  index_posts_on_postable_type_and_postable_id  (postable_type,postable_id)
-#
 class Post < ApplicationRecord
   belongs_to :postable, polymorphic: true
   has_many :notices, as: :noticeable, dependent: :destroy
@@ -67,3 +50,21 @@ class Post < ApplicationRecord
     end
   end
 end
+
+# == Schema Information
+#
+# Table name: posts
+#
+#  id            :bigint           not null, primary key
+#  body          :text             not null
+#  postable_type :string
+#  status        :integer          default("published"), not null
+#  title         :string           not null
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  postable_id   :bigint
+#
+# Indexes
+#
+#  index_posts_on_postable_type_and_postable_id  (postable_type,postable_id)
+#

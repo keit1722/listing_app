@@ -1,15 +1,13 @@
 class Organizations::SkiAreasController < Organizations::BaseController
-  before_action :set_districts, only: [:new, :create, :edit, :update]
-
   def index
+    @organization =
+      current_user.organizations.find_by!(slug: params[:organization_slug])
     @ski_areas =
-      current_user
-      .organizations
-      .find_by!(slug: params[:organization_slug])
+      @organization
       .ski_areas
       .page(params[:page])
       .per(20)
-      .with_attached_images
+      .with_attached_main_image
   end
 
   def show
@@ -27,6 +25,7 @@ class Organizations::SkiAreasController < Organizations::BaseController
     organization =
       current_user.organizations.find_by(slug: params[:organization_slug])
     @ski_area_create_form = SkiAreaCreateForm.new(organization)
+    @districts = District.all
     render layout: 'mypage_maps'
   end
 
@@ -35,6 +34,7 @@ class Organizations::SkiAreasController < Organizations::BaseController
       current_user.organizations.find_by(slug: params[:organization_slug])
     @ski_area_create_form =
       SkiAreaCreateForm.new(organization, ski_area_create_params)
+    @districts = District.all
 
     if @ski_area_create_form.save
       redirect_to organization_ski_areas_path, success: '作成しました'
@@ -53,6 +53,7 @@ class Organizations::SkiAreasController < Organizations::BaseController
       .with_attached_images
       .find_by!(slug: params[:slug])
     @ski_area_update_form = SkiAreaUpdateForm.new(@ski_area)
+    @districts = District.all
     render layout: 'mypage_maps'
   end
 
@@ -66,6 +67,7 @@ class Organizations::SkiAreasController < Organizations::BaseController
       .find_by!(slug: params[:slug])
     @ski_area_update_form =
       SkiAreaUpdateForm.new(@ski_area, ski_area_update_params)
+    @districts = District.all
 
     if @ski_area_update_form.update
       redirect_to organization_ski_area_path, success: '情報を更新しました'
@@ -102,6 +104,7 @@ class Organizations::SkiAreasController < Organizations::BaseController
           :slug,
           :description,
           :address,
+          :main_image,
           { images: [] }
         ]
       )
@@ -119,6 +122,7 @@ class Organizations::SkiAreasController < Organizations::BaseController
           :lng,
           :description,
           :address,
+          :main_image,
           { images: [] }
         ]
       )

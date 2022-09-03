@@ -1,13 +1,24 @@
-<div id="titlebar">
+<div id="titlebar" class="margin-bottom-20">
   <div class="row">
     <div class="col-md-12">
-      <%= render 'shared/breadcrumbs_mypage', { icon_name: "list", page_name: "投稿一覧" } %>
+      <h2><i class="sl sl-icon-list"></i> 投稿一覧</h2>
     </div>
   </div>
 </div>
 
-<div class="row">
+<div class="margin-bottom-20 display-flex-space-between">
+  <%= link_to send(postable_show_path, postable.organization, postable), class: "button border" do %>
+    <i class="sl sl-icon-arrow-left-circle"></i> 戻る
+  <% end %>
 
+  <% if !new_path.nil? %>
+      <%= link_to send(new_path), class: "button border" do %>
+        <i class="sl sl-icon-plus"></i> 新規作成
+      <% end %>
+  <% end %>
+</div>
+
+<div class="row">
   <!-- Listings -->
   <div class="col-lg-12 col-md-12">
 

@@ -1,14 +1,14 @@
 <div id="titlebar">
   <div class="row">
     <div class="col-md-12">
-      <%= render 'shared/breadcrumbs_mypage', { icon_name: "plus", page_name: "宿泊施設情報編集" } %>
+      <h2><i class="sl sl-icon-pencil"></i> 宿泊施設情報編集</h2>
     </div>
   </div>
 </div>
 
 <div class="row">
   <div class="col-lg-12">
-    <%= form_with model: hotel_update_form, url: send(update_path), method: :patch do |f| %>
+    <%= form_with model: hotel_update_form, url: send(path), method: :patch do |f| %>
       <div id="add-listing">
         <%= render 'shared/error_messages_multiple', models: [f.object, f.object.hotel, f.object.reservation_link] %>
 
@@ -31,7 +31,7 @@
             </div>
             <!-- Row / End -->
 
-            <% if current_page?(edit_admin_organization_hotel_path(hotel.organization, hotel)) %>
+            <% if current_page?(edit_pvsuwimvsuoitmucvyku_organization_hotel_path(hotel.organization, hotel)) %>
               <!-- Row -->
               <div class="row with-forms margin-bottom-20">
                 <!-- Slug -->
@@ -89,26 +89,62 @@
 
             <!-- Row -->
             <div class="row with-forms margin-bottom-20">
-              <!-- Description -->
+              <!-- Images -->
               <div class="col-md-12">
-                <h5><%= ff.label :images %></h5>
-                <%= ff.label :images, class: "uploader-conteiner" do %>
-                  <div class="uploader-inner">
-                    <i class="sl sl-icon-plus"></i>ここをクリックして画像をアップロードしてください
+                <h5><%= ff.label :main_image %></h5>
+                <p>メインとして利用される画像を1枚だけ選択してください。</p>
+                <div class="images-preview display-flex-end">
+                  <div class="change-photo-btn position-static">
+                    <div class="photoUpload">
+                        <span><i class="fa fa-upload"></i> アップロードする画像を選択</span>
+                        <%= ff.file_field :main_image, class: "upload", onchange: "previewImage(this, 'main-preview')" %>
+                    </div>
                   </div>
-                  <%= ff.file_field :images, multiple: true, class: "dropzone dz-clickable", onchange: "previewImage(this)" %>
-                <% end %>
+                </div>
               </div>
             </div>
             <!-- Row / End -->
 
             <!-- Row -->
-            <div class="row with-forms">
+            <div class="row with-forms margin-bottom-40">
               <!-- Images preview -->
               <div class="col-md-12">
-                <div id="preview">
-                  <% hotel.images.each do |image| %>
-                    <%= image_tag image.variant(resize: '300x200').processed %>
+                <div id="main-preview" class="images-preview">
+                  <% if hotel.main_image.attached? %>
+                    <%= image_tag hotel.main_image.variant(resize: '600x400').processed, class: "image-preview" %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+            <!-- Row / End -->
+
+            <!-- Row -->
+            <div class="row with-forms margin-bottom-20">
+              <!-- Images -->
+              <div class="col-md-12">
+                <h5><%= ff.label :images %></h5>
+                <p>メイン画像以外に画像を4枚まで表示できます。ページの見栄えを良くするためにここでは2枚以上の画像選択をおすすめします。</p>
+                <div class="images-preview display-flex-end">
+                  <div class="change-photo-btn position-static">
+                    <div class="photoUpload">
+                      <span><i class="fa fa-upload"></i> アップロードする画像を選択</span>
+                      <%= ff.file_field :images, multiple: true, class: "upload", onchange: "previewImage(this, 'preview')" %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Row / End -->
+
+            <!-- Row -->
+            <div class="row with-forms margin-bottom-40">
+              <!-- Images preview -->
+              <div class="col-md-12">
+                <div id="preview" class="images-preview">
+                  <% if hotel.images.attached? %>
+                    <% hotel.images.each do |image| %>
+                      <%= image_tag image.variant(resize: '600x400').processed, class: "image-preview" %>
+                    <% end %>
                   <% end %>
                 </div>
               </div>
@@ -145,7 +181,13 @@
         <% end %>
         <!-- Section / End -->
 
-        <%= f.submit "更新する", class: "button margin-top-40" %>
+        <div class="margin-top-40">
+          <%= link_to send(path), class: "button border overflow-visible" do %>
+            <i class="sl sl-icon-arrow-left-circle"></i> 戻る
+          <% end %>
+
+          <%= f.submit '更新する', class: "button right-side" %>
+        </div>
       </div>
     <% end %>
   </div>

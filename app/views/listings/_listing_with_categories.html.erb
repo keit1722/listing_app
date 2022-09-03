@@ -4,8 +4,8 @@
 
       <!-- Image -->
       <div class="listing-item-image">
-        <% if listing.images.attached? %>
-         <%= image_tag listing.images.first, class: "listing-image" %>
+        <% if listing.main_image.attached? %>
+         <%= image_tag listing.main_image, class: "listing-image" %>
         <% end %>
         <span class="tag listing-category"><%= listing.decorate.arranged_categories %></span>
       </div>

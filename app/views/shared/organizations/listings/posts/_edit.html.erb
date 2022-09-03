@@ -1,14 +1,14 @@
 <div id="titlebar">
   <div class="row">
     <div class="col-md-12">
-      <%= render 'shared/breadcrumbs_mypage', { icon_name: "doc", page_name: "投稿内容編集" } %>
+      <h2><i class="sl sl-icon-pencil"></i> 投稿内容編集</h2>
     </div>
   </div>
 </div>
 
 <div class="row">
   <div class="col-lg-12">
-    <%= form_with model: post, url: send(update_path, post.postable.organization, post.postable, post) do |f| %>
+    <%= form_with model: post, url: send(path) do |f| %>
         <div id="add-listing">
           <%= render 'shared/error_messages', model: f.object %>
           <!-- Section -->
@@ -39,12 +39,14 @@
               <!-- Images -->
               <div class="col-md-12">
                 <h5><%= f.label :image %></h5>
-                <%= f.label :image, class: "uploader-conteiner" do %>
-                  <div class="uploader-inner">
-                    <i class="sl sl-icon-plus"></i>ここをクリックして画像をアッsプロードしてください
+                <div class="images-preview display-flex-end">
+                  <div class="change-photo-btn position-static">
+                    <div class="photoUpload">
+                      <span><i class="fa fa-upload"></i> アップロードする画像を選択</span>
+                      <%= f.file_field :image, class: "upload", onchange: "previewImage(this)" %>
+                    </div>
                   </div>
-                  <%= f.file_field :image, class: "dropzone dz-clickable", onchange: "previewImage(this)" %>
-                <% end %>
+                </div>
               </div>
             </div>
             <!-- Row / End -->
@@ -53,9 +55,9 @@
               <div class="row with-forms margin-bottom-20">
                 <!-- Images preview -->
                 <div class="col-md-12">
-                  <div id="preview">
+                  <div id="preview" class="images-preview">
                     <% if post.image.attached? %>
-                      <%= image_tag post.image.variant(resize: '300x200').processed %>
+                      <%= image_tag post.image.variant(resize: '600x400').processed, class: "image-preview" %>
                     <% end %>
                   </div>
                 </div>
@@ -78,8 +80,13 @@
           </div>
           <!-- Section / End -->
 
-          <%= f.submit nil, class: "button margin-top-40" %>
+        <div class="margin-top-40">
+          <%= link_to send(path), class: "button border overflow-visible" do %>
+            <i class="sl sl-icon-arrow-left-circle"></i> 戻る
+          <% end %>
 
+          <%= f.submit nil, class: "button right-side" %>
         </div>
+      </div>
     <% end %>
   </div>

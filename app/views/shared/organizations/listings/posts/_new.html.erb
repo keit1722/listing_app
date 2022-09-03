@@ -1,7 +1,7 @@
 <div id="titlebar">
   <div class="row">
     <div class="col-md-12">
-      <%= render 'shared/breadcrumbs_mypage', { icon_name: "plus", page_name: "新規投稿作成" } %>
+      <h2><i class="sl sl-icon-plus"></i> 新規投稿作成</h2>
     </div>
   </div>
 </div>
@@ -37,16 +37,18 @@
 
             <!-- Row -->
             <div class="row with-forms margin-bottom-20">
-              <!-- Images -->
+              <!-- Image -->
               <div class="col-md-12">
                 <h5><%= f.label :image %></h5>
                 <p>画像を一枚添付することができます。</p>
-                <%= f.label :image, class: "uploader-conteiner" do %>
-                  <div class="uploader-inner">
-                    <i class="sl sl-icon-plus"></i>ここをクリックして画像をアップロードしてください
+                <div class="images-preview display-flex-end">
+                  <div class="change-photo-btn position-static">
+                    <div class="photoUpload">
+                        <span><i class="fa fa-upload"></i> アップロードする画像を選択</span>
+                        <%= f.file_field :image, class: "upload", onchange: "previewImage(this)" %>
+                    </div>
                   </div>
-                  <%= f.file_field :image, class: "dropzone dz-clickable", onchange: "previewImage(this)" %>
-                <% end %>
+                </div>
               </div>
             </div>
             <!-- Row / End -->
@@ -55,11 +57,7 @@
               <div class="row with-forms margin-bottom-20">
                 <!-- Images preview -->
                 <div class="col-md-12">
-                  <div id="preview">
-                    <% if post.image.attached? %>
-                      <%= image_tag post.image.variant(resize: '300x200').processed %>
-                    <% end %>
-                  </div>
+                  <div id="preview" class="images-preview"></div>
                 </div>
               </div>
             <!-- Row / End -->
@@ -79,8 +77,13 @@
           </div>
           <!-- Section / End -->
 
-        <%= f.submit nil, class: "button margin-top-40" %>
+        <div class="margin-top-40">
+          <%= link_to [post.postable.organization, post.postable, post], class: "button border overflow-visible" do %>
+            <i class="sl sl-icon-arrow-left-circle"></i> 戻る
+          <% end %>
 
+          <%= f.submit nil, class: "button right-side" %>
+        </div>
       </div>
     <% end %>
   </div>

@@ -1,17 +1,3 @@
-# == Schema Information
-#
-# Table name: districts
-#
-#  id         :bigint           not null, primary key
-#  location   :integer          not null
-#  name       :string           not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#
-# Indexes
-#
-#  index_districts_on_name  (name) UNIQUE
-#
 class District < ApplicationRecord
   has_many :district_mappings, dependent: :destroy
   has_many :restaurants,
@@ -48,3 +34,18 @@ class District < ApplicationRecord
 
   enum location: { hakuba: 1, otari: 2 }
 end
+
+# == Schema Information
+#
+# Table name: districts
+#
+#  id         :bigint           not null, primary key
+#  location   :integer          not null
+#  name       :string           not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+# Indexes
+#
+#  index_districts_on_name  (name) UNIQUE
+#

@@ -1,13 +1,18 @@
-<div id="titlebar">
+<div id="titlebar" class="margin-bottom-20">
   <div class="row">
     <div class="col-md-12">
-      <%= render 'shared/breadcrumbs_mypage', { icon_name: "doc", page_name: "アクティビティ詳細" } %>
+      <h2><i class="sl sl-icon-doc"></i> アクティビティ詳細</h2>
     </div>
   </div>
 </div>
 
-<div class="row">
+<div class="margin-bottom-20 display-flex-end">
+  <%= link_to send(post_index_path, activity.organization, activity), class: "button border" do %>
+    <i class="sl sl-icon-list"></i> 投稿一覧
+  <% end %>
+</div>
 
+<div class="row">
   <!-- Profile -->
   <div class="col-md-12">
     <div class="dashboard-list-box margin-top-0">
@@ -61,25 +66,34 @@
         <!-- Row / End -->
 
         <!-- Row -->
-        <% if activity.images.attached? %>
-          <div class="row with-forms margin-bottom-20">
+          <div class="row margin-bottom-20">
             <!-- Images preview -->
             <div class="col-md-12">
-              <div id="preview">
-                <% activity.images.each do |image| %>
-                  <%= image_tag image.variant(resize: '300x200').processed %>
+              <div id="preview" class="images-preview">
+                <%= image_tag activity.main_image.variant(resize: '600x400').processed, class: "image-preview" %>
+                <% if activity.images.attached? %>
+                  <% activity.images.each do |image| %>
+                    <%= image_tag image.variant(resize: '600x400').processed, class: "image-preview" %>
+                  <% end %>
                 <% end %>
               </div>
             </div>
           </div>
-        <% end %>
         <!-- Row / End -->
       </div>
     </div>
-    <%= link_to send(edit_path), class: "button margin-top-15" do %>
-      <i class="sl sl-icon-pencil"></i> 編集
-    <% end %>
-    <%= link_to send(destroy_path), method: :delete, data: { confirm: "削除すると復旧はできません。よろしいですか？" }, class: "border button" do %>
-      <i class="sl sl-icon-trash"></i> 削除
-    <% end %>
+ 
+    <div class="margin-top-40">
+      <%= link_to send(index_path), class: "button border margin-bottom-20 overflow-visible" do %>
+        <i class="sl sl-icon-arrow-left-circle"></i> 戻る
+      <% end %>
+
+      <%= link_to send(edit_path), class: "button overflow-visible" do %>
+        <i class="sl sl-icon-pencil"></i> 編集
+      <% end %>
+      
+      <%= link_to send(destroy_path), method: :delete, data: { confirm: "削除すると復旧はできません。よろしいですか？" }, class: "border button right-side width-auto overflow-visible" do %>
+        <i class="sl sl-icon-trash"></i> 削除
+      <% end %>
+    </div>
   </div>

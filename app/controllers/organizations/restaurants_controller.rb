@@ -1,16 +1,13 @@
 class Organizations::RestaurantsController < Organizations::BaseController
-  before_action :set_districts, only: [:new, :create, :edit, :update]
-  before_action :set_restaurant_categories, only: [:new, :create, :edit, :update]
-
   def index
+    @organization =
+      current_user.organizations.find_by!(slug: params[:organization_slug])
     @restaurants =
-      current_user
-      .organizations
-      .find_by!(slug: params[:organization_slug])
+      @organization
       .restaurants
       .page(params[:page])
       .per(20)
-      .with_attached_images
+      .with_attached_main_image
   end
 
   def show
@@ -28,6 +25,8 @@ class Organizations::RestaurantsController < Organizations::BaseController
     organization =
       current_user.organizations.find_by(slug: params[:organization_slug])
     @restaurant_create_form = RestaurantCreateForm.new(organization)
+    @districts = District.all
+    @restaurant_categories = RestaurantCategory.all
     render layout: 'mypage_maps'
   end
 
@@ -36,6 +35,8 @@ class Organizations::RestaurantsController < Organizations::BaseController
       current_user.organizations.find_by(slug: params[:organization_slug])
     @restaurant_create_form =
       RestaurantCreateForm.new(organization, restaurant_create_params)
+    @districts = District.all
+    @restaurant_categories = RestaurantCategory.all
 
     if @restaurant_create_form.save
       redirect_to organization_restaurants_path, success: '作成しました'
@@ -54,6 +55,8 @@ class Organizations::RestaurantsController < Organizations::BaseController
       .with_attached_images
       .find_by!(slug: params[:slug])
     @restaurant_update_form = RestaurantUpdateForm.new(@restaurant)
+    @districts = District.all
+    @restaurant_categories = RestaurantCategory.all
     render layout: 'mypage_maps'
   end
 
@@ -67,6 +70,8 @@ class Organizations::RestaurantsController < Organizations::BaseController
       .find_by!(slug: params[:slug])
     @restaurant_update_form =
       RestaurantUpdateForm.new(@restaurant, restaurant_update_params)
+    @districts = District.all
+    @restaurant_categories = RestaurantCategory.all
 
     if @restaurant_update_form.update
       redirect_to organization_restaurant_path, success: '情報を更新しました'
@@ -105,6 +110,7 @@ class Organizations::RestaurantsController < Organizations::BaseController
           :slug,
           :description,
           :address,
+          :main_image,
           { images: [] }
         ]
       )
@@ -124,12 +130,9 @@ class Organizations::RestaurantsController < Organizations::BaseController
           :lng,
           :description,
           :address,
+          :main_image,
           { images: [] }
         ]
       )
-  end
-
-  def set_restaurant_categories
-    @restaurant_categories = RestaurantCategory.all
   end
 end

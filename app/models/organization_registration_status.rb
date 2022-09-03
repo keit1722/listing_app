@@ -1,3 +1,11 @@
+class OrganizationRegistrationStatus < ApplicationRecord
+  belongs_to :organization_registration
+
+  validates :status, presence: true
+
+  enum status: { accepted: 1, rejected: 2, completed: 3 }
+end
+
 # == Schema Information
 #
 # Table name: organization_registration_statuses
@@ -16,10 +24,3 @@
 #
 #  fk_rails_...  (organization_registration_id => organization_registrations.id)
 #
-class OrganizationRegistrationStatus < ApplicationRecord
-  belongs_to :organization_registration
-
-  validates :status, presence: true
-
-  enum status: { accepted: 1, rejected: 2, completed: 3 }
-end

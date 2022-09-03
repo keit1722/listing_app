@@ -1,15 +1,13 @@
 class Organizations::ActivitiesController < Organizations::BaseController
-  before_action :set_districts, only: [:new, :create, :edit, :update]
-
   def index
+    @organization =
+      current_user.organizations.find_by!(slug: params[:organization_slug])
     @activities =
-      current_user
-      .organizations
-      .find_by!(slug: params[:organization_slug])
+      @organization
       .activities
       .page(params[:page])
       .per(20)
-      .with_attached_images
+      .with_attached_main_image
   end
 
   def show
@@ -27,6 +25,7 @@ class Organizations::ActivitiesController < Organizations::BaseController
     organization =
       current_user.organizations.find_by(slug: params[:organization_slug])
     @activity_create_form = ActivityCreateForm.new(organization)
+    @districts = District.all
     render layout: 'mypage_maps'
   end
 
@@ -35,6 +34,7 @@ class Organizations::ActivitiesController < Organizations::BaseController
       current_user.organizations.find_by(slug: params[:organization_slug])
     @activity_create_form =
       ActivityCreateForm.new(organization, activity_create_params)
+    @districts = District.all
 
     if @activity_create_form.save
       redirect_to organization_activities_path, success: '作成しました'
@@ -53,6 +53,7 @@ class Organizations::ActivitiesController < Organizations::BaseController
       .with_attached_images
       .find_by!(slug: params[:slug])
     @activity_update_form = ActivityUpdateForm.new(@activity)
+    @districts = District.all
     render layout: 'mypage_maps'
   end
 
@@ -66,6 +67,7 @@ class Organizations::ActivitiesController < Organizations::BaseController
       .find_by!(slug: params[:slug])
     @activity_update_form =
       ActivityUpdateForm.new(@activity, activity_update_params)
+    @districts = District.all
 
     if @activity_update_form.update
       redirect_to organization_activity_path, success: '情報を更新しました'
@@ -103,6 +105,7 @@ class Organizations::ActivitiesController < Organizations::BaseController
           :slug,
           :description,
           :address,
+          :main_image,
           { images: [] }
         ]
       )
@@ -121,6 +124,7 @@ class Organizations::ActivitiesController < Organizations::BaseController
           :lng,
           :description,
           :address,
+          :main_image,
           { images: [] }
         ]
       )

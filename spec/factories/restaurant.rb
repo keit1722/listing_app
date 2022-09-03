@@ -6,8 +6,8 @@ FactoryBot.define do
     lng { Faker::Number.between(from: -180, to: 180) }
     name { Faker::Company.unique.name }
     slug { Faker::Alphanumeric.unique.alphanumeric(number: 10) }
-    images do
-      [Rack::Test::UploadedFile.new('spec/fixtures/fixture.png', 'image/png')]
+    main_image do
+      Rack::Test::UploadedFile.new('spec/fixtures/fixture.png', 'image/png')
     end
 
     organization
