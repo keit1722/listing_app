@@ -5,7 +5,8 @@ class ReservationLink < ApplicationRecord
             length: {
               maximum: 100,
             },
-            format: /\A#{URI::DEFAULT_PARSER.make_regexp(%w[http https])}\z/
+            format: /\A#{URI::DEFAULT_PARSER.make_regexp(%w[http https])}\z/,
+            allow_blank: true
 end
 
 # == Schema Information
