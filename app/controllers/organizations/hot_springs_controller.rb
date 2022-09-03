@@ -1,4 +1,6 @@
 class Organizations::HotSpringsController < Organizations::BaseController
+  layout 'mypage_maps'
+
   def index
     @organization =
       current_user.organizations.find_by!(slug: params[:organization_slug])
@@ -8,6 +10,7 @@ class Organizations::HotSpringsController < Organizations::BaseController
         .page(params[:page])
         .per(20)
         .with_attached_main_image
+    render layout: 'mypage'
   end
 
   def show
@@ -18,7 +21,6 @@ class Organizations::HotSpringsController < Organizations::BaseController
         .hot_springs
         .with_attached_images
         .find_by!(slug: params[:slug])
-    render layout: 'mypage_maps'
   end
 
   def new
@@ -26,7 +28,6 @@ class Organizations::HotSpringsController < Organizations::BaseController
       current_user.organizations.find_by(slug: params[:organization_slug])
     @hot_spring_create_form = HotSpringCreateForm.new(organization)
     @districts = District.all
-    render layout: 'mypage_maps'
   end
 
   def create
@@ -54,7 +55,6 @@ class Organizations::HotSpringsController < Organizations::BaseController
         .find_by!(slug: params[:slug])
     @hot_spring_update_form = HotSpringUpdateForm.new(@hot_spring)
     @districts = District.all
-    render layout: 'mypage_maps'
   end
 
   def update

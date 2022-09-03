@@ -1,9 +1,12 @@
 class Organizations::ShopsController < Organizations::BaseController
+  layout 'mypage_maps'
+
   def index
     @organization =
       current_user.organizations.find_by!(slug: params[:organization_slug])
     @shops =
       @organization.shops.page(params[:page]).per(20).with_attached_main_image
+    render layout: 'mypage'
   end
 
   def show
@@ -14,7 +17,6 @@ class Organizations::ShopsController < Organizations::BaseController
         .shops
         .with_attached_images
         .find_by!(slug: params[:slug])
-    render layout: 'mypage_maps'
   end
 
   def new
@@ -23,7 +25,6 @@ class Organizations::ShopsController < Organizations::BaseController
     @shop_create_form = ShopCreateForm.new(organization)
     @districts = District.all
     @shop_categories = ShopCategory.all
-    render layout: 'mypage_maps'
   end
 
   def create
@@ -52,7 +53,6 @@ class Organizations::ShopsController < Organizations::BaseController
     @shop_update_form = ShopUpdateForm.new(@shop)
     @districts = District.all
     @shop_categories = ShopCategory.all
-    render layout: 'mypage_maps'
   end
 
   def update

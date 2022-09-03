@@ -1,4 +1,6 @@
 class Pvsuwimvsuoitmucvyku::Organizations::PhotoSpotsController < Pvsuwimvsuoitmucvyku::BaseController
+  layout 'mypage_maps'
+
   def index
     @organization = Organization.find_by!(slug: params[:organization_slug])
     @photo_spots =
@@ -7,6 +9,7 @@ class Pvsuwimvsuoitmucvyku::Organizations::PhotoSpotsController < Pvsuwimvsuoitm
         .page(params[:page])
         .per(20)
         .with_attached_main_image
+    render layout: 'mypage'
   end
 
   def show
@@ -16,7 +19,6 @@ class Pvsuwimvsuoitmucvyku::Organizations::PhotoSpotsController < Pvsuwimvsuoitm
         .photo_spots
         .with_attached_images
         .find_by!(slug: params[:slug])
-    render layout: 'mypage_maps'
   end
 
   def edit
@@ -28,7 +30,6 @@ class Pvsuwimvsuoitmucvyku::Organizations::PhotoSpotsController < Pvsuwimvsuoitm
         .find_by!(slug: params[:slug])
     @photo_spot_update_form = PhotoSpotUpdateForm.new(@photo_spot)
     @districts = District.all
-    render layout: 'mypage_maps'
   end
 
   def update

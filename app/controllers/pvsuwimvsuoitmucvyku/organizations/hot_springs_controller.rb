@@ -1,4 +1,6 @@
 class Pvsuwimvsuoitmucvyku::Organizations::HotSpringsController < Pvsuwimvsuoitmucvyku::BaseController
+  layout 'mypage_maps'
+
   def index
     @organization = Organization.find_by!(slug: params[:organization_slug])
     @hot_springs =
@@ -7,6 +9,7 @@ class Pvsuwimvsuoitmucvyku::Organizations::HotSpringsController < Pvsuwimvsuoitm
         .page(params[:page])
         .per(20)
         .with_attached_main_image
+    render layout: 'mypage'
   end
 
   def show
@@ -16,7 +19,6 @@ class Pvsuwimvsuoitmucvyku::Organizations::HotSpringsController < Pvsuwimvsuoitm
         .hot_springs
         .with_attached_images
         .find_by!(slug: params[:slug])
-    render layout: 'mypage_maps'
   end
 
   def edit
@@ -28,7 +30,6 @@ class Pvsuwimvsuoitmucvyku::Organizations::HotSpringsController < Pvsuwimvsuoitm
         .find_by!(slug: params[:slug])
     @hot_spring_update_form = HotSpringUpdateForm.new(@hot_spring)
     @districts = District.all
-    render layout: 'mypage_maps'
   end
 
   def update

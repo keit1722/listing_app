@@ -1,4 +1,6 @@
 class Organizations::PhotoSpotsController < Organizations::BaseController
+  layout 'mypage_maps'
+
   def index
     @organization =
       current_user.organizations.find_by!(slug: params[:organization_slug])
@@ -8,6 +10,7 @@ class Organizations::PhotoSpotsController < Organizations::BaseController
         .page(params[:page])
         .per(20)
         .with_attached_main_image
+    render layout: 'mypage'
   end
 
   def show
@@ -18,7 +21,6 @@ class Organizations::PhotoSpotsController < Organizations::BaseController
         .photo_spots
         .with_attached_images
         .find_by!(slug: params[:slug])
-    render layout: 'mypage_maps'
   end
 
   def new
@@ -26,7 +28,6 @@ class Organizations::PhotoSpotsController < Organizations::BaseController
       current_user.organizations.find_by(slug: params[:organization_slug])
     @photo_spot_create_form = PhotoSpotCreateForm.new(organization)
     @districts = District.all
-    render layout: 'mypage_maps'
   end
 
   def create
@@ -54,7 +55,6 @@ class Organizations::PhotoSpotsController < Organizations::BaseController
         .find_by!(slug: params[:slug])
     @photo_spot_update_form = PhotoSpotUpdateForm.new(@photo_spot)
     @districts = District.all
-    render layout: 'mypage_maps'
   end
 
   def update

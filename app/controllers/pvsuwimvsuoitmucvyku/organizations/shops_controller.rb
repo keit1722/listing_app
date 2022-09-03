@@ -1,8 +1,11 @@
 class Pvsuwimvsuoitmucvyku::Organizations::ShopsController < Pvsuwimvsuoitmucvyku::BaseController
+  layout 'mypage_maps'
+
   def index
     @organization = Organization.find_by!(slug: params[:organization_slug])
     @shops =
       @organization.shops.page(params[:page]).per(20).with_attached_main_image
+    render layout: 'mypage'
   end
 
   def show
@@ -12,7 +15,6 @@ class Pvsuwimvsuoitmucvyku::Organizations::ShopsController < Pvsuwimvsuoitmucvyk
         .shops
         .with_attached_images
         .find_by!(slug: params[:slug])
-    render layout: 'mypage_maps'
   end
 
   def edit
@@ -25,7 +27,6 @@ class Pvsuwimvsuoitmucvyku::Organizations::ShopsController < Pvsuwimvsuoitmucvyk
     @shop_update_form = ShopUpdateForm.new(@shop)
     @districts = District.all
     @shop_categories = ShopCategory.all
-    render layout: 'mypage_maps'
   end
 
   def update
