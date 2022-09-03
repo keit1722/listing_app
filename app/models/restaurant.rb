@@ -10,6 +10,7 @@ class Restaurant < ApplicationRecord
   has_many :restaurant_categories, through: :restaurant_category_mappings
   has_one :reservation_link, as: :reservation_linkable, dependent: :destroy
   has_many :opening_hours, as: :opening_hourable, dependent: :destroy
+  has_one :page_show, as: :page_showable, dependent: :destroy
 
   has_one_attached :main_image
   has_many_attached :images
@@ -19,23 +20,23 @@ class Restaurant < ApplicationRecord
   validates_with CoordinateValidator
   validates :slug,
             length: {
-              maximum: 100
+              maximum: 100,
             },
             uniqueness: true,
             presence: true,
             format: {
-              with: /\A[a-z0-9\-]+\z/
+              with: /\A[a-z0-9\-]+\z/,
             }
   validates :description, length: { maximum: 10_000 }, presence: true
-  validates :main_image, attached: true, content_type: [:png, :jpg, :jpeg]
-  validates :images, limit: { max: 4 }, content_type: [:png, :jpg, :jpeg]
+  validates :main_image, attached: true, content_type: %i[png jpg jpeg]
+  validates :images, limit: { max: 4 }, content_type: %i[png jpg jpeg]
 
   scope :search_with_category,
         lambda { |category_ids|
           joins(:restaurant_categories).where(
             restaurant_categories: {
-              id: category_ids
-            }
+              id: category_ids,
+            },
           )
         }
 
@@ -50,8 +51,8 @@ class Restaurant < ApplicationRecord
             [
               'description LIKE(?) OR Restaurants.name LIKE(?)',
               "%#{keyword}%",
-              "%#{keyword}%"
-            ]
+              "%#{keyword}%",
+            ],
           )
         }
 

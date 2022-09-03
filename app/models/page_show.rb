@@ -1,4 +1,5 @@
 class PageShow < ApplicationRecord
+  belongs_to :page_showable, polymorphic: true
 end
 
 # == Schema Information
