@@ -16,11 +16,11 @@ class Pvsuwimvsuoitmucvyku::Organizations::PostsController < Pvsuwimvsuoitmucvyk
     @post = @postable.posts.find(params[:id])
     if @post.update(post_params)
       redirect_to [
-                    :pvsuwimvsuoitmucvyku,
-                    @postable.organization,
-                    @postable,
-                    @post,
-                  ],
+        :pvsuwimvsuoitmucvyku,
+        @postable.organization,
+        @postable,
+        @post
+      ],
                   success: '内容を更新しました'
     else
       flash.now[:danger] = '内容を更新できませんでした'
@@ -32,11 +32,11 @@ class Pvsuwimvsuoitmucvyku::Organizations::PostsController < Pvsuwimvsuoitmucvyk
     @post = @postable.posts.find(params[:id])
     @post.destroy!
     redirect_to [
-                  :pvsuwimvsuoitmucvyku,
-                  @postable.organization,
-                  @postable,
-                  :posts,
-                ],
+      :pvsuwimvsuoitmucvyku,
+      @postable.organization,
+      @postable,
+      :posts
+    ],
                 success: '削除しました'
   end
 

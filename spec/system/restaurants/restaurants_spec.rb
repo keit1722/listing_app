@@ -10,7 +10,7 @@ RSpec.describe '飲食店', type: :system do
       :restaurant,
       organization: organization_a,
       restaurant_categories: [restaurant_category],
-      districts: [district],
+      districts: [district]
     )
   end
   let!(:user_b) { create(:business_user, :activated) }
@@ -20,7 +20,7 @@ RSpec.describe '飲食店', type: :system do
       :restaurant,
       organization: organization_b,
       restaurant_categories: [restaurant_category],
-      districts: [district],
+      districts: [district]
     )
   end
   let(:district_c) { create(:district_meitetsu) }
@@ -50,9 +50,9 @@ RSpec.describe '飲食店', type: :system do
     it 'マイページに自分の飲食店は表示される' do
       visit organization_restaurant_path(organization_a, restaurant_a)
       expect(page).to have_current_path organization_restaurant_path(
-                          organization_a,
-                          restaurant_a,
-                        )
+        organization_a,
+        restaurant_a
+      )
     end
 
     it 'マイページには自分の飲食店以外は表示されない' do
@@ -69,8 +69,8 @@ RSpec.describe '飲食店', type: :system do
       it '登録フォームに進めること' do
         visit new_organization_restaurant_path(organization_a)
         expect(page).to have_current_path new_organization_restaurant_path(
-                            organization_a,
-                          )
+          organization_a
+        )
       end
     end
 
@@ -89,7 +89,7 @@ RSpec.describe '飲食店', type: :system do
         find('#restaurant_create_form_district_id_chosen').click
         find(
           '#restaurant_create_form_district_id_chosen .active-result',
-          text: '内山',
+          text: '内山'
         ).click
         fill_in '住所', with: 'サンプル飲食店住所'
         fill_in 'スラッグ', with: 'sample-restaurant'
@@ -102,7 +102,7 @@ RSpec.describe '飲食店', type: :system do
         find('#restaurant_create_form_restaurant_category_ids_chosen').click
         find(
           '#restaurant_create_form_restaurant_category_ids_chosen .active-result',
-          text: '和食',
+          text: '和食'
         ).click
         fill_in 'restaurant_create_form_reservation_link_attributes_link',
                 with: 'https://google.com'
@@ -122,9 +122,9 @@ RSpec.describe '飲食店', type: :system do
       it '編集フォームに進めること' do
         visit edit_organization_restaurant_path(organization_a, restaurant_a)
         expect(page).to have_current_path edit_organization_restaurant_path(
-                            organization_a,
-                            restaurant_a,
-                          )
+          organization_a,
+          restaurant_a
+        )
       end
     end
 
@@ -145,7 +145,7 @@ RSpec.describe '飲食店', type: :system do
         find('#restaurant_update_form_district_id_chosen').click
         find(
           '#restaurant_update_form_district_id_chosen .active-result',
-          text: '佐野',
+          text: '佐野'
         ).click
         fill_in '住所', with: '更新サンプル飲食店住所'
         fill_in '紹介',
@@ -157,7 +157,7 @@ RSpec.describe '飲食店', type: :system do
         find('#restaurant_update_form_restaurant_category_ids_chosen').click
         find(
           '#restaurant_update_form_restaurant_category_ids_chosen .active-result',
-          text: '中華',
+          text: '中華'
         ).click
         fill_in 'restaurant_update_form_reservation_link_attributes_link',
                 with: 'https://yahoo.com'
@@ -168,7 +168,7 @@ RSpec.describe '飲食店', type: :system do
         expect(page).to have_content '佐野'
         expect(page).to have_content '更新サンプル飲食店住所'
         expect(
-          page,
+          page
         ).to have_content 'Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
         expect(page).to have_content '中華'
         expect(page).to have_content 'https://yahoo.com'
@@ -182,7 +182,7 @@ RSpec.describe '飲食店', type: :system do
         :restaurant,
         organization: organization_a,
         restaurant_categories: [restaurant_category_b],
-        districts: [district_c],
+        districts: [district_c]
       )
     end
 
@@ -225,7 +225,7 @@ RSpec.describe '飲食店', type: :system do
         :restaurant,
         organization: organization_a,
         restaurant_categories: [restaurant_category_b],
-        districts: [district_c],
+        districts: [district_c]
       )
     end
 
@@ -330,9 +330,9 @@ RSpec.describe '飲食店', type: :system do
     context '自分の所属組織のものであれば' do
       it '投稿の新規作成ページが表示されること' do
         visit new_organization_restaurant_post_path(
-                organization_a,
-                restaurant_a,
-              )
+          organization_a,
+          restaurant_a
+        )
         expect(page).to have_content '新規投稿作成'
       end
     end
@@ -341,9 +341,9 @@ RSpec.describe '飲食店', type: :system do
       it '投稿の新規作成ページが表示されなずにエラーになる' do
         Capybara.raise_server_errors = false
         visit new_organization_restaurant_post_path(
-                organization_b,
-                restaurant_b,
-              )
+          organization_b,
+          restaurant_b
+        )
         assert_text 'ActiveRecord::RecordNotFound'
       end
     end
@@ -351,9 +351,9 @@ RSpec.describe '飲食店', type: :system do
     context '入力情報が正しい場合' do
       it '新規登録できること' do
         visit new_organization_restaurant_post_path(
-                organization_a,
-                restaurant_a,
-              )
+          organization_a,
+          restaurant_a
+        )
         fill_in 'タイトル', with: 'サンプル投稿名'
         fill_in '内容', with: 'サンプル投稿内容'
         page.execute_script "$('input#post_image').css('opacity','1')"
@@ -377,10 +377,10 @@ RSpec.describe '飲食店', type: :system do
     context '自分の所属組織のものであれば' do
       it '投稿詳細ページが表示される' do
         visit organization_restaurant_post_path(
-                organization_a,
-                restaurant_a,
-                post_a,
-              )
+          organization_a,
+          restaurant_a,
+          post_a
+        )
         expect(page).to have_content post_a.title
         expect(page).to have_content post_a.body
       end
@@ -390,10 +390,10 @@ RSpec.describe '飲食店', type: :system do
       it '投稿詳細ページが表示されずにエラーになる' do
         Capybara.raise_server_errors = false
         visit organization_restaurant_post_path(
-                organization_b,
-                restaurant_b,
-                post_b,
-              )
+          organization_b,
+          restaurant_b,
+          post_b
+        )
         assert_text 'ActiveRecord::RecordNotFound'
       end
     end
@@ -406,10 +406,10 @@ RSpec.describe '飲食店', type: :system do
       it '情報更新できること' do
         business_login_as user_a
         visit edit_organization_restaurant_post_path(
-                organization_a,
-                restaurant_a,
-                post_a,
-              )
+          organization_a,
+          restaurant_a,
+          post_a
+        )
         fill_in 'タイトル', with: '更新サンプル投稿名'
         fill_in '内容', with: '更新サンプル投稿内容'
         page.execute_script "$('input#post_image').css('opacity','1')"
@@ -442,10 +442,10 @@ RSpec.describe '飲食店', type: :system do
     it '投稿を削除できること' do
       business_login_as user_a
       visit organization_restaurant_post_path(
-              organization_a,
-              restaurant_a,
-              post_a,
-            )
+        organization_a,
+        restaurant_a,
+        post_a
+      )
 
       expect do
         find('a.button', text: '削除').click

@@ -50,10 +50,10 @@ RSpec.describe User, type: :model do
 
       it do
         expect(described_class.not_admin).not_to eq [
-             user_admin,
-             user_business,
-             user_general,
-           ]
+          user_admin,
+          user_business,
+          user_general
+        ]
       end
 
       it do

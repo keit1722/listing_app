@@ -17,16 +17,16 @@ class Activity < ApplicationRecord
   validates_with CoordinateValidator
   validates :slug,
             length: {
-              maximum: 100,
+              maximum: 100
             },
             uniqueness: true,
             presence: true,
             format: {
-              with: /\A[a-z0-9\-]+\z/,
+              with: /\A[a-z0-9\-]+\z/
             }
   validates :description, length: { maximum: 10_000 }, presence: true
-  validates :main_image, attached: true, content_type: %i[png jpg jpeg]
-  validates :images, limit: { max: 4 }, content_type: %i[png jpg jpeg]
+  validates :main_image, attached: true, content_type: [:png, :jpg, :jpeg]
+  validates :images, limit: { max: 4 }, content_type: [:png, :jpg, :jpeg]
 
   scope :search_with_district,
         lambda { |district_ids|
@@ -39,8 +39,8 @@ class Activity < ApplicationRecord
             [
               'description LIKE(?) OR Activities.name LIKE(?)',
               "%#{keyword}%",
-              "%#{keyword}%",
-            ],
+              "%#{keyword}%"
+            ]
           )
         }
 

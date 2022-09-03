@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Hotel, type: :model do
+RSpec.describe described_class, type: :model do
   describe 'バリデーション' do
     it '名称は必須であること' do
       hotel = build(:hotel, name: nil)
@@ -25,7 +25,7 @@ RSpec.describe Hotel, type: :model do
       hotel = build(:hotel, lat: nil)
       hotel.valid?
       expect(hotel.errors.full_messages).to include(
-        '地図にピンを設置してください',
+        '地図にピンを設置してください'
       )
     end
 
@@ -33,7 +33,7 @@ RSpec.describe Hotel, type: :model do
       hotel = build(:hotel, lng: nil)
       hotel.valid?
       expect(hotel.errors.full_messages).to include(
-        '地図にピンを設置してください',
+        '地図にピンを設置してください'
       )
     end
 
@@ -99,14 +99,15 @@ RSpec.describe Hotel, type: :model do
       let(:hotel_sano) { create(:hotel, districts: [sano]) }
 
       it do
-        expect(Hotel.search_with_district([uchiyama.id, sano.id])).to eq [
-             hotel_uchiyama,
-             hotel_sano,
-           ]
+        expect(
+          described_class.search_with_district([uchiyama.id, sano.id])
+        ).to eq [hotel_uchiyama, hotel_sano]
       end
 
       it do
-        expect(Hotel.search_with_district([uchiyama.id])).to eq [hotel_uchiyama]
+        expect(described_class.search_with_district([uchiyama.id])).to eq [
+          hotel_uchiyama
+        ]
       end
     end
 
@@ -118,23 +119,25 @@ RSpec.describe Hotel, type: :model do
         create(
           :hotel,
           name: 'ホテルサンプル_B',
-          description: 'Aランクの宿泊施設です',
+          description: 'Aランクの宿泊施設です'
         )
       end
 
-      it { expect(Hotel.keyword_contain('送迎')).to eq [hotel_a] }
+      it { expect(described_class.keyword_contain('送迎')).to eq [hotel_a] }
 
-      it { expect(Hotel.keyword_contain('宿泊')).to eq [hotel_b] }
+      it { expect(described_class.keyword_contain('宿泊')).to eq [hotel_b] }
 
       it do
-        expect(Hotel.keyword_contain('A').order('id')).to eq [hotel_a, hotel_b]
+        expect(described_class.keyword_contain('A').order('id')).to eq [
+          hotel_a,
+          hotel_b
+        ]
       end
 
       it do
-        expect(Hotel.keyword_contain('ホテルサンプル').order('id')).to eq [
-             hotel_a,
-             hotel_b,
-           ]
+        expect(
+          described_class.keyword_contain('ホテルサンプル').order('id')
+        ).to eq [hotel_a, hotel_b]
       end
     end
   end

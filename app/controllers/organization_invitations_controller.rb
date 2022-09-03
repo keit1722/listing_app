@@ -2,7 +2,7 @@ class OrganizationInvitationsController < ApplicationController
   layout 'mypage'
 
   include OrganizationInvitationVariable
-  before_action :check_valid_action, only: %i[show]
+  before_action :check_valid_action, only: [:show]
 
   def show; end
 end

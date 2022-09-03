@@ -42,7 +42,7 @@ class Pvsuwimvsuoitmucvyku::UsersController < Pvsuwimvsuoitmucvyku::BaseControll
         :password_confirmation,
         :username,
         :public_uid,
-        :role,
+        :role
       )
   end
 end

@@ -15,8 +15,8 @@ RSpec.describe '組織登録申請結果', type: :system do
     context '未回答の申請の場合' do
       it '承認・否認の回答ができる' do
         visit pvsuwimvsuoitmucvyku_organization_registration_path(
-                organization_registration,
-              )
+          organization_registration
+        )
         expect(page).to have_selector '.button-accepted'
         expect(page).to have_selector '.button-rejected'
       end
@@ -25,16 +25,16 @@ RSpec.describe '組織登録申請結果', type: :system do
     context '回答済みの申請の場合' do
       before do
         visit pvsuwimvsuoitmucvyku_organization_registration_path(
-                organization_registration,
-              )
+          organization_registration
+        )
         click_on '承認'
         page.accept_confirm
       end
 
       it '承認・否認ができない' do
         visit pvsuwimvsuoitmucvyku_organization_registration_path(
-                organization_registration,
-              )
+          organization_registration
+        )
         expect(page).not_to have_selector '.button-accepted'
         expect(page).not_to have_selector '.button-rejected'
       end
@@ -44,29 +44,29 @@ RSpec.describe '組織登録申請結果', type: :system do
   describe '登録申請の回答' do
     it '承認することができる' do
       visit pvsuwimvsuoitmucvyku_organization_registration_path(
-              organization_registration,
-            )
+        organization_registration
+      )
       expect do
         find('.button-accepted').click
         page.accept_confirm
         expect(page).to have_content '申請の回答を作成しました'
       end.to change(OrganizationRegistrationStatus, :count).by(1)
       expect(
-        organization_registration.organization_registration_status.status,
+        organization_registration.organization_registration_status.status
       ).to eq 'accepted'
     end
 
     it '否認することができる' do
       visit pvsuwimvsuoitmucvyku_organization_registration_path(
-              organization_registration,
-            )
+        organization_registration
+      )
       expect do
         find('.button-rejected').click
         page.accept_confirm
         expect(page).to have_content '申請の回答を作成しました'
       end.to change(OrganizationRegistrationStatus, :count).by(1)
       expect(
-        organization_registration.organization_registration_status.status,
+        organization_registration.organization_registration_status.status
       ).to eq 'rejected'
     end
   end

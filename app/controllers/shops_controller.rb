@@ -2,10 +2,10 @@ class ShopsController < ApplicationController
   def index
     @shops =
       Shop
-        .with_attached_main_image
-        .includes(:shop_categories)
-        .page(params[:page])
-        .per(20)
+      .with_attached_main_image
+      .includes(:shop_categories)
+      .page(params[:page])
+      .per(20)
     @categories = ShopCategory.all
     @shops_count = Shop.count
     render layout: 'listings_index'

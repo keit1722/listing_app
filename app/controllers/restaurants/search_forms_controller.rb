@@ -2,12 +2,12 @@ class Restaurants::SearchFormsController < ApplicationController
   def search
     @restaurants =
       SearchWithCategoriesForm
-        .new(search_restaurants_params)
-        .search
-        .with_attached_main_image
-        .includes(:restaurant_categories, :restaurant_category_mappings)
-        .page(params[:page])
-        .per(20)
+      .new(search_restaurants_params)
+      .search
+      .with_attached_main_image
+      .includes(:restaurant_categories, :restaurant_category_mappings)
+      .page(params[:page])
+      .per(20)
     @categories = RestaurantCategory.all
     @restaurants_count =
       SearchWithCategoriesForm.new(search_restaurants_params).search.count

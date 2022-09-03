@@ -12,7 +12,7 @@ class PagesController < ApplicationController
       resolve_n1(category, listings)
         .with_attached_main_image
         .page(params[:page])
-        .per(20),
+        .per(20)
     )
     instance_variable_set("@#{category}_count", listings.count)
 

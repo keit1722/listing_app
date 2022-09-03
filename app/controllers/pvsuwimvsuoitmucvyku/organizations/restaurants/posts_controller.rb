@@ -6,8 +6,8 @@ class Pvsuwimvsuoitmucvyku::Organizations::Restaurants::PostsController < Pvsuwi
   def set_postable
     @postable =
       Organization
-        .find_by!(slug: params[:organization_slug])
-        .restaurants
-        .find_by!(slug: params[:restaurant_slug])
+      .find_by!(slug: params[:organization_slug])
+      .restaurants
+      .find_by!(slug: params[:restaurant_slug])
   end
 end

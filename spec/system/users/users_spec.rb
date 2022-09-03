@@ -14,7 +14,7 @@ RSpec.describe 'ユーザー', type: :system do
         visit pvsuwimvsuoitmucvyku_users_path
         expect(page).to have_content general_user.decorate.full_name
         expect(page).to have_content pvsuwimvsuoitmucvyku_user.decorate
-                       .full_name
+                                                              .full_name
       end
     end
 

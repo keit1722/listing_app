@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Shop, type: :model do
+RSpec.describe described_class, type: :model do
   describe 'バリデーション' do
     it '名称は必須であること' do
       shop = build(:shop, name: nil)
@@ -25,7 +25,7 @@ RSpec.describe Shop, type: :model do
       shop = build(:shop, lat: nil)
       shop.valid?
       expect(shop.errors.full_messages).to include(
-        '地図にピンを設置してください',
+        '地図にピンを設置してください'
       )
     end
 
@@ -33,7 +33,7 @@ RSpec.describe Shop, type: :model do
       shop = build(:shop, lng: nil)
       shop.valid?
       expect(shop.errors.full_messages).to include(
-        '地図にピンを設置してください',
+        '地図にピンを設置してください'
       )
     end
 
@@ -99,14 +99,15 @@ RSpec.describe Shop, type: :model do
       let(:shop_sports) { create(:shop, shop_categories: [sports]) }
 
       it do
-        expect(Shop.search_with_category([souvenir.id, sports.id])).to eq [
-             shop_souvenir,
-             shop_sports,
-           ]
+        expect(
+          described_class.search_with_category([souvenir.id, sports.id])
+        ).to eq [shop_souvenir, shop_sports]
       end
 
       it do
-        expect(Shop.search_with_category([souvenir.id])).to eq [shop_souvenir]
+        expect(described_class.search_with_category([souvenir.id])).to eq [
+          shop_souvenir
+        ]
       end
     end
 
@@ -117,14 +118,15 @@ RSpec.describe Shop, type: :model do
       let(:shop_sano) { create(:shop, districts: [sano]) }
 
       it do
-        expect(Shop.search_with_district([uchiyama.id, sano.id])).to eq [
-             shop_uchiyama,
-             shop_sano,
-           ]
+        expect(
+          described_class.search_with_district([uchiyama.id, sano.id])
+        ).to eq [shop_uchiyama, shop_sano]
       end
 
       it do
-        expect(Shop.search_with_district([uchiyama.id])).to eq [shop_uchiyama]
+        expect(described_class.search_with_district([uchiyama.id])).to eq [
+          shop_uchiyama
+        ]
       end
     end
 
@@ -136,23 +138,25 @@ RSpec.describe Shop, type: :model do
         create(
           :shop,
           name: 'ショップサンプル_B',
-          description: 'Aランク食品を取り扱うスーパーです',
+          description: 'Aランク食品を取り扱うスーパーです'
         )
       end
 
-      it { expect(Shop.keyword_contain('コンビニ')).to eq [shop_a] }
+      it { expect(described_class.keyword_contain('コンビニ')).to eq [shop_a] }
 
-      it { expect(Shop.keyword_contain('スーパー')).to eq [shop_b] }
+      it { expect(described_class.keyword_contain('スーパー')).to eq [shop_b] }
 
       it do
-        expect(Shop.keyword_contain('A').order('id')).to eq [shop_a, shop_b]
+        expect(described_class.keyword_contain('A').order('id')).to eq [
+          shop_a,
+          shop_b
+        ]
       end
 
       it do
-        expect(Shop.keyword_contain('ショップサンプル').order('id')).to eq [
-             shop_a,
-             shop_b,
-           ]
+        expect(
+          described_class.keyword_contain('ショップサンプル').order('id')
+        ).to eq [shop_a, shop_b]
       end
     end
   end

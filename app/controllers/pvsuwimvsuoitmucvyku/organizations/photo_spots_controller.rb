@@ -3,29 +3,29 @@ class Pvsuwimvsuoitmucvyku::Organizations::PhotoSpotsController < Pvsuwimvsuoitm
     @organization = Organization.find_by!(slug: params[:organization_slug])
     @photo_spots =
       @organization
-        .photo_spots
-        .page(params[:page])
-        .per(20)
-        .with_attached_main_image
+      .photo_spots
+      .page(params[:page])
+      .per(20)
+      .with_attached_main_image
   end
 
   def show
     @photo_spot =
       Organization
-        .find_by!(slug: params[:organization_slug])
-        .photo_spots
-        .with_attached_images
-        .find_by!(slug: params[:slug])
+      .find_by!(slug: params[:organization_slug])
+      .photo_spots
+      .with_attached_images
+      .find_by!(slug: params[:slug])
     render layout: 'mypage_maps'
   end
 
   def edit
     @photo_spot =
       Organization
-        .find_by!(slug: params[:organization_slug])
-        .photo_spots
-        .with_attached_images
-        .find_by!(slug: params[:slug])
+      .find_by!(slug: params[:organization_slug])
+      .photo_spots
+      .with_attached_images
+      .find_by!(slug: params[:slug])
     @photo_spot_update_form = PhotoSpotUpdateForm.new(@photo_spot)
     @districts = District.all
     render layout: 'mypage_maps'
@@ -34,10 +34,10 @@ class Pvsuwimvsuoitmucvyku::Organizations::PhotoSpotsController < Pvsuwimvsuoitm
   def update
     @photo_spot =
       Organization
-        .find_by!(slug: params[:organization_slug])
-        .photo_spots
-        .with_attached_images
-        .find_by!(slug: params[:slug])
+      .find_by!(slug: params[:organization_slug])
+      .photo_spots
+      .with_attached_images
+      .find_by!(slug: params[:slug])
     @photo_spot_update_form =
       PhotoSpotUpdateForm.new(@photo_spot, photo_spot_params)
     @districts = District.all
@@ -65,8 +65,8 @@ class Pvsuwimvsuoitmucvyku::Organizations::PhotoSpotsController < Pvsuwimvsuoitm
           :description,
           :address,
           :main_image,
-          { images: [] },
-        ],
+          { images: [] }
+        ]
       )
   end
 end

@@ -8,20 +8,20 @@ class Pvsuwimvsuoitmucvyku::Organizations::HotelsController < Pvsuwimvsuoitmucvy
   def show
     @hotel =
       Organization
-        .find_by!(slug: params[:organization_slug])
-        .hotels
-        .with_attached_images
-        .find_by!(slug: params[:slug])
+      .find_by!(slug: params[:organization_slug])
+      .hotels
+      .with_attached_images
+      .find_by!(slug: params[:slug])
     render layout: 'mypage_maps'
   end
 
   def edit
     @hotel =
       Organization
-        .find_by!(slug: params[:organization_slug])
-        .hotels
-        .with_attached_images
-        .find_by!(slug: params[:slug])
+      .find_by!(slug: params[:organization_slug])
+      .hotels
+      .with_attached_images
+      .find_by!(slug: params[:slug])
     @hotel_update_form = HotelUpdateForm.new(@hotel)
     @districts = District.all
     render layout: 'mypage_maps'
@@ -30,10 +30,10 @@ class Pvsuwimvsuoitmucvyku::Organizations::HotelsController < Pvsuwimvsuoitmucvy
   def update
     @hotel =
       Organization
-        .find_by!(slug: params[:organization_slug])
-        .hotels
-        .with_attached_images
-        .find_by!(slug: params[:slug])
+      .find_by!(slug: params[:organization_slug])
+      .hotels
+      .with_attached_images
+      .find_by!(slug: params[:slug])
     @hotel_update_form = HotelUpdateForm.new(@hotel, hotel_params)
     @districts = District.all
 
@@ -54,14 +54,7 @@ class Pvsuwimvsuoitmucvyku::Organizations::HotelsController < Pvsuwimvsuoitmucvy
       .permit(
         :district_id,
         reservation_link_attributes: [:link],
-        opening_hours_attributes: %i[
-          start_time_hour
-          start_time_minute
-          end_time_hour
-          end_time_minute
-          closed
-          day
-        ],
+        opening_hours_attributes: [:start_time_hour, :start_time_minute, :end_time_hour, :end_time_minute, :closed, :day],
         hotel_attributes: [
           :name,
           :lat,
@@ -69,8 +62,8 @@ class Pvsuwimvsuoitmucvyku::Organizations::HotelsController < Pvsuwimvsuoitmucvy
           :description,
           :address,
           :main_image,
-          { images: [] },
-        ],
+          { images: [] }
+        ]
       )
   end
 end

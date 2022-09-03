@@ -2,12 +2,12 @@ class Shops::SearchFormsController < ApplicationController
   def search
     @shops =
       SearchWithCategoriesForm
-        .new(search_shops_params)
-        .search
-        .with_attached_main_image
-        .includes(:shop_categories, :shop_category_mappings)
-        .page(params[:page])
-        .per(20)
+      .new(search_shops_params)
+      .search
+      .with_attached_main_image
+      .includes(:shop_categories, :shop_category_mappings)
+      .page(params[:page])
+      .per(20)
     @categories = ShopCategory.all
     @shops_count =
       SearchWithCategoriesForm.new(search_shops_params).search.count

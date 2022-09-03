@@ -2,7 +2,7 @@ class OrganizationInvitations::ActionsController < ApplicationController
   layout 'mypage'
 
   include OrganizationInvitationVariable
-  before_action :check_valid_action, only: %i[accepted unaccepted]
+  before_action :check_valid_action, only: [:accepted, :unaccepted]
 
   def accepted
     @organization_invitation.accepted!

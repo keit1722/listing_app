@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Restaurant, type: :model do
+RSpec.describe described_class, type: :model do
   describe 'バリデーション' do
     it '名称は必須であること' do
       restaurant = build(:restaurant, name: nil)
@@ -25,7 +25,7 @@ RSpec.describe Restaurant, type: :model do
       restaurant = build(:restaurant, lat: nil)
       restaurant.valid?
       expect(restaurant.errors.full_messages).to include(
-        '地図にピンを設置してください',
+        '地図にピンを設置してください'
       )
     end
 
@@ -33,7 +33,7 @@ RSpec.describe Restaurant, type: :model do
       restaurant = build(:restaurant, lng: nil)
       restaurant.valid?
       expect(restaurant.errors.full_messages).to include(
-        '地図にピンを設置してください',
+        '地図にピンを設置してください'
       )
     end
 
@@ -104,14 +104,16 @@ RSpec.describe Restaurant, type: :model do
 
       it do
         expect(
-          Restaurant.search_with_category([japanese_food.id, chinese_food.id]),
+          described_class.search_with_category(
+            [japanese_food.id, chinese_food.id]
+          )
         ).to eq [restaurant_japanese, restaurant_chinese]
       end
 
       it do
-        expect(Restaurant.search_with_category([japanese_food.id])).to eq [
-             restaurant_japanese,
-           ]
+        expect(described_class.search_with_category([japanese_food.id])).to eq [
+          restaurant_japanese
+        ]
       end
     end
 
@@ -122,16 +124,15 @@ RSpec.describe Restaurant, type: :model do
       let(:restaurant_sano) { create(:restaurant, districts: [sano]) }
 
       it do
-        expect(Restaurant.search_with_district([uchiyama.id, sano.id])).to eq [
-             restaurant_uchiyama,
-             restaurant_sano,
-           ]
+        expect(
+          described_class.search_with_district([uchiyama.id, sano.id])
+        ).to eq [restaurant_uchiyama, restaurant_sano]
       end
 
       it do
-        expect(Restaurant.search_with_district([uchiyama.id])).to eq [
-             restaurant_uchiyama,
-           ]
+        expect(described_class.search_with_district([uchiyama.id])).to eq [
+          restaurant_uchiyama
+        ]
       end
     end
 
@@ -140,33 +141,36 @@ RSpec.describe Restaurant, type: :model do
         create(
           :restaurant,
           name: '飲食店サンプル_A',
-          description: 'フランス料理屋です',
+          description: 'フランス料理屋です'
         )
       end
       let!(:restaurant_b) do
         create(
           :restaurant,
           name: '飲食店サンプル_B',
-          description: 'Aランク牛を提供します',
+          description: 'Aランク牛を提供します'
         )
       end
 
-      it { expect(Restaurant.keyword_contain('フランス')).to eq [restaurant_a] }
-
-      it { expect(Restaurant.keyword_contain('提供')).to eq [restaurant_b] }
-
       it do
-        expect(Restaurant.keyword_contain('A').order('id')).to eq [
-             restaurant_a,
-             restaurant_b,
-           ]
+        expect(described_class.keyword_contain('フランス')).to eq [restaurant_a]
       end
 
       it do
-        expect(Restaurant.keyword_contain('飲食店サンプル').order('id')).to eq [
-             restaurant_a,
-             restaurant_b,
-           ]
+        expect(described_class.keyword_contain('提供')).to eq [restaurant_b]
+      end
+
+      it do
+        expect(described_class.keyword_contain('A').order('id')).to eq [
+          restaurant_a,
+          restaurant_b
+        ]
+      end
+
+      it do
+        expect(
+          described_class.keyword_contain('飲食店サンプル').order('id')
+        ).to eq [restaurant_a, restaurant_b]
       end
     end
   end

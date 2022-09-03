@@ -2,10 +2,10 @@ class Pvsuwimvsuoitmucvyku::OrganizationRegistrationsController < Pvsuwimvsuoitm
   def index
     @organization_registrations =
       OrganizationRegistration
-        .includes(:organization_registration_status)
-        .page(params[:page])
-        .per(20)
-        .ordered
+      .includes(:organization_registration_status)
+      .page(params[:page])
+      .per(20)
+      .ordered
   end
 
   def show

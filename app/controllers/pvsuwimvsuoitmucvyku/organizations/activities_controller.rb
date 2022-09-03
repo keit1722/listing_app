@@ -3,29 +3,29 @@ class Pvsuwimvsuoitmucvyku::Organizations::ActivitiesController < Pvsuwimvsuoitm
     @organization = Organization.find_by!(slug: params[:organization_slug])
     @activities =
       @organization
-        .activities
-        .page(params[:page])
-        .per(20)
-        .with_attached_main_image
+      .activities
+      .page(params[:page])
+      .per(20)
+      .with_attached_main_image
   end
 
   def show
     @activity =
       Organization
-        .find_by!(slug: params[:organization_slug])
-        .activities
-        .with_attached_images
-        .find_by!(slug: params[:slug])
+      .find_by!(slug: params[:organization_slug])
+      .activities
+      .with_attached_images
+      .find_by!(slug: params[:slug])
     render layout: 'mypage_maps'
   end
 
   def edit
     @activity =
       Organization
-        .find_by!(slug: params[:organization_slug])
-        .activities
-        .with_attached_images
-        .find_by!(slug: params[:slug])
+      .find_by!(slug: params[:organization_slug])
+      .activities
+      .with_attached_images
+      .find_by!(slug: params[:slug])
     @activity_update_form = ActivityUpdateForm.new(@activity)
     @districts = District.all
     render layout: 'mypage_maps'
@@ -34,10 +34,10 @@ class Pvsuwimvsuoitmucvyku::Organizations::ActivitiesController < Pvsuwimvsuoitm
   def update
     @activity =
       Organization
-        .find_by!(slug: params[:organization_slug])
-        .activities
-        .with_attached_images
-        .find_by!(slug: params[:slug])
+      .find_by!(slug: params[:organization_slug])
+      .activities
+      .with_attached_images
+      .find_by!(slug: params[:slug])
     @activity_update_form = ActivityUpdateForm.new(@activity, activity_params)
     @districts = District.all
 
@@ -58,14 +58,7 @@ class Pvsuwimvsuoitmucvyku::Organizations::ActivitiesController < Pvsuwimvsuoitm
       .permit(
         :district_id,
         reservation_link_attributes: [:link],
-        opening_hours_attributes: %i[
-          start_time_hour
-          start_time_minute
-          end_time_hour
-          end_time_minute
-          closed
-          day
-        ],
+        opening_hours_attributes: [:start_time_hour, :start_time_minute, :end_time_hour, :end_time_minute, :closed, :day],
         activity_attributes: [
           :name,
           :lat,
@@ -73,8 +66,8 @@ class Pvsuwimvsuoitmucvyku::Organizations::ActivitiesController < Pvsuwimvsuoitm
           :description,
           :address,
           :main_image,
-          { images: [] },
-        ],
+          { images: [] }
+        ]
       )
   end
 end

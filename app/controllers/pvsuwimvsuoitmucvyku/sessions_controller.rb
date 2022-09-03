@@ -1,8 +1,8 @@
 class Pvsuwimvsuoitmucvyku::SessionsController < Pvsuwimvsuoitmucvyku::BaseController
   layout 'application', only: :new
 
-  skip_before_action :only_admin, only: %i[new create]
-  before_action :require_logout, only: %i[new create]
+  skip_before_action :only_admin, only: [:new, :create]
+  before_action :require_logout, only: [:new, :create]
 
   def new; end
 

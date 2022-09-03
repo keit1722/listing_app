@@ -35,7 +35,7 @@ class Mypage::UsersController < Mypage::BaseController
         :password,
         :password_confirmation,
         :username,
-        :avatar,
+        :avatar
       )
   end
 end

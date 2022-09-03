@@ -17,7 +17,7 @@ RSpec.describe 'お知らせ', type: :system do
         pvsuwimvsuoitmucvyku_login_as user_admin
         visit new_pvsuwimvsuoitmucvyku_announcement_path
         expect(
-          page,
+          page
         ).to have_current_path new_pvsuwimvsuoitmucvyku_announcement_path
       end
     end
@@ -56,7 +56,7 @@ RSpec.describe 'お知らせ', type: :system do
         click_button '登録する'
 
         expect(
-          page,
+          page
         ).to have_current_path pvsuwimvsuoitmucvyku_announcements_path
         expect(page).to have_content '作成しました'
         expect(page).to have_content 'サンプルタイトル'
@@ -70,8 +70,8 @@ RSpec.describe 'お知らせ', type: :system do
     context '入力が正しい場合' do
       it 'お知らせが編集される' do
         visit edit_pvsuwimvsuoitmucvyku_announcement_path(
-                announcement_published,
-              )
+          announcement_published
+        )
         fill_in 'タイトル', with: 'サンプル編集後タイトル'
         fill_in '内容', with: 'サンプル編集後内容'
         find('#announcement_status_chosen').click
@@ -79,10 +79,10 @@ RSpec.describe 'お知らせ', type: :system do
         click_button '更新する'
 
         expect(
-          page,
+          page
         ).to have_current_path pvsuwimvsuoitmucvyku_announcement_path(
-                            announcement_published,
-                          )
+          announcement_published
+        )
         expect(page).to have_content '更新しました'
         expect(page).to have_content 'サンプル編集後タイトル'
       end
@@ -113,8 +113,8 @@ RSpec.describe 'お知らせ', type: :system do
       it '詳細ページが表示される' do
         visit announcement_path(announcement_published)
         expect(page).to have_current_path announcement_path(
-                            announcement_published,
-                          )
+          announcement_published
+        )
       end
     end
 
