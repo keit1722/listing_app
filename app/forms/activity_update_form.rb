@@ -1,7 +1,11 @@
 class ActivityUpdateForm
   include ActiveModel::Model
 
-  attr_accessor :activity, :opening_hours, :district_id, :reservation_link
+  attr_accessor :activity,
+                :district_id,
+                :reservation_link,
+                :opening_hours,
+                :page_show
 
   validates :district_id, presence: true
 
@@ -11,6 +15,7 @@ class ActivityUpdateForm
     self.district_id = @activity.district_ids
     self.reservation_link = @activity.reservation_link
     self.opening_hours = @activity.opening_hours.early
+    self.page_show = @activity.page_show
 
     super params
   end
@@ -29,6 +34,10 @@ class ActivityUpdateForm
     reservation_link.assign_attributes(attributes)
   end
 
+  def page_show_attributes=(attributes)
+    page_show.assign_attributes(attributes)
+  end
+
   def update
     build_associations
 
@@ -37,6 +46,7 @@ class ActivityUpdateForm
     ActiveRecord::Base.transaction do
       activity.save!
       reservation_link.save!
+      page_show.save!
       opening_hours.each(&:save!)
     end
   rescue ActiveRecord::RecordInvalid
@@ -54,7 +64,8 @@ class ActivityUpdateForm
     [
       @activity.valid?,
       reservation_link.valid?,
-      opening_hours.map(&:valid?).all?
+      page_show.valid?,
+      opening_hours.map(&:valid?).all?,
     ].all?
   end
 end

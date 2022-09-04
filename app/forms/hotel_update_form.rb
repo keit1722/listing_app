@@ -1,7 +1,11 @@
 class HotelUpdateForm
   include ActiveModel::Model
 
-  attr_accessor :hotel, :district_id, :reservation_link, :opening_hours
+  attr_accessor :hotel,
+                :district_id,
+                :reservation_link,
+                :opening_hours,
+                :page_show
 
   validates :district_id, presence: true
 
@@ -11,6 +15,7 @@ class HotelUpdateForm
     self.district_id = @hotel.district_ids
     self.reservation_link = @hotel.reservation_link
     self.opening_hours = @hotel.opening_hours.early
+    self.page_show = @hotel.page_show
 
     super params
   end
@@ -29,14 +34,19 @@ class HotelUpdateForm
     reservation_link.assign_attributes(attributes)
   end
 
+  def page_show_attributes=(attributes)
+    page_show.assign_attributes(attributes)
+  end
+
   def update
-    build_associationss
+    build_associations
 
     return false unless valid?
 
     ActiveRecord::Base.transaction do
       hotel.save!
       reservation_link.save!
+      page_show.save!
       opening_hours.each(&:save!)
     end
   rescue ActiveRecord::RecordInvalid
@@ -45,7 +55,7 @@ class HotelUpdateForm
 
   private
 
-  def build_associationss
+  def build_associations
     @hotel.district_ids = district_id.to_i unless district_id.empty?
   end
 
@@ -54,6 +64,7 @@ class HotelUpdateForm
     [
       @hotel.valid?,
       reservation_link.valid?,
+      page_show.valid?,
       opening_hours.map(&:valid?).all?,
     ].all?
   end
