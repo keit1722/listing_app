@@ -91,6 +91,7 @@ class Organizations::HotelsController < Organizations::BaseController
       .permit(
         :district_id,
         reservation_link_attributes: [:link],
+        page_show_attributes: %i[reservation_link opening_hours],
         opening_hours_attributes: %i[
           start_time_hour
           start_time_minute
@@ -118,6 +119,7 @@ class Organizations::HotelsController < Organizations::BaseController
       .permit(
         :district_id,
         reservation_link_attributes: [:link],
+        page_show_attributes: %i[reservation_link opening_hours],
         opening_hours_attributes: %i[
           start_time_hour
           start_time_minute
