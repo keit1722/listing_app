@@ -44,11 +44,21 @@
               <td data-label="内容"><%= shop.decorate.format_description %></td>
             </tr>
             <tr>
-              <td data-label="項目"><%= ReservationLink.human_attribute_name("link") %></td>
+              <td data-label="項目">
+                <%= ReservationLink.human_attribute_name("link") %>
+                <% if !shop.page_show.reservation_link? %>
+                  <strong>（非表示）<strong>
+                <% end %>
+              </td>
               <td data-label="内容"><%= link_to nil, shop.reservation_link.link %></td>
             </tr>
             <tr>
-              <td data-label="項目"><%= OpeningHour.model_name.human %></td>
+              <td data-label="項目">
+                <%= OpeningHour.model_name.human %>
+                <% if !shop.page_show.opening_hours? %>
+                  <strong>（非表示）<strong>
+                <% end %>
+              </td>
               <td data-label="内容">
                 <ul class="bg-transparent">
                   <%= render partial: "shared/organizations/listings/opening_hour", collection: shop.opening_hours.early %>
