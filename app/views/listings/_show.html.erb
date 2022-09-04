@@ -1,0 +1,75 @@
+  <!-- Slider -->
+  <div class="listing-slider mfp-gallery-container margin-bottom-0">
+    <%= link_to url_for(listing.main_image), class: "item mfp-gallery", data: { background_image: url_for(listing.main_image) } do %><% end %>
+    <% if listing.images.attached? %>
+      <%= render partial: "listings/image", collection: listing.images %>
+    <% end %>
+  </div>
+
+  <!-- Content -->
+  <div class="container">
+    <div class="row sticky-wrapper">
+      <div class="col-lg-8 col-md-8 padding-right-30">
+
+        <!-- Titlebar -->
+        <div id="titlebar" class="listing-titlebar">
+          <div class="listing-titlebar-title">
+            <h2>
+              <%= listing.name %> 
+            </h2>
+            <span>
+              <a href="#listing-location" class="listing-address">
+                <i class="fa fa-map-marker"></i>
+                <%= listing.address %>
+              </a>
+            </span>
+          </div>
+        </div>
+
+         <!-- Listing Nav -->
+        <div id="listing-nav" class="listing-nav-container">
+          <ul class="listing-nav">
+            <li><a href="#listing-overview" class="active">概要</a></li>
+            <li><a href="#listing-location">地図</a></li>
+            <% if three_posts.present? %>
+              <li><a href="#listing-reviews">投稿</a></li>
+            <% end %>
+          </ul>
+        </div>
+
+        <!-- Description -->
+        <%= render "listings/show_description", { listing: listing } %>
+
+        <!-- Location -->
+        <%= render "listings/show_location", { listing: listing } %>
+
+        <!-- Post -->
+        <% if three_posts.present? %>
+          <%= render "listings/show_post", { listing: listing, three_posts: three_posts } %>
+        <% end %>
+
+      </div>
+
+      <!-- Sidebar -->
+      <div class="col-lg-4 col-md-4 margin-top-75 sticky">
+
+        <!-- Opening Hours -->
+        <% if listing.page_show.opening_hours? %>
+          <%= render "listings/show_opening_hour", { listing: listing } %>
+        <% end %>
+
+        <!-- Reservation Link -->
+        <% if listing.page_show.reservation_link? && !listing.reservation_link.link.blank? %>
+          <%= render "listings/show_reservation_link", { listing: listing } %>
+        <% end %>
+
+        <!-- Bookmark -->
+        <% if current_user %>
+          <%= render "listings/show_bookmark", { listing: listing } %>
+        <% end %>
+
+      </div>
+      <!-- Sidebar / End -->
+
+    </div>
+  </div>
