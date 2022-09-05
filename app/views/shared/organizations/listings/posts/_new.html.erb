@@ -62,18 +62,6 @@
               </div>
             <!-- Row / End -->
 
-            <!-- Row -->
-            <div class="row with-forms margin-bottom-20">
-              <!-- Status -->
-              <div class="col-md-12">
-                <h5><%= f.label :status %></h5>
-                <p>この投稿を「公開」にするか、一旦「下書き」として保存するかを選択できます。<br>
-                「下書き」にすると同じ組織のユーザー以外には投稿が表示されません。</p>
-                <%= f.select :status, Post.statuses_i18n.invert, {}, { class: "chosen-select" } %>
-              </div>
-            </div>
-            <!-- Row / End -->
-
           </div>
           <!-- Section / End -->
 
