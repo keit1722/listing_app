@@ -22,6 +22,7 @@ FactoryBot.define do
       restaurant.opening_hours << build(:day_sunday)
       restaurant.opening_hours << build(:day_holiday)
       restaurant.reservation_link = build(:reservation_link)
+      restaurant.page_show = build(:page_show)
     end
   end
 end

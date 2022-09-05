@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe described_class, type: :model do
+RSpec.describe PhotoSpot, type: :model do
   describe 'バリデーション' do
     it '名称は必須であること' do
       photo_spot = build(:photo_spot, name: nil)
@@ -25,7 +25,7 @@ RSpec.describe described_class, type: :model do
       photo_spot = build(:photo_spot, lat: nil)
       photo_spot.valid?
       expect(photo_spot.errors.full_messages).to include(
-        '地図にピンを設置してください'
+        '地図にピンを設置してください',
       )
     end
 
@@ -33,7 +33,7 @@ RSpec.describe described_class, type: :model do
       photo_spot = build(:photo_spot, lng: nil)
       photo_spot.valid?
       expect(photo_spot.errors.full_messages).to include(
-        '地図にピンを設置してください'
+        '地図にピンを設置してください',
       )
     end
 
@@ -100,14 +100,14 @@ RSpec.describe described_class, type: :model do
 
       it do
         expect(
-          described_class.search_with_district([uchiyama.id, sano.id])
+          described_class.search_with_district([uchiyama.id, sano.id]),
         ).to eq [photo_spot_uchiyama, photo_spot_sano]
       end
 
       it do
         expect(described_class.search_with_district([uchiyama.id])).to eq [
-          photo_spot_uchiyama
-        ]
+             photo_spot_uchiyama,
+           ]
       end
     end
 
@@ -116,14 +116,14 @@ RSpec.describe described_class, type: :model do
         create(
           :photo_spot,
           name: 'フォトスポットサンプル_A',
-          description: '美しい山々'
+          description: '美しい山々',
         )
       end
       let!(:photo_spot_b) do
         create(
           :photo_spot,
           name: 'フォトスポットサンプル_B',
-          description: 'Aランクの絶景です'
+          description: 'Aランクの絶景です',
         )
       end
 
@@ -137,14 +137,14 @@ RSpec.describe described_class, type: :model do
 
       it do
         expect(described_class.keyword_contain('A').order('id')).to eq [
-          photo_spot_a,
-          photo_spot_b
-        ]
+             photo_spot_a,
+             photo_spot_b,
+           ]
       end
 
       it do
         expect(
-          described_class.keyword_contain('フォトスポットサンプル').order('id')
+          described_class.keyword_contain('フォトスポットサンプル').order('id'),
         ).to eq [photo_spot_a, photo_spot_b]
       end
     end

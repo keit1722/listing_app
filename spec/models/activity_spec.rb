@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe described_class, type: :model do
+RSpec.describe Activity, type: :model do
   describe 'バリデーション' do
     it '名称は必須であること' do
       activity = build(:activity, name: nil)
@@ -25,7 +25,7 @@ RSpec.describe described_class, type: :model do
       activity = build(:activity, lat: nil)
       activity.valid?
       expect(activity.errors.full_messages).to include(
-        '地図にピンを設置してください'
+        '地図にピンを設置してください',
       )
     end
 
@@ -33,7 +33,7 @@ RSpec.describe described_class, type: :model do
       activity = build(:activity, lng: nil)
       activity.valid?
       expect(activity.errors.full_messages).to include(
-        '地図にピンを設置してください'
+        '地図にピンを設置してください',
       )
     end
 
@@ -100,14 +100,14 @@ RSpec.describe described_class, type: :model do
 
       it do
         expect(
-          described_class.search_with_district([uchiyama.id, sano.id])
+          described_class.search_with_district([uchiyama.id, sano.id]),
         ).to eq [activity_uchiyama, activity_sano]
       end
 
       it do
         expect(described_class.search_with_district([uchiyama.id])).to eq [
-          activity_uchiyama
-        ]
+             activity_uchiyama,
+           ]
       end
     end
 
@@ -116,14 +116,14 @@ RSpec.describe described_class, type: :model do
         create(
           :activity,
           name: 'アクティビティサンプル_A',
-          description: '雨天決行です'
+          description: '雨天決行です',
         )
       end
       let!(:activity_b) do
         create(
           :activity,
           name: 'アクティビティサンプル_B',
-          description: '山登り（ルートA）をガイドします'
+          description: '山登り（ルートA）をガイドします',
         )
       end
 
@@ -135,14 +135,14 @@ RSpec.describe described_class, type: :model do
 
       it do
         expect(described_class.keyword_contain('A').order('id')).to eq [
-          activity_a,
-          activity_b
-        ]
+             activity_a,
+             activity_b,
+           ]
       end
 
       it do
         expect(
-          described_class.keyword_contain('アクティビティサンプル').order('id')
+          described_class.keyword_contain('アクティビティサンプル').order('id'),
         ).to eq [activity_a, activity_b]
       end
     end

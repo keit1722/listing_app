@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe described_class, type: :model do
+RSpec.describe SkiArea, type: :model do
   describe 'バリデーション' do
     it '名称は必須であること' do
       ski_area = build(:ski_area, name: nil)
@@ -25,7 +25,7 @@ RSpec.describe described_class, type: :model do
       ski_area = build(:ski_area, lat: nil)
       ski_area.valid?
       expect(ski_area.errors.full_messages).to include(
-        '地図にピンを設置してください'
+        '地図にピンを設置してください',
       )
     end
 
@@ -33,7 +33,7 @@ RSpec.describe described_class, type: :model do
       ski_area = build(:ski_area, lng: nil)
       ski_area.valid?
       expect(ski_area.errors.full_messages).to include(
-        '地図にピンを設置してください'
+        '地図にピンを設置してください',
       )
     end
 
@@ -100,14 +100,14 @@ RSpec.describe described_class, type: :model do
 
       it do
         expect(
-          described_class.search_with_district([uchiyama.id, sano.id])
+          described_class.search_with_district([uchiyama.id, sano.id]),
         ).to eq [ski_area_uchiyama, ski_area_sano]
       end
 
       it do
         expect(described_class.search_with_district([uchiyama.id])).to eq [
-          ski_area_uchiyama
-        ]
+             ski_area_uchiyama,
+           ]
       end
     end
 
@@ -116,14 +116,14 @@ RSpec.describe described_class, type: :model do
         create(
           :ski_area,
           name: 'スキー場サンプル_A',
-          description: '12月から営業します'
+          description: '12月から営業します',
         )
       end
       let!(:ski_area_b) do
         create(
           :ski_area,
           name: 'スキー場サンプル_B',
-          description: 'A〜Cコースまでが上級コースです'
+          description: 'A〜Cコースまでが上級コースです',
         )
       end
 
@@ -133,14 +133,14 @@ RSpec.describe described_class, type: :model do
 
       it do
         expect(described_class.keyword_contain('A').order('id')).to eq [
-          ski_area_a,
-          ski_area_b
-        ]
+             ski_area_a,
+             ski_area_b,
+           ]
       end
 
       it do
         expect(
-          described_class.keyword_contain('スキー場サンプル').order('id')
+          described_class.keyword_contain('スキー場サンプル').order('id'),
         ).to eq [ski_area_a, ski_area_b]
       end
     end

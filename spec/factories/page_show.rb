@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :page_show do
-    
+    opening_hours { true }
+    reservation_link { true }
   end
 end
 

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe described_class, type: :model do
+RSpec.describe HotSpring, type: :model do
   describe 'バリデーション' do
     it '名称は必須であること' do
       hot_spring = build(:hot_spring, name: nil)
@@ -25,7 +25,7 @@ RSpec.describe described_class, type: :model do
       hot_spring = build(:hot_spring, lat: nil)
       hot_spring.valid?
       expect(hot_spring.errors.full_messages).to include(
-        '地図にピンを設置してください'
+        '地図にピンを設置してください',
       )
     end
 
@@ -33,7 +33,7 @@ RSpec.describe described_class, type: :model do
       hot_spring = build(:hot_spring, lng: nil)
       hot_spring.valid?
       expect(hot_spring.errors.full_messages).to include(
-        '地図にピンを設置してください'
+        '地図にピンを設置してください',
       )
     end
 
@@ -100,14 +100,14 @@ RSpec.describe described_class, type: :model do
 
       it do
         expect(
-          described_class.search_with_district([uchiyama.id, sano.id])
+          described_class.search_with_district([uchiyama.id, sano.id]),
         ).to eq [hot_spring_uchiyama, hot_spring_sano]
       end
 
       it do
         expect(described_class.search_with_district([uchiyama.id])).to eq [
-          hot_spring_uchiyama
-        ]
+             hot_spring_uchiyama,
+           ]
       end
     end
 
@@ -116,21 +116,21 @@ RSpec.describe described_class, type: :model do
         create(
           :hot_spring,
           name: '温泉サンプル_A',
-          description: 'リラックスできます'
+          description: 'リラックスできます',
         )
       end
       let!(:hot_spring_b) do
         create(
           :hot_spring,
           name: '温泉サンプル_B',
-          description: 'Aランクのお湯です'
+          description: 'Aランクのお湯です',
         )
       end
 
       it do
         expect(described_class.keyword_contain('リラックス')).to eq [
-          hot_spring_a
-        ]
+             hot_spring_a,
+           ]
       end
 
       it do
@@ -139,14 +139,14 @@ RSpec.describe described_class, type: :model do
 
       it do
         expect(described_class.keyword_contain('A').order('id')).to eq [
-          hot_spring_a,
-          hot_spring_b
-        ]
+             hot_spring_a,
+             hot_spring_b,
+           ]
       end
 
       it do
         expect(
-          described_class.keyword_contain('温泉サンプル').order('id')
+          described_class.keyword_contain('温泉サンプル').order('id'),
         ).to eq [hot_spring_a, hot_spring_b]
       end
     end

@@ -21,6 +21,8 @@ FactoryBot.define do
       shop.opening_hours << build(:day_saturday)
       shop.opening_hours << build(:day_sunday)
       shop.opening_hours << build(:day_holiday)
+      shop.reservation_link = build(:reservation_link)
+      shop.page_show = build(:page_show)
     end
   end
 end
