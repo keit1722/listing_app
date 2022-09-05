@@ -3,14 +3,14 @@ class Restaurant < ApplicationRecord
 
   belongs_to :organization
 
+  has_many :restaurant_category_mappings, dependent: :destroy
+  has_many :restaurant_categories, through: :restaurant_category_mappings
   include Districtable
   include Bookmarkable
   include Postable
-  has_many :restaurant_category_mappings, dependent: :destroy
-  has_many :restaurant_categories, through: :restaurant_category_mappings
-  has_one :reservation_link, as: :reservation_linkable, dependent: :destroy
-  has_many :opening_hours, as: :opening_hourable, dependent: :destroy
-  has_one :page_show, as: :page_showable, dependent: :destroy
+  include ReservationLinkable
+  include OpeningHourable
+  include PageShowable
 
   has_one_attached :main_image
   has_many_attached :images

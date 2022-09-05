@@ -1,5 +1,6 @@
 module CommonListingScope
   extend ActiveSupport::Concern
+
   included do
     scope :search_with_district,
           lambda { |district_ids|
