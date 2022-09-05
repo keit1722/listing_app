@@ -83,7 +83,7 @@ end
 #  id            :bigint           not null, primary key
 #  body          :text             not null
 #  postable_type :string
-#  status        :integer          default("published"), not null
+#  status        :integer          not null
 #  title         :string           not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null

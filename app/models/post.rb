@@ -9,7 +9,7 @@ class Post < ApplicationRecord
   validates :body, length: { maximum: 10_000 }, presence: true
   validates :status, presence: true
 
-  enum status: { published: 1, draft: 2 }
+  enum status: { published: 1, draft: 2, draft_to_published: 3 }
 
   scope :ordered, -> { order(created_at: :desc) }
   scope :recent, ->(count) { ordered.limit(count) }
@@ -58,7 +58,7 @@ end
 #  id            :bigint           not null, primary key
 #  body          :text             not null
 #  postable_type :string
-#  status        :integer          default("published"), not null
+#  status        :integer          not null
 #  title         :string           not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null

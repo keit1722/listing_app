@@ -237,7 +237,7 @@ ActiveRecord::Schema.define(version: 2022_07_01_083140) do
     t.string "postable_type"
     t.string "title", null: false
     t.text "body", null: false
-    t.integer "status", default: 1, null: false
+    t.integer "status", null: false
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "created_at", precision: 6, null: false
     t.index ["postable_type", "postable_id"], name: "index_posts_on_postable_type_and_postable_id"
