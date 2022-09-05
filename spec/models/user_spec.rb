@@ -42,26 +42,6 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe 'スコープ' do
-    describe 'not_admin' do
-      let(:user_admin) { create(:pvsuwimvsuoitmucvyku_user, :activated) }
-      let(:user_business) { create(:business_user, :activated) }
-      let(:user_general) { create(:general_user, :activated) }
-
-      it do
-        expect(described_class.not_admin).not_to eq [
-          user_admin,
-          user_business,
-          user_general
-        ]
-      end
-
-      it do
-        expect(described_class.not_admin).to eq [user_business, user_general]
-      end
-    end
-  end
-
   describe 'インスタンスメソッド' do
     let(:organization) { create(:organization) }
     let(:user) do

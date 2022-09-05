@@ -13,7 +13,6 @@ class Post < ApplicationRecord
 
   scope :ordered, -> { order(created_at: :desc) }
   scope :recent, ->(count) { ordered.limit(count) }
-  scope :not_draft =>  column_name, -> { where.not(status: :draft) }
 
   after_create_commit :create_notices
 
