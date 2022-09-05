@@ -127,20 +127,29 @@ RSpec.describe SkiArea, type: :model do
         )
       end
 
-      it { expect(described_class.keyword_contain('12月')).to eq [ski_area_a] }
-
-      it { expect(described_class.keyword_contain('上級')).to eq [ski_area_b] }
+      it do
+        expect(described_class.keyword_contain('ski_areas', '12月')).to eq [
+             ski_area_a,
+           ]
+      end
 
       it do
-        expect(described_class.keyword_contain('A').order('id')).to eq [
-             ski_area_a,
+        expect(described_class.keyword_contain('ski_areas', '上級')).to eq [
              ski_area_b,
            ]
       end
 
       it do
         expect(
-          described_class.keyword_contain('スキー場サンプル').order('id'),
+          described_class.keyword_contain('ski_areas', 'A').order('id'),
+        ).to eq [ski_area_a, ski_area_b]
+      end
+
+      it do
+        expect(
+          described_class
+            .keyword_contain('ski_areas', 'スキー場サンプル')
+            .order('id'),
         ).to eq [ski_area_a, ski_area_b]
       end
     end

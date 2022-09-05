@@ -128,25 +128,28 @@ RSpec.describe HotSpring, type: :model do
       end
 
       it do
-        expect(described_class.keyword_contain('リラックス')).to eq [
-             hot_spring_a,
-           ]
+        expect(
+          described_class.keyword_contain('hot_springs', 'リラックス'),
+        ).to eq [hot_spring_a]
       end
 
       it do
-        expect(described_class.keyword_contain('お湯')).to eq [hot_spring_b]
-      end
-
-      it do
-        expect(described_class.keyword_contain('A').order('id')).to eq [
-             hot_spring_a,
+        expect(described_class.keyword_contain('hot_springs', 'お湯')).to eq [
              hot_spring_b,
            ]
       end
 
       it do
         expect(
-          described_class.keyword_contain('温泉サンプル').order('id'),
+          described_class.keyword_contain('hot_springs', 'A').order('id'),
+        ).to eq [hot_spring_a, hot_spring_b]
+      end
+
+      it do
+        expect(
+          described_class
+            .keyword_contain('hot_springs', '温泉サンプル')
+            .order('id'),
         ).to eq [hot_spring_a, hot_spring_b]
       end
     end

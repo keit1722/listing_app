@@ -127,22 +127,29 @@ RSpec.describe Activity, type: :model do
         )
       end
 
-      it { expect(described_class.keyword_contain('雨天')).to eq [activity_a] }
-
       it do
-        expect(described_class.keyword_contain('ガイド')).to eq [activity_b]
+        expect(described_class.keyword_contain('activities', '雨天')).to eq [
+             activity_a,
+           ]
       end
 
       it do
-        expect(described_class.keyword_contain('A').order('id')).to eq [
-             activity_a,
+        expect(described_class.keyword_contain('activities', 'ガイド')).to eq [
              activity_b,
            ]
       end
 
       it do
         expect(
-          described_class.keyword_contain('アクティビティサンプル').order('id'),
+          described_class.keyword_contain('activities', 'A').order('id'),
+        ).to eq [activity_a, activity_b]
+      end
+
+      it do
+        expect(
+          described_class
+            .keyword_contain('activities', 'アクティビティサンプル')
+            .order('id'),
         ).to eq [activity_a, activity_b]
       end
     end

@@ -128,23 +128,28 @@ RSpec.describe PhotoSpot, type: :model do
       end
 
       it do
-        expect(described_class.keyword_contain('山々')).to eq [photo_spot_a]
-      end
-
-      it do
-        expect(described_class.keyword_contain('絶景')).to eq [photo_spot_b]
-      end
-
-      it do
-        expect(described_class.keyword_contain('A').order('id')).to eq [
+        expect(described_class.keyword_contain('photo_spots', '山々')).to eq [
              photo_spot_a,
+           ]
+      end
+
+      it do
+        expect(described_class.keyword_contain('photo_spots', '絶景')).to eq [
              photo_spot_b,
            ]
       end
 
       it do
         expect(
-          described_class.keyword_contain('フォトスポットサンプル').order('id'),
+          described_class.keyword_contain('photo_spots', 'A').order('id'),
+        ).to eq [photo_spot_a, photo_spot_b]
+      end
+
+      it do
+        expect(
+          described_class
+            .keyword_contain('photo_spots', 'フォトスポットサンプル')
+            .order('id'),
         ).to eq [photo_spot_a, photo_spot_b]
       end
     end

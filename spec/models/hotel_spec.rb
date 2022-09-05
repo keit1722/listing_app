@@ -123,20 +123,29 @@ RSpec.describe Hotel, type: :model do
         )
       end
 
-      it { expect(described_class.keyword_contain('送迎')).to eq [hotel_a] }
-
-      it { expect(described_class.keyword_contain('宿泊')).to eq [hotel_b] }
+      it do
+        expect(described_class.keyword_contain('hotels', '送迎')).to eq [
+             hotel_a,
+           ]
+      end
 
       it do
-        expect(described_class.keyword_contain('A').order('id')).to eq [
-             hotel_a,
+        expect(described_class.keyword_contain('hotels', '宿泊')).to eq [
              hotel_b,
            ]
       end
 
       it do
         expect(
-          described_class.keyword_contain('ホテルサンプル').order('id'),
+          described_class.keyword_contain('hotels', 'A').order('id'),
+        ).to eq [hotel_a, hotel_b]
+      end
+
+      it do
+        expect(
+          described_class
+            .keyword_contain('hotels', 'ホテルサンプル')
+            .order('id'),
         ).to eq [hotel_a, hotel_b]
       end
     end

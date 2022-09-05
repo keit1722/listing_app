@@ -8,10 +8,10 @@ module CommonListingScope
           }
 
     scope :keyword_contain,
-          lambda { |keyword|
+          lambda { |model, keyword|
             where(
               [
-                'description LIKE(?) OR Activities.name LIKE(?)',
+                "description LIKE(?) OR #{model}.name LIKE(?)",
                 "%#{keyword}%",
                 "%#{keyword}%",
               ],

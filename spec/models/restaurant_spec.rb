@@ -153,23 +153,28 @@ RSpec.describe Restaurant, type: :model do
       end
 
       it do
-        expect(described_class.keyword_contain('フランス')).to eq [restaurant_a]
+        expect(
+          described_class.keyword_contain('restaurants', 'フランス'),
+        ).to eq [restaurant_a]
       end
 
       it do
-        expect(described_class.keyword_contain('提供')).to eq [restaurant_b]
-      end
-
-      it do
-        expect(described_class.keyword_contain('A').order('id')).to eq [
-             restaurant_a,
+        expect(described_class.keyword_contain('restaurants', '提供')).to eq [
              restaurant_b,
            ]
       end
 
       it do
         expect(
-          described_class.keyword_contain('飲食店サンプル').order('id'),
+          described_class.keyword_contain('restaurants', 'A').order('id'),
+        ).to eq [restaurant_a, restaurant_b]
+      end
+
+      it do
+        expect(
+          described_class
+            .keyword_contain('restaurants', '飲食店サンプル')
+            .order('id'),
         ).to eq [restaurant_a, restaurant_b]
       end
     end
