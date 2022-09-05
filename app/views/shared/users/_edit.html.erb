@@ -50,18 +50,6 @@
           </div>
           <!-- Row / End -->
 
-          <% if current_page?(edit_pvsuwimvsuoitmucvyku_user_path(user)) %>
-            <!-- Row -->
-            <div class="row with-forms margin-bottom-20">
-              <!-- Public Uid -->
-              <div class="col-md-12">
-                <h5><%= f.label :public_uid %></h5>
-                <%= f.text_field :public_uid %>
-              </div>
-            </div>
-            <!-- Row / End -->
-          <% end %>
-
           <!-- Row -->
           <div class="row with-forms margin-bottom-20">
             <!-- Email -->
@@ -72,7 +60,7 @@
           </div>
           <!-- Row / End -->
 
-          <% if current_page?(edit_pvsuwimvsuoitmucvyku_user_path(user)) %>
+          <% if request.path.include?('pvsuwimvsuoitmucvyku') %>
             <!-- Row -->
             <div class="row with-forms margin-bottom-20">
               <!-- Role -->
@@ -139,7 +127,7 @@
         <!-- Section / End -->
 
         <div class="margin-top-20">
-          <% if current_page?(edit_pvsuwimvsuoitmucvyku_user_path(user)) %>
+          <% if request.path.include?('pvsuwimvsuoitmucvyku') %>
             <%= link_to pvsuwimvsuoitmucvyku_user_path(user), class: "button border overflow-visible" do %>
               <i class="sl sl-icon-arrow-left-circle"></i> 戻る
             <% end %>

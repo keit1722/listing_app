@@ -189,3 +189,10 @@ ja:
       long: "%Y/%m/%d %H:%M"
       short: "%m/%d %H:%M"
   email: "メールアドレス"
+  listing:
+    name: '名称'
+    address: '住所'
+    slug: 'スラッグ'
+    description: '紹介'
+    main_image: 'メイン画像'
+    images: 'その他画像'

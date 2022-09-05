@@ -42,22 +42,28 @@
               <td data-label="項目"><%= Restaurant.human_attribute_name("description") %></td>
               <td data-label="内容"><%= restaurant.decorate.format_description %></td>
             </tr>
-            <% if restaurant.reservation_link.present? %>
-              <tr>
-                <td data-label="項目"><%= ReservationLink.human_attribute_name("link") %></td>
-                <td data-label="内容"><%= link_to nil, restaurant.reservation_link.link %></td>
-              </tr>
-            <% end %>
-            <% if restaurant.opening_hours.exists? %>
-              <tr>
-                <td data-label="項目"><%= OpeningHour.model_name.human %></td>
-                <td data-label="内容">
-                  <ul class="bg-transparent">
-                    <%= render partial: "shared/organizations/listings/opening_hour", collection: restaurant.opening_hours.early %>
-                  </ul>
-                </td>
-              </tr>
-            <% end %>
+            <tr>
+              <td data-label="項目">
+                <%= ReservationLink.human_attribute_name("link") %>
+                <% if !restaurant.page_show.reservation_link? %>
+                  <strong>（非表示）<strong>
+                <% end %>
+              </td>
+              <td data-label="内容"><%= link_to nil, restaurant.reservation_link.link %></td>
+            </tr>
+            <tr>
+              <td data-label="項目">
+                <%= OpeningHour.model_name.human %>
+                <% if !restaurant.page_show.opening_hours? %>
+                  <strong>（非表示）<strong>
+                <% end %>
+              </td>
+              <td data-label="内容">
+                <ul class="bg-transparent">
+                  <%= render partial: "shared/organizations/listings/opening_hour", collection: restaurant.opening_hours.early %>
+                </ul>
+              </td>
+            </tr>
           </tbody>
         </table>
         <!-- table end -->

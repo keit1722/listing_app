@@ -14,8 +14,10 @@ class SearchHomeForm
     if keyword.present?
       scope =
         splited_keywords
-        .map { |splited_keyword| scope.keyword_contain(splited_keyword) }
-        .inject { |result, scp| result.or(scp) }
+          .map do |splited_keyword|
+            scope.keyword_contain(category, splited_keyword)
+          end
+          .inject { |result, scp| result.or(scp) }
     end
     scope
   end

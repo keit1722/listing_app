@@ -10,7 +10,7 @@
   <div class="col-lg-12">
     <%= form_with model: @restaurant_create_form, url: organization_restaurants_path do |f| %>
       <div id="add-listing">
-        <%= render 'shared/error_messages_multiple', models: [f.object, f.object.restaurant, f.object.reservation_link] %>
+        <%= render 'shared/error_messages_multiple', models: [f.object, f.object.restaurant, f.object.reservation_link, f.object.page_show] %>
 
         <!-- Section -->
         <%= f.fields_for :restaurant do |ff| %>
@@ -163,37 +163,54 @@
 
 
         <!-- Section -->
-        <%= f.fields_for :reservation_link do |ff| %>
           <div class="add-listing-section margin-top-45">
 
             <!-- Headline -->
             <div class="add-listing-headline">
               <h3><i class="sl sl-icon-link"></i> 予約ページのURL</h3>
+              <!-- Switcher -->
+              <%= f.fields_for :page_show do |ff| %>
+                <label class="switch">
+                  <%= ff.check_box :reservation_link, class: "slider round" %>
+                  <span class="slider round"></span>
+                </label>
+              <% end %>
             </div>
 
-            <!-- Row -->
-            <div class="row with-forms margin-bottom-20">
-              <!-- Name -->
-              <div class="col-md-12">
-                <p>別サイトなどに予約ページがあればURLを入力してください。<br>
-                入力があれば個別ページにリンクを作成します。<br>
-                必ず<strong>http</strong>または<strong>https</strong>からご入力ください。</p>
-                <%= ff.text_field :link %>
-              </div>
+            <!-- Switcher ON-OFF Content -->
+            <div class="switcher-content">
+              <%= f.fields_for :reservation_link do |ff| %>
+                <!-- Row -->
+                <div class="row with-forms margin-bottom-20">
+                  <!-- Name -->
+                  <div class="col-md-12">
+                    <p>別サイトなどに予約ページがあればURLを入力してください。<br>
+                    入力があれば個別ページにリンクを作成します。<br>
+                    必ず<strong>http</strong>または<strong>https</strong>からご入力ください。</p>
+                    <%= ff.text_field :link %>
+                  </div>
+                </div>
+                <!-- Row / End -->
+              <% end %>
             </div>
-            <!-- Row / End -->
 
           </div>
-        <% end %>
         <!-- Section / End -->
 
 
         <!-- Section -->
-        <div class="add-listing-section margin-top-45 switcher-on">
+        <div class="add-listing-section margin-top-45">
 
           <!-- Headline -->
           <div class="add-listing-headline">
             <h3><i class="sl sl-icon-clock"></i> 営業時間</h3>
+            <!-- Switcher -->
+            <%= f.fields_for :page_show do |ff| %>
+              <label class="switch">
+                <%= ff.check_box :opening_hours, class: "slider round" %>
+                <span class="slider round"></span>
+              </label>
+            <% end %>
           </div>
 
           <!-- Switcher ON-OFF Content -->

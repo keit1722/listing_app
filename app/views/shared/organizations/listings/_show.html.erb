@@ -1,13 +1,13 @@
 <div id="titlebar" class="margin-bottom-20">
   <div class="row">
     <div class="col-md-12">
-      <h2><i class="sl sl-icon-doc"></i> アクティビティ詳細</h2>
+      <h2><i class="sl sl-icon-doc"></i> <%= page_name %></h2>
     </div>
   </div>
 </div>
 
 <div class="margin-bottom-20 display-flex-end">
-  <%= link_to send(post_index_path, activity.organization, activity), class: "button border" do %>
+  <%= link_to send(post_index_path, listing.organization, listing), class: "button border" do %>
     <i class="sl sl-icon-list"></i> 投稿一覧
   <% end %>
 </div>
@@ -21,37 +21,44 @@
         <table class="basic-table">
           <tbody>
             <tr>
-              <td data-label="項目"><%= Activity.human_attribute_name("name") %></td>
-              <td data-label="内容"><%= activity.name %></td>
+              <td data-label="項目"><%= t("listing.name") %></td>
+              <td data-label="内容"><%= listing.name %></td>
             </tr>
             <tr>
-              <td data-label="項目"><%= Activity.human_attribute_name("address") %></td>
-              <td data-label="内容"><%= activity.address %></td>
+              <td data-label="項目"><%= t("listing.address") %></td>
+              <td data-label="内容"><%= listing.address %></td>
             </tr>
             <tr>
               <td data-label="項目"><%= District.model_name.human %></td>
-              <td data-label="内容"><%= activity.districts.first.name %></td>
+              <td data-label="内容"><%= listing.districts.first.name %></td>
             </tr>
             <tr>
-              <td data-label="項目"><%= Activity.human_attribute_name("description") %></td>
-              <td data-label="内容"><%= activity.decorate.format_description %></td>
+              <td data-label="項目"><%= t("listing.description") %></td>
+              <td data-label="内容"><%= listing.decorate.format_description %></td>
             </tr>
-            <% if activity.reservation_link.present? %>
-              <tr>
-                <td data-label="項目"><%= ReservationLink.human_attribute_name("link") %></td>
-                <td data-label="内容"><%= link_to nil, activity.reservation_link.link %></td>
-              </tr>
-            <% end %>
-            <% if activity.opening_hours.exists? %>
-              <tr>
-                <td data-label="項目"><%= OpeningHour.model_name.human %></td>
-                <td data-label="内容">
-                  <ul class="bg-transparent">
-                    <%= render partial: "shared/organizations/listings/opening_hour", collection: activity.opening_hours.early %>
-                  </ul>
-                </td>
-              </tr>
-            <% end %>
+            <tr>
+              <td data-label="項目">
+                <%= ReservationLink.human_attribute_name("link") %>
+                <% if !listing.page_show.reservation_link? %>
+                  <strong>（非表示）<strong>
+                <% end %>
+              </td>
+              <td data-label="内容"><%= link_to nil, listing.reservation_link.link %></td>
+            </tr>
+            <tr>
+              <td data-label="項目">
+                <%= OpeningHour.model_name.human %>
+                <% if !listing.page_show.opening_hours? %>
+                  <strong>（非表示）<strong>
+                <% end %>
+              </td>
+              </td>
+              <td data-label="内容">
+                <ul class="bg-transparent">
+                  <%= render partial: "shared/organizations/listings/opening_hour", collection: listing.opening_hours.early %>
+                </ul>
+              </td>
+            </tr>
           </tbody>
         </table>
         <!-- table end -->
@@ -60,7 +67,7 @@
         <div class="row with-forms margin-bottom-20">
           <!-- Map -->
           <div class="col-md-12">
-            <div id="map-location-display" class="margin-top-25 margin-bottom-25" data-lat="<%= activity.lat %>" data-lng="<%= activity.lng %>"></div>
+            <div id="map-location-display" class="margin-top-25 margin-bottom-25" data-lat="<%= listing.lat %>" data-lng="<%= listing.lng %>"></div>
           </div>
         </div>
         <!-- Row / End -->
@@ -70,9 +77,9 @@
             <!-- Images preview -->
             <div class="col-md-12">
               <div id="preview" class="images-preview">
-                <%= image_tag activity.main_image.variant(resize: '600x400').processed, class: "image-preview" %>
-                <% if activity.images.attached? %>
-                  <% activity.images.each do |image| %>
+                <%= image_tag listing.main_image.variant(resize: '600x400').processed, class: "image-preview" %>
+                <% if listing.images.attached? %>
+                  <% listing.images.each do |image| %>
                     <%= image_tag image.variant(resize: '600x400').processed, class: "image-preview" %>
                   <% end %>
                 <% end %>
