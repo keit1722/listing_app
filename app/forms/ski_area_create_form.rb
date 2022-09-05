@@ -3,7 +3,11 @@ class SkiAreaCreateForm
 
   DAY_COUNT = 8
 
-  attr_accessor :ski_area, :opening_hours, :district_id
+  attr_accessor :ski_area,
+                :district_id,
+                :reservation_link,
+                :opening_hours,
+                :page_show
 
   validates :district_id, presence: true
 
@@ -13,6 +17,8 @@ class SkiAreaCreateForm
 
     self.ski_area = organization.ski_areas.build if ski_area.blank?
     self.district_id = params[:district_id]
+    self.reservation_link = ReservationLink.new if reservation_link.blank?
+    self.page_show = PageShow.new if page_show.blank?
     return if opening_hours.present?
 
     self.opening_hours = Array.new(DAY_COUNT) { OpeningHour.new }
@@ -29,13 +35,23 @@ class SkiAreaCreateForm
       end
   end
 
+  def reservation_link_attributes=(attributes)
+    self.reservation_link = ReservationLink.new(attributes)
+  end
+
+  def page_show_attributes=(attributes)
+    self.page_show = PageShow.new(attributes)
+  end
+
   def save
-    build_associationss
+    build_associations
 
     return false unless valid?
 
     ActiveRecord::Base.transaction do
       ski_area.save!
+      reservation_link.save!
+      page_show.save!
       opening_hours.each(&:save!)
     end
   rescue ActiveRecord::RecordInvalid
@@ -44,8 +60,10 @@ class SkiAreaCreateForm
 
   private
 
-  def build_associationss
+  def build_associations
     ski_area.district_ids = district_id.to_i unless district_id.empty?
+    reservation_link.reservation_linkable = ski_area
+    page_show.page_showable = ski_area
     opening_hours.each do |opening_hour|
       opening_hour.opening_hourable = ski_area
     end
@@ -53,6 +71,11 @@ class SkiAreaCreateForm
 
   def valid?
     super
-    [ski_area.valid?, opening_hours.map(&:valid?).all?].all?
+    [
+      ski_area.valid?,
+      reservation_link.valid?,
+      page_show.valid?,
+      opening_hours.map(&:valid?).all?,
+    ].all?
   end
 end

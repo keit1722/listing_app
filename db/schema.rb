@@ -207,6 +207,16 @@ ActiveRecord::Schema.define(version: 2022_07_01_083140) do
     t.index ["slug"], name: "index_organizations_on_slug", unique: true
   end
 
+  create_table "page_shows", force: :cascade do |t|
+    t.bigint "page_showable_id"
+    t.string "page_showable_type"
+    t.boolean "reservation_link", default: true, null: false
+    t.boolean "opening_hours", default: true, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.index ["page_showable_type", "page_showable_id"], name: "index_page_shows_on_page_showable_type_and_page_showable_id"
+  end
+
   create_table "photo_spots", force: :cascade do |t|
     t.string "name", null: false
     t.string "address", null: false
@@ -236,7 +246,7 @@ ActiveRecord::Schema.define(version: 2022_07_01_083140) do
   create_table "reservation_links", force: :cascade do |t|
     t.bigint "reservation_linkable_id"
     t.string "reservation_linkable_type"
-    t.string "link", null: false
+    t.string "link"
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "created_at", precision: 6, null: false
     t.index ["reservation_linkable_type", "reservation_linkable_id"], name: "index_polymorphic_reservation_link_mappings_on_id_and_type"

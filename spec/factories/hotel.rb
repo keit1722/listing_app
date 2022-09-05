@@ -12,6 +12,17 @@ FactoryBot.define do
 
     organization
 
-    after(:build) { |hotel| hotel.reservation_link = build(:reservation_link) }
+    after(:build) do |hotel|
+      hotel.opening_hours << build(:day_monday)
+      hotel.opening_hours << build(:day_tuesday)
+      hotel.opening_hours << build(:day_wednesday)
+      hotel.opening_hours << build(:day_thursday)
+      hotel.opening_hours << build(:day_friday)
+      hotel.opening_hours << build(:day_saturday)
+      hotel.opening_hours << build(:day_sunday)
+      hotel.opening_hours << build(:day_holiday)
+      hotel.reservation_link = build(:reservation_link)
+      hotel.page_show = build(:page_show)
+    end
   end
 end

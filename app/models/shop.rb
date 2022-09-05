@@ -3,12 +3,14 @@ class Shop < ApplicationRecord
 
   belongs_to :organization
 
+  has_many :shop_category_mappings, dependent: :destroy
+  has_many :shop_categories, through: :shop_category_mappings
   include Districtable
   include Bookmarkable
   include Postable
-  has_many :shop_category_mappings, dependent: :destroy
-  has_many :shop_categories, through: :shop_category_mappings
-  has_many :opening_hours, as: :opening_hourable, dependent: :destroy
+  include ReservationLinkable
+  include OpeningHourable
+  include PageShowable
 
   has_one_attached :main_image
   has_many_attached :images
@@ -18,37 +20,23 @@ class Shop < ApplicationRecord
   validates_with CoordinateValidator
   validates :slug,
             length: {
-              maximum: 100
+              maximum: 100,
             },
             uniqueness: true,
             presence: true,
             format: {
-              with: /\A[a-z0-9\-]+\z/
+              with: /\A[a-z0-9\-]+\z/,
             }
   validates :description, length: { maximum: 10_000 }, presence: true
-  validates :main_image, attached: true, content_type: [:png, :jpg, :jpeg]
-  validates :images, limit: { max: 4 }, content_type: [:png, :jpg, :jpeg]
+  validates :main_image, attached: true, content_type: %i[png jpg jpeg]
+  validates :images, limit: { max: 4 }, content_type: %i[png jpg jpeg]
 
   scope :search_with_category,
         lambda { |category_ids|
           joins(:shop_categories).where(shop_categories: { id: category_ids })
         }
 
-  scope :search_with_district,
-        lambda { |district_ids|
-          joins(:districts).where(districts: { id: district_ids })
-        }
-
-  scope :keyword_contain,
-        lambda { |keyword|
-          where(
-            [
-              'description LIKE(?) OR Shops.name LIKE(?)',
-              "%#{keyword}%",
-              "%#{keyword}%"
-            ]
-          )
-        }
+  include CommonListingScope
 
   def to_param
     slug

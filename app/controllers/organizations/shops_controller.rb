@@ -1,20 +1,22 @@
 class Organizations::ShopsController < Organizations::BaseController
+  layout 'mypage_maps'
+
   def index
     @organization =
       current_user.organizations.find_by!(slug: params[:organization_slug])
     @shops =
       @organization.shops.page(params[:page]).per(20).with_attached_main_image
+    render layout: 'mypage'
   end
 
   def show
     @shop =
       current_user
-      .organizations
-      .find_by!(slug: params[:organization_slug])
-      .shops
-      .with_attached_images
-      .find_by!(slug: params[:slug])
-    render layout: 'mypage_maps'
+        .organizations
+        .find_by!(slug: params[:organization_slug])
+        .shops
+        .with_attached_images
+        .find_by!(slug: params[:slug])
   end
 
   def new
@@ -23,7 +25,6 @@ class Organizations::ShopsController < Organizations::BaseController
     @shop_create_form = ShopCreateForm.new(organization)
     @districts = District.all
     @shop_categories = ShopCategory.all
-    render layout: 'mypage_maps'
   end
 
   def create
@@ -44,25 +45,24 @@ class Organizations::ShopsController < Organizations::BaseController
   def edit
     @shop =
       current_user
-      .organizations
-      .find_by!(slug: params[:organization_slug])
-      .shops
-      .with_attached_images
-      .find_by!(slug: params[:slug])
+        .organizations
+        .find_by!(slug: params[:organization_slug])
+        .shops
+        .with_attached_images
+        .find_by!(slug: params[:slug])
     @shop_update_form = ShopUpdateForm.new(@shop)
     @districts = District.all
     @shop_categories = ShopCategory.all
-    render layout: 'mypage_maps'
   end
 
   def update
     @shop =
       current_user
-      .organizations
-      .find_by!(slug: params[:organization_slug])
-      .shops
-      .with_attached_images
-      .find_by!(slug: params[:slug])
+        .organizations
+        .find_by!(slug: params[:organization_slug])
+        .shops
+        .with_attached_images
+        .find_by!(slug: params[:slug])
     @shop_update_form = ShopUpdateForm.new(@shop, shop_update_params)
     @districts = District.all
     @shop_categories = ShopCategory.all
@@ -78,10 +78,10 @@ class Organizations::ShopsController < Organizations::BaseController
   def destroy
     @shop =
       current_user
-      .organizations
-      .find_by(slug: params[:organization_slug])
-      .shops
-      .find_by(slug: params[:slug])
+        .organizations
+        .find_by(slug: params[:organization_slug])
+        .shops
+        .find_by(slug: params[:slug])
 
     @shop.destroy!
     redirect_to organization_shops_path, success: '削除しました'
@@ -94,7 +94,16 @@ class Organizations::ShopsController < Organizations::BaseController
       .require(:shop_create_form)
       .permit(
         :district_id,
-        opening_hours_attributes: [:start_time_hour, :start_time_minute, :end_time_hour, :end_time_minute, :closed, :day],
+        reservation_link_attributes: [:link],
+        page_show_attributes: %i[reservation_link opening_hours],
+        opening_hours_attributes: %i[
+          start_time_hour
+          start_time_minute
+          end_time_hour
+          end_time_minute
+          closed
+          day
+        ],
         shop_category_ids: [],
         shop_attributes: [
           :name,
@@ -104,8 +113,8 @@ class Organizations::ShopsController < Organizations::BaseController
           :description,
           :address,
           :main_image,
-          { images: [] }
-        ]
+          { images: [] },
+        ],
       )
   end
 
@@ -114,7 +123,16 @@ class Organizations::ShopsController < Organizations::BaseController
       .require(:shop_update_form)
       .permit(
         :district_id,
-        opening_hours_attributes: [:start_time_hour, :start_time_minute, :end_time_hour, :end_time_minute, :closed, :day],
+        reservation_link_attributes: [:link],
+        page_show_attributes: %i[reservation_link opening_hours],
+        opening_hours_attributes: %i[
+          start_time_hour
+          start_time_minute
+          end_time_hour
+          end_time_minute
+          closed
+          day
+        ],
         shop_category_ids: [],
         shop_attributes: [
           :name,
@@ -123,8 +141,8 @@ class Organizations::ShopsController < Organizations::BaseController
           :description,
           :address,
           :main_image,
-          { images: [] }
-        ]
+          { images: [] },
+        ],
       )
   end
 end

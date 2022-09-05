@@ -1,19 +1,19 @@
 <div id="titlebar">
   <div class="row">
     <div class="col-md-12">
-      <h2><i class="sl sl-icon-pencil"></i> アクティビティ情報編集</h2>
+      <h2><i class="sl sl-icon-pencil"></i> <%= page_name %></h2>
     </div>
   </div>
 </div>
 
 <div class="row">
   <div class="col-lg-12">
-    <%= form_with model: activity_update_form, url: send(path), method: :patch do |f| %>
+    <%= form_with model: update_form, url: send(path), method: :patch do |f| %>
       <div id="add-listing">
-        <%= render 'shared/error_messages_multiple', models: [f.object, f.object.activity, f.object.reservation_link] %>
+        <%= render 'shared/error_messages_multiple', models: [f.object, f.object.send(listing_symbol), f.object.reservation_link, f.object.page_show] %>
 
         <!-- Section -->
-        <%= f.fields_for :activity do |ff| %>
+        <%= f.fields_for listing_symbol do |ff| %>
           <div class="add-listing-section">
 
             <!-- Headline -->
@@ -30,18 +30,6 @@
               </div>
             </div>
             <!-- Row / End -->
-
-            <% if current_page?(edit_pvsuwimvsuoitmucvyku_organization_activity_path(activity.organization, activity)) %>
-              <!-- Row -->
-              <div class="row with-forms margin-bottom-20">
-                <!-- Slug -->
-                <div class="col-md-12">
-                  <h5><%= ff.label :slug %></h5>
-                  <%= ff.text_field :slug %>
-                </div>
-              </div>
-              <!-- Row / End -->
-            <% end %>
 
             <!-- Row -->
             <div class="row with-forms margin-bottom-20">
@@ -74,7 +62,7 @@
             <!-- Row / End -->
 
             <!-- Row -->
-            <div class="row with-forms" id="map-section" data-model="activity" data-action="update">
+            <div class="row with-forms" id="map-section" data-model="<%= listing_symbol.to_s %>" data-action="update">
               <div class="col-md-12">
                 <h5>位置情報</h5>
                 <p>正確な地図を作成するために、以下のマップをクリックしてお店の正確な位置にピンを置いてください。<br>
@@ -110,8 +98,8 @@
               <!-- Images preview -->
               <div class="col-md-12">
                 <div id="main-preview" class="images-preview">
-                  <% if activity.main_image.attached? %>
-                    <%= image_tag activity.main_image.variant(resize: '600x400').processed, class: "image-preview" %>
+                  <% if listing.main_image.attached? %>
+                    <%= image_tag listing.main_image.variant(resize: '600x400').processed, class: "image-preview" %>
                   <% end %>
                 </div>
               </div>
@@ -141,8 +129,8 @@
               <!-- Images preview -->
               <div class="col-md-12">
                 <div id="preview" class="images-preview">
-                  <% if activity.images.attached? %>
-                    <% activity.images.each do |image| %>
+                  <% if listing.images.attached? %>
+                    <% listing.images.each do |image| %>
                       <%= image_tag image.variant(resize: '600x400').processed, class: "image-preview" %>
                     <% end %>
                   <% end %>
@@ -157,37 +145,54 @@
 
 
         <!-- Section -->
-        <%= f.fields_for :reservation_link do |ff| %>
-          <div class="add-listing-section margin-top-45">
+        <div class="add-listing-section margin-top-45">
 
-            <!-- Headline -->
-            <div class="add-listing-headline">
-              <h3><i class="sl sl-icon-link"></i> 予約ページのURL</h3>
-            </div>
-
-            <!-- Row -->
-            <div class="row with-forms margin-bottom-20">
-              <!-- Name -->
-              <div class="col-md-12">
-                <p>別サイトなどに予約ページがあればURLを入力してください。<br>
-                入力があれば個別ページにリンクを作成します。<br>
-                必ず<strong>http</strong>または<strong>https</strong>からご入力ください。</p>
-                <%= ff.text_field :link %>
-              </div>
-            </div>
-            <!-- Row / End -->
-
+          <!-- Headline -->
+          <div class="add-listing-headline">
+            <h3><i class="sl sl-icon-link"></i> 予約ページのURL</h3>
+            <!-- Switcher -->
+            <%= f.fields_for :page_show do |ff| %>
+              <label class="switch">
+                <%= ff.check_box :reservation_link, class: "slider round" %>
+                <span class="slider round"></span>
+              </label>
+            <% end %>
           </div>
-        <% end %>
+
+          <!-- Switcher ON-OFF Content -->
+          <div class="switcher-content">
+            <%= f.fields_for :reservation_link do |ff| %>
+              <!-- Row -->
+              <div class="row with-forms margin-bottom-20">
+                <!-- Name -->
+                <div class="col-md-12">
+                  <p>別サイトなどに予約ページがあればURLを入力してください。<br>
+                  入力があれば個別ページにリンクを作成します。<br>
+                  必ず<strong>http</strong>または<strong>https</strong>からご入力ください。</p>
+                  <%= ff.text_field :link %>
+                </div>
+              </div>
+              <!-- Row / End -->
+            <% end %>
+          </div>
+
+        </div>
         <!-- Section / End -->
 
 
         <!-- Section -->
-        <div class="add-listing-section margin-top-45 switcher-on">
+        <div class="add-listing-section margin-top-45">
 
           <!-- Headline -->
           <div class="add-listing-headline">
             <h3><i class="sl sl-icon-clock"></i> 営業時間</h3>
+            <!-- Switcher -->
+            <%= f.fields_for :page_show do |ff| %>
+              <label class="switch">
+                <%= ff.check_box :opening_hours, class: "slider round" %>
+                <span class="slider round"></span>
+              </label>
+            <% end %>
           </div>
 
           <!-- Switcher ON-OFF Content -->

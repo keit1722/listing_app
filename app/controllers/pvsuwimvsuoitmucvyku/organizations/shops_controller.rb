@@ -1,40 +1,41 @@
 class Pvsuwimvsuoitmucvyku::Organizations::ShopsController < Pvsuwimvsuoitmucvyku::BaseController
+  layout 'mypage_maps'
+
   def index
     @organization = Organization.find_by!(slug: params[:organization_slug])
     @shops =
       @organization.shops.page(params[:page]).per(20).with_attached_main_image
+    render layout: 'mypage'
   end
 
   def show
     @shop =
       Organization
-      .find_by!(slug: params[:organization_slug])
-      .shops
-      .with_attached_images
-      .find_by!(slug: params[:slug])
-    render layout: 'mypage_maps'
+        .find_by!(slug: params[:organization_slug])
+        .shops
+        .with_attached_images
+        .find_by!(slug: params[:slug])
   end
 
   def edit
     @shop =
       Organization
-      .find_by!(slug: params[:organization_slug])
-      .shops
-      .with_attached_images
-      .find_by!(slug: params[:slug])
+        .find_by!(slug: params[:organization_slug])
+        .shops
+        .with_attached_images
+        .find_by!(slug: params[:slug])
     @shop_update_form = ShopUpdateForm.new(@shop)
     @districts = District.all
     @shop_categories = ShopCategory.all
-    render layout: 'mypage_maps'
   end
 
   def update
     @shop =
       Organization
-      .find_by!(slug: params[:organization_slug])
-      .shops
-      .with_attached_images
-      .find_by!(slug: params[:slug])
+        .find_by!(slug: params[:organization_slug])
+        .shops
+        .with_attached_images
+        .find_by!(slug: params[:slug])
     @shop_update_form = ShopUpdateForm.new(@shop, shop_params)
     @districts = District.all
     @shop_categories = ShopCategory.all
@@ -55,7 +56,16 @@ class Pvsuwimvsuoitmucvyku::Organizations::ShopsController < Pvsuwimvsuoitmucvyk
       .require(:shop_update_form)
       .permit(
         :district_id,
-        opening_hours_attributes: [:start_time_hour, :start_time_minute, :end_time_hour, :end_time_minute, :closed, :day],
+        reservation_link_attributes: [:link],
+        page_show_attributes: %i[reservation_link opening_hours],
+        opening_hours_attributes: %i[
+          start_time_hour
+          start_time_minute
+          end_time_hour
+          end_time_minute
+          closed
+          day
+        ],
         shop_category_ids: [],
         shop_attributes: [
           :name,
@@ -64,8 +74,8 @@ class Pvsuwimvsuoitmucvyku::Organizations::ShopsController < Pvsuwimvsuoitmucvyk
           :description,
           :address,
           :main_image,
-          { images: [] }
-        ]
+          { images: [] },
+        ],
       )
   end
 end

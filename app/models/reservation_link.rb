@@ -3,10 +3,10 @@ class ReservationLink < ApplicationRecord
 
   validates :link,
             length: {
-              maximum: 100
+              maximum: 100,
             },
-            presence: true,
-            format: /\A#{URI::DEFAULT_PARSER.make_regexp(%w[http https])}\z/
+            format: /\A#{URI::DEFAULT_PARSER.make_regexp(%w[http https])}\z/,
+            allow_blank: true
 end
 
 # == Schema Information
@@ -14,7 +14,7 @@ end
 # Table name: reservation_links
 #
 #  id                        :bigint           not null, primary key
-#  link                      :string           not null
+#  link                      :string
 #  reservation_linkable_type :string
 #  created_at                :datetime         not null
 #  updated_at                :datetime         not null

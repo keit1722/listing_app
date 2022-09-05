@@ -17,13 +17,19 @@ class SearchWithCategoriesForm
     if keyword.present?
       scope =
         splited_keywords
-        .map { |splited_keyword| scope.keyword_contain(splited_keyword) }
-        .inject { |result, scp| result.or(scp) }
+          .map do |splited_keyword|
+            scope.keyword_contain(pluralized_model, splited_keyword)
+          end
+          .inject { |result, scp| result.or(scp) }
     end
     scope
   end
 
   private
+
+  def pluralized_model
+    model.pluralize
+  end
 
   def splited_keywords
     keyword.split(/[[:blank:]]+/)
@@ -47,8 +53,7 @@ class SearchWithCategoriesForm
             area_group[:area] == selected_area_group
           end
         end.flatten
-      selected_districts =
-        selected_area_groups.pluck(:grouped).flatten
+      selected_districts = selected_area_groups.pluck(:grouped).flatten
       District.where(name: selected_districts).pluck(:id)
     end
   end
