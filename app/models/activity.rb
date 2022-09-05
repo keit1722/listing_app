@@ -29,21 +29,7 @@ class Activity < ApplicationRecord
   validates :main_image, attached: true, content_type: %i[png jpg jpeg]
   validates :images, limit: { max: 4 }, content_type: %i[png jpg jpeg]
 
-  scope :search_with_district,
-        lambda { |district_ids|
-          joins(:districts).where(districts: { id: district_ids })
-        }
-
-  scope :keyword_contain,
-        lambda { |keyword|
-          where(
-            [
-              'description LIKE(?) OR Activities.name LIKE(?)',
-              "%#{keyword}%",
-              "%#{keyword}%",
-            ],
-          )
-        }
+  include CommonListingScope
 
   def to_param
     slug

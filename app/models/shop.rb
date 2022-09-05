@@ -36,21 +36,7 @@ class Shop < ApplicationRecord
           joins(:shop_categories).where(shop_categories: { id: category_ids })
         }
 
-  scope :search_with_district,
-        lambda { |district_ids|
-          joins(:districts).where(districts: { id: district_ids })
-        }
-
-  scope :keyword_contain,
-        lambda { |keyword|
-          where(
-            [
-              'description LIKE(?) OR Shops.name LIKE(?)',
-              "%#{keyword}%",
-              "%#{keyword}%",
-            ],
-          )
-        }
+  include CommonListingScope
 
   def to_param
     slug

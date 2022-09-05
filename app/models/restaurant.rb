@@ -40,21 +40,7 @@ class Restaurant < ApplicationRecord
           )
         }
 
-  scope :search_with_district,
-        lambda { |district_ids|
-          joins(:districts).where(districts: { id: district_ids })
-        }
-
-  scope :keyword_contain,
-        lambda { |keyword|
-          where(
-            [
-              'description LIKE(?) OR Restaurants.name LIKE(?)',
-              "%#{keyword}%",
-              "%#{keyword}%",
-            ],
-          )
-        }
+  include CommonListingScope
 
   def to_param
     slug
