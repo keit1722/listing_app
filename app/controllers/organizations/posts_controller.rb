@@ -1,4 +1,6 @@
 class Organizations::PostsController < Organizations::BaseController
+  include PostAction
+
   def index
     @posts =
       @postable.posts.with_attached_image.page(params[:page]).per(20).ordered
