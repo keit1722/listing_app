@@ -29,6 +29,6 @@ class Pvsuwimvsuoitmucvyku::Organizations::PostsController < Pvsuwimvsuoitmucvyk
   private
 
   def post_params
-    params.require(:post).permit(:title, :body, :status, :image)
+    params.require(:post).permit(:title, :body, :image)
   end
 end
