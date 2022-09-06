@@ -101,7 +101,6 @@ Rails.application.routes.draw do
             patch :as_draft
           end
         end
-        resources :images, module: :restaurants, only: %i[destroy]
       end
       resources :shops, param: :slug do
         resources :posts,
