@@ -25,50 +25,50 @@ module PostAction
       render :new
     end
   end
-end
 
-def to_published
-  @post = @postable.posts.find(params[:id])
-  if @post.update(
-       post_params.merge(status: 'published', published_before: true),
-     )
-    redirect_to [@postable.organization, @postable, @post],
-                success: '投稿しました'
-  else
-    flash.now[:danger] = '投稿できませんでした'
-    render :edit
+  def to_published
+    @post = @postable.posts.find(params[:id])
+    if @post.update(
+         post_params.merge(status: 'published', published_before: true),
+       )
+      redirect_to [@postable.organization, @postable, @post],
+                  success: '投稿しました'
+    else
+      flash.now[:danger] = '投稿できませんでした'
+      render :edit
+    end
   end
-end
 
-def to_draft
-  @post = @postable.posts.find(params[:id])
-  if @post.update(post_params.merge(status: 'draft'))
-    redirect_to [@postable.organization, @postable, @post],
-                success: '下書きとして変更しました'
-  else
-    flash.now[:danger] = '下書きとして変更できませんでした'
-    render :edit
+  def to_draft
+    @post = @postable.posts.find(params[:id])
+    if @post.update(post_params.merge(status: 'draft'))
+      redirect_to [@postable.organization, @postable, @post],
+                  success: '下書きとして変更しました'
+    else
+      flash.now[:danger] = '下書きとして変更できませんでした'
+      render :edit
+    end
   end
-end
 
-def as_published
-  @post = @postable.posts.find(params[:id])
-  if @post.update(post_params)
-    redirect_to [@postable.organization, @postable, @post],
-                success: '内容を更新しました'
-  else
-    flash.now[:danger] = '内容を更新できませんでした'
-    render :edit
+  def as_published
+    @post = @postable.posts.find(params[:id])
+    if @post.update(post_params)
+      redirect_to [@postable.organization, @postable, @post],
+                  success: '内容を更新しました'
+    else
+      flash.now[:danger] = '内容を更新できませんでした'
+      render :edit
+    end
   end
-end
 
-def as_draft
-  @post = @postable.posts.find(params[:id])
-  if @post.update(post_params)
-    redirect_to [@postable.organization, @postable, @post],
-                success: '内容を更新しました'
-  else
-    flash.now[:danger] = '内容を更新できませんでした'
-    render :edit
+  def as_draft
+    @post = @postable.posts.find(params[:id])
+    if @post.update(post_params)
+      redirect_to [@postable.organization, @postable, @post],
+                  success: '内容を更新しました'
+    else
+      flash.now[:danger] = '内容を更新できませんでした'
+      render :edit
+    end
   end
 end
