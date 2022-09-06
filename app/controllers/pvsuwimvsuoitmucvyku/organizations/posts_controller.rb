@@ -1,4 +1,6 @@
 class Pvsuwimvsuoitmucvyku::Organizations::PostsController < Pvsuwimvsuoitmucvyku::BaseController
+  include AdminPostAction
+
   def index
     @posts =
       @postable.posts.with_attached_image.page(params[:page]).per(20).ordered
@@ -12,31 +14,15 @@ class Pvsuwimvsuoitmucvyku::Organizations::PostsController < Pvsuwimvsuoitmucvyk
     @post = @postable.posts.find(params[:id])
   end
 
-  def update
-    @post = @postable.posts.find(params[:id])
-    if @post.update(post_params)
-      redirect_to [
-        :pvsuwimvsuoitmucvyku,
-        @postable.organization,
-        @postable,
-        @post
-      ],
-                  success: '内容を更新しました'
-    else
-      flash.now[:danger] = '内容を更新できませんでした'
-      render :edit
-    end
-  end
-
   def destroy
     @post = @postable.posts.find(params[:id])
     @post.destroy!
     redirect_to [
-      :pvsuwimvsuoitmucvyku,
-      @postable.organization,
-      @postable,
-      :posts
-    ],
+                  :pvsuwimvsuoitmucvyku,
+                  @postable.organization,
+                  @postable,
+                  :posts,
+                ],
                 success: '削除しました'
   end
 
