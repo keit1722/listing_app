@@ -10,6 +10,7 @@ class Post < ApplicationRecord
   validates :status, presence: true
 
   enum status: { published: 1, draft: 2, draft_to_published: 3 }
+  enum notice_title: { posted: 1, updated: 2 }
 
   scope :ordered, -> { order(created_at: :desc) }
   scope :recent, ->(count) { ordered.limit(count) }
