@@ -87,26 +87,117 @@ Rails.application.routes.draw do
     scope module: :organizations do
       resources :organization_invitations, only: %i[index new create]
       resources :restaurants, param: :slug do
-        resources :posts, module: :restaurants
+        resources :posts,
+                  module: :restaurants,
+                  only: %i[index show new edit destroy] do
+          collection do
+            post :publish
+            post :unpublish
+          end
+          member do
+            patch :to_published
+            patch :to_draft
+            patch :as_published
+            patch :as_draft
+          end
+        end
         resources :images, module: :restaurants, only: %i[destroy]
       end
       resources :shops, param: :slug do
-        resources :posts, module: :shops
+        resources :posts,
+                  module: :shops,
+                  only: %i[index show new edit destroy] do
+          collection do
+            post :publish
+            post :unpublish
+          end
+          member do
+            patch :to_published
+            patch :to_draft
+            patch :as_published
+            patch :as_draft
+          end
+        end
       end
       resources :hotels, param: :slug do
-        resources :posts, module: :hotels
+        resources :posts,
+                  module: :hotels,
+                  only: %i[index show new edit destroy] do
+          collection do
+            post :publish
+            post :unpublish
+          end
+          member do
+            patch :to_published
+            patch :to_draft
+            patch :as_published
+            patch :as_draft
+          end
+        end
       end
       resources :activities, param: :slug do
-        resources :posts, module: :activities
+        resources :posts,
+                  module: :activities,
+                  only: %i[index show new edit destroy] do
+          collection do
+            post :publish
+            post :unpublish
+          end
+          member do
+            patch :to_published
+            patch :to_draft
+            patch :as_published
+            patch :as_draft
+          end
+        end
       end
       resources :hot_springs, param: :slug do
-        resources :posts, module: :hot_springs
+        resources :posts,
+                  module: :hot_springs,
+                  only: %i[index show new edit destroy] do
+          collection do
+            post :publish
+            post :unpublish
+          end
+          member do
+            patch :to_published
+            patch :to_draft
+            patch :as_published
+            patch :as_draft
+          end
+        end
       end
       resources :ski_areas, param: :slug do
-        resources :posts, module: :ski_areas
+        resources :posts,
+                  module: :ski_areas,
+                  only: %i[index show new edit destroy] do
+          collection do
+            post :publish
+            post :unpublish
+          end
+          member do
+            patch :to_published
+            patch :to_draft
+            patch :as_published
+            patch :as_draft
+          end
+        end
       end
       resources :photo_spots, param: :slug do
-        resources :posts, module: :photo_spots
+        resources :posts,
+                  module: :photo_spots,
+                  only: %i[index show new edit destroy] do
+          collection do
+            post :publish
+            post :unpublish
+          end
+          member do
+            patch :to_published
+            patch :to_draft
+            patch :as_published
+            patch :as_draft
+          end
+        end
       end
     end
   end

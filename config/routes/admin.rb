@@ -10,50 +10,95 @@ namespace :pvsuwimvsuoitmucvyku do
                 param: :slug,
                 only: %i[index edit update show destroy] do
         resources :posts,
-                  only: %i[index edit update show destroy],
-                  module: :restaurants
+                  only: %i[index edit show destroy],
+                  module: :restaurants do
+          member do
+            patch :to_published
+            patch :to_draft
+            patch :as_published
+            patch :as_draft
+          end
+        end
       end
       resources :shops,
                 param: :slug,
                 only: %i[index edit update show destroy] do
-        resources :posts,
-                  only: %i[index edit update show destroy],
-                  module: :shops
+        resources :posts, only: %i[index edit show destroy], module: :shops do
+          member do
+            patch :to_published
+            patch :to_draft
+            patch :as_published
+            patch :as_draft
+          end
+        end
       end
       resources :hotels,
                 param: :slug,
                 only: %i[index edit update show destroy] do
-        resources :posts,
-                  only: %i[index edit update show destroy],
-                  module: :hotels
+        resources :posts, only: %i[index edit show destroy], module: :hotels do
+          member do
+            patch :to_published
+            patch :to_draft
+            patch :as_published
+            patch :as_draft
+          end
+        end
       end
       resources :activities,
                 param: :slug,
                 only: %i[index edit update show destroy] do
         resources :posts,
-                  only: %i[index edit update show destroy],
-                  module: :activities
+                  only: %i[index edit show destroy],
+                  module: :activities do
+          member do
+            patch :to_published
+            patch :to_draft
+            patch :as_published
+            patch :as_draft
+          end
+        end
       end
       resources :hot_springs,
                 param: :slug,
                 only: %i[index edit update show destroy] do
         resources :posts,
-                  only: %i[index edit update show destroy],
-                  module: :hot_springs
+                  only: %i[index edit show destroy],
+                  module: :hot_springs do
+          member do
+            patch :to_published
+            patch :to_draft
+            patch :as_published
+            patch :as_draft
+          end
+        end
       end
       resources :ski_areas,
                 param: :slug,
                 only: %i[index edit update show destroy] do
         resources :posts,
-                  only: %i[index edit update show destroy],
-                  module: :ski_areas
+                  only: %i[index edit show destroy],
+                  module: :ski_areas do
+          member do
+            patch :to_published
+            patch :to_draft
+            patch :as_published
+            patch :as_draft
+          end
+        end
       end
       resources :photo_spots,
                 param: :slug,
                 only: %i[index edit update show destroy] do
         resources :posts,
-                  only: %i[index edit update show destroy],
-                  module: :photo_spots
+                  only: %i[index edit show destroy],
+                  module: :photo_spots do
+          member do
+            patch :to_published
+            patch :to_draft
+            patch :as_published
+            patch :as_draft
+          end
+        end
       end
     end
   end
