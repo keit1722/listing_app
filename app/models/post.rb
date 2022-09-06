@@ -14,8 +14,6 @@ class Post < ApplicationRecord
   scope :ordered, -> { order(created_at: :desc) }
   scope :recent, ->(count) { ordered.limit(count) }
 
-  after_create_commit :create_notices
-
   def previous
     postable
       .posts
@@ -37,8 +35,6 @@ class Post < ApplicationRecord
   private
 
   def create_notices
-    return if draft?
-
     notices =
       postable.bookmarks.map do |bookmark|
         Notice.new(user: bookmark.user, noticeable: self)
