@@ -80,15 +80,15 @@ end
 #
 # Table name: posts
 #
-#  id            :bigint           not null, primary key
-#  body          :text             not null
-#  notice_title  :integer          default(1), not null
-#  postable_type :string
-#  status        :integer          not null
-#  title         :string           not null
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#  postable_id   :bigint
+#  id               :bigint           not null, primary key
+#  body             :text             not null
+#  postable_type    :string
+#  published_before :boolean          default(FALSE), not null
+#  status           :integer          not null
+#  title            :string           not null
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  postable_id      :bigint
 #
 # Indexes
 #
