@@ -53,6 +53,7 @@ end
 #
 #  id            :bigint           not null, primary key
 #  body          :text             not null
+#  notice_title  :integer          default(1), not null
 #  postable_type :string
 #  status        :integer          not null
 #  title         :string           not null

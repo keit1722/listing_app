@@ -240,6 +240,7 @@ ActiveRecord::Schema.define(version: 2022_07_01_083140) do
     t.integer "status", null: false
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "created_at", precision: 6, null: false
+    t.integer "notice_title", default: 1, null: false
     t.index ["postable_type", "postable_id"], name: "index_posts_on_postable_type_and_postable_id"
   end
 
