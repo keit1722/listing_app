@@ -23,9 +23,9 @@ RSpec.describe Post, type: :model do
 
   describe 'スコープ' do
     let(:restaurant) { create(:restaurant) }
-    let!(:post_a) { create(:post, postable: restaurant) }
-    let!(:post_b) { create(:post, postable: restaurant) }
-    let!(:post_c) { create(:post, postable: restaurant) }
+    let!(:post_a) { create(:post_published, postable: restaurant) }
+    let!(:post_b) { create(:post_published, postable: restaurant) }
+    let!(:post_c) { create(:post_published, postable: restaurant) }
 
     describe 'ordered' do
       it { expect(described_class.ordered).to eq [post_c, post_b, post_a] }
@@ -42,9 +42,9 @@ RSpec.describe Post, type: :model do
 
   describe 'インスタンスメソッド' do
     let(:restaurant) { create(:restaurant) }
-    let!(:post_a) { create(:post, postable: restaurant) }
-    let!(:post_b) { create(:post, postable: restaurant) }
-    let!(:post_c) { create(:post, postable: restaurant) }
+    let!(:post_a) { create(:post_published, postable: restaurant) }
+    let!(:post_b) { create(:post_published, postable: restaurant) }
+    let!(:post_c) { create(:post_published, postable: restaurant) }
 
     describe 'previous' do
       context 'ひとつ前に作成されたオブジェクトがある場合' do
