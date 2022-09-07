@@ -102,6 +102,11 @@ ja:
         organization_address: '住所'
         organization_phone: '電話番号'
         business_detail: '事業内容'
+      incoming_email:
+        post: 'お気に入り登録しているお店・施設の投稿'
+        announcement: '運営からのお知らせ'
+        organization: '組織へ別ユーザーが参加'
+        organization_invitation: '組織への参加するための招待'
   activemodel:
     attributes:
       restaurant_create_form:
