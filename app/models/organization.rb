@@ -16,18 +16,20 @@ class Organization < ApplicationRecord
   validates :phone, numericality: true, length: { in: 10..11 }, presence: true
   validates :slug,
             length: {
-              maximum: 30
+              maximum: 30,
             },
             uniqueness: true,
             presence: true,
             format: {
-              with: /\A[a-z0-9\-]+\z/
+              with: /\A[a-z0-9\-]+\z/,
             }
 
   def create_notices
     notices = users.map { |user| Notice.new(user: user, noticeable: self) }
     Notice.import notices
-    users.each do |user|
+
+    email_receivers = users.select { |user| user.incoming_email.organization? }
+    email_receivers.each do |user|
       NoticeMailer
         .with(user_to: user, organization: self)
         .organization

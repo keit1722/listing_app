@@ -34,13 +34,12 @@ class Post < ApplicationRecord
 
   def create_notices
     notices =
-      postable.bookmarks.map do |bookmark|
-        Notice.new(user: bookmark.user, noticeable: self)
-      end
+      postable.users.map { |user| Notice.new(user: user, noticeable: self) }
     Notice.import notices
 
-    postable.bookmarks.each do |bookmark|
-      NoticeMailer.with(user_to: bookmark.user, post: self).post.deliver_later
+    email_receivers = postable.users.select { |user| user.incoming_email.post? }
+    email_receivers.each do |user|
+      NoticeMailer.with(user_to: user, post: self).post.deliver_later
     end
   end
 end

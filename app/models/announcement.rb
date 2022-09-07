@@ -33,7 +33,8 @@ class Announcement < ApplicationRecord
     notices = User.map { |user| Notice.new(user: user, noticeable: self) }
     Notice.import notices
 
-    User.each do |user|
+    email_receivers = User.select { |user| user.incoming_email.announcement? }
+    email_receivers.each do |user|
       NoticeMailer
         .with(user_to: user, announcement: self)
         .announcement
