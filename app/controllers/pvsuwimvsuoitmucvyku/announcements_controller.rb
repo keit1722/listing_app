@@ -29,7 +29,7 @@ class Pvsuwimvsuoitmucvyku::AnnouncementsController < Pvsuwimvsuoitmucvyku::Base
   def announcement_params
     params
       .require(:announcement)
-      .permit(:title, :body :image)
+      .permit(:title, :body, :image)
       .merge(poster_id: current_user.id)
   end
 end
