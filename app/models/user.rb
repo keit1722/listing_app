@@ -84,7 +84,7 @@ class User < ApplicationRecord
 
   enum role: { general: 1, business: 2, admin: 9 }
 
-  after_create :create_incoming_email
+  after_create :create_incoming_email_model
 
   def to_param
     public_uid
@@ -112,7 +112,7 @@ class User < ApplicationRecord
     "#{bookmarkable.class.to_s.underscore}_bookmarks"
   end
 
-  def create_incoming_email
+  def create_incoming_email_model
     self.create_incoming_email
   end
 end
