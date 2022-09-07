@@ -17,7 +17,7 @@ RSpec.describe 'お知らせ', type: :system do
         pvsuwimvsuoitmucvyku_login_as user_admin
         visit new_pvsuwimvsuoitmucvyku_announcement_path
         expect(
-          page
+          page,
         ).to have_current_path new_pvsuwimvsuoitmucvyku_announcement_path
       end
     end
@@ -51,14 +51,12 @@ RSpec.describe 'お知らせ', type: :system do
         visit new_pvsuwimvsuoitmucvyku_announcement_path
         fill_in 'タイトル', with: 'サンプルタイトル'
         fill_in '内容', with: 'サンプル内容'
-        find('#announcement_status_chosen').click
-        find('#announcement_status_chosen .active-result', text: '公開').click
-        click_button '登録する'
+        click_button '投稿'
 
         expect(
-          page
+          page,
         ).to have_current_path pvsuwimvsuoitmucvyku_announcements_path
-        expect(page).to have_content '作成しました'
+        expect(page).to have_content '投稿しました'
         expect(page).to have_content 'サンプルタイトル'
       end
     end
@@ -70,20 +68,18 @@ RSpec.describe 'お知らせ', type: :system do
     context '入力が正しい場合' do
       it 'お知らせが編集される' do
         visit edit_pvsuwimvsuoitmucvyku_announcement_path(
-          announcement_published
-        )
+                announcement_published,
+              )
         fill_in 'タイトル', with: 'サンプル編集後タイトル'
         fill_in '内容', with: 'サンプル編集後内容'
-        find('#announcement_status_chosen').click
-        find('#announcement_status_chosen .active-result', text: '公開').click
-        click_button '更新する'
+        click_button '更新'
 
         expect(
-          page
+          page,
         ).to have_current_path pvsuwimvsuoitmucvyku_announcement_path(
-          announcement_published
-        )
-        expect(page).to have_content '更新しました'
+                            announcement_published,
+                          )
+        expect(page).to have_content '内容を更新しました'
         expect(page).to have_content 'サンプル編集後タイトル'
       end
     end
@@ -113,8 +109,8 @@ RSpec.describe 'お知らせ', type: :system do
       it '詳細ページが表示される' do
         visit announcement_path(announcement_published)
         expect(page).to have_current_path announcement_path(
-          announcement_published
-        )
+                            announcement_published,
+                          )
       end
     end
 
