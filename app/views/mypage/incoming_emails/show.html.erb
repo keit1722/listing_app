@@ -27,14 +27,16 @@
               <td data-label="項目"><%= IncomingEmail.human_attribute_name("announcement") %></td>
               <td data-label="内容"><%= @incoming_email.announcement? ? "する" : "しない" %></td>
             </tr>
-            <tr>
-              <td data-label="項目"><%= IncomingEmail.human_attribute_name("organization") %></td>
-              <td data-label="内容"><%= @incoming_email.organization? ? "する" : "しない" %></td>
-            </tr>
-            <tr>
-              <td data-label="項目"><%= IncomingEmail.human_attribute_name("organization_invitation") %></td>
-              <td data-label="内容"><%= @incoming_email.organization_invitation? ? "する" : "しない" %></td>
-            </tr>
+            <% if current_user.business? || current_user.admin? %>
+              <tr>
+                <td data-label="項目"><%= IncomingEmail.human_attribute_name("organization") %></td>
+                <td data-label="内容"><%= @incoming_email.organization? ? "する" : "しない" %></td>
+              </tr>
+              <tr>
+                <td data-label="項目"><%= IncomingEmail.human_attribute_name("organization_invitation") %></td>
+                <td data-label="内容"><%= @incoming_email.organization_invitation? ? "する" : "しない" %></td>
+              </tr>
+            <% end %>
           </tbody>
         </table>
         <!-- table -->
