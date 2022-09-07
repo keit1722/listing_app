@@ -134,3 +134,17 @@ RSpec.describe Announcement, type: :model do
     end
   end
 end
+
+# == Schema Information
+#
+# Table name: announcements
+#
+#  id               :bigint           not null, primary key
+#  body             :text             not null
+#  published_before :boolean          default(FALSE), not null
+#  status           :integer          default("published"), not null
+#  title            :string           not null
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  poster_id        :integer          not null
+#

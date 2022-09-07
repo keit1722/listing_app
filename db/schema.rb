@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(version: 2022_07_01_083140) do
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "created_at", precision: 6, null: false
     t.integer "poster_id", null: false
+    t.boolean "published_before", default: false, null: false
   end
 
   create_table "bookmarks", force: :cascade do |t|
