@@ -112,5 +112,16 @@ namespace :pvsuwimvsuoitmucvyku do
     resources :organization_registration_statuses, only: %i[create]
   end
 
-  resources :announcements
+  resources :announcements, only: %i[index show new edit destroy] do
+    collection do
+      post :publish
+      post :unpublish
+    end
+    member do
+      patch :to_published
+      patch :to_draft
+      patch :as_published
+      patch :as_draft
+    end
+  end
 end
