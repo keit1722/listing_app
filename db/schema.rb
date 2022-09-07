@@ -128,6 +128,17 @@ ActiveRecord::Schema.define(version: 2022_07_01_083140) do
     t.index ["slug"], name: "index_hotels_on_slug", unique: true
   end
 
+  create_table "incoming_emails", force: :cascade do |t|
+    t.bigint "user_id"
+    t.boolean "post", default: true, null: false
+    t.boolean "announcement", default: true, null: false
+    t.boolean "organization", default: true, null: false
+    t.boolean "organization_invitation", default: true, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_incoming_emails_on_user_id"
+  end
+
   create_table "notices", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "noticeable_id"
@@ -365,6 +376,7 @@ ActiveRecord::Schema.define(version: 2022_07_01_083140) do
   add_foreign_key "district_mappings", "districts"
   add_foreign_key "hot_springs", "organizations"
   add_foreign_key "hotels", "organizations"
+  add_foreign_key "incoming_emails", "users"
   add_foreign_key "notices", "users"
   add_foreign_key "organization_invitations", "organizations"
   add_foreign_key "organization_registration_statuses", "organization_registrations"
