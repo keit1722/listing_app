@@ -17,7 +17,7 @@ class Post < ApplicationRecord
   def previous
     postable
       .posts
-      .not_draft
+      .published
       .where('created_at < ?', created_at)
       .order('created_at DESC')
       .first
@@ -26,7 +26,7 @@ class Post < ApplicationRecord
   def next
     postable
       .posts
-      .not_draft
+      .published
       .where('created_at > ?', created_at)
       .order('created_at ASC')
       .first

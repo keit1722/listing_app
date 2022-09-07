@@ -4,7 +4,7 @@ class PostsController < ApplicationController
       @postable
         .posts
         .with_attached_image
-        .not_draft
+        .published
         .page(params[:page])
         .per(5)
         .ordered
@@ -12,8 +12,8 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post = @postable.posts.not_draft.find(params[:id])
-    @posts = @postable.posts.with_attached_image.not_draft.ordered
+    @post = @postable.posts.published.find(params[:id])
+    @posts = @postable.posts.with_attached_image.published.ordered
     @three_posts = @posts.limit(3)
   end
 end
