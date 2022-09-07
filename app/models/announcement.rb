@@ -30,11 +30,10 @@ class Announcement < ApplicationRecord
   end
 
   def create_notices
-    notices =
-      User.not_admin.map { |user| Notice.new(user: user, noticeable: self) }
+    notices = User.map { |user| Notice.new(user: user, noticeable: self) }
     Notice.import notices
 
-    User.not_admin.each do |user|
+    User.each do |user|
       NoticeMailer
         .with(user_to: user, announcement: self)
         .announcement
