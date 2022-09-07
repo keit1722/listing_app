@@ -32,8 +32,6 @@ class Post < ApplicationRecord
       .first
   end
 
-  private
-
   def create_notices
     notices =
       postable.bookmarks.map do |bookmark|

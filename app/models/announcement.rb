@@ -29,11 +29,7 @@ class Announcement < ApplicationRecord
       .first
   end
 
-  private
-
   def create_notices
-    return if draft?
-
     notices =
       User.not_admin.map { |user| Notice.new(user: user, noticeable: self) }
     Notice.import notices
