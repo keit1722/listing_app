@@ -7,7 +7,8 @@ module AnnouncementAction
         announcement_params.merge(status: 'published', published_before: true),
       )
     if @announcement.save
-      redirect_to pvsuwimvsuoitmucvyku_announcements_path, '投稿しました'
+      redirect_to pvsuwimvsuoitmucvyku_announcements_path,
+                  success: '投稿しました'
     else
       flash.now[:error] = '投稿できませんでした'
       render :new
