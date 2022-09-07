@@ -1,4 +1,6 @@
 class IncomingEmail < ApplicationRecord
+  belongs_to :user
+
   validates :announcement, presence: true
   validates :organization, presence: true
   validates :organization_invitation, presence: true

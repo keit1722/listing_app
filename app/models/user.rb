@@ -44,6 +44,8 @@ class User < ApplicationRecord
            source: :noticeable,
            source_type: 'Post'
 
+  has_one :incoming_email
+
   has_one_attached :avatar
 
   validates :password,
