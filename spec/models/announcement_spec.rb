@@ -1,14 +1,3 @@
-#
-# Table name: announcements
-#
-#  id         :bigint           not null, primary key
-#  body       :text             not null
-#  status     :integer          default("published"), not null
-#  title      :string           not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  poster_id  :integer          not null
-#
 require 'rails_helper'
 
 RSpec.describe Announcement, type: :model do
