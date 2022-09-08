@@ -1,6 +1,6 @@
-<%=  @user_to.username %>  さん
+<%= @user_to.username %>  さん
 
-<%= @post.postable.name %> が新しく投稿をしました。
+<%= @post.postable.name %> が<%= @title %>。
 
 <%= polymorphic_url([@post.postable, @post]) %>
 

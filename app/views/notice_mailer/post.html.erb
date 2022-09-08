@@ -1,6 +1,6 @@
-<p><%=  @user_to.username %>  さん</p>
+<p><%= @user_to.username %>  さん</p>
 
-<p><%= @post.postable.name %> が新しく投稿をしました。</p>
+<p><%= "#{@post.postable.name} が#{@title}" %>。</p>
 <%= link_to nil, polymorphic_url([@post.postable, @post]) %>
 <p>===============================================</p>
 <p>listing_app</p>
