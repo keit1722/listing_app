@@ -32,14 +32,17 @@ class Post < ApplicationRecord
       .first
   end
 
-  def create_notices
+  def create_notices(title)
     notices =
       postable.users.map { |user| Notice.new(user: user, noticeable: self) }
     Notice.import notices
 
     email_receivers = postable.users.select { |user| user.incoming_email.post? }
     email_receivers.each do |user|
-      NoticeMailer.with(user_to: user, post: self).post.deliver_later
+      NoticeMailer
+        .with(user_to: user, post: self, title: title)
+        .post
+        .deliver_later
     end
   end
 end

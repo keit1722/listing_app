@@ -7,6 +7,7 @@ module AdminPostAction
         post_params.merge(status: 'published', published_before: true),
       )
     if @post.save
+      @post.create_notices('新しく投稿をしました')
       redirect_to [
                     :pvsuwimvsuoitmucvyku,
                     @postable.organization,
@@ -41,6 +42,7 @@ module AdminPostAction
     if @post.update(
          post_params.merge(status: 'published', published_before: true),
        )
+      @post.create_notices('新しく投稿をしました')
       redirect_to [
                     :pvsuwimvsuoitmucvyku,
                     @postable.organization,
@@ -73,6 +75,7 @@ module AdminPostAction
   def as_published
     @post = @postable.posts.find(params[:id])
     if @post.update(post_params)
+      @post.create_notices('投稿内容を更新しました')
       redirect_to [
                     :pvsuwimvsuoitmucvyku,
                     @postable.organization,
