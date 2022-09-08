@@ -351,8 +351,6 @@ RSpec.describe 'スキー', type: :system do
         fill_in '内容', with: '更新サンプル投稿内容'
         page.execute_script "$('input#post_image').css('opacity','1')"
         attach_file('画像', Rails.root.join('spec/fixtures/fixture.png'))
-        find('#post_status_chosen').click
-        find('#post_status_chosen .active-result', text: '下書き').click
         click_button '更新'
 
         expect(page).to have_content '内容を更新しました'
