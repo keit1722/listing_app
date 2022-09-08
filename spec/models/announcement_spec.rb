@@ -111,24 +111,35 @@ RSpec.describe Announcement, type: :model do
         create(:business_user, :activated)
       end
 
-      context '作成した記事が公開用だった場合' do
-        it '管理者以外に通知される' do
+      context 'メール受信設定をOFFにしているユーザがいない場合' do
+        it 'すべてのユーザに通知が送られ、メールも送信される' do
           expect do
-            create(:announcement_published, poster_id: user.id).create_notices
-          end.to change(Notice, :count).by(2).and have_enqueued_mail(
+            create(:announcement_published, poster_id: user.id).create_notices(
+              '新しいお知らせがあります',
+            )
+          end.to change(Notice, :count).by(3).and have_enqueued_mail(
+                                               NoticeMailer,
+                                               :announcement,
+                                             )
+                                             .exactly(3)
+                                             .times
+        end
+      end
+
+      context 'メール受信設定をOFFにしているユーザがいる場合' do
+        it 'すべてのユーザに通知が送られ、メールは送信されない' do
+          user.incoming_email.update(announcement: false)
+
+          expect do
+            create(:announcement_published, poster_id: user.id).create_notices(
+              '新しいお知らせがあります',
+            )
+          end.to change(Notice, :count).by(3).and have_enqueued_mail(
                                                NoticeMailer,
                                                :announcement,
                                              )
                                              .exactly(2)
                                              .times
-        end
-      end
-
-      context '作成した記事が下書きだった場合' do
-        it '誰にも通知されない' do
-          expect do
-            create(:announcement_draft, poster_id: user.id)
-          end.not_to change(Notice, :count)
         end
       end
     end
