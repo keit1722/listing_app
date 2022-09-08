@@ -147,7 +147,6 @@ ActiveRecord::Schema.define(version: 2022_07_01_083140) do
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "created_at", precision: 6, null: false
     t.index ["noticeable_type", "noticeable_id"], name: "index_notices_on_noticeable_type_and_noticeable_id"
-    t.index ["user_id", "noticeable_id", "noticeable_type"], name: "index_bookmarks_on_user_id_and_noticeable_id_and_type", unique: true
     t.index ["user_id"], name: "index_notices_on_user_id"
   end
 

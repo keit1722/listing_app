@@ -209,9 +209,6 @@ create_table 'notices', force: :cascade do |t|
   t.boolean 'read', null: false, default: false
   t.datetime 'updated_at', precision: 6, null: false
   t.datetime 'created_at', precision: 6, null: false
-  t.index %i[user_id noticeable_id noticeable_type],
-          unique: true,
-          name: 'index_bookmarks_on_user_id_and_noticeable_id_and_type'
 end
 
 create_table 'organization_invitations', force: :cascade do |t|
