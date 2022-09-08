@@ -435,25 +435,4 @@ RSpec.describe 'フォトスポット', type: :system do
       expect(page).to have_content post_a.title
     end
   end
-
-  describe '通知一覧表示' do
-    before { business_login_as user_a }
-
-    context 'お気に入りをしているフォトスポットの場合' do
-      it '投稿がされるとフォトスポットの名前が追加される' do
-        user_a.bookmark(photo_spot_a)
-        create(:post_published, postable: photo_spot_a)
-        visit mypage_notices_path
-        expect(page).to have_content photo_spot_a.name
-      end
-    end
-
-    context 'お気に入りをしていないフォトスポットの場合' do
-      it '投稿がされるとフォトスポットの名前が追加されない' do
-        create(:post_published, postable: photo_spot_a)
-        visit mypage_notices_path
-        expect(page).not_to have_content photo_spot_a.name
-      end
-    end
-  end
 end

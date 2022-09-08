@@ -435,25 +435,4 @@ RSpec.describe '温泉', type: :system do
       expect(page).to have_content post_a.title
     end
   end
-
-  describe '通知一覧表示' do
-    before { business_login_as user_a }
-
-    context 'お気に入りをしている温泉の場合' do
-      it '投稿がされると温泉の名前が追加される' do
-        user_a.bookmark(hot_spring_a)
-        create(:post_published, postable: hot_spring_a)
-        visit mypage_notices_path
-        expect(page).to have_content hot_spring_a.name
-      end
-    end
-
-    context 'お気に入りをしていない温泉の場合' do
-      it '投稿がされると温泉の名前が追加されない' do
-        create(:post_published, postable: hot_spring_a)
-        visit mypage_notices_path
-        expect(page).not_to have_content hot_spring_a.name
-      end
-    end
-  end
 end
