@@ -1,5 +1,5 @@
 <div class="message-by-headline">
-  <h5>お知らせ 
+  <h5><%= notice.noticeable.published_before? ? "新しいお知らせがあります" : "お知らせの内容が更新されました" %> 
     <% if notice.unread? %>
       <i>未読</i>
     <% end %>

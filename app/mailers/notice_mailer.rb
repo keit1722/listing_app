@@ -2,7 +2,7 @@ class NoticeMailer < ApplicationMailer
   def post
     @user_to = params[:user_to]
     @post = params[:post]
-    @message = params[:title]
+    @title = params[:title]
 
     mail(to: @user_to.email, subject: "#{@post.postable.name} が#{@title}")
   end
@@ -31,7 +31,8 @@ class NoticeMailer < ApplicationMailer
   def announcement
     @user_to = params[:user_to]
     @announcement = params[:announcement]
+    @title = params[:title]
 
-    mail(to: @user_to.email, subject: 'お知らせがあります')
+    mail(to: @user_to.email, subject: @title)
   end
 end

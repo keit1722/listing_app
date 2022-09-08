@@ -7,6 +7,7 @@ module AnnouncementAction
         announcement_params.merge(status: 'published', published_before: true),
       )
     if @announcement.save
+      @announcement.create_notices('新しいお知らせがあります')
       redirect_to pvsuwimvsuoitmucvyku_announcements_path,
                   success: '投稿しました'
     else
@@ -31,6 +32,7 @@ module AnnouncementAction
     if @announcement.update(
          announcement_params.merge(status: 'published', published_before: true),
        )
+      @announcement.create_notices('新しいお知らせがあります')
       redirect_to pvsuwimvsuoitmucvyku_announcement_path,
                   success: '投稿しました'
     else
@@ -53,6 +55,7 @@ module AnnouncementAction
   def as_published
     @announcement = Announcement.find(params[:id])
     if @announcement.update(announcement_params)
+      @announcement.create_notices('お知らせの内容が更新されました')
       redirect_to pvsuwimvsuoitmucvyku_announcement_path,
                   success: '内容を更新しました'
     else
