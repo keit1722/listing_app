@@ -62,10 +62,10 @@ ActiveRecord::Schema.define(version: 2022_07_01_083140) do
     t.string "title", null: false
     t.text "body", null: false
     t.integer "status", default: 1, null: false
+    t.boolean "published_before", default: false, null: false
+    t.integer "poster_id", null: false
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "created_at", precision: 6, null: false
-    t.integer "poster_id", null: false
-    t.boolean "published_before", default: false, null: false
   end
 
   create_table "bookmarks", force: :cascade do |t|
@@ -153,35 +153,35 @@ ActiveRecord::Schema.define(version: 2022_07_01_083140) do
   create_table "opening_hours", force: :cascade do |t|
     t.bigint "opening_hourable_id"
     t.string "opening_hourable_type"
-    t.integer "day", null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.datetime "created_at", precision: 6, null: false
     t.string "start_time_hour", null: false
     t.string "start_time_minute", null: false
     t.string "end_time_hour", null: false
     t.string "end_time_minute", null: false
+    t.integer "day", null: false
     t.boolean "closed", default: false, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", precision: 6, null: false
     t.index ["opening_hourable_type", "opening_hourable_id"], name: "index_polymorphic_opening_hour_mappings_on_id_and_type"
   end
 
   create_table "organization_invitations", force: :cascade do |t|
     t.bigint "organization_id"
-    t.string "token", null: false
-    t.datetime "expires_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.datetime "created_at", precision: 6, null: false
     t.integer "inviter_id", null: false
     t.string "email", null: false
+    t.string "token", null: false
+    t.datetime "expires_at", precision: 6, null: false
     t.integer "status", default: 1, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", precision: 6, null: false
     t.index ["organization_id"], name: "index_organization_invitations_on_organization_id"
     t.index ["token"], name: "index_organization_invitations_on_token", unique: true
   end
 
   create_table "organization_registration_statuses", force: :cascade do |t|
     t.bigint "organization_registration_id"
+    t.integer "status", null: false
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "created_at", precision: 6, null: false
-    t.integer "status", null: false
     t.index ["organization_registration_id"], name: "index_org_registration_statuses_on_org_registration_id"
   end
 
@@ -249,9 +249,9 @@ ActiveRecord::Schema.define(version: 2022_07_01_083140) do
     t.string "title", null: false
     t.text "body", null: false
     t.integer "status", null: false
+    t.boolean "published_before", default: false, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "created_at", precision: 6, null: false
-    t.boolean "published_before", default: false, null: false
     t.index ["postable_type", "postable_id"], name: "index_posts_on_postable_type_and_postable_id"
   end
 
