@@ -52,6 +52,11 @@ RSpec.describe User, type: :model do
       user.resign(organization)
       expect(user.organizations).to be_empty
     end
+
+    it 'create_incoming_email_model' do
+      other_user = create(:general_user)
+      expect(other_user.incoming_email.present?).to be_truthy
+    end
   end
 end
 
