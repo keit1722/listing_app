@@ -95,9 +95,12 @@ RSpec.describe Post, type: :model do
         expect(user_c.notices.exists?).to be_falsey
       end
 
-      it 'お気に入り登録して、なおかつ投稿のメール通知をオンにしているユーザにのみ通知が送られる' do
+      it 'お気に入り登録して、なおかつ投稿のメール通知をオンにしているユーザにのみメール送信がおこなわれる' do
         mails = ActionMailer::Base.deliveries
-        expect(mails.size).to eq(1)
+        recievers =
+          User.joins(:incoming_email).where(incoming_email: { post: true })
+
+        expect(mails.size).to eq(recievers.size)
         expect(mails.first.to.first).to eq(user_a.email)
       end
     end
