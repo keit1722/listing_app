@@ -94,42 +94,33 @@ RSpec.describe Announcement, type: :model do
       end
     end
 
-    describe 'create_notice' do
+    describe 'create_notices' do
+      let!(:user_a) { create(:general_user, :activated) }
+      let(:user_b) { create(:general_user, :activated) }
+      around { |example| perform_enqueued_jobs(&example) }
+
       before do
-        create(:general_user, :activated)
-        create(:business_user, :activated)
+        user_b.incoming_email.update(announcement: false)
+        ActionMailer::Base.deliveries.clear
+        create(:announcement_published, poster_id: user.id).create_notices(
+          '新しいお知らせがあります',
+        )
       end
 
-      context 'メール受信設定をOFFにしているユーザがいない場合' do
-        it 'すべてのユーザに通知が送られ、メールも送信される' do
-          expect do
-            create(:announcement_published, poster_id: user.id).create_notices(
-              '新しいお知らせがあります',
-            )
-          end.to change(Notice, :count).by(3).and have_enqueued_mail(
-                                               NoticeMailer,
-                                               :announcement,
-                                             )
-                                             .exactly(3)
-                                             .times
-        end
+      it 'すべてのユーザに通知が送られる' do
+        expect(Notice.all.size).to eq(User.all.size)
       end
 
-      context 'メール受信設定をOFFにしているユーザがいる場合' do
-        it 'すべてのユーザに通知が送られ、メールは送信されない' do
-          user.incoming_email.update(announcement: false)
+      it 'すべてのユーザに通知が送られ、お知らせのメール通知をオンにしているユーザにのみメール送信がおこなわれる' do
+        mails = ActionMailer::Base.deliveries
+        recievers =
+          User
+            .joins(:incoming_email)
+            .where(incoming_email: { announcement: true })
 
-          expect do
-            create(:announcement_published, poster_id: user.id).create_notices(
-              '新しいお知らせがあります',
-            )
-          end.to change(Notice, :count).by(3).and have_enqueued_mail(
-                                               NoticeMailer,
-                                               :announcement,
-                                             )
-                                             .exactly(2)
-                                             .times
-        end
+        expect(mails.size).to eq(recievers.size)
+        expect(mails.second.to.first).to eq(user_a.email)
+        expect(mails.first.to.first).to eq(user.email)
       end
     end
   end
