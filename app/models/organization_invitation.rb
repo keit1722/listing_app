@@ -7,7 +7,7 @@ class OrganizationInvitation < ApplicationRecord
   validates :email,
             presence: true,
             format: {
-              with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i,
+              with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
             }
   validates :inviter_id, presence: true
   validates :expires_at, presence: true
@@ -27,12 +27,12 @@ class OrganizationInvitation < ApplicationRecord
 
     Notice.create(user: user, noticeable: self)
 
-    if user.incoming_email.organization_invitation?
-      NoticeMailer
-        .with(user_to: user, organization_invitation: self)
-        .organization_invitation
-        .deliver_later
-    end
+    return unless user.incoming_email.organization_invitation?
+
+    NoticeMailer
+      .with(user_to: user, organization_invitation: self)
+      .organization_invitation
+      .deliver_later
   end
 
   def to_param
@@ -42,9 +42,7 @@ class OrganizationInvitation < ApplicationRecord
   private
 
   def belonged_user
-    if organization.users.exists?(email: email)
-      errors.add(:email, 'を利用しているユーザーは既にメンバーです。')
-    end
+    errors.add(:email, 'を利用しているユーザーは既にメンバーです。') if organization.users.exists?(email: email)
   end
 
   def create_token

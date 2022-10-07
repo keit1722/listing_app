@@ -12,11 +12,11 @@ class Organizations::HotelsController < Organizations::BaseController
   def show
     @hotel =
       current_user
-        .organizations
-        .find_by!(slug: params[:organization_slug])
-        .hotels
-        .with_attached_images
-        .find_by!(slug: params[:slug])
+      .organizations
+      .find_by!(slug: params[:organization_slug])
+      .hotels
+      .with_attached_images
+      .find_by!(slug: params[:slug])
   end
 
   def new
@@ -43,11 +43,11 @@ class Organizations::HotelsController < Organizations::BaseController
   def edit
     @hotel =
       current_user
-        .organizations
-        .find_by!(slug: params[:organization_slug])
-        .hotels
-        .with_attached_images
-        .find_by!(slug: params[:slug])
+      .organizations
+      .find_by!(slug: params[:organization_slug])
+      .hotels
+      .with_attached_images
+      .find_by!(slug: params[:slug])
     @hotel_update_form = HotelUpdateForm.new(@hotel)
     @districts = District.all
   end
@@ -55,11 +55,11 @@ class Organizations::HotelsController < Organizations::BaseController
   def update
     @hotel =
       current_user
-        .organizations
-        .find_by!(slug: params[:organization_slug])
-        .hotels
-        .with_attached_images
-        .find_by!(slug: params[:slug])
+      .organizations
+      .find_by!(slug: params[:organization_slug])
+      .hotels
+      .with_attached_images
+      .find_by!(slug: params[:slug])
     @hotel_update_form = HotelUpdateForm.new(@hotel, hotel_update_params)
     @districts = District.all
 
@@ -74,10 +74,10 @@ class Organizations::HotelsController < Organizations::BaseController
   def destroy
     @hotel =
       current_user
-        .organizations
-        .find_by(slug: params[:organization_slug])
-        .hotels
-        .find_by(slug: params[:slug])
+      .organizations
+      .find_by(slug: params[:organization_slug])
+      .hotels
+      .find_by(slug: params[:slug])
 
     @hotel.destroy!
     redirect_to organization_hotels_path, success: '削除しました'
@@ -91,15 +91,8 @@ class Organizations::HotelsController < Organizations::BaseController
       .permit(
         :district_id,
         reservation_link_attributes: [:link],
-        page_show_attributes: %i[reservation_link opening_hours],
-        opening_hours_attributes: %i[
-          start_time_hour
-          start_time_minute
-          end_time_hour
-          end_time_minute
-          closed
-          day
-        ],
+        page_show_attributes: [:reservation_link, :opening_hours],
+        opening_hours_attributes: [:start_time_hour, :start_time_minute, :end_time_hour, :end_time_minute, :closed, :day],
         hotel_attributes: [
           :name,
           :lat,
@@ -108,8 +101,8 @@ class Organizations::HotelsController < Organizations::BaseController
           :description,
           :address,
           :main_image,
-          { images: [] },
-        ],
+          { images: [] }
+        ]
       )
   end
 
@@ -119,15 +112,8 @@ class Organizations::HotelsController < Organizations::BaseController
       .permit(
         :district_id,
         reservation_link_attributes: [:link],
-        page_show_attributes: %i[reservation_link opening_hours],
-        opening_hours_attributes: %i[
-          start_time_hour
-          start_time_minute
-          end_time_hour
-          end_time_minute
-          closed
-          day
-        ],
+        page_show_attributes: [:reservation_link, :opening_hours],
+        opening_hours_attributes: [:start_time_hour, :start_time_minute, :end_time_hour, :end_time_minute, :closed, :day],
         hotel_attributes: [
           :name,
           :lat,
@@ -135,8 +121,8 @@ class Organizations::HotelsController < Organizations::BaseController
           :description,
           :address,
           :main_image,
-          { images: [] },
-        ],
+          { images: [] }
+        ]
       )
   end
 end

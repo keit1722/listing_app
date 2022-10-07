@@ -35,15 +35,15 @@ RSpec.describe 'スキー', type: :system do
     it 'マイページに自分のスキー場は表示される' do
       visit organization_ski_area_path(organization_a, ski_area_a)
       expect(page).to have_current_path organization_ski_area_path(
-                          organization_a,
-                          ski_area_a,
-                        )
+        organization_a,
+        ski_area_a
+      )
     end
 
     it 'マイページには自分のスキー場以外は表示されない' do
       Capybara.raise_server_errors = false
       visit organization_ski_area_path(organization_b, ski_area_b)
-      assert_text 'ActiveRecord::RecordNotFound'
+      expect(page).to have_content 'ActiveRecord::RecordNotFound'
     end
   end
 
@@ -54,8 +54,8 @@ RSpec.describe 'スキー', type: :system do
       it '登録フォームに進めること' do
         visit new_organization_ski_area_path(organization_a)
         expect(page).to have_current_path new_organization_ski_area_path(
-                            organization_a,
-                          )
+          organization_a
+        )
       end
     end
 
@@ -63,7 +63,7 @@ RSpec.describe 'スキー', type: :system do
       it '登録フォームに進めずエラーになること' do
         Capybara.raise_server_errors = false
         visit new_organization_ski_area_path(organization_b)
-        assert_text 'NoMethodError'
+        expect(page).to have_content 'NoMethodError'
       end
     end
 
@@ -71,17 +71,17 @@ RSpec.describe 'スキー', type: :system do
       it '新規登録できること' do
         visit new_organization_ski_area_path(organization_a)
         fill_in '名称', with: 'サンプルスキー場の名前'
-        find('#ski_area_create_form_district_id_chosen').click
+        find_by_id('ski_area_create_form_district_id_chosen').click
         find(
           '#ski_area_create_form_district_id_chosen .active-result',
-          text: '内山',
+          text: '内山'
         ).click
         fill_in '住所', with: 'サンプルスキー場住所'
         fill_in 'スラッグ', with: 'sample-ski-area'
         fill_in '紹介',
                 with:
                   'Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua.'
-        find('#map-location-registration').click
+        find_by_id('map-location-registration').click
         page.execute_script "$('input#ski_area_create_form_ski_area_attributes_main_image').css('opacity','1')"
         attach_file('メイン画像', Rails.root.join('spec/fixtures/fixture.png'))
         click_button '登録する'
@@ -100,9 +100,9 @@ RSpec.describe 'スキー', type: :system do
       it '編集フォームに進めること' do
         visit edit_organization_ski_area_path(organization_a, ski_area_a)
         expect(page).to have_current_path edit_organization_ski_area_path(
-                            organization_a,
-                            ski_area_a,
-                          )
+          organization_a,
+          ski_area_a
+        )
       end
     end
 
@@ -110,7 +110,7 @@ RSpec.describe 'スキー', type: :system do
       it '編集フォームに進めずエラーになること' do
         Capybara.raise_server_errors = false
         visit edit_organization_ski_area_path(organization_b, ski_area_b)
-        assert_text 'ActiveRecord::RecordNotFound'
+        expect(page).to have_content 'ActiveRecord::RecordNotFound'
       end
     end
 
@@ -119,16 +119,16 @@ RSpec.describe 'スキー', type: :system do
         create(:district_sano)
         visit edit_organization_ski_area_path(organization_a, ski_area_a)
         fill_in '名称', with: '更新サンプルスキー場の名前'
-        find('#ski_area_update_form_district_id_chosen').click
+        find_by_id('ski_area_update_form_district_id_chosen').click
         find(
           '#ski_area_update_form_district_id_chosen .active-result',
-          text: '佐野',
+          text: '佐野'
         ).click
         fill_in '住所', with: '更新サンプルスキー場住所'
         fill_in '紹介',
                 with:
                   'Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-        find('#map-location-registration').click
+        find_by_id('map-location-registration').click
         page.execute_script "$('input#ski_area_update_form_ski_area_attributes_main_image').css('opacity','1')"
         attach_file('メイン画像', Rails.root.join('spec/fixtures/fixture.png'))
 
@@ -139,7 +139,7 @@ RSpec.describe 'スキー', type: :system do
         expect(page).to have_content '佐野'
         expect(page).to have_content '更新サンプルスキー場住所'
         expect(
-          page,
+          page
         ).to have_content 'Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
       end
     end
@@ -182,9 +182,9 @@ RSpec.describe 'スキー', type: :system do
     context '検索ワード・エリア・カテゴリー（スキー場）を指定した場合' do
       it '指定された検索ワード・エリア・カテゴリーの一覧が表示されること' do
         fill_in 'q_keyword', with: ski_area_a.name
-        find('#q_area_chosen').click
+        find_by_id('q_area_chosen').click
         find('#q_area_chosen .active-result', text: 'さのさか').click
-        find('#q_category_chosen').click
+        find_by_id('q_category_chosen').click
         find('#q_category_chosen .active-result', text: 'スキー場').click
         click_button '検索'
 
@@ -196,7 +196,7 @@ RSpec.describe 'スキー', type: :system do
 
     context 'カテゴリー（スキー場）だけを指定した場合' do
       it '全てのスキー場の一覧が表示される' do
-        find('#q_category_chosen').click
+        find_by_id('q_category_chosen').click
         find('#q_category_chosen .active-result', text: 'スキー場').click
         click_button '検索'
 
@@ -208,9 +208,9 @@ RSpec.describe 'スキー', type: :system do
 
     context 'エリアとカテゴリー（スキー場）だけを指定した場合' do
       it '指定したエリアに所属しているスキー場の一覧が表示される' do
-        find('#q_area_chosen').click
+        find_by_id('q_area_chosen').click
         find('#q_area_chosen .active-result', text: 'さのさか').click
-        find('#q_category_chosen').click
+        find_by_id('q_category_chosen').click
         find('#q_category_chosen .active-result', text: 'スキー場').click
         click_button '検索'
 
@@ -223,7 +223,7 @@ RSpec.describe 'スキー', type: :system do
     context 'カテゴリーを指定しない場合' do
       it '検索結果が表示されないこと' do
         fill_in 'q_keyword', with: ski_area_a.name
-        find('#q_area_chosen').click
+        find_by_id('q_area_chosen').click
         find('#q_area_chosen .active-result', text: 'さのさか').click
         click_button '検索'
 
@@ -286,7 +286,7 @@ RSpec.describe 'スキー', type: :system do
       it '投稿の新規作成ページが表示されなずにエラーになる' do
         Capybara.raise_server_errors = false
         visit new_organization_ski_area_post_path(organization_b, ski_area_b)
-        assert_text 'ActiveRecord::RecordNotFound'
+        expect(page).to have_content 'ActiveRecord::RecordNotFound'
       end
     end
 
@@ -314,10 +314,10 @@ RSpec.describe 'スキー', type: :system do
     context '自分の所属組織のものであれば' do
       it '投稿詳細ページが表示される' do
         visit organization_ski_area_post_path(
-                organization_a,
-                ski_area_a,
-                post_a,
-              )
+          organization_a,
+          ski_area_a,
+          post_a
+        )
         expect(page).to have_content post_a.title
         expect(page).to have_content post_a.body
       end
@@ -327,11 +327,11 @@ RSpec.describe 'スキー', type: :system do
       it '投稿詳細ページが表示されずにエラーになる' do
         Capybara.raise_server_errors = false
         visit organization_ski_area_post_path(
-                organization_b,
-                ski_area_b,
-                post_b,
-              )
-        assert_text 'ActiveRecord::RecordNotFound'
+          organization_b,
+          ski_area_b,
+          post_b
+        )
+        expect(page).to have_content 'ActiveRecord::RecordNotFound'
       end
     end
   end
@@ -343,10 +343,10 @@ RSpec.describe 'スキー', type: :system do
       it '情報更新できること' do
         business_login_as user_a
         visit edit_organization_ski_area_post_path(
-                organization_a,
-                ski_area_a,
-                post_a,
-              )
+          organization_a,
+          ski_area_a,
+          post_a
+        )
         fill_in 'タイトル', with: '更新サンプル投稿名'
         fill_in '内容', with: '更新サンプル投稿内容'
         page.execute_script "$('input#post_image').css('opacity','1')"
@@ -408,7 +408,7 @@ RSpec.describe 'スキー', type: :system do
     it '下書きの投稿はエラーになり表示されない' do
       Capybara.raise_server_errors = false
       visit ski_area_post_path(ski_area_a, post_b)
-      assert_text 'ActiveRecord::RecordNotFound'
+      expect(page).to have_content 'ActiveRecord::RecordNotFound'
     end
 
     it '投稿の詳細ページには下書きではない次の投稿名が表示されてクリックできる' do

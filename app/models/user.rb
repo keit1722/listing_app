@@ -44,14 +44,14 @@ class User < ApplicationRecord
            source: :noticeable,
            source_type: 'Post'
 
-  has_one :incoming_email
+  has_one :incoming_email, dependent: :destroy
 
   has_one_attached :avatar
 
   validates :password,
             presence: true,
             length: {
-              minimum: 3,
+              minimum: 3
             },
             if: -> { new_record? || changes[:crypted_password] }
   validates :password,
@@ -65,22 +65,22 @@ class User < ApplicationRecord
             uniqueness: true,
             presence: true,
             length: {
-              maximum: 100,
+              maximum: 100
             },
             format: {
-              with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i,
+              with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
             }
   validates :first_name, presence: true, length: { maximum: 50 }
   validates :last_name, presence: true, length: { maximum: 50 }
   validates :username,
             presence: true,
             length: {
-              maximum: 100,
+              maximum: 100
             },
             uniqueness: true
 
   validates :reset_password_token, uniqueness: true, allow_nil: true
-  validates :avatar, content_type: %i[png jpg jpeg]
+  validates :avatar, content_type: [:png, :jpg, :jpeg]
 
   enum role: { general: 1, business: 2, admin: 9 }
 
@@ -113,7 +113,7 @@ class User < ApplicationRecord
   end
 
   def create_incoming_email_model
-    self.create_incoming_email
+    create_incoming_email
   end
 end
 

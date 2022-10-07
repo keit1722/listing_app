@@ -25,7 +25,7 @@ RSpec.describe PhotoSpot, type: :model do
       photo_spot = build(:photo_spot, lat: nil)
       photo_spot.valid?
       expect(photo_spot.errors.full_messages).to include(
-        '地図にピンを設置してください',
+        '地図にピンを設置してください'
       )
     end
 
@@ -33,7 +33,7 @@ RSpec.describe PhotoSpot, type: :model do
       photo_spot = build(:photo_spot, lng: nil)
       photo_spot.valid?
       expect(photo_spot.errors.full_messages).to include(
-        '地図にピンを設置してください',
+        '地図にピンを設置してください'
       )
     end
 
@@ -100,14 +100,14 @@ RSpec.describe PhotoSpot, type: :model do
 
       it do
         expect(
-          described_class.search_with_district([uchiyama.id, sano.id]),
+          described_class.search_with_district([uchiyama.id, sano.id])
         ).to eq [photo_spot_uchiyama, photo_spot_sano]
       end
 
       it do
         expect(described_class.search_with_district([uchiyama.id])).to eq [
-             photo_spot_uchiyama,
-           ]
+          photo_spot_uchiyama
+        ]
       end
     end
 
@@ -116,32 +116,32 @@ RSpec.describe PhotoSpot, type: :model do
         create(
           :photo_spot,
           name: 'フォトスポットサンプル_A',
-          description: '美しい山々',
+          description: '美しい山々'
         )
       end
       let!(:photo_spot_b) do
         create(
           :photo_spot,
           name: 'フォトスポットサンプル_B',
-          description: 'Aランクの絶景です',
+          description: 'Aランクの絶景です'
         )
       end
 
       it do
         expect(described_class.keyword_contain('photo_spots', '山々')).to eq [
-             photo_spot_a,
-           ]
+          photo_spot_a
+        ]
       end
 
       it do
         expect(described_class.keyword_contain('photo_spots', '絶景')).to eq [
-             photo_spot_b,
-           ]
+          photo_spot_b
+        ]
       end
 
       it do
         expect(
-          described_class.keyword_contain('photo_spots', 'A').order('id'),
+          described_class.keyword_contain('photo_spots', 'A').order('id')
         ).to eq [photo_spot_a, photo_spot_b]
       end
 
@@ -149,7 +149,7 @@ RSpec.describe PhotoSpot, type: :model do
         expect(
           described_class
             .keyword_contain('photo_spots', 'フォトスポットサンプル')
-            .order('id'),
+            .order('id')
         ).to eq [photo_spot_a, photo_spot_b]
       end
     end

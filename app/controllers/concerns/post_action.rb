@@ -4,7 +4,7 @@ module PostAction
   def publish
     @post =
       @postable.posts.build(
-        post_params.merge(status: 'published', published_before: true),
+        post_params.merge(status: 'published', published_before: true)
       )
     if @post.save
       @post.create_notices('新しく投稿をしました')
@@ -30,8 +30,8 @@ module PostAction
   def to_published
     @post = @postable.posts.find(params[:id])
     if @post.update(
-         post_params.merge(status: 'published', published_before: true),
-       )
+      post_params.merge(status: 'published', published_before: true)
+    )
       @post.create_notices('新しく投稿をしました')
       redirect_to [@postable.organization, @postable, @post],
                   success: '投稿しました'

@@ -13,8 +13,8 @@ module CommonListingScope
               [
                 "description LIKE(?) OR #{model}.name LIKE(?)",
                 "%#{keyword}%",
-                "%#{keyword}%",
-              ],
+                "%#{keyword}%"
+              ]
             )
           }
   end

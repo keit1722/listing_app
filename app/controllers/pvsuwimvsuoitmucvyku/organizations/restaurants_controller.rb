@@ -5,29 +5,29 @@ class Pvsuwimvsuoitmucvyku::Organizations::RestaurantsController < Pvsuwimvsuoit
     @organization = Organization.find_by!(slug: params[:organization_slug])
     @restaurants =
       @organization
-        .restaurants
-        .page(params[:page])
-        .per(20)
-        .with_attached_main_image
+      .restaurants
+      .page(params[:page])
+      .per(20)
+      .with_attached_main_image
     render layout: 'mypage'
   end
 
   def show
     @restaurant =
       Organization
-        .find_by!(slug: params[:organization_slug])
-        .restaurants
-        .with_attached_images
-        .find_by!(slug: params[:slug])
+      .find_by!(slug: params[:organization_slug])
+      .restaurants
+      .with_attached_images
+      .find_by!(slug: params[:slug])
   end
 
   def edit
     @restaurant =
       Organization
-        .find_by!(slug: params[:organization_slug])
-        .restaurants
-        .with_attached_images
-        .find_by!(slug: params[:slug])
+      .find_by!(slug: params[:organization_slug])
+      .restaurants
+      .with_attached_images
+      .find_by!(slug: params[:slug])
     @restaurant_update_form = RestaurantUpdateForm.new(@restaurant)
     @districts = District.all
     @restaurant_categories = RestaurantCategory.all
@@ -36,10 +36,10 @@ class Pvsuwimvsuoitmucvyku::Organizations::RestaurantsController < Pvsuwimvsuoit
   def update
     @restaurant =
       Organization
-        .find_by!(slug: params[:organization_slug])
-        .restaurants
-        .with_attached_images
-        .find_by!(slug: params[:slug])
+      .find_by!(slug: params[:organization_slug])
+      .restaurants
+      .with_attached_images
+      .find_by!(slug: params[:slug])
     @restaurant_update_form =
       RestaurantUpdateForm.new(@restaurant, restaurant_params)
     @districts = District.all
@@ -62,15 +62,8 @@ class Pvsuwimvsuoitmucvyku::Organizations::RestaurantsController < Pvsuwimvsuoit
       .permit(
         :district_id,
         reservation_link_attributes: [:link],
-        page_show_attributes: %i[reservation_link opening_hours],
-        opening_hours_attributes: %i[
-          start_time_hour
-          start_time_minute
-          end_time_hour
-          end_time_minute
-          closed
-          day
-        ],
+        page_show_attributes: [:reservation_link, :opening_hours],
+        opening_hours_attributes: [:start_time_hour, :start_time_minute, :end_time_hour, :end_time_minute, :closed, :day],
         restaurant_category_ids: [],
         restaurant_attributes: [
           :name,
@@ -79,8 +72,8 @@ class Pvsuwimvsuoitmucvyku::Organizations::RestaurantsController < Pvsuwimvsuoit
           :description,
           :address,
           :main_image,
-          { images: [] },
-        ],
+          { images: [] }
+        ]
       )
   end
 end

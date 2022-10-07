@@ -14,7 +14,7 @@ class NoticeMailer < ApplicationMailer
     mail(
       to: @user_to.email,
       subject:
-        "#{@organization_invitation.organization.name} がへの招待が届いています",
+        "#{@organization_invitation.organization.name} がへの招待が届いています"
     )
   end
 
@@ -24,7 +24,7 @@ class NoticeMailer < ApplicationMailer
 
     mail(
       to: @user_to.email,
-      subject: "#{@organization.name} にユーザーが参加しました",
+      subject: "#{@organization.name} にユーザーが参加しました"
     )
   end
 

@@ -11,7 +11,7 @@ RSpec.describe OrganizationInvitation, type: :model do
         build(:organization_invitation, email: nil, organization: organization)
       organization_invitation.valid?
       expect(organization_invitation.errors[:email]).to include(
-        'を入力してください',
+        'を入力してください'
       )
     end
 
@@ -22,11 +22,11 @@ RSpec.describe OrganizationInvitation, type: :model do
         build(
           :organization_invitation,
           email: another_business_user.email,
-          organization: organization,
+          organization: organization
         )
       organization_invitation.valid?
       expect(organization_invitation.errors[:email]).to include(
-        'を利用しているユーザーは既にメンバーです。',
+        'を利用しているユーザーは既にメンバーです。'
       )
     end
   end
@@ -37,7 +37,7 @@ RSpec.describe OrganizationInvitation, type: :model do
         :organization_invitation,
         organization: organization,
         inviter_id: business_user.id,
-        email: general_user.email,
+        email: general_user.email
       )
     end
 
@@ -49,7 +49,7 @@ RSpec.describe OrganizationInvitation, type: :model do
               :organization_invitation,
               organization: organization,
               inviter_id: business_user.id,
-              email: Faker::Internet.unique.email,
+              email: Faker::Internet.unique.email
             )
           expect(failed_organization_invitation.create_notice).to be_nil
         end
@@ -58,7 +58,7 @@ RSpec.describe OrganizationInvitation, type: :model do
       context 'メールアドレスを持つユーザが見つかる場合' do
         it '通知を送ること' do
           expect { organization_invitation }.to change(Notice, :count).by(
-            1,
+            1
           ).and have_enqueued_mail(NoticeMailer, :organization_invitation)
         end
       end

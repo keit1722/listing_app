@@ -4,7 +4,7 @@ module AnnouncementAction
   def publish
     @announcement =
       Announcement.new(
-        announcement_params.merge(status: 'published', published_before: true),
+        announcement_params.merge(status: 'published', published_before: true)
       )
     if @announcement.save
       @announcement.create_notices('新しいお知らせがあります')
@@ -30,8 +30,8 @@ module AnnouncementAction
   def to_published
     @announcement = Announcement.find(params[:id])
     if @announcement.update(
-         announcement_params.merge(status: 'published', published_before: true),
-       )
+      announcement_params.merge(status: 'published', published_before: true)
+    )
       @announcement.create_notices('新しいお知らせがあります')
       redirect_to pvsuwimvsuoitmucvyku_announcement_path,
                   success: '投稿しました'

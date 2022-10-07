@@ -4,7 +4,7 @@ class Mypage::NoticesController < Mypage::BaseController
     preloader = ActiveRecord::Associations::Preloader.new
     preloader.preload(
       notices.select { |notice| notice.noticeable_type == 'Post' },
-      noticeable: [:postable],
+      noticeable: [:postable]
     )
     @notices = notices.page(params[:page]).per(20).ordered
   end

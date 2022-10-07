@@ -79,6 +79,7 @@ RSpec.describe Post, type: :model do
       let(:user_b) { create(:general_user, :activated) }
       let(:user_c) { create(:general_user, :activated) }
       let(:post) { create(:post_published, postable: restaurant) }
+
       around { |example| perform_enqueued_jobs(&example) }
 
       before do
@@ -90,9 +91,9 @@ RSpec.describe Post, type: :model do
       end
 
       it 'お気に入り登録しているユーザにのみ投稿した通知が送られる' do
-        expect(user_a.notices.exists?).to be_truthy
-        expect(user_b.notices.exists?).to be_truthy
-        expect(user_c.notices.exists?).to be_falsey
+        expect(user_a.notices).to exist
+        expect(user_b.notices).to exist
+        expect(user_c.notices).to be_empty
       end
 
       it 'お気に入り登録して、なおかつ投稿のメール通知をオンにしているユーザにのみメール送信がおこなわれる' do

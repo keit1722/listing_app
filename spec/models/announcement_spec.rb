@@ -30,18 +30,18 @@ RSpec.describe Announcement, type: :model do
     describe 'ordered' do
       it do
         expect(described_class.ordered).to eq [
-             announcement_c,
-             announcement_b,
-             announcement_a,
-           ]
+          announcement_c,
+          announcement_b,
+          announcement_a
+        ]
       end
 
       it do
         expect(described_class.ordered).not_to eq [
-             announcement_a,
-             announcement_b,
-             announcement_c,
-           ]
+          announcement_a,
+          announcement_b,
+          announcement_c
+        ]
       end
     end
 
@@ -52,10 +52,10 @@ RSpec.describe Announcement, type: :model do
 
       it do
         expect(described_class.recent(3)).to eq [
-             announcement_c,
-             announcement_b,
-             announcement_a,
-           ]
+          announcement_c,
+          announcement_b,
+          announcement_a
+        ]
       end
     end
   end
@@ -97,13 +97,14 @@ RSpec.describe Announcement, type: :model do
     describe 'create_notices' do
       let!(:user_a) { create(:general_user, :activated) }
       let(:user_b) { create(:general_user, :activated) }
+
       around { |example| perform_enqueued_jobs(&example) }
 
       before do
         user_b.incoming_email.update(announcement: false)
         ActionMailer::Base.deliveries.clear
         create(:announcement_published, poster_id: user.id).create_notices(
-          '新しいお知らせがあります',
+          '新しいお知らせがあります'
         )
       end
 
@@ -115,8 +116,8 @@ RSpec.describe Announcement, type: :model do
         mails = ActionMailer::Base.deliveries
         recievers =
           User
-            .joins(:incoming_email)
-            .where(incoming_email: { announcement: true })
+          .joins(:incoming_email)
+          .where(incoming_email: { announcement: true })
 
         expect(mails.size).to eq(recievers.size)
         expect(mails.second.to.first).to eq(user_a.email)

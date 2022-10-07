@@ -55,7 +55,7 @@ RSpec.describe User, type: :model do
 
     it 'create_incoming_email_model' do
       other_user = create(:general_user)
-      expect(other_user.incoming_email.present?).to be_truthy
+      expect(other_user.incoming_email).to be_present
     end
   end
 end
