@@ -1,0 +1,52 @@
+<div id="titlebar">
+  <div class="row">
+    <div class="col-md-12">
+      <h2><i class="sl sl-icon-settings"></i> メール受信設定</h2>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+
+  <!-- Profile -->
+  <div class="col-md-12">
+    <div class="dashboard-list-box margin-top-0">
+      <div class="dashboard-list-box-static">
+        <!-- table -->
+        <table class="basic-table">
+          <tbody>
+            <tr>
+              <th>通知メールの種類</th>
+              <th>メール通知</th>
+            </tr>
+            <tr>
+              <td data-label="項目"><%= IncomingEmail.human_attribute_name("post") %></td>
+              <td data-label="内容"><%= @incoming_email.post? ? "する" : "しない" %></td>
+            </tr>
+            <tr>
+              <td data-label="項目"><%= IncomingEmail.human_attribute_name("announcement") %></td>
+              <td data-label="内容"><%= @incoming_email.announcement? ? "する" : "しない" %></td>
+            </tr>
+            <% if current_user.business? || current_user.admin? %>
+              <tr>
+                <td data-label="項目"><%= IncomingEmail.human_attribute_name("organization") %></td>
+                <td data-label="内容"><%= @incoming_email.organization? ? "する" : "しない" %></td>
+              </tr>
+              <tr>
+                <td data-label="項目"><%= IncomingEmail.human_attribute_name("organization_invitation") %></td>
+                <td data-label="内容"><%= @incoming_email.organization_invitation? ? "する" : "しない" %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <!-- table -->
+      </div>
+    </div>
+
+    <div class="margin-top-40">
+      <%= link_to mypage_email_setting_edit_path, class: "button overflow-visible" do %>
+        <i class="sl sl-icon-wrench"></i> 設定変更
+      <% end %>
+    </div>
+    
+  </div>

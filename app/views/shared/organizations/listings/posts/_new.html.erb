@@ -8,7 +8,7 @@
 
 <div class="row">
   <div class="col-lg-12">
-    <%= form_with model: [post.postable.organization, post.postable, post], url: [post.postable.organization, post.postable, post] do |f| %>
+    <%= form_with model: post, url: [:publish, post.postable.organization, post.postable, post] do |f| %>
       <div id="add-listing">
         <%= render 'shared/error_messages', model: f.object %>
 
@@ -45,7 +45,7 @@
                   <div class="change-photo-btn position-static">
                     <div class="photoUpload">
                         <span><i class="fa fa-upload"></i> アップロードする画像を選択</span>
-                        <%= f.file_field :image, class: "upload", onchange: "previewImage(this)" %>
+                        <%= f.file_field :image, class: "upload", onchange: "previewImage(this, 'preview')" %>
                     </div>
                   </div>
                 </div>
@@ -62,27 +62,23 @@
               </div>
             <!-- Row / End -->
 
-            <!-- Row -->
-            <div class="row with-forms margin-bottom-20">
-              <!-- Status -->
-              <div class="col-md-12">
-                <h5><%= f.label :status %></h5>
-                <p>この投稿を「公開」にするか、一旦「下書き」として保存するかを選択できます。<br>
-                「下書き」にすると同じ組織のユーザー以外には投稿が表示されません。</p>
-                <%= f.select :status, Post.statuses_i18n.invert, {}, { class: "chosen-select" } %>
-              </div>
-            </div>
-            <!-- Row / End -->
-
           </div>
           <!-- Section / End -->
 
-        <div class="margin-top-40">
-          <%= link_to [post.postable.organization, post.postable, post], class: "button border overflow-visible" do %>
-            <i class="sl sl-icon-arrow-left-circle"></i> 戻る
-          <% end %>
-
-          <%= f.submit nil, class: "button right-side" %>
+        <div class="margin-top-40 display-flex-space-between">
+          <div>
+            <%= link_to [post.postable.organization, post.postable, post], class: "button border overflow-visible" do %>
+              <i class="sl sl-icon-arrow-left-circle"></i> 戻る
+            <% end %>
+          </div>
+          <div>
+            <%= f.button class: "button" do %>
+              <i class="fa  fa-send-o"></i> 投稿
+            <% end %>
+            <%= f.button formaction: polymorphic_path([:unpublish, post.postable.organization, post.postable, post]), class: "button" do %>
+              <i class="fa fa-folder-o"></i> 下書き
+            <% end %>
+          </div>
         </div>
       </div>
     <% end %>

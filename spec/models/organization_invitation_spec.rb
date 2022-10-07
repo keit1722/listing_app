@@ -57,10 +57,9 @@ RSpec.describe OrganizationInvitation, type: :model do
 
       context 'メールアドレスを持つユーザが見つかる場合' do
         it '通知を送ること' do
-          expect { organization_invitation.create_notice }.to change(
-            Notice,
-            :count
-          ).by(1).and have_enqueued_mail(NoticeMailer, :organization_invitation)
+          expect { organization_invitation }.to change(Notice, :count).by(
+            1
+          ).and have_enqueued_mail(NoticeMailer, :organization_invitation)
         end
       end
     end

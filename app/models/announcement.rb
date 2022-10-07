@@ -13,8 +13,6 @@ class Announcement < ApplicationRecord
   scope :ordered, -> { order(created_at: :desc) }
   scope :recent, ->(count) { ordered.limit(count) }
 
-  after_create_commit :create_notices
-
   def previous
     Announcement
       .published
@@ -31,18 +29,14 @@ class Announcement < ApplicationRecord
       .first
   end
 
-  private
-
-  def create_notices
-    return if draft?
-
-    notices =
-      User.not_admin.map { |user| Notice.new(user: user, noticeable: self) }
+  def create_notices(title)
+    notices = User.all.map { |user| Notice.new(user: user, noticeable: self) }
     Notice.import notices
 
-    User.not_admin.each do |user|
+    email_receivers = User.select { |user| user.incoming_email.announcement? }
+    email_receivers.each do |user|
       NoticeMailer
-        .with(user_to: user, announcement: self)
+        .with(user_to: user, announcement: self, title: title)
         .announcement
         .deliver_later
     end
@@ -53,11 +47,12 @@ end
 #
 # Table name: announcements
 #
-#  id         :bigint           not null, primary key
-#  body       :text             not null
-#  status     :integer          default("published"), not null
-#  title      :string           not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  poster_id  :integer          not null
+#  id               :bigint           not null, primary key
+#  body             :text             not null
+#  published_before :boolean          default(FALSE), not null
+#  status           :integer          default("published"), not null
+#  title            :string           not null
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  poster_id        :integer          not null
 #

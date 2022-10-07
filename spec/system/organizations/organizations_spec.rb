@@ -55,7 +55,7 @@ RSpec.describe '組織', type: :system do
     it '自分の組織以外は表示されない' do
       Capybara.raise_server_errors = false
       visit organization_path organization_b
-      assert_text 'ActiveRecord::RecordNotFound'
+      expect(page).to have_content 'ActiveRecord::RecordNotFound'
     end
   end
 
@@ -70,7 +70,7 @@ RSpec.describe '組織', type: :system do
     it '自分の組織以外は表示されないこと' do
       Capybara.raise_server_errors = false
       visit edit_organization_path organization_b
-      assert_text 'ActiveRecord::RecordNotFound'
+      expect(page).to have_content 'ActiveRecord::RecordNotFound'
     end
   end
 end

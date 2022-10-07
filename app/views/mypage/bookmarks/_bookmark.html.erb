@@ -1,8 +1,8 @@
 <li>
   <div class="list-box-listing">
-    <% if bookmark.bookmarkable.images.attached? %>
+    <% if bookmark.bookmarkable.main_image.attached? %>
       <div class="list-box-listing-img">
-        <%= link_to image_tag(bookmark.bookmarkable.images.first), bookmark.bookmarkable %>
+        <%= link_to image_tag(bookmark.bookmarkable.main_image), bookmark.bookmarkable %>
       </div>
     <% end %>
     <div class="list-box-listing-content">

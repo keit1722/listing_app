@@ -24,8 +24,6 @@ class Organizations::OrganizationInvitationsController < Organizations::BaseCont
       .build(organization_invitation_params)
 
     if @organization_invitation.save
-      @organization_invitation.create_notice
-
       redirect_to organization_organization_invitations_path,
                   success:
                     "#{@organization_invitation.email} に招待通知を送りました。承認されるまでお待ちください。"

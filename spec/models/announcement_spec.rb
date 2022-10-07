@@ -1,14 +1,3 @@
-#
-# Table name: announcements
-#
-#  id         :bigint           not null, primary key
-#  body       :text             not null
-#  status     :integer          default("published"), not null
-#  title      :string           not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  poster_id  :integer          not null
-#
 require 'rails_helper'
 
 RSpec.describe Announcement, type: :model do
@@ -105,32 +94,49 @@ RSpec.describe Announcement, type: :model do
       end
     end
 
-    describe 'create_notice' do
+    describe 'create_notices' do
+      let!(:user_a) { create(:general_user, :activated) }
+      let(:user_b) { create(:general_user, :activated) }
+
+      around { |example| perform_enqueued_jobs(&example) }
+
       before do
-        create(:general_user, :activated)
-        create(:business_user, :activated)
+        user_b.incoming_email.update(announcement: false)
+        ActionMailer::Base.deliveries.clear
+        create(:announcement_published, poster_id: user.id).create_notices(
+          '新しいお知らせがあります'
+        )
       end
 
-      context '作成した記事が公開用だった場合' do
-        it '管理者以外に通知される' do
-          expect do
-            create(:announcement_published, poster_id: user.id)
-          end.to change(Notice, :count).by(2).and have_enqueued_mail(
-            NoticeMailer,
-            :announcement
-          )
-            .exactly(2)
-            .times
-        end
+      it 'すべてのユーザに通知が送られる' do
+        expect(Notice.all.size).to eq(User.all.size)
       end
 
-      context '作成した記事が下書きだった場合' do
-        it '誰にも通知されない' do
-          expect do
-            create(:announcement_draft, poster_id: user.id)
-          end.not_to change(Notice, :count)
-        end
+      it 'すべてのユーザに通知が送られ、お知らせのメール通知をオンにしているユーザにのみメール送信がおこなわれる' do
+        mails = ActionMailer::Base.deliveries
+        recievers =
+          User
+          .joins(:incoming_email)
+          .where(incoming_email: { announcement: true })
+
+        expect(mails.size).to eq(recievers.size)
+        expect(mails.second.to.first).to eq(user_a.email)
+        expect(mails.first.to.first).to eq(user.email)
       end
     end
   end
 end
+
+# == Schema Information
+#
+# Table name: announcements
+#
+#  id               :bigint           not null, primary key
+#  body             :text             not null
+#  published_before :boolean          default(FALSE), not null
+#  status           :integer          default("published"), not null
+#  title            :string           not null
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  poster_id        :integer          not null
+#

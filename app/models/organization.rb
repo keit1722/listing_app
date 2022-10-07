@@ -27,7 +27,9 @@ class Organization < ApplicationRecord
   def create_notices
     notices = users.map { |user| Notice.new(user: user, noticeable: self) }
     Notice.import notices
-    users.each do |user|
+
+    email_receivers = users.select { |user| user.incoming_email.organization? }
+    email_receivers.each do |user|
       NoticeMailer
         .with(user_to: user, organization: self)
         .organization

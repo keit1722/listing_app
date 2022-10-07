@@ -42,7 +42,7 @@
             <div class="post-content">
               <h3><%= @announcement.title %></h3>
               <ul class="post-meta">
-                <li><%= l @announcement.created_at, format: :short %></li>
+                <li><%= l @announcement.created_at, format: :long %></li>
               </ul>
               <p><%= @announcement.decorate.format_body %></p>
             </div>

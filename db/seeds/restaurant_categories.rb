@@ -1,5 +1,3 @@
-puts 'Start inserting seed "restaurant_categories" ...'
-
 restaurant_categories = %w[
   和食
   洋食
@@ -16,5 +14,4 @@ restaurant_categories = %w[
 
 restaurant_categories.each do |restaurant_category|
   RestaurantCategory.create(name: restaurant_category)
-  puts "\"#{restaurant_category}\" has created!"
 end

@@ -14,8 +14,6 @@ class Post < ApplicationRecord
   scope :ordered, -> { order(created_at: :desc) }
   scope :recent, ->(count) { ordered.limit(count) }
 
-  after_create_commit :create_notices
-
   def previous
     postable
       .posts
@@ -34,19 +32,17 @@ class Post < ApplicationRecord
       .first
   end
 
-  private
-
-  def create_notices
-    return if draft?
-
+  def create_notices(title)
     notices =
-      postable.bookmarks.map do |bookmark|
-        Notice.new(user: bookmark.user, noticeable: self)
-      end
+      postable.users.map { |user| Notice.new(user: user, noticeable: self) }
     Notice.import notices
 
-    postable.bookmarks.each do |bookmark|
-      NoticeMailer.with(user_to: bookmark.user, post: self).post.deliver_later
+    email_receivers = postable.users.select { |user| user.incoming_email.post? }
+    email_receivers.each do |user|
+      NoticeMailer
+        .with(user_to: user, post: self, title: title)
+        .post
+        .deliver_later
     end
   end
 end
@@ -55,14 +51,15 @@ end
 #
 # Table name: posts
 #
-#  id            :bigint           not null, primary key
-#  body          :text             not null
-#  postable_type :string
-#  status        :integer          default("published"), not null
-#  title         :string           not null
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#  postable_id   :bigint
+#  id               :bigint           not null, primary key
+#  body             :text             not null
+#  postable_type    :string
+#  published_before :boolean          default(FALSE), not null
+#  status           :integer          not null
+#  title            :string           not null
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  postable_id      :bigint
 #
 # Indexes
 #

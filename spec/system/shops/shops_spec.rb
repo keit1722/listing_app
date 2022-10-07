@@ -55,7 +55,7 @@ RSpec.describe 'ショップ', type: :system do
     it 'マイページには自分のショップ以外は表示されないこと' do
       Capybara.raise_server_errors = false
       visit organization_shop_path(organization_b, shop_b)
-      assert_text 'ActiveRecord::RecordNotFound'
+      expect(page).to have_content 'ActiveRecord::RecordNotFound'
     end
   end
 
@@ -75,7 +75,7 @@ RSpec.describe 'ショップ', type: :system do
       it '登録フォームに進めずエラーになること' do
         Capybara.raise_server_errors = false
         visit new_organization_shop_path(organization_b)
-        assert_text 'NoMethodError'
+        expect(page).to have_content 'NoMethodError'
       end
     end
 
@@ -83,7 +83,7 @@ RSpec.describe 'ショップ', type: :system do
       it '新規登録できること' do
         visit new_organization_shop_path(organization_a)
         fill_in '名称', with: 'サンプルショップ店名'
-        find('#shop_create_form_district_id_chosen').click
+        find_by_id('shop_create_form_district_id_chosen').click
         find(
           '#shop_create_form_district_id_chosen .active-result',
           text: '内山'
@@ -93,10 +93,10 @@ RSpec.describe 'ショップ', type: :system do
         fill_in '紹介',
                 with:
                   'Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua.'
-        find('#map-location-registration').click
+        find_by_id('map-location-registration').click
         page.execute_script "$('input#shop_create_form_shop_attributes_main_image').css('opacity','1')"
         attach_file('メイン画像', Rails.root.join('spec/fixtures/fixture.png'))
-        find('#shop_create_form_shop_category_ids_chosen').click
+        find_by_id('shop_create_form_shop_category_ids_chosen').click
         find(
           '#shop_create_form_shop_category_ids_chosen .active-result',
           text: 'お土産'
@@ -128,7 +128,7 @@ RSpec.describe 'ショップ', type: :system do
         Capybara.raise_server_errors = false
         visit edit_organization_shop_path(organization_b, shop_b)
 
-        assert_text 'ActiveRecord::RecordNotFound'
+        expect(page).to have_content 'ActiveRecord::RecordNotFound'
       end
     end
 
@@ -138,7 +138,7 @@ RSpec.describe 'ショップ', type: :system do
         create(:district_sano)
         visit edit_organization_shop_path(organization_a, shop_a)
         fill_in '名称', with: '更新サンプルショップ店名'
-        find('#shop_update_form_district_id_chosen').click
+        find_by_id('shop_update_form_district_id_chosen').click
         find(
           '#shop_update_form_district_id_chosen .active-result',
           text: '佐野'
@@ -147,10 +147,10 @@ RSpec.describe 'ショップ', type: :system do
         fill_in '紹介',
                 with:
                   'Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-        find('#map-location-registration').click
+        find_by_id('map-location-registration').click
         page.execute_script "$('input#shop_update_form_shop_attributes_main_image').css('opacity','1')"
         attach_file('メイン画像', Rails.root.join('spec/fixtures/fixture.png'))
-        find('#shop_update_form_shop_category_ids_chosen').click
+        find_by_id('shop_update_form_shop_category_ids_chosen').click
         find(
           '#shop_update_form_shop_category_ids_chosen .active-result',
           text: 'スポーツショップ'
@@ -227,9 +227,9 @@ RSpec.describe 'ショップ', type: :system do
     context '検索ワード・エリア・カテゴリー（ショップ）を指定した場合' do
       it '指定された検索ワード・エリア・カテゴリーの一覧が表示されること' do
         fill_in 'q_keyword', with: shop_a.name
-        find('#q_area_chosen').click
+        find_by_id('q_area_chosen').click
         find('#q_area_chosen .active-result', text: 'さのさか').click
-        find('#q_category_chosen').click
+        find_by_id('q_category_chosen').click
         find('#q_category_chosen .active-result', text: 'ショップ').click
         click_button '検索'
 
@@ -241,7 +241,7 @@ RSpec.describe 'ショップ', type: :system do
 
     context 'カテゴリー（ショップ）だけを指定した場合' do
       it '全てのショップの一覧が表示される' do
-        find('#q_category_chosen').click
+        find_by_id('q_category_chosen').click
         find('#q_category_chosen .active-result', text: 'ショップ').click
         click_button '検索'
 
@@ -253,9 +253,9 @@ RSpec.describe 'ショップ', type: :system do
 
     context 'エリアとカテゴリー（ショップ）だけを指定した場合' do
       it '指定したエリアに所属しているショップの一覧が表示される' do
-        find('#q_area_chosen').click
+        find_by_id('q_area_chosen').click
         find('#q_area_chosen .active-result', text: 'さのさか').click
-        find('#q_category_chosen').click
+        find_by_id('q_category_chosen').click
         find('#q_category_chosen .active-result', text: 'ショップ').click
         click_button '検索'
 
@@ -268,7 +268,7 @@ RSpec.describe 'ショップ', type: :system do
     context 'カテゴリーを指定しない場合' do
       it '検索結果が表示されないこと' do
         fill_in 'q_keyword', with: shop_a.name
-        find('#q_area_chosen').click
+        find_by_id('q_area_chosen').click
         find('#q_area_chosen .active-result', text: 'さのさか').click
         click_button '検索'
 
@@ -331,7 +331,7 @@ RSpec.describe 'ショップ', type: :system do
       it '投稿の新規作成ページが表示されなずにエラーになる' do
         Capybara.raise_server_errors = false
         visit new_organization_shop_post_path(organization_b, shop_b)
-        assert_text 'ActiveRecord::RecordNotFound'
+        expect(page).to have_content 'ActiveRecord::RecordNotFound'
       end
     end
 
@@ -342,11 +342,9 @@ RSpec.describe 'ショップ', type: :system do
         fill_in '内容', with: 'サンプル投稿内容'
         page.execute_script "$('input#post_image').css('opacity','1')"
         attach_file('画像', Rails.root.join('spec/fixtures/fixture.png'))
-        find('#post_status_chosen').click
-        find('#post_status_chosen .active-result', text: '公開').click
-        click_button '登録する'
+        click_button '投稿'
 
-        expect(page).to have_content '作成しました'
+        expect(page).to have_content '投稿しました'
         expect(page).to have_content 'サンプル投稿名'
       end
     end
@@ -370,7 +368,7 @@ RSpec.describe 'ショップ', type: :system do
       it '投稿詳細ページが表示されずにエラーになる' do
         Capybara.raise_server_errors = false
         visit organization_shop_post_path(organization_b, shop_b, post_b)
-        assert_text 'ActiveRecord::RecordNotFound'
+        expect(page).to have_content 'ActiveRecord::RecordNotFound'
       end
     end
   end
@@ -386,11 +384,9 @@ RSpec.describe 'ショップ', type: :system do
         fill_in '内容', with: '更新サンプル投稿内容'
         page.execute_script "$('input#post_image').css('opacity','1')"
         attach_file('画像', Rails.root.join('spec/fixtures/fixture.png'))
-        find('#post_status_chosen').click
-        find('#post_status_chosen .active-result', text: '下書き').click
-        click_button '更新する'
+        click_button '更新'
 
-        expect(page).to have_content '更新しました'
+        expect(page).to have_content '内容を更新しました'
         expect(page).to have_content '更新サンプル投稿名'
       end
     end
@@ -445,7 +441,7 @@ RSpec.describe 'ショップ', type: :system do
     it '下書きの投稿はエラーになり表示されない' do
       Capybara.raise_server_errors = false
       visit shop_post_path(shop_a, post_b)
-      assert_text 'ActiveRecord::RecordNotFound'
+      expect(page).to have_content 'ActiveRecord::RecordNotFound'
     end
 
     it '投稿の詳細ページには下書きではない次の投稿名が表示されてクリックできる' do
@@ -458,27 +454,6 @@ RSpec.describe 'ショップ', type: :system do
       visit shop_post_path(shop_a, post_c)
       find('li.prev-post a', text: post_a.title).click
       expect(page).to have_content post_a.title
-    end
-  end
-
-  describe '通知一覧表示' do
-    before { business_login_as user_a }
-
-    context 'お気に入りをしているショップの場合' do
-      it '投稿がされるとショップの名前が追加される' do
-        user_a.bookmark(shop_a)
-        create(:post_published, postable: shop_a)
-        visit mypage_notices_path
-        expect(page).to have_content shop_a.name
-      end
-    end
-
-    context 'お気に入りをしていないショップの場合' do
-      it '投稿がされるとショップの名前が追加されない' do
-        create(:post_published, postable: shop_a)
-        visit mypage_notices_path
-        expect(page).not_to have_content shop_a.name
-      end
     end
   end
 end

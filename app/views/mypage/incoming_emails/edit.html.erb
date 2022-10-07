@@ -1,0 +1,78 @@
+<div id="titlebar">
+  <div class="row">
+    <div class="col-md-12">
+      <h2><i class="sl sl-icon-wrench"></i> メール受信設定編集</h2>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+
+    <div id="add-listing">
+      <%= form_with model: @incoming_email, url: mypage_email_setting_path do |f| %>
+        <%= render 'shared/error_messages', model: f.object %>
+
+        <!-- Section -->
+        <div class="add-listing-section">
+
+          <!-- Headline -->
+          <div class="add-listing-headline">
+          </div>
+
+          <!-- Row -->
+          <div class="row with-forms margin-bottom-20">
+            <!-- Role -->
+            <div class="col-md-12">
+              <h5><%= f.label :post %></h5>
+              <%= f.select :post, [['メール通知する', true], ['メール通知しない', false]], {}, { class: "chosen-select" } %>
+            </div>
+          </div>
+          <!-- Row / End -->
+
+          <!-- Row -->
+          <div class="row with-forms margin-bottom-20">
+            <!-- Role -->
+            <div class="col-md-12">
+              <h5><%= f.label :announcement %></h5>
+              <%= f.select :announcement, [['メール通知する', true], ['メール通知しない', false]], {}, { class: "chosen-select" } %>
+            </div>
+          </div>
+          <!-- Row / End -->
+
+          <% if current_user.business? || current_user.admin? %>
+            <!-- Row -->
+            <div class="row with-forms margin-bottom-20">
+              <!-- Role -->
+              <div class="col-md-12">
+                <h5><%= f.label :organization %></h5>
+                <%= f.select :organization, [['メール通知する', true], ['メール通知しない', false]], {}, { class: "chosen-select" } %>
+              </div>
+            </div>
+            <!-- Row / End -->
+
+            <!-- Row -->
+            <div class="row with-forms margin-bottom-20">
+              <!-- Role -->
+              <div class="col-md-12">
+                <h5><%= f.label :organization_invitation %></h5>
+                <%= f.select :organization_invitation, [['メール通知する', true], ['メール通知しない', false]], {}, { class: "chosen-select" } %>
+              </div>
+            </div>
+            <!-- Row / End -->
+          <% end %>
+
+        </div>
+        <!-- Section / End -->
+
+        <div class="margin-top-20">
+            <%= link_to mypage_email_setting_path, class: "button border overflow-visible" do %>
+              <i class="sl sl-icon-arrow-left-circle"></i> 戻る
+            <% end %>
+
+          <%= f.submit nil, class: "button right-side" %>
+        </div>
+      <% end %>
+
+    </div>
+  </div>

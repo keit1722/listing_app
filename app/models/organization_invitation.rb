@@ -17,6 +17,7 @@ class OrganizationInvitation < ApplicationRecord
 
   before_create :create_token
   before_save { self.email = email.downcase }
+  after_create_commit :create_notice
 
   scope :ordered, -> { order(created_at: :desc) }
 
@@ -25,6 +26,9 @@ class OrganizationInvitation < ApplicationRecord
     return if user.nil?
 
     Notice.create(user: user, noticeable: self)
+
+    return unless user.incoming_email.organization_invitation?
+
     NoticeMailer
       .with(user_to: user, organization_invitation: self)
       .organization_invitation

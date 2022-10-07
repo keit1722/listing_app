@@ -51,14 +51,12 @@ RSpec.describe 'お知らせ', type: :system do
         visit new_pvsuwimvsuoitmucvyku_announcement_path
         fill_in 'タイトル', with: 'サンプルタイトル'
         fill_in '内容', with: 'サンプル内容'
-        find('#announcement_status_chosen').click
-        find('#announcement_status_chosen .active-result', text: '公開').click
-        click_button '登録する'
+        click_button '投稿'
 
         expect(
           page
         ).to have_current_path pvsuwimvsuoitmucvyku_announcements_path
-        expect(page).to have_content '作成しました'
+        expect(page).to have_content '投稿しました'
         expect(page).to have_content 'サンプルタイトル'
       end
     end
@@ -74,16 +72,14 @@ RSpec.describe 'お知らせ', type: :system do
         )
         fill_in 'タイトル', with: 'サンプル編集後タイトル'
         fill_in '内容', with: 'サンプル編集後内容'
-        find('#announcement_status_chosen').click
-        find('#announcement_status_chosen .active-result', text: '公開').click
-        click_button '更新する'
+        click_button '更新'
 
         expect(
           page
         ).to have_current_path pvsuwimvsuoitmucvyku_announcement_path(
           announcement_published
         )
-        expect(page).to have_content '更新しました'
+        expect(page).to have_content '内容を更新しました'
         expect(page).to have_content 'サンプル編集後タイトル'
       end
     end
@@ -122,7 +118,7 @@ RSpec.describe 'お知らせ', type: :system do
       it '詳細ページが表示されない' do
         Capybara.raise_server_errors = false
         visit announcement_path(announcement_draft)
-        assert_text 'ActiveRecord::RecordNotFound'
+        expect(page).to have_content 'ActiveRecord::RecordNotFound'
       end
     end
   end

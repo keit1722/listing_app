@@ -12,11 +12,11 @@ class Organizations::ShopsController < Organizations::BaseController
   def show
     @shop =
       current_user
-        .organizations
-        .find_by!(slug: params[:organization_slug])
-        .shops
-        .with_attached_images
-        .find_by!(slug: params[:slug])
+      .organizations
+      .find_by!(slug: params[:organization_slug])
+      .shops
+      .with_attached_images
+      .find_by!(slug: params[:slug])
   end
 
   def new
@@ -45,11 +45,11 @@ class Organizations::ShopsController < Organizations::BaseController
   def edit
     @shop =
       current_user
-        .organizations
-        .find_by!(slug: params[:organization_slug])
-        .shops
-        .with_attached_images
-        .find_by!(slug: params[:slug])
+      .organizations
+      .find_by!(slug: params[:organization_slug])
+      .shops
+      .with_attached_images
+      .find_by!(slug: params[:slug])
     @shop_update_form = ShopUpdateForm.new(@shop)
     @districts = District.all
     @shop_categories = ShopCategory.all
@@ -58,11 +58,11 @@ class Organizations::ShopsController < Organizations::BaseController
   def update
     @shop =
       current_user
-        .organizations
-        .find_by!(slug: params[:organization_slug])
-        .shops
-        .with_attached_images
-        .find_by!(slug: params[:slug])
+      .organizations
+      .find_by!(slug: params[:organization_slug])
+      .shops
+      .with_attached_images
+      .find_by!(slug: params[:slug])
     @shop_update_form = ShopUpdateForm.new(@shop, shop_update_params)
     @districts = District.all
     @shop_categories = ShopCategory.all
@@ -78,10 +78,10 @@ class Organizations::ShopsController < Organizations::BaseController
   def destroy
     @shop =
       current_user
-        .organizations
-        .find_by(slug: params[:organization_slug])
-        .shops
-        .find_by(slug: params[:slug])
+      .organizations
+      .find_by(slug: params[:organization_slug])
+      .shops
+      .find_by(slug: params[:slug])
 
     @shop.destroy!
     redirect_to organization_shops_path, success: '削除しました'
@@ -95,15 +95,8 @@ class Organizations::ShopsController < Organizations::BaseController
       .permit(
         :district_id,
         reservation_link_attributes: [:link],
-        page_show_attributes: %i[reservation_link opening_hours],
-        opening_hours_attributes: %i[
-          start_time_hour
-          start_time_minute
-          end_time_hour
-          end_time_minute
-          closed
-          day
-        ],
+        page_show_attributes: [:reservation_link, :opening_hours],
+        opening_hours_attributes: [:start_time_hour, :start_time_minute, :end_time_hour, :end_time_minute, :closed, :day],
         shop_category_ids: [],
         shop_attributes: [
           :name,
@@ -113,8 +106,8 @@ class Organizations::ShopsController < Organizations::BaseController
           :description,
           :address,
           :main_image,
-          { images: [] },
-        ],
+          { images: [] }
+        ]
       )
   end
 
@@ -124,15 +117,8 @@ class Organizations::ShopsController < Organizations::BaseController
       .permit(
         :district_id,
         reservation_link_attributes: [:link],
-        page_show_attributes: %i[reservation_link opening_hours],
-        opening_hours_attributes: %i[
-          start_time_hour
-          start_time_minute
-          end_time_hour
-          end_time_minute
-          closed
-          day
-        ],
+        page_show_attributes: [:reservation_link, :opening_hours],
+        opening_hours_attributes: [:start_time_hour, :start_time_minute, :end_time_hour, :end_time_minute, :closed, :day],
         shop_category_ids: [],
         shop_attributes: [
           :name,
@@ -141,8 +127,8 @@ class Organizations::ShopsController < Organizations::BaseController
           :description,
           :address,
           :main_image,
-          { images: [] },
-        ],
+          { images: [] }
+        ]
       )
   end
 end

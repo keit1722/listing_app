@@ -25,7 +25,7 @@ RSpec.describe Shop, type: :model do
       shop = build(:shop, lat: nil)
       shop.valid?
       expect(shop.errors.full_messages).to include(
-        '地図にピンを設置してください',
+        '地図にピンを設置してください'
       )
     end
 
@@ -33,7 +33,7 @@ RSpec.describe Shop, type: :model do
       shop = build(:shop, lng: nil)
       shop.valid?
       expect(shop.errors.full_messages).to include(
-        '地図にピンを設置してください',
+        '地図にピンを設置してください'
       )
     end
 
@@ -100,14 +100,14 @@ RSpec.describe Shop, type: :model do
 
       it do
         expect(
-          described_class.search_with_category([souvenir.id, sports.id]),
+          described_class.search_with_category([souvenir.id, sports.id])
         ).to eq [shop_souvenir, shop_sports]
       end
 
       it do
         expect(described_class.search_with_category([souvenir.id])).to eq [
-             shop_souvenir,
-           ]
+          shop_souvenir
+        ]
       end
     end
 
@@ -119,14 +119,14 @@ RSpec.describe Shop, type: :model do
 
       it do
         expect(
-          described_class.search_with_district([uchiyama.id, sano.id]),
+          described_class.search_with_district([uchiyama.id, sano.id])
         ).to eq [shop_uchiyama, shop_sano]
       end
 
       it do
         expect(described_class.search_with_district([uchiyama.id])).to eq [
-             shop_uchiyama,
-           ]
+          shop_uchiyama
+        ]
       end
     end
 
@@ -138,25 +138,25 @@ RSpec.describe Shop, type: :model do
         create(
           :shop,
           name: 'ショップサンプル_B',
-          description: 'Aランク食品を取り扱うスーパーです',
+          description: 'Aランク食品を取り扱うスーパーです'
         )
       end
 
       it do
         expect(described_class.keyword_contain('shops', 'コンビニ')).to eq [
-             shop_a,
-           ]
+          shop_a
+        ]
       end
 
       it do
         expect(described_class.keyword_contain('shops', 'スーパー')).to eq [
-             shop_b,
-           ]
+          shop_b
+        ]
       end
 
       it do
         expect(
-          described_class.keyword_contain('shops', 'A').order('id'),
+          described_class.keyword_contain('shops', 'A').order('id')
         ).to eq [shop_a, shop_b]
       end
 
@@ -164,7 +164,7 @@ RSpec.describe Shop, type: :model do
         expect(
           described_class
             .keyword_contain('shops', 'ショップサンプル')
-            .order('id'),
+            .order('id')
         ).to eq [shop_a, shop_b]
       end
     end

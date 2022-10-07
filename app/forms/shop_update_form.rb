@@ -69,7 +69,7 @@ class ShopUpdateForm
       @shop.valid?,
       reservation_link.valid?,
       page_show.valid?,
-      opening_hours.map(&:valid?).all?,
+      opening_hours.map(&:valid?).all?
     ].all?
   end
 end

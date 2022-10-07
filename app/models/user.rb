@@ -44,6 +44,8 @@ class User < ApplicationRecord
            source: :noticeable,
            source_type: 'Post'
 
+  has_one :incoming_email, dependent: :destroy
+
   has_one_attached :avatar
 
   validates :password,
@@ -82,7 +84,7 @@ class User < ApplicationRecord
 
   enum role: { general: 1, business: 2, admin: 9 }
 
-  scope :not_admin, -> { where.not(role: :admin) }
+  after_create :create_incoming_email_model
 
   def to_param
     public_uid
@@ -108,6 +110,10 @@ class User < ApplicationRecord
 
   def bookmark_object(bookmarkable)
     "#{bookmarkable.class.to_s.underscore}_bookmarks"
+  end
+
+  def create_incoming_email_model
+    create_incoming_email
   end
 end
 

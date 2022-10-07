@@ -23,9 +23,9 @@ RSpec.describe Post, type: :model do
 
   describe 'スコープ' do
     let(:restaurant) { create(:restaurant) }
-    let!(:post_a) { create(:post, postable: restaurant) }
-    let!(:post_b) { create(:post, postable: restaurant) }
-    let!(:post_c) { create(:post, postable: restaurant) }
+    let!(:post_a) { create(:post_published, postable: restaurant) }
+    let!(:post_b) { create(:post_published, postable: restaurant) }
+    let!(:post_c) { create(:post_published, postable: restaurant) }
 
     describe 'ordered' do
       it { expect(described_class.ordered).to eq [post_c, post_b, post_a] }
@@ -42,9 +42,9 @@ RSpec.describe Post, type: :model do
 
   describe 'インスタンスメソッド' do
     let(:restaurant) { create(:restaurant) }
-    let!(:post_a) { create(:post, postable: restaurant) }
-    let!(:post_b) { create(:post, postable: restaurant) }
-    let!(:post_c) { create(:post, postable: restaurant) }
+    let!(:post_a) { create(:post_published, postable: restaurant) }
+    let!(:post_b) { create(:post_published, postable: restaurant) }
+    let!(:post_c) { create(:post_published, postable: restaurant) }
 
     describe 'previous' do
       context 'ひとつ前に作成されたオブジェクトがある場合' do
@@ -73,6 +73,38 @@ RSpec.describe Post, type: :model do
         end
       end
     end
+
+    describe 'create_notices' do
+      let(:user_a) { create(:general_user, :activated) }
+      let(:user_b) { create(:general_user, :activated) }
+      let(:user_c) { create(:general_user, :activated) }
+      let(:post) { create(:post_published, postable: restaurant) }
+
+      around { |example| perform_enqueued_jobs(&example) }
+
+      before do
+        user_a.bookmark(restaurant)
+        user_b.bookmark(restaurant)
+        user_b.incoming_email.update(post: false)
+        ActionMailer::Base.deliveries.clear
+        post.create_notices('新しく投稿をしました')
+      end
+
+      it 'お気に入り登録しているユーザにのみ投稿した通知が送られる' do
+        expect(user_a.notices).to exist
+        expect(user_b.notices).to exist
+        expect(user_c.notices).to be_empty
+      end
+
+      it 'お気に入り登録して、なおかつ投稿のメール通知をオンにしているユーザにのみメール送信がおこなわれる' do
+        mails = ActionMailer::Base.deliveries
+        recievers =
+          User.joins(:incoming_email).where(incoming_email: { post: true })
+
+        expect(mails.size).to eq(recievers.size)
+        expect(mails.first.to.first).to eq(user_a.email)
+      end
+    end
   end
 end
 
@@ -80,14 +112,15 @@ end
 #
 # Table name: posts
 #
-#  id            :bigint           not null, primary key
-#  body          :text             not null
-#  postable_type :string
-#  status        :integer          default("published"), not null
-#  title         :string           not null
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#  postable_id   :bigint
+#  id               :bigint           not null, primary key
+#  body             :text             not null
+#  postable_type    :string
+#  published_before :boolean          default(FALSE), not null
+#  status           :integer          not null
+#  title            :string           not null
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  postable_id      :bigint
 #
 # Indexes
 #

@@ -41,7 +41,7 @@ class Pvsuwimvsuoitmucvyku::UsersController < Pvsuwimvsuoitmucvyku::BaseControll
         :password,
         :password_confirmation,
         :username,
-        :role,
+        :role
       )
   end
 end

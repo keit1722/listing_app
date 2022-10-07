@@ -25,7 +25,7 @@ RSpec.describe Hotel, type: :model do
       hotel = build(:hotel, lat: nil)
       hotel.valid?
       expect(hotel.errors.full_messages).to include(
-        '地図にピンを設置してください',
+        '地図にピンを設置してください'
       )
     end
 
@@ -33,7 +33,7 @@ RSpec.describe Hotel, type: :model do
       hotel = build(:hotel, lng: nil)
       hotel.valid?
       expect(hotel.errors.full_messages).to include(
-        '地図にピンを設置してください',
+        '地図にピンを設置してください'
       )
     end
 
@@ -100,14 +100,14 @@ RSpec.describe Hotel, type: :model do
 
       it do
         expect(
-          described_class.search_with_district([uchiyama.id, sano.id]),
+          described_class.search_with_district([uchiyama.id, sano.id])
         ).to eq [hotel_uchiyama, hotel_sano]
       end
 
       it do
         expect(described_class.search_with_district([uchiyama.id])).to eq [
-             hotel_uchiyama,
-           ]
+          hotel_uchiyama
+        ]
       end
     end
 
@@ -119,25 +119,25 @@ RSpec.describe Hotel, type: :model do
         create(
           :hotel,
           name: 'ホテルサンプル_B',
-          description: 'Aランクの宿泊施設です',
+          description: 'Aランクの宿泊施設です'
         )
       end
 
       it do
         expect(described_class.keyword_contain('hotels', '送迎')).to eq [
-             hotel_a,
-           ]
+          hotel_a
+        ]
       end
 
       it do
         expect(described_class.keyword_contain('hotels', '宿泊')).to eq [
-             hotel_b,
-           ]
+          hotel_b
+        ]
       end
 
       it do
         expect(
-          described_class.keyword_contain('hotels', 'A').order('id'),
+          described_class.keyword_contain('hotels', 'A').order('id')
         ).to eq [hotel_a, hotel_b]
       end
 
@@ -145,7 +145,7 @@ RSpec.describe Hotel, type: :model do
         expect(
           described_class
             .keyword_contain('hotels', 'ホテルサンプル')
-            .order('id'),
+            .order('id')
         ).to eq [hotel_a, hotel_b]
       end
     end

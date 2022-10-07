@@ -5,29 +5,29 @@ class Pvsuwimvsuoitmucvyku::Organizations::PhotoSpotsController < Pvsuwimvsuoitm
     @organization = Organization.find_by!(slug: params[:organization_slug])
     @photo_spots =
       @organization
-        .photo_spots
-        .page(params[:page])
-        .per(20)
-        .with_attached_main_image
+      .photo_spots
+      .page(params[:page])
+      .per(20)
+      .with_attached_main_image
     render layout: 'mypage'
   end
 
   def show
     @photo_spot =
       Organization
-        .find_by!(slug: params[:organization_slug])
-        .photo_spots
-        .with_attached_images
-        .find_by!(slug: params[:slug])
+      .find_by!(slug: params[:organization_slug])
+      .photo_spots
+      .with_attached_images
+      .find_by!(slug: params[:slug])
   end
 
   def edit
     @photo_spot =
       Organization
-        .find_by!(slug: params[:organization_slug])
-        .photo_spots
-        .with_attached_images
-        .find_by!(slug: params[:slug])
+      .find_by!(slug: params[:organization_slug])
+      .photo_spots
+      .with_attached_images
+      .find_by!(slug: params[:slug])
     @photo_spot_update_form = PhotoSpotUpdateForm.new(@photo_spot)
     @districts = District.all
   end
@@ -35,10 +35,10 @@ class Pvsuwimvsuoitmucvyku::Organizations::PhotoSpotsController < Pvsuwimvsuoitm
   def update
     @photo_spot =
       Organization
-        .find_by!(slug: params[:organization_slug])
-        .photo_spots
-        .with_attached_images
-        .find_by!(slug: params[:slug])
+      .find_by!(slug: params[:organization_slug])
+      .photo_spots
+      .with_attached_images
+      .find_by!(slug: params[:slug])
     @photo_spot_update_form =
       PhotoSpotUpdateForm.new(@photo_spot, photo_spot_params)
     @districts = District.all
@@ -60,15 +60,8 @@ class Pvsuwimvsuoitmucvyku::Organizations::PhotoSpotsController < Pvsuwimvsuoitm
       .permit(
         :district_id,
         reservation_link_attributes: [:link],
-        page_show_attributes: %i[reservation_link opening_hours],
-        opening_hours_attributes: %i[
-          start_time_hour
-          start_time_minute
-          end_time_hour
-          end_time_minute
-          closed
-          day
-        ],
+        page_show_attributes: [:reservation_link, :opening_hours],
+        opening_hours_attributes: [:start_time_hour, :start_time_minute, :end_time_hour, :end_time_minute, :closed, :day],
         photo_spot_attributes: [
           :name,
           :lat,
@@ -76,8 +69,8 @@ class Pvsuwimvsuoitmucvyku::Organizations::PhotoSpotsController < Pvsuwimvsuoitm
           :description,
           :address,
           :main_image,
-          { images: [] },
-        ],
+          { images: [] }
+        ]
       )
   end
 end

@@ -1,5 +1,3 @@
-puts 'Start inserting seed "districs" ...'
-
 hakuba_districts = %w[
   内山
   佐野
@@ -36,11 +34,9 @@ hakuba_districts = %w[
 otari_districts = %w[北小谷 千国 中土]
 
 hakuba_districts.each do |hakuba_district|
-  district = District.create(name: hakuba_district, location: 'hakuba')
-  puts "\"#{district.name}\" has created!"
+  District.create(name: hakuba_district, location: 'hakuba')
 end
 
 otari_districts.each do |otari_district|
-  district = District.create(name: otari_district, location: 'otari')
-  puts "\"#{district.name}\" has created!"
+  District.create(name: otari_district, location: 'otari')
 end
