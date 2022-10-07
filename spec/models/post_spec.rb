@@ -73,6 +73,34 @@ RSpec.describe Post, type: :model do
         end
       end
     end
+
+    describe 'create_notices' do
+      let(:user_a) { create(:general_user, :activated) }
+      let(:user_b) { create(:general_user, :activated) }
+      let(:user_c) { create(:general_user, :activated) }
+      let(:post) { create(:post_published, postable: restaurant) }
+      around { |example| perform_enqueued_jobs(&example) }
+
+      before do
+        user_a.bookmark(restaurant)
+        user_b.bookmark(restaurant)
+        user_b.incoming_email.update(post: false)
+        ActionMailer::Base.deliveries.clear
+        post.create_notices('新しく投稿をしました')
+      end
+
+      it 'お気に入り登録しているユーザにのみ投稿した通知が送られる' do
+        expect(user_a.notices.exists?).to be_truthy
+        expect(user_b.notices.exists?).to be_truthy
+        expect(user_c.notices.exists?).to be_falsey
+      end
+
+      it 'お気に入り登録して、なおかつ投稿のメール通知をオンにしているユーザにのみ通知が送られる' do
+        mails = ActionMailer::Base.deliveries
+        expect(mails.size).to eq(1)
+        expect(mails.first.to.first).to eq(user_a.email)
+      end
+    end
   end
 end
 
