@@ -5,6 +5,9 @@ Rails.application.routes.draw do
   get 'term', to: 'pages#term'
   get 'privacy', to: 'pages#privacy'
   get 'cookie', to: 'pages#cookie'
+  post 'oauth/callback', to: 'oauths#callback'
+  get 'oauth/callback', to: 'oauths#callback'
+  get 'oauth/:provider', to: 'oauths#oauth', as: :auth_at_provider
   get 'login', to: 'sessions#new'
   post 'login', to: 'sessions#create'
   delete 'logout', to: 'sessions#destroy'
