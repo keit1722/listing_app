@@ -36,7 +36,7 @@
     <%= javascript_include_tag 'application' %>
 
     <!-- Maps -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap&v=weekly"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=<%= Rails.application.credentials[:google_maps][:api_key] %>&callback=initMap&v=weekly"></script>
     <%= javascript_include_tag 'infobox.min' %>
     <%= javascript_include_tag 'markerclusterer' %>
     <%= javascript_include_tag 'maps' %>

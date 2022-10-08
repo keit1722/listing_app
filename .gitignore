@@ -40,5 +40,4 @@ vendor
 
 public/fonts/
 app/assets/images/
-/.env
 spec/fixtures/

@@ -109,10 +109,6 @@ GEM
     debug_inspector (1.1.0)
     diff-lcs (1.5.0)
     diffy (3.4.2)
-    dotenv (2.8.1)
-    dotenv-rails (2.8.1)
-      dotenv (= 2.8.1)
-      railties (>= 3.2)
     draper (4.0.2)
       actionpack (>= 5.0)
       activemodel (>= 5.0)
@@ -422,7 +418,6 @@ DEPENDENCIES
   bullet
   byebug
   capybara
-  dotenv-rails
   draper
   enum_help
   factory_bot_rails
