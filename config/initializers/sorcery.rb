@@ -169,7 +169,6 @@ Rails.application.config.sorcery.configure do |config|
   config.google.callback_url = Settings.sorcery[:google_callback_url]
   config.google.user_info_mapping = {
     email: 'email',
-    username: 'name',
     last_name: 'family_name',
     first_name: 'given_name',
   }

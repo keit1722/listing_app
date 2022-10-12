@@ -75,12 +75,8 @@ class User < ApplicationRecord
             }
   validates :first_name, presence: true, length: { maximum: 50 }
   validates :last_name, presence: true, length: { maximum: 50 }
-  validates :username,
-            presence: true,
-            length: {
-              maximum: 100,
-            },
-            uniqueness: true
+  validates :username, length: { maximum: 100 }, on: :create
+  validates :username, presence: true, length: { maximum: 100 }, on: :update
 
   validates :reset_password_token, uniqueness: true, allow_nil: true
   validates :avatar, content_type: %i[png jpg jpeg]
@@ -88,6 +84,7 @@ class User < ApplicationRecord
   enum role: { general: 1, business: 2, admin: 9 }
 
   after_create :create_incoming_email_model
+  before_create { self.username = '名無しユーザー' if username.blank? }
 
   def to_param
     public_uid
