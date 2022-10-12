@@ -83,7 +83,7 @@ class User < ApplicationRecord
 
   enum role: { general: 1, business: 2, admin: 9 }
 
-  after_create :create_incoming_email_model
+  after_create { create_incoming_email }
   before_create { self.username = '名無しユーザー' if username.blank? }
 
   def to_param
@@ -110,10 +110,6 @@ class User < ApplicationRecord
 
   def bookmark_object(bookmarkable)
     "#{bookmarkable.class.to_s.underscore}_bookmarks"
-  end
-
-  def create_incoming_email_model
-    create_incoming_email
   end
 end
 
