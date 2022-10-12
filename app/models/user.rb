@@ -149,5 +149,4 @@ end
 #  index_users_on_email                 (email) UNIQUE
 #  index_users_on_public_uid            (public_uid) UNIQUE
 #  index_users_on_reset_password_token  (reset_password_token)
-#  index_users_on_username              (username) UNIQUE
 #
