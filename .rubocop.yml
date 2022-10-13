@@ -38,6 +38,25 @@ Naming/PredicateName:
   Enabled: false
 Layout/LineLength:
   Max: 150
+  Exclude:
+    - 'db/seeds/dummy_data/announcements.rb'
+    - 'db/seeds/dummy_data/announcements.rb'
+    - 'db/seeds/dummy_data/announcements.rb'
+    - 'db/seeds/dummy_data/posts.rb'
+    - 'db/seeds/dummy_data/posts.rb'
+    - 'db/seeds/dummy_data/posts.rb'
+    - 'db/seeds/dummy_data/posts.rb'
+    - 'db/seeds/dummy_data/posts.rb'
+    - 'db/seeds/dummy_data/restaurants.rb'
+Metrics/BlockLength:
+  Exclude:
+    - 'db/seeds/dummy_data/activities.rb'
+    - 'db/seeds/dummy_data/hot_springs.rb'
+    - 'db/seeds/dummy_data/hotels.rb'
+    - 'db/seeds/dummy_data/photo_spots.rb'
+    - 'db/seeds/dummy_data/restaurants.rb'
+    - 'db/seeds/dummy_data/shops.rb'
+    - 'db/seeds/dummy_data/ski_areas.rb'
 Metrics/MethodLength:
     Enabled: false
 Metrics/ClassLength:
