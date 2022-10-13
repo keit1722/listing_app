@@ -21171,6 +21171,10 @@ body .category-box-btn:hover {
   pointer-events: none;
 }
 
+.font-color-red {
+  color: #f91942 !important;
+}
+
 .images-preview {
   margin-left: auto;
   margin-right: auto;
