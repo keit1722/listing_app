@@ -40,5 +40,8 @@ vendor
 
 public/fonts/
 app/assets/images/
-/.env
 spec/fixtures/
+
+config/settings.local.yml
+config/settings/*.local.yml
+config/environments/*.local.yml

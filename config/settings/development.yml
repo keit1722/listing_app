@@ -1,0 +1,4 @@
+sorcery:
+  google_callback_url: 'http://localhost:3000/oauth/callback?provider=google'
+app:
+  email: "office@example.com"

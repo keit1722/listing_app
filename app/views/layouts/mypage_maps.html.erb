@@ -47,6 +47,6 @@
 
     <%= javascript_include_tag 'application' %>
     <%= javascript_include_tag 'maps-location' %>
-    <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap&v=weekly" async></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=<%= Rails.application.credentials[:google_maps][:api_key] %>&callback=initMap&v=weekly" async></script>
   </body>
 </html>

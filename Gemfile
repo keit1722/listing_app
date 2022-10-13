@@ -32,11 +32,12 @@ gem 'public_uid'
 gem 'active_storage_validations'
 gem 'kaminari'
 gem 'enum_help'
-gem 'dotenv-rails'
 gem 'activerecord-import'
 gem 'redis-rails'
 gem 'sidekiq'
 gem 'sinatra'
+gem 'config'
+gem 'omniauth-google-oauth2'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false

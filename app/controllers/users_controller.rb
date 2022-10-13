@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :require_logout
+  before_action :require_logout, only: [:new, :create]
 
   def new
     @user = User.new
@@ -18,7 +18,7 @@ class UsersController < ApplicationController
   end
 
   def activate
-    if @user = User.load_from_activation_token(params[:id])
+    if (@user = User.load_from_activation_token(params[:id]))
       @user.activate!
       auto_login(@user)
       redirect_to root_path, success: 'アカウントが有効になりました'

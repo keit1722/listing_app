@@ -6,7 +6,7 @@ class SorceryCore < ActiveRecord::Migration[6.1]
       t.string :salt
       t.string 'first_name', null: false
       t.string 'last_name', null: false
-      t.string 'username', null: false, index: { unique: true }
+      t.string 'username', null: false
       t.integer 'role', null: false, default: 1
       t.string :public_uid, index: { unique: true }
 

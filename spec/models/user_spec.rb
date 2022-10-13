@@ -14,19 +14,6 @@ RSpec.describe User, type: :model do
       expect(user.errors[:first_name]).to include('を入力してください')
     end
 
-    it 'ユーザーネームは必須であること' do
-      user = build(:general_user, username: nil)
-      user.valid?
-      expect(user.errors[:username]).to include('を入力してください')
-    end
-
-    it 'ユーザーネームは一意であること' do
-      user = create(:general_user)
-      same_name_user = build(:general_user, username: user.username)
-      same_name_user.valid?
-      expect(same_name_user.errors[:username]).to include('はすでに存在します')
-    end
-
     it 'メールアドレスは必須であること' do
       user = build(:general_user, email: nil)
       user.valid?
@@ -89,5 +76,4 @@ end
 #  index_users_on_email                 (email) UNIQUE
 #  index_users_on_public_uid            (public_uid) UNIQUE
 #  index_users_on_reset_password_token  (reset_password_token)
-#  index_users_on_username              (username) UNIQUE
 #

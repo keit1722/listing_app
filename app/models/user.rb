@@ -44,6 +44,9 @@ class User < ApplicationRecord
            source: :noticeable,
            source_type: 'Post'
 
+  has_many :authentications, dependent: :destroy
+  accepts_nested_attributes_for :authentications
+
   has_one :incoming_email, dependent: :destroy
 
   has_one_attached :avatar
@@ -72,19 +75,16 @@ class User < ApplicationRecord
             }
   validates :first_name, presence: true, length: { maximum: 50 }
   validates :last_name, presence: true, length: { maximum: 50 }
-  validates :username,
-            presence: true,
-            length: {
-              maximum: 100
-            },
-            uniqueness: true
+  validates :username, length: { maximum: 100 }, on: :create
+  validates :username, presence: true, length: { maximum: 100 }, on: :update
 
   validates :reset_password_token, uniqueness: true, allow_nil: true
   validates :avatar, content_type: [:png, :jpg, :jpeg]
 
   enum role: { general: 1, business: 2, admin: 9 }
 
-  after_create :create_incoming_email_model
+  after_create { create_incoming_email }
+  before_create { self.username = '名無しユーザー' if username.blank? }
 
   def to_param
     public_uid
@@ -110,10 +110,6 @@ class User < ApplicationRecord
 
   def bookmark_object(bookmarkable)
     "#{bookmarkable.class.to_s.underscore}_bookmarks"
-  end
-
-  def create_incoming_email_model
-    create_incoming_email
   end
 end
 
@@ -146,5 +142,4 @@ end
 #  index_users_on_email                 (email) UNIQUE
 #  index_users_on_public_uid            (public_uid) UNIQUE
 #  index_users_on_reset_password_token  (reset_password_token)
-#  index_users_on_username              (username) UNIQUE
 #
