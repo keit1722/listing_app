@@ -14,7 +14,7 @@
     </h3>
 
     <ul class="post-meta">
-      <li><%= l announcement.created_at, format: :short %></li>
+      <li><%= l announcement.created_at, format: :long %></li>
     </ul>
 
     <p><%= announcement.decorate.truncate_body(100) %></p>
