@@ -1,4 +1,11 @@
-shop_categories = %w[お土産 スポーツショップ コンビニ スーパー]
+shop_categories = %w[
+  お土産
+  スポーツショップ
+  レンタルショップ
+  コンビニ
+  スーパー
+  薬局
+]
 
 shop_categories.each do |shop_category|
   ShopCategory.create(name: shop_category)
