@@ -27,6 +27,15 @@
   <div class="container">
 
     <div class="row">
+      <div class="col-lg-12 margin-bottom-50">
+        <div id="gSignInWrapper" class="display-flex-center">
+          <%= link_to auth_at_provider_path(provider: :google), id: "customBtn", class: "customGPlusSignIn" do %>
+            <span class="icon"></span>
+            <span class="buttonText">Googleアカウントで登録</span>
+          <% end %>
+        </div>
+      </div>
+
       <div class="col-lg-12">
         <div id="add-listing" class="separated-form">
           <%= form_with model: @user, url: signup_path do |f| %>
