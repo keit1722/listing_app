@@ -58,7 +58,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: bundler config
-      run: bundle config set path 'vendor/bundle'
+        run: bundle config set path 'vendor/bundle'
       - name: Cache gems
         id: cache-gems
         uses: actions/cache@v2
