@@ -42,7 +42,7 @@ jobs:
           bundle install --jobs 4 --retry 3
       - name: setup db schema
         run: |
-          bundle exec rails db:create db:schema:load --trace
+          bundle exec rails db:create ridgepole:apply --trace
       - name: run spec
         run: bundle exec rspec
       - name: Archive rspec result screenshots
