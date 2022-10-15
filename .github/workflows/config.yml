@@ -40,6 +40,8 @@ jobs:
         if: steps.cache-gems.outputs.cache-hit != 'true'
         run: |
           bundle install --jobs 4 --retry 3
+      - name: setup database.yml
+        run: cp config/database.ci.yml config/database.yml
       - name: setup db schema
         run: |
           bundle exec rails db:create ridgepole:apply --trace
