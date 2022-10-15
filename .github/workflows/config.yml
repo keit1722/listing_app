@@ -8,9 +8,6 @@ jobs:
         image: postgres:11-alpine
         ports:
           - "5432:5432"
-        - run:
-          name: setup database.yml
-          command: cp config/database.ci.yml config/database.yml
         env:
           POSTGRES_DB: rails_test
           POSTGRES_USER: root
@@ -19,6 +16,7 @@ jobs:
       image: ruby:3.0.3
     env:
       RAILS_ENV: test
+      DATABASE_URL: "postgres://rails:password@localhost:5432/rails_test"
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
