@@ -8,10 +8,13 @@ jobs:
         image: postgres:11-alpine
         ports:
           - "5432:5432"
+        - run:
+          name: setup database.yml
+          command: cp config/database.ci.yml config/database.yml
         env:
           POSTGRES_DB: rails_test
-          POSTGRES_USER: rails
-          POSTGRES_PASSWORD: password
+          POSTGRES_USER: root
+          POSTGRES_PASSWORD:
     container:
       image: ruby:3.0.3
     env:
