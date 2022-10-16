@@ -17,7 +17,6 @@ RSpec.configure do |config|
   require 'pry'
   config.before(:each, type: :system) do
     driven_by :selenium,
-              using: :headless_chrome,
               screen_size: [1920, 1080],
               using: :headless_chrome do |options|
       options.add_argument('--disable-dev-sim-usage')
