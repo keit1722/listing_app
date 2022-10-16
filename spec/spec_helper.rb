@@ -15,7 +15,7 @@
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
   require 'pry'
-  config.before(:each, type: :system) do
+  config.before(:each, type: :system) do |example|
     driven_by :selenium,
               screen_size: [1920, 1080],
               using: :headless_chrome do |options|
