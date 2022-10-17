@@ -39,7 +39,9 @@ vendor
 /config/database.yml
 
 public/fonts/
-app/assets/images/
+app/assets/images/*
+!/app/assets/images/logo.png
+!/app/assets/images/logo2.png
 
 config/settings.local.yml
 config/settings/*.local.yml
