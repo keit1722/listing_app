@@ -103,3 +103,6 @@ RSpec.configure do |config|
   #   # as the one that triggered the failure.
   #   Kernel.srand config.seed
 end
+
+Capybara.javascript_driver =
+  ENV['SELENIUM_DRIVER_URL'] ? :remote_chrome : :selenium_chrome_headless
