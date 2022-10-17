@@ -42,6 +42,7 @@ public/fonts/
 app/assets/images/*
 !/app/assets/images/logo.png
 !/app/assets/images/logo2.png
+!/app/assets/images/blank-profile-picture.png
 
 config/settings.local.yml
 config/settings/*.local.yml
