@@ -38,10 +38,6 @@ yarn-debug.log*
 vendor
 /config/database.yml
 
-public/fonts/
-app/assets/images/
-spec/fixtures/
-
 config/settings.local.yml
 config/settings/*.local.yml
 config/environments/*.local.yml
