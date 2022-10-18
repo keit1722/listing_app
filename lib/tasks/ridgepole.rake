@@ -16,7 +16,7 @@ namespace :ridgepole do
       "-f #{schema_file}",
       "-E #{rails_env}",
       "-c #{config_file}",
-      '--drop-table',
+      '--drop-table'
     )
   end
 
