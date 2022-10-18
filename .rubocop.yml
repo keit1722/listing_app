@@ -78,3 +78,6 @@ Rails/LexicallyScopedActionFilter:
   Enabled: false
 Rails/I18nLocaleTexts:
   Enabled: false
+Rails/UniqueValidationWithoutIndex:
+  Exclude:
+    - 'app/models/user.rb'
