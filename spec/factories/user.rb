@@ -20,7 +20,7 @@ FactoryBot.define do
     end
 
     trait :activated do
-      after(:create) { |user| user.activate! }
+      after(:create, &:activate!)
     end
 
     factory :general_user, traits: [:general]
