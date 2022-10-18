@@ -57,6 +57,7 @@ Metrics/BlockLength:
     - 'db/seeds/dummy_data/restaurants.rb'
     - 'db/seeds/dummy_data/shops.rb'
     - 'db/seeds/dummy_data/ski_areas.rb'
+    - 'lib/tasks/ridgepole.rake'
 Metrics/MethodLength:
     Enabled: false
 Metrics/ClassLength:
@@ -77,3 +78,6 @@ Rails/LexicallyScopedActionFilter:
   Enabled: false
 Rails/I18nLocaleTexts:
   Enabled: false
+Rails/UniqueValidationWithoutIndex:
+  Exclude:
+    - 'app/models/user.rb'

@@ -16,7 +16,15 @@
 RSpec.configure do |config|
   require 'pry'
   config.before(:each, type: :system) do
-    driven_by :selenium, using: :headless_chrome, screen_size: [1920, 1080]
+    driven_by :selenium,
+              using: :headless_chrome,
+              screen_size: [1920, 1080] do |driver_options|
+      driver_options.add_argument('--disable-dev-sim-usage')
+      driver_options.add_argument('--no-sandbox')
+      driver_options.add_argument('--disable-gpu')
+      driver_options.add_argument('--disable-dev-shm-usage')
+      driver_options.add_argument('--lang=ja')
+    end
   end
 
   # rspec-expectations config goes here. You can use an alternate
