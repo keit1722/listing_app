@@ -18,8 +18,8 @@ module ApplicationHelper
           href: image_url(Settings.meta.icon.apple_touch.image_path),
           rel: 'apple-touch-icon',
           sizes: '180x180',
-          type: 'image/png',
-        },
+          type: 'image/png'
+        }
       ],
       og: {
         site_name: :site,
@@ -28,11 +28,11 @@ module ApplicationHelper
         type: Settings.meta.og.type,
         url: request.original_url,
         image: image_url(Settings.meta.og.image_path),
-        locale: 'ja_JP',
+        locale: 'ja_JP'
       },
       twitter: {
-        card: 'summary_large_image',
-      },
+        card: 'summary_large_image'
+      }
     }
   end
 end
