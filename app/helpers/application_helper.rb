@@ -6,6 +6,7 @@ module ApplicationHelper
   def default_meta_tags
     {
       site: Settings.meta.site,
+      reverse: true,
       title: Settings.meta.title,
       charset: 'utf-8',
       description: Settings.meta.description,
