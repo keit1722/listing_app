@@ -1,0 +1,18 @@
+meta:
+  site: listing app
+  title: 白馬村・小谷村の情報サイト
+  description: 白馬村・小谷村の情報サイト。飲食店・宿泊・スキー場・アクティビティ・
+  keywords:
+    - 白馬村
+    - 小谷村
+    - Hakuba
+    - Otari
+    - Hakuba Vallery
+  icon:
+    favicon:
+      image_path: favicon.svg
+    apple_touch:
+      image_path: apple-touch.png
+  og:
+    type: website
+    image_path: ogp.png

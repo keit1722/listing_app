@@ -38,6 +38,7 @@ gem 'sidekiq'
 gem 'sinatra'
 gem 'config'
 gem 'omniauth-google-oauth2'
+gem 'meta-tags'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
