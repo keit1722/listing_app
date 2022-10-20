@@ -31,7 +31,7 @@ module ApplicationHelper
         locale: 'ja_JP',
       },
       twitter: {
-        card: 'summary',
+        card: 'summary_large_image',
       },
     }
   end
