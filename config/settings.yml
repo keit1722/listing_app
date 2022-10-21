@@ -16,3 +16,6 @@ meta:
   og:
     type: website
     image_path: ogp.png
+
+sorcery:
+  google_callback_url: 'http://localhost:3000/oauth/callback?provider=google'
