@@ -22,7 +22,7 @@ announcements_data.size.times do |index|
   Announcement.create(
     title: announcements_data[index][:title],
     body: announcements_data[index][:body],
-    poster_id: poster_id,
+    poster_id:,
     status: :published,
     published_before: true
   )

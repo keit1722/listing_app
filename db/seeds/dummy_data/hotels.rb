@@ -119,11 +119,11 @@ Organization
       HotelCreateForm.new(
         organization,
         {
-          district_id: district_id,
-          hotel_attributes: hotel_attributes,
-          opening_hours_attributes: opening_hours_attributes,
-          reservation_link_attributes: reservation_link_attributes,
-          page_show_attributes: page_show_attributes
+          district_id:,
+          hotel_attributes:,
+          opening_hours_attributes:,
+          reservation_link_attributes:,
+          page_show_attributes:
         }
       )
 

@@ -25,7 +25,7 @@ class Organization < ApplicationRecord
             }
 
   def create_notices
-    notices = users.map { |user| Notice.new(user: user, noticeable: self) }
+    notices = users.map { |user| Notice.new(user:, noticeable: self) }
     Notice.import notices
 
     email_receivers = users.select { |user| user.incoming_email.organization? }

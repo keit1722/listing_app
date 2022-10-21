@@ -14,7 +14,7 @@ class Pvsuwimvsuoitmucvyku::OrganizationRegistrationStatusesController < Pvsuwim
         OrganizationRegistrationMailer
           .with(
             user_to: user,
-            organization_registration: organization_registration
+            organization_registration:
           )
           .accepted
           .deliver_later
@@ -23,7 +23,7 @@ class Pvsuwimvsuoitmucvyku::OrganizationRegistrationStatusesController < Pvsuwim
         OrganizationRegistrationMailer
           .with(
             user_to: user,
-            organization_registration: organization_registration
+            organization_registration:
           )
           .rejected
           .deliver_later

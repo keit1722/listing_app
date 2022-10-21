@@ -22,10 +22,10 @@ class OrganizationInvitation < ApplicationRecord
   scope :ordered, -> { order(created_at: :desc) }
 
   def create_notice
-    user = User.find_by(email: email)
+    user = User.find_by(email:)
     return if user.nil?
 
-    Notice.create(user: user, noticeable: self)
+    Notice.create(user:, noticeable: self)
 
     return unless user.incoming_email.organization_invitation?
 
@@ -42,7 +42,7 @@ class OrganizationInvitation < ApplicationRecord
   private
 
   def belonged_user
-    errors.add(:email, 'を利用しているユーザーは既にメンバーです。') if organization.users.exists?(email: email)
+    errors.add(:email, 'を利用しているユーザーは既にメンバーです。') if organization.users.exists?(email:)
   end
 
   def create_token

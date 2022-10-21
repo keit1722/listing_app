@@ -131,12 +131,12 @@ Organization
       RestaurantCreateForm.new(
         organization,
         {
-          district_id: district_id,
-          restaurant_attributes: restaurant_attributes,
-          opening_hours_attributes: opening_hours_attributes,
-          reservation_link_attributes: reservation_link_attributes,
-          restaurant_category_ids: restaurant_category_ids,
-          page_show_attributes: page_show_attributes
+          district_id:,
+          restaurant_attributes:,
+          opening_hours_attributes:,
+          reservation_link_attributes:,
+          restaurant_category_ids:,
+          page_show_attributes:
         }
       )
 
