@@ -63,6 +63,19 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "listing_app_production"
 
   config.action_mailer.perform_caching = false
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+  host = 'rails-listing-app.herokuapp.com'
+  config.action_mailer.default_url_options = { host: host }
+  ActionMailer::Base.smtp_settings = {
+      address:              'smtp.sendgrid.net',
+      user_name:            'apikey',
+      password:             Rails.application.credentials.dig(:sendgrid, :api_key),
+      authentication:       :plain,
+      domain:               'herokuapp.com',
+      port:                 '587',
+      enable_starttls_auto: true,
+  }
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
