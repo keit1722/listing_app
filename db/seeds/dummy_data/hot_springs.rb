@@ -118,11 +118,11 @@ Organization
       HotSpringCreateForm.new(
         organization,
         {
-          district_id: district_id,
-          hot_spring_attributes: hot_spring_attributes,
-          opening_hours_attributes: opening_hours_attributes,
-          reservation_link_attributes: reservation_link_attributes,
-          page_show_attributes: page_show_attributes
+          district_id:,
+          hot_spring_attributes:,
+          opening_hours_attributes:,
+          reservation_link_attributes:,
+          page_show_attributes:
         }
       )
 

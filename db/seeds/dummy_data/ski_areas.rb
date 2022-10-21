@@ -119,11 +119,11 @@ Organization
       SkiAreaCreateForm.new(
         organization,
         {
-          district_id: district_id,
-          ski_area_attributes: ski_area_attributes,
-          opening_hours_attributes: opening_hours_attributes,
-          reservation_link_attributes: reservation_link_attributes,
-          page_show_attributes: page_show_attributes
+          district_id:,
+          ski_area_attributes:,
+          opening_hours_attributes:,
+          reservation_link_attributes:,
+          page_show_attributes:
         }
       )
 
