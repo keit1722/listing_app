@@ -8,7 +8,7 @@ RSpec.describe OrganizationInvitation, type: :model do
   describe 'バリデーション' do
     it 'メールアドレスは必須であること' do
       organization_invitation =
-        build(:organization_invitation, email: nil, organization: organization)
+        build(:organization_invitation, email: nil, organization:)
       organization_invitation.valid?
       expect(organization_invitation.errors[:email]).to include(
         'を入力してください'
@@ -22,7 +22,7 @@ RSpec.describe OrganizationInvitation, type: :model do
         build(
           :organization_invitation,
           email: another_business_user.email,
-          organization: organization
+          organization:
         )
       organization_invitation.valid?
       expect(organization_invitation.errors[:email]).to include(
@@ -35,7 +35,7 @@ RSpec.describe OrganizationInvitation, type: :model do
     let(:organization_invitation) do
       create(
         :organization_invitation,
-        organization: organization,
+        organization:,
         inviter_id: business_user.id,
         email: general_user.email
       )
@@ -47,7 +47,7 @@ RSpec.describe OrganizationInvitation, type: :model do
           failed_organization_invitation =
             create(
               :organization_invitation,
-              organization: organization,
+              organization:,
               inviter_id: business_user.id,
               email: Faker::Internet.unique.email
             )

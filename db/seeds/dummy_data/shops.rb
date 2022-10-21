@@ -128,12 +128,12 @@ Organization
       ShopCreateForm.new(
         organization,
         {
-          district_id: district_id,
-          shop_attributes: shop_attributes,
-          opening_hours_attributes: opening_hours_attributes,
-          reservation_link_attributes: reservation_link_attributes,
-          shop_category_ids: shop_category_ids,
-          page_show_attributes: page_show_attributes
+          district_id:,
+          shop_attributes:,
+          opening_hours_attributes:,
+          reservation_link_attributes:,
+          shop_category_ids:,
+          page_show_attributes:
         }
       )
 

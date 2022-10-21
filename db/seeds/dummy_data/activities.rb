@@ -119,11 +119,11 @@ Organization
       ActivityCreateForm.new(
         organization,
         {
-          district_id: district_id,
-          activity_attributes: activity_attributes,
-          opening_hours_attributes: opening_hours_attributes,
-          reservation_link_attributes: reservation_link_attributes,
-          page_show_attributes: page_show_attributes
+          district_id:,
+          activity_attributes:,
+          opening_hours_attributes:,
+          reservation_link_attributes:,
+          page_show_attributes:
         }
       )
 

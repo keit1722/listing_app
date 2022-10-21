@@ -39,14 +39,14 @@ RSpec.describe '組織登録申請', type: :system do
 
   describe '登録申請内容詳細' do
     let!(:organization_registration) do
-      create(:organization_registration, user: user)
+      create(:organization_registration, user:)
     end
 
     context '承認された申請の場合' do
       it '本登録へ進むことができる' do
         create(
           :organization_registration_status_accepted,
-          organization_registration: organization_registration
+          organization_registration:
         )
         visit mypage_organization_registration_path(organization_registration)
         expect(page).to have_content '本登録へ進む'
@@ -57,7 +57,7 @@ RSpec.describe '組織登録申請', type: :system do
       it '本登録へ進むことができない' do
         create(
           :organization_registration_status_rejected,
-          organization_registration: organization_registration
+          organization_registration:
         )
         visit mypage_organization_registration_path(organization_registration)
         expect(page).not_to have_content '本登録へ進む'

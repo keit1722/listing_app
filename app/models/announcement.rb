@@ -30,13 +30,13 @@ class Announcement < ApplicationRecord
   end
 
   def create_notices(title)
-    notices = User.all.map { |user| Notice.new(user: user, noticeable: self) }
+    notices = User.all.map { |user| Notice.new(user:, noticeable: self) }
     Notice.import notices
 
     email_receivers = User.select { |user| user.incoming_email.announcement? }
     email_receivers.each do |user|
       NoticeMailer
-        .with(user_to: user, announcement: self, title: title)
+        .with(user_to: user, announcement: self, title:)
         .announcement
         .deliver_later
     end
