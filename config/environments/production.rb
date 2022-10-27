@@ -65,7 +65,7 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
-  host = 'listing-app.net'
+  host = Rails.application.credentials.dig(:domain)
   config.action_mailer.default_url_options = { host: host }
   ActionMailer::Base.smtp_settings = {
       address:              'smtp.sendgrid.net',
