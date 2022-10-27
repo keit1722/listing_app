@@ -73,7 +73,7 @@ Rails.application.configure do
       password:             ENV['SENDGRID_API_KEY'],
       authentication:       :plain,
       domain:               'heroku.com',
-      port:                 '587',
+      port:                 587,
       enable_starttls_auto: true,
   }
 
