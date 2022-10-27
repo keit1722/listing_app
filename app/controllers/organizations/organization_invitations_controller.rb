@@ -42,7 +42,7 @@ class Organizations::OrganizationInvitationsController < Organizations::BaseCont
       .merge(
         organization: Organization.find_by(slug: params[:organization_slug]),
         inviter_id: current_user.id,
-        expires_at: 6.hours.from_now
+        expires_at: 24.hours.from_now
       )
   end
 end
