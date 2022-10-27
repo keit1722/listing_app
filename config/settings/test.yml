@@ -2,3 +2,5 @@ app:
   email: "office@example.com"
 email:
   from: listing_app@example.com
+sorcery:
+  google_callback_url: 'http://localhost:3000/oauth/callback?provider=google'
