@@ -1,2 +1,4 @@
+app:
+  email: "contact@listing-app.net"
 email:
   from: <%= Rails.application.credentials.dig(:email, :sender) %>
