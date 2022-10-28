@@ -61,3 +61,47 @@
 ### CI
 
 - [GitHub Actions](https://docs.github.com/en/actions)
+
+## Project initiation
+
+#### リモートリポジトリをローカルにクローン
+
+```
+$ git clone git@github.com:keit1722/listing_app.git
+```
+
+### Gemインストール
+
+```
+$ bundle install --path vendor/bundle
+```
+
+### Redis立ち上げ
+
+```
+$ redis-server
+```
+
+### データベース作成
+
+```
+$ bundle exec rails db:create
+```
+
+### データベースにテーブルを作成（Ridgepoleを利用）
+
+```
+$ bundle exec rake ridgepole:apply
+```
+
+### seedデータを反映
+
+```
+$ bundle exec rails db:seed
+```
+
+### Railsサーバ立ち上げ
+
+```
+$ bundle exec rails s
+```
