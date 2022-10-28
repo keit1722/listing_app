@@ -1,24 +1,50 @@
-# README
+# listing app
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## 使用言語
 
-Things you may want to cover:
+### バックエンド
 
-* Ruby version
+- Ruby 3.1.2
+- Rails 6.1.7
 
-* System dependencies
+### フロントエンド
 
-* Configuration
+- CSS
+- JavaScript
 
-* Database creation
+## デプロイ
 
-* Database initialization
+- [Heroku](https://jp.heroku.com/home)
 
-* How to run the test suite
+## メール送信
 
-* Services (job queues, cache servers, search engines, etc.)
+- [SendGrid](https://sendgrid.com/)
 
-* Deployment instructions
+## ユーザー承認
 
-* ...
+- [Sorcery](https://github.com/Sorcery/sorcery)
+
+## Decorator
+
+- [draper](https://github.com/drapergem/draper)
+
+## アップロード
+
+- ActiveStorage
+
+## バックグラウンドジョブ
+
+- [Sidekiq](https://github.com/mperham/sidekiq)
+
+## コード解析
+
+- [RuboCop](https://github.com/rubocop/rubocop)
+- [Bullet](https://github.com/flyerhzm/bullet)
+
+## テスト
+
+- [RSpec](https://github.com/rspec/rspec-rails)
+
+## CI
+
+- [GitHub Actions](https://docs.github.com/en/actions)
