@@ -1,54 +1,56 @@
 # listing app
 
-## 使用言語
+## 使用技術
 
-### バックエンド
+### 使用言語
+
+#### バックエンド
 
 - Ruby 3.1.2
 - Rails 6.1.7
 
-### フロントエンド
+#### フロントエンド
 
 - CSS
 - JavaScript
 
-## デプロイ
+### デプロイ
 
 - [Heroku](https://jp.heroku.com/home)
 
-## メール送信
+### メール送信
 
 - [SendGrid](https://sendgrid.com/)
 
-## ユーザー承認
+### ユーザー承認
 
 - [Sorcery](https://github.com/Sorcery/sorcery)
 
-## Decorator
+### Decorator
 
 - [draper](https://github.com/drapergem/draper)
 
-## アップロード
+### アップロード
 
 - ActiveStorage
 
-## ストレージ
+### ストレージ
 
 - [Amazon S3](https://docs.aws.amazon.com/AmazonS3/latest/userguide//Welcome.html)
 
-## バックグラウンドジョブ
+### バックグラウンドジョブ
 
 - [Sidekiq](https://github.com/mperham/sidekiq)
 
-## コード解析
+### コード解析
 
 - [RuboCop](https://github.com/rubocop/rubocop)
 - [Bullet](https://github.com/flyerhzm/bullet)
 
-## テスト
+### テスト
 
 - [RSpec](https://github.com/rspec/rspec-rails)
 
-## CI
+### CI
 
 - [GitHub Actions](https://docs.github.com/en/actions)
