@@ -65,15 +65,15 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
-  host = 'rails-listing-app.herokuapp.com'
+  host = Rails.application.credentials.dig(:domain)
   config.action_mailer.default_url_options = { host: host }
   ActionMailer::Base.smtp_settings = {
       address:              'smtp.sendgrid.net',
       user_name:            'apikey',
-      password:             Rails.application.credentials.dig(:sendgrid, :api_key),
+      password:             ENV['SENDGRID_API_KEY'],
       authentication:       :plain,
-      domain:               'herokuapp.com',
-      port:                 '587',
+      domain:               host,
+      port:                 587,
       enable_starttls_auto: true,
   }
 

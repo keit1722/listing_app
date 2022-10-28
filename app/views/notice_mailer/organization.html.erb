@@ -2,5 +2,4 @@
 
 <p><%= @organization.name %> にユーザーが参加しました。</p>
 <%= link_to nil, organization_url(@organization) %>
-<p>===============================================</p>
-<p>listing_app</p>
+<%= render "shared/mailer/html/footer" %>

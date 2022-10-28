@@ -54,7 +54,7 @@ class User < ApplicationRecord
   validates :password,
             presence: true,
             length: {
-              minimum: 3
+              minimum: 6
             },
             if: -> { new_record? || changes[:crypted_password] }
   validates :password,

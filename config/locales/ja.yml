@@ -20,7 +20,7 @@ ja:
         last_name: '名字'
         first_name: '名前'
         email: 'メールアドレス'
-        username: 'ユーザーネーム'
+        username: 'ユーザー名'
         password: 'パスワード'
         password_confirmation: 'パスワード確認'
         role: 'アカウントタイプ'

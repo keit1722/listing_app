@@ -81,3 +81,5 @@ Rails/I18nLocaleTexts:
 Rails/UniqueValidationWithoutIndex:
   Exclude:
     - 'app/models/user.rb'
+Rails/Output:
+  Enabled: false

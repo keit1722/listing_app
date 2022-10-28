@@ -54,12 +54,14 @@
                 <!-- Last name -->
                 <div class="col-md-6">
                   <h5><%= f.label :last_name %></h5>
+                  <p>管理者以外には公開されません。<p>
                   <%= f.text_field :last_name %>
                 </div>
 
                 <!-- Fast name -->
                 <div class="col-md-6">
                   <h5><%= f.label :first_name %></h5>
+                  <p>管理者以外には公開されません。<p>
                   <%= f.text_field :first_name %>
                 </div>
 
@@ -71,7 +73,7 @@
                 <!-- Slug -->
                 <div class="col-md-12">
                   <h5><%= f.label :username %></h5>
-                  <p>他のユーザーの目に触れる箇所になります。
+                  <p>他のユーザーにも公開されます。
                   <br>50文字以内で入力してください。後から変更が可能です。</p>
                   <%= f.text_field :username %>
                 </div>
@@ -94,7 +96,7 @@
                 <!-- Password -->
                 <div class="col-md-6">
                   <h5><%= f.label :password %></h5>
-                  <p>3文字以上でパスワードを決めてください。</p>
+                  <p>6文字以上でパスワードを決めてください。</p>
                   <%= f.password_field :password %>
                 </div>
 

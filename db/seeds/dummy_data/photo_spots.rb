@@ -1,3 +1,5 @@
+puts 'Start inserting seed "photo_spots" ...'
+
 photo_spots_information = [
   {
     name: '白馬城',
@@ -147,4 +149,5 @@ Organization
     )
 
     photo_spot_create_form.save
+    puts "\"#{photo_spot_create_form.photo_spot.name}\" has created!"
   end

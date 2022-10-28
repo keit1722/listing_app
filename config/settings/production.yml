@@ -1,0 +1,6 @@
+app:
+  email: "contact@listing-app.net"
+email:
+  from: <%= Rails.application.credentials.dig(:email, :sender) %>
+sorcery:
+  google_callback_url: <%= "https://#{Rails.application.credentials.dig(:domain)}/oauth/callback?provider=google" %>

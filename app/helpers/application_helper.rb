@@ -12,6 +12,7 @@ module ApplicationHelper
       description: Settings.meta.description,
       keywords: Settings.meta.keywords,
       canonical: request.original_url,
+      noindex: true,
       icon: [
         { href: image_url(Settings.meta.icon.favicon.image_path) },
         {
