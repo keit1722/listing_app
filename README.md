@@ -12,6 +12,14 @@
 - CSS
 - JavaScript
 
+### データベース
+
+- PostgreSQL
+
+### アプリケーションサーバ
+
+- Puma
+
 ### デプロイ
 
 - [Heroku](https://jp.heroku.com/home)
