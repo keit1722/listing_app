@@ -105,3 +105,24 @@ $ bundle exec rails db:seed
 ```
 $ bundle exec rails s
 ```
+
+## Environment variable
+
+### 環境変数には以下の情報を設定
+
+```
+domain: <本番環境でアプリ公開時の独自ドメイン>
+basic_auth:
+  user: <Basic認証で利用するユーザ名>
+  password: <Basic認証で利用するパスワード>
+google_maps:
+  api_key: <GoogleマップのAPI key>
+google_oauth:
+  client_id: <Google Oauthのclient ID>
+  client_secret: <Google Oauthのclient secret>
+aws:
+  access_key_id: <AWSのaccess key ID>
+  secret_access_key: <AWSのsecret access key>
+email:
+  sender: <独自ドメインメールの送信元メールアドレス>
+```
