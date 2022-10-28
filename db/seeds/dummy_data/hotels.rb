@@ -1,3 +1,5 @@
+puts 'Start inserting seed "hotels" ...'
+
 hotels_information = [
   {
     name: '入山荘',
@@ -147,4 +149,5 @@ Organization
     )
 
     hotel_create_form.save
+    puts "\"#{hotel_create_form.hotel.name}\" has created!"
   end

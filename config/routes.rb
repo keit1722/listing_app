@@ -212,8 +212,9 @@ Rails.application.routes.draw do
 
   draw(:admin)
 
+  mount Sidekiq::Web, at: '/sidekiq'
+  
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: '/letter_opener'
-    mount Sidekiq::Web, at: '/sidekiq'
   end
 end

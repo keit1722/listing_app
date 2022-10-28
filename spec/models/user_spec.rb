@@ -27,6 +27,13 @@ RSpec.describe User, type: :model do
       same_email_user.valid?
       expect(same_email_user.errors[:email]).to include('はすでに存在します')
     end
+
+    it 'パスワードは6文字以上であること' do
+      user =
+        build(:general_user, password: '12345', password_confirmation: '12345')
+      user.valid?
+      expect(user.errors[:password]).to include('は6文字以上で入力してください')
+    end
   end
 
   describe 'インスタンスメソッド' do

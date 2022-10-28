@@ -1,3 +1,5 @@
+puts 'Start inserting seed "posts" ...'
+
 posts_data = [
   {
     title: '来月の営業時間について',
@@ -34,12 +36,13 @@ models.each do |model|
     .limit(5)
     .each do |instance|
       posts_data.size.times do |index|
-        instance.posts.create(
+        post = instance.posts.create(
           title: posts_data[index][:title],
           body: posts_data[index][:body],
           status: :published,
           published_before: true
         )
+        puts "post#{post.id} has created!"
       end
     end
 end

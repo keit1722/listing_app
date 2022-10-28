@@ -1,3 +1,5 @@
+puts 'Start inserting seed "hot_springs" ...'
+
 hot_springs_information = [
   {
     name: '白馬温泉',
@@ -148,4 +150,5 @@ Organization
     )
 
     hot_spring_create_form.save
+    puts "\"#{hot_spring_create_form.hot_spring.name}\" has created!"
   end

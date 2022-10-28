@@ -1,3 +1,5 @@
+puts 'Start inserting seed "restaurants" ...'
+
 restaurants_information = [
   {
     name: 'Trattoria HAKUBA',
@@ -162,4 +164,5 @@ Organization
     )
 
     restaurant_create_form.save
+    puts "\"#{restaurant_create_form.restaurant.name}\" has created!"
   end

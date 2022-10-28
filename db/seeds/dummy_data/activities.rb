@@ -1,3 +1,5 @@
+puts 'Start inserting seed "activities" ...'
+
 activities_information = [
   {
     name: 'マウンテンバイク体験',
@@ -148,4 +150,5 @@ Organization
     )
 
     activity_create_form.save
+    puts "\"#{activity_create_form.activity.name}\" has created!"
   end
