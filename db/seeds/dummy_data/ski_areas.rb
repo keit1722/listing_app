@@ -1,3 +1,5 @@
+puts 'Start inserting seed "ski_areas" ...'
+
 ski_areas_information = [
   {
     name: '白馬スノーパーク',
@@ -148,4 +150,5 @@ Organization
     )
 
     ski_area_create_form.save
+    puts "\"#{ski_area_create_form.ski_area.name}\" has created!"
   end

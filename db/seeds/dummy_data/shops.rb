@@ -1,3 +1,5 @@
+puts 'Start inserting seed "shops" ...'
+
 shops_information = [
   {
     name: 'スキーレンタルレモネード',
@@ -157,4 +159,5 @@ Organization
     )
 
     shop_create_form.save
+    puts "\"#{shop_create_form.shop.name}\" has created!"
   end

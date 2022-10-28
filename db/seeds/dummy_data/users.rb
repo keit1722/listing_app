@@ -1,3 +1,5 @@
+puts 'Start inserting seed "users" ...'
+
 users = [
   {
     last_name: '山田',
@@ -28,6 +30,7 @@ users.each do |user|
       user.merge({ password: 'password', password_confirmation: 'password' })
     )
   created_user.activate!
+  puts "\"#{created_user.username}\" has created!"
 end
 
 4.times do
@@ -42,4 +45,5 @@ end
       role: :business
     )
   user.activate!
+  puts "\"#{user.username}\" has created!"
 end

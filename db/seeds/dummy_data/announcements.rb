@@ -1,3 +1,5 @@
+puts 'Start inserting seed "announcements" ...'
+
 announcements_data = [
   {
     title: 'システムメンテナンスのお知らせ',
@@ -19,11 +21,12 @@ announcements_data = [
 poster_id = User.admin.first.id
 
 announcements_data.size.times do |index|
-  Announcement.create(
+  announcement = Announcement.create(
     title: announcements_data[index][:title],
     body: announcements_data[index][:body],
     poster_id:,
     status: :published,
     published_before: true
   )
+  puts "announcement#{announcement.id} has created!"
 end
