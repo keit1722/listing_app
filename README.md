@@ -32,6 +32,10 @@
 
 - ActiveStorage
 
+## ストレージ
+
+- [Amazon S3](https://docs.aws.amazon.com/AmazonS3/latest/userguide//Welcome.html)
+
 ## バックグラウンドジョブ
 
 - [Sidekiq](https://github.com/mperham/sidekiq)
