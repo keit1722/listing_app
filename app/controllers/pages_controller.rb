@@ -29,6 +29,8 @@ class PagesController < ApplicationController
 
   def cookie; end
 
+  def faq; end
+
   private
 
   def resolve_n1(category, listings)
