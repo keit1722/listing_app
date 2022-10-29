@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get 'term', to: 'pages#term'
   get 'privacy', to: 'pages#privacy'
   get 'cookie', to: 'pages#cookie'
+  get 'faq', to: 'pages#faq'
   post 'oauth/callback', to: 'oauths#callback'
   get 'oauth/callback', to: 'oauths#callback'
   get 'oauth/:provider', to: 'oauths#oauth', as: :auth_at_provider
