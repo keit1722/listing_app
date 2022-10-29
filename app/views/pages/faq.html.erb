@@ -1,0 +1,77 @@
+<% set_meta_tags title: 'FAQ' %>
+<!-- Wrapper -->
+<div id="wrapper">
+
+  <!-- Header Container -->
+  <header id="header-container" class="fullwidth">
+    <div id="header">
+      <div class="container">
+        <%= render 'shared/header' %>
+      <div>
+    <div>
+  </header>
+  <div class="clearfix"></div>
+  <!-- Header Container / End -->
+
+
+  <!-- Titlebar -->
+  <%= render 'shared/breadcrumbs_pages', page_name: "FAQ" %>
+
+
+  <!-- Content -->
+  <div class="container">
+
+    <div class="row">
+      <div class="col-md-12">
+        <!-- Toggles Container -->
+        <div class="style-2">
+
+          <div class="toggle-wrap">
+            <span class="trigger"><a href="#">マイページにはどこから入れますか？ <i class="sl sl-icon-plus"></i> </a></span>
+            <div class="toggle-container">
+              <p>画面右上または左上（表示デバイスによって異なります）に表示されているログイン中という文字をクリックしていただき、「プロフィール」をクリックしてください。マイページに移動します。当サイトにユーザー登録頂いた方のみアクセスできます。</p>
+            </div>
+          </div>
+
+          <div class="toggle-wrap">
+            <span class="trigger"><a href="#">メールが届きません <i class="sl sl-icon-plus"></i> </a></span>
+            <div class="toggle-container">
+              <p> 迷惑メールの設定によってはメールが届かない場合があります。当サイトからのメールは「<%= Settings.email.from %>」で送信致します。「<%= Settings.email.from %>」からのメールを受信できるように設定をお願いします。</p>
+            </div>
+          </div>
+
+          <div class="toggle-wrap">
+            <span class="trigger"><a href="#">ビジネスユーザーになるにはどうすれば良いですか？ <i class="sl sl-icon-plus"></i> </a></span>
+            <div class="toggle-container">
+              <p>ビジネスユーザーになるためには、会社や個人事業などの「組織」に所属する必要があります。所属する「組織」は当サイトに登録申請していただく必要があります。マイページの「組織新規登録」→「新規登録」から組織を登録するよう申請してください。申請が承認されれば自動的にビジネスユーザーになります。また、既に当サイトに登録頂いている「組織」からその「組織」への参加招待を受けることもできます。参加招待を承認すれば、その「組織」に所属し、同時にビジネスユーザーになります。</p>
+            </div>
+          </div>
+
+          <div class="toggle-wrap">
+            <span class="trigger"><a href="#">自分がビジネスユーザーかどうかわからない <i class="sl sl-icon-plus"></i> </a></span>
+            <div class="toggle-container">
+              <p> プロフィールページの「アカウントタイプ」という項目でご確認いただけます。</p>
+            </div>
+          </div>
+
+        </div>
+        <!-- Toggles Container / End -->
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- Footer -->
+  <div id="footer" class="margin-top-65">
+    <%= render 'shared/footer' %>
+  </div>
+  <!-- Footer / End -->
+
+
+  <!-- Back To Top Button -->
+  <div id="backtotop"><a href="#"></a></div>
+
+
+</div>
+<!-- Wrapper / End -->
