@@ -24,39 +24,39 @@ Rails.application.routes.draw do
 
   resources :restaurants, param: :slug, only: %i[index show] do
     collection { get 'search', controller: 'restaurants/search_forms' }
-    resource :bookmarks, only: %i[create destroy], module: :restaurants
+    resource :bookmark, only: %i[create destroy], module: :restaurants
     resources :posts, only: %i[index show], module: :restaurants
   end
   resources :shops, param: :slug, only: %i[index show] do
     collection { get 'search', controller: 'shops/search_forms' }
-    resource :bookmarks, only: %i[create destroy], module: :shops
+    resource :bookmark, only: %i[create destroy], module: :shops
     resources :posts, only: %i[index show], module: :shops
   end
   resources :hotels, param: :slug, only: %i[index show] do
     collection { get 'search', controller: 'hotels/search_forms' }
-    resource :bookmarks, only: %i[create destroy], module: :hotels
+    resource :bookmark, only: %i[create destroy], module: :hotels
     resources :posts, only: %i[index show], module: :hotels
   end
 
   resources :activities, param: :slug, only: %i[index show] do
     collection { get 'search', controller: 'activities/search_forms' }
-    resource :bookmarks, only: %i[create destroy], module: :activities
+    resource :bookmark, only: %i[create destroy], module: :activities
     resources :posts, only: %i[index show], module: :activities
   end
 
   resources :hot_springs, param: :slug, only: %i[index show] do
     collection { get 'search', controller: 'hot_springs/search_forms' }
-    resource :bookmarks, only: %i[create destroy], module: :hot_springs
+    resource :bookmark, only: %i[create destroy], module: :hot_springs
     resources :posts, only: %i[index show], module: :hot_springs
   end
   resources :ski_areas, param: :slug, only: %i[index show] do
     collection { get 'search', controller: 'ski_areas/search_forms' }
-    resource :bookmarks, only: %i[create destroy], module: :ski_areas
+    resource :bookmark, only: %i[create destroy], module: :ski_areas
     resources :posts, only: %i[index show], module: :ski_areas
   end
   resources :photo_spots, param: :slug, only: %i[index show] do
     collection { get 'search', controller: 'photo_spots/search_forms' }
-    resource :bookmarks, only: %i[create destroy], module: :photo_spots
+    resource :bookmark, only: %i[create destroy], module: :photo_spots
     resources :posts, only: %i[index show], module: :photo_spots
   end
   resources :notices, only: [] do
