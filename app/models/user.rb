@@ -91,25 +91,19 @@ class User < ApplicationRecord
   end
 
   def bookmark(bookmarkable)
-    send(bookmark_object(bookmarkable)) << bookmarkable
+    Bookmark.create(bookmarkable: bookmarkable, user_id: id)
   end
 
   def unbookmark(bookmarkable)
-    send(bookmark_object(bookmarkable)).destroy(bookmarkable)
+    Bookmark.find_by(bookmarkable: bookmarkable, user_id: id).destroy
   end
 
   def bookmark?(bookmarkable)
-    send(bookmark_object(bookmarkable)).include?(bookmarkable)
+    Bookmark.where(user_id: id).present?
   end
 
   def resign(organization)
     organizations.destroy(organization)
-  end
-
-  private
-
-  def bookmark_object(bookmarkable)
-    "#{bookmarkable.class.to_s.underscore}_bookmarks"
   end
 end
 
