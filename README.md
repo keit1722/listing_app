@@ -33,7 +33,7 @@
 
 - [SendGrid](https://sendgrid.com/)
 
-### ユーザー承認
+### ユーザー認証
 
 - [Sorcery](https://github.com/Sorcery/sorcery)
 
@@ -74,13 +74,13 @@
 $ git clone git@github.com:keit1722/listing_app.git
 ```
 
-### Gemインストール
+### Gem インストール
 
 ```
 $ bundle install --path vendor/bundle
 ```
 
-### Redis立ち上げ
+### Redis 立ち上げ
 
 ```
 $ redis-server
@@ -92,19 +92,19 @@ $ redis-server
 $ bundle exec rails db:create
 ```
 
-### データベースにテーブルを作成（Ridgepoleを利用）
+### データベースにテーブルを作成（Ridgepole を利用）
 
 ```
 $ bundle exec rake ridgepole:apply
 ```
 
-### seedデータを反映
+### seed データを反映
 
 ```
 $ bundle exec rails db:seed
 ```
 
-### Railsサーバ立ち上げ
+### Rails サーバ立ち上げ
 
 ```
 $ bundle exec rails s
