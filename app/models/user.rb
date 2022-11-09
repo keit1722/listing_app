@@ -95,7 +95,7 @@ class User < ApplicationRecord
   end
 
   def unbookmark(bookmarkable)
-    Bookmark.find_by(bookmarkable:, user_id: id).destroy
+    bookmarks.find_by(bookmarkable:).destroy
   end
 
   def bookmark?(bookmarkable)
