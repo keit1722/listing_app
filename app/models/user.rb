@@ -99,7 +99,7 @@ class User < ApplicationRecord
   end
 
   def bookmark?(bookmarkable)
-    Bookmark.where(user_id: id).include?(bookmarkable)
+    bookmarks.find_by(bookmarkable:)
   end
 
   def resign(organization)
