@@ -91,11 +91,11 @@ class User < ApplicationRecord
   end
 
   def bookmark(bookmarkable)
-    Bookmark.create(bookmarkable: bookmarkable, user_id: id)
+    Bookmark.create(bookmarkable:, user_id: id)
   end
 
   def unbookmark(bookmarkable)
-    Bookmark.find_by(bookmarkable: bookmarkable, user_id: id).destroy
+    Bookmark.find_by(bookmarkable:, user_id: id).destroy
   end
 
   def bookmark?(bookmarkable)
