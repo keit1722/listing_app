@@ -1,17 +1,16 @@
 class PhotoSpot < ApplicationRecord
-  include ActiveModel::Validations
-
   belongs_to :organization
-
+  has_one_attached :main_image
+  has_many_attached :images
+  
+  include ActiveModel::Validations
   include Districtable
   include Bookmarkable
   include Postable
   include ReservationLinkable
   include OpeningHourable
   include PageShowable
-
-  has_one_attached :main_image
-  has_many_attached :images
+  include CommonListingScope
 
   validates :name, length: { maximum: 100 }, uniqueness: true, presence: true
   validates :address, length: { maximum: 100 }, presence: true
@@ -28,8 +27,6 @@ class PhotoSpot < ApplicationRecord
   validates :description, length: { maximum: 10_000 }, presence: true
   validates :main_image, attached: true, content_type: [:png, :jpg, :jpeg]
   validates :images, limit: { max: 4 }, content_type: [:png, :jpg, :jpeg]
-
-  include CommonListingScope
 
   def to_param
     slug

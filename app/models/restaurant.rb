@@ -1,17 +1,7 @@
 class Restaurant < ApplicationRecord
-  include ActiveModel::Validations
-
   belongs_to :organization
-
   has_many :restaurant_category_mappings, dependent: :destroy
   has_many :restaurant_categories, through: :restaurant_category_mappings
-  include Districtable
-  include Bookmarkable
-  include Postable
-  include ReservationLinkable
-  include OpeningHourable
-  include PageShowable
-
   has_one_attached :main_image
   has_many_attached :images
 
@@ -19,28 +9,35 @@ class Restaurant < ApplicationRecord
   validates :address, length: { maximum: 100 }, presence: true
   validates_with CoordinateValidator
   validates :slug,
-            length: {
-              maximum: 100
-            },
-            uniqueness: true,
-            presence: true,
-            format: {
-              with: /\A[a-z0-9\-]+\z/
-            }
+  length: {
+    maximum: 100
+  },
+  uniqueness: true,
+  presence: true,
+  format: {
+    with: /\A[a-z0-9\-]+\z/
+  }
   validates :description, length: { maximum: 10_000 }, presence: true
   validates :main_image, attached: true, content_type: [:png, :jpg, :jpeg]
   validates :images, limit: { max: 4 }, content_type: [:png, :jpg, :jpeg]
 
-  scope :search_with_category,
-        lambda { |category_ids|
-          joins(:restaurant_categories).where(
-            restaurant_categories: {
-              id: category_ids
-            }
-          )
-        }
-
+  include ActiveModel::Validations
+  include Districtable
+  include Bookmarkable
+  include Postable
+  include ReservationLinkable
+  include OpeningHourable
+  include PageShowable
   include CommonListingScope
+  
+  scope :search_with_category,
+  lambda { |category_ids|
+    joins(:restaurant_categories).where(
+      restaurant_categories: {
+        id: category_ids
+      }
+    )
+  }
 
   def to_param
     slug

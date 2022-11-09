@@ -1,12 +1,11 @@
 class Announcement < ApplicationRecord
-  validates :title, length: { maximum: 100 }, presence: true
-  validates :body, length: { maximum: 10_000 }, presence: true
-  validates :status, presence: true
-
+  has_one_attached :image
   has_many :notices, as: :noticeable, dependent: :destroy
   has_many :users, through: :notices
 
-  has_one_attached :image
+  validates :title, length: { maximum: 100 }, presence: true
+  validates :body, length: { maximum: 10_000 }, presence: true
+  validates :status, presence: true
 
   enum status: { published: 1, draft: 2 }
 

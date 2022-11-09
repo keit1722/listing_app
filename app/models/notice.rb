@@ -1,10 +1,10 @@
 class Notice < ApplicationRecord
-  include Rails.application.routes.url_helpers
-
   belongs_to :user
   belongs_to :noticeable, polymorphic: true
 
   enum read: { unread: false, read: true }
+
+  include Rails.application.routes.url_helpers
 
   scope :ordered, -> { order(created_at: :desc) }
 

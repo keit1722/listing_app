@@ -4,8 +4,6 @@ class User < ApplicationRecord
   generate_public_uid generator:
                         PublicUid::Generators::HexStringSecureRandom.new(20)
 
-  before_save { self.email = email.downcase }
-
   has_many :organization_users, dependent: :destroy
   has_many :organizations, through: :organization_users
   has_many :bookmarks, dependent: :destroy
@@ -43,14 +41,10 @@ class User < ApplicationRecord
            through: :notices,
            source: :noticeable,
            source_type: 'Post'
-
   has_many :authentications, dependent: :destroy
   accepts_nested_attributes_for :authentications
-
   has_one :incoming_email, dependent: :destroy
-
   has_one_attached :avatar
-
   validates :password,
             presence: true,
             length: {
@@ -63,7 +57,6 @@ class User < ApplicationRecord
   validates :password_confirmation,
             presence: true,
             if: -> { new_record? || changes[:crypted_password] }
-
   validates :email,
             uniqueness: true,
             presence: true,
@@ -77,12 +70,12 @@ class User < ApplicationRecord
   validates :last_name, presence: true, length: { maximum: 50 }
   validates :username, length: { maximum: 100 }, on: :create
   validates :username, presence: true, length: { maximum: 100 }, on: :update
-
   validates :reset_password_token, uniqueness: true, allow_nil: true
   validates :avatar, content_type: [:png, :jpg, :jpeg]
 
   enum role: { general: 1, business: 2, admin: 9 }
 
+  before_save { self.email = email.downcase }
   after_create { create_incoming_email }
   before_create { self.username = '名無しユーザー' if username.blank? }
 

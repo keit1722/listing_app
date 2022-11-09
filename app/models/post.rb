@@ -2,7 +2,6 @@ class Post < ApplicationRecord
   belongs_to :postable, polymorphic: true
   has_many :notices, as: :noticeable, dependent: :destroy
   has_many :users, through: :notices
-
   has_one_attached :image
 
   validates :title, length: { maximum: 100 }, presence: true

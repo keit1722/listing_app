@@ -1,6 +1,5 @@
 class OrganizationInvitation < ApplicationRecord
   belongs_to :organization
-
   has_many :notices, as: :noticeable, dependent: :destroy
   has_many :users, through: :notices
 
