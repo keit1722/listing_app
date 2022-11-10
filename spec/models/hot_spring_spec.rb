@@ -100,7 +100,9 @@ RSpec.describe HotSpring, type: :model do
 
       it do
         expect(
-          described_class.search_with_district([uchiyama.id, sano.id])
+          described_class
+            .search_with_district([uchiyama.id, sano.id])
+            .where(id: [hot_spring_uchiyama.id, hot_spring_sano.id])
         ).to eq [hot_spring_uchiyama, hot_spring_sano]
       end
 
