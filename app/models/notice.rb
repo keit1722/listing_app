@@ -9,16 +9,7 @@ class Notice < ApplicationRecord
   scope :ordered, -> { order(created_at: :desc) }
 
   def redirect_path
-    case noticeable_type
-    when 'Post'
-      [noticeable.postable, noticeable]
-    when 'OrganizationInvitation'
-      organization_invitation_path(noticeable)
-    when 'Organization'
-      organization_path(noticeable)
-    when 'Announcement'
-      announcement_path(noticeable)
-    end
+    noticeable.path_for_notice
   end
 end
 

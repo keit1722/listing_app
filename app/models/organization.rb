@@ -9,7 +9,8 @@ class Organization < ApplicationRecord
   has_many :ski_areas, dependent: :destroy
   has_many :photo_spots, dependent: :destroy
   has_many :organization_invitations, dependent: :destroy
-  has_many :notices, as: :noticeable, dependent: :destroy
+
+  include NoticeableAssociation
 
   validates :name, length: { maximum: 100 }, uniqueness: true, presence: true
   validates :address, length: { maximum: 100 }, presence: true
@@ -35,6 +36,10 @@ class Organization < ApplicationRecord
         .organization
         .deliver_later
     end
+  end
+
+  def path_for_notice
+    organization_path(self)
   end
 
   def to_param

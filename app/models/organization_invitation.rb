@@ -1,7 +1,8 @@
 class OrganizationInvitation < ApplicationRecord
   belongs_to :organization
-  has_many :notices, as: :noticeable, dependent: :destroy
   has_many :users, through: :notices
+
+  include NoticeableAssociation
 
   validates :email,
             presence: true,
@@ -46,6 +47,10 @@ class OrganizationInvitation < ApplicationRecord
 
   def create_token
     self.token = SecureRandom.uuid
+  end
+
+  def path_for_notice
+    organization_invitation_path(self)
   end
 end
 

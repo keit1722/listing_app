@@ -1,8 +1,9 @@
 class Post < ApplicationRecord
   belongs_to :postable, polymorphic: true
-  has_many :notices, as: :noticeable, dependent: :destroy
   has_many :users, through: :notices
   has_one_attached :image
+
+  include NoticeableAssociation
 
   validates :title, length: { maximum: 100 }, presence: true
   validates :body, length: { maximum: 10_000 }, presence: true
@@ -43,6 +44,10 @@ class Post < ApplicationRecord
         .post
         .deliver_later
     end
+  end
+
+  def path_for_notice
+    [postable, self]
   end
 end
 
