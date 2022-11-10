@@ -22,12 +22,12 @@ class Restaurant < ApplicationRecord
   validates :images, limit: { max: 4 }, content_type: [:png, :jpg, :jpeg]
 
   include ActiveModel::Validations
-  include Districtable
-  include Bookmarkable
-  include Postable
-  include ReservationLinkable
-  include OpeningHourable
-  include PageShowable
+  include DistrictableAssociation
+  include BookmarkableAssociation
+  include PostableAssociation
+  include ReservationLinkableAssociation
+  include OpeningHourableAssociation
+  include PageShowableAssociation
   include CommonListingScope
   
   scope :search_with_category,

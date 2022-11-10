@@ -4,12 +4,12 @@ class PhotoSpot < ApplicationRecord
   has_many_attached :images
   
   include ActiveModel::Validations
-  include Districtable
-  include Bookmarkable
-  include Postable
-  include ReservationLinkable
-  include OpeningHourable
-  include PageShowable
+  include DistrictableAssociation
+  include BookmarkableAssociation
+  include PostableAssociation
+  include ReservationLinkableAssociation
+  include OpeningHourableAssociation
+  include PageShowableAssociation
   include CommonListingScope
 
   validates :name, length: { maximum: 100 }, uniqueness: true, presence: true

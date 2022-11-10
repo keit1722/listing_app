@@ -1,4 +1,4 @@
-module Bookmarkable
+module BookmarkableAssociation
   extend ActiveSupport::Concern
 
   included do
