@@ -45,6 +45,7 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :authentications
   has_one :incoming_email, dependent: :destroy
   has_one_attached :avatar
+
   validates :password,
             presence: true,
             length: {
