@@ -21,11 +21,11 @@ module AdminPostable
     @post = @postable.posts.find(params[:id])
     @post.destroy!
     redirect_to [
-                  :pvsuwimvsuoitmucvyku,
-                  @postable.organization,
-                  @postable,
-                  :posts,
-                ],
+      :pvsuwimvsuoitmucvyku,
+      @postable.organization,
+      @postable,
+      :posts
+    ],
                 success: '削除しました'
   end
 

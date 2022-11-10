@@ -102,7 +102,7 @@ RSpec.describe SkiArea, type: :model do
         expect(
           described_class
             .search_with_district([uchiyama.id, sano.id])
-            .where(id: [ski_area_uchiyama.id, ski_area_sano.id]),
+            .where(id: [ski_area_uchiyama.id, ski_area_sano.id])
         ).to eq [ski_area_uchiyama, ski_area_sano]
       end
 

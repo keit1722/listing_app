@@ -9,14 +9,14 @@ class Restaurant < ApplicationRecord
   validates :address, length: { maximum: 100 }, presence: true
   validates_with CoordinateValidator
   validates :slug,
-  length: {
-    maximum: 100
-  },
-  uniqueness: true,
-  presence: true,
-  format: {
-    with: /\A[a-z0-9\-]+\z/
-  }
+            length: {
+              maximum: 100
+            },
+            uniqueness: true,
+            presence: true,
+            format: {
+              with: /\A[a-z0-9\-]+\z/
+            }
   validates :description, length: { maximum: 10_000 }, presence: true
   validates :main_image, attached: true, content_type: [:png, :jpg, :jpeg]
   validates :images, limit: { max: 4 }, content_type: [:png, :jpg, :jpeg]
@@ -29,15 +29,15 @@ class Restaurant < ApplicationRecord
   include OpeningHourableAssociation
   include PageShowableAssociation
   include CommonListingScope
-  
+
   scope :search_with_category,
-  lambda { |category_ids|
-    joins(:restaurant_categories).where(
-      restaurant_categories: {
-        id: category_ids
-      }
-    )
-  }
+        lambda { |category_ids|
+          joins(:restaurant_categories).where(
+            restaurant_categories: {
+              id: category_ids
+            }
+          )
+        }
 
   def to_param
     slug

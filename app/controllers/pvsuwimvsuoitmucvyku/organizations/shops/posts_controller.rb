@@ -6,8 +6,8 @@ class Pvsuwimvsuoitmucvyku::Organizations::Shops::PostsController < Pvsuwimvsuoi
   def set_postable
     @postable =
       Organization
-        .find_by!(slug: params[:organization_slug])
-        .shops
-        .find_by!(slug: params[:shop_slug])
+      .find_by!(slug: params[:organization_slug])
+      .shops
+      .find_by!(slug: params[:shop_slug])
   end
 end

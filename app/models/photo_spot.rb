@@ -2,7 +2,7 @@ class PhotoSpot < ApplicationRecord
   belongs_to :organization
   has_one_attached :main_image
   has_many_attached :images
-  
+
   include ActiveModel::Validations
   include DistrictableAssociation
   include BookmarkableAssociation

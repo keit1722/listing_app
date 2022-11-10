@@ -6,9 +6,9 @@ class Organizations::Hotels::PostsController < Organizations::BaseController
   def set_postable
     @postable =
       current_user
-        .organizations
-        .find_by!(slug: params[:organization_slug])
-        .hotels
-        .find_by!(slug: params[:hotel_slug])
+      .organizations
+      .find_by!(slug: params[:organization_slug])
+      .hotels
+      .find_by!(slug: params[:hotel_slug])
   end
 end

@@ -1,6 +1,6 @@
 module Bookmarkable
   extend ActiveSupport::Concern
-  included { before_action :set_bookmarkable, only: %i[create destroy] }
+  included { before_action :set_bookmarkable, only: [:create, :destroy] }
 
   def create
     current_user.bookmark(@bookmarkable)

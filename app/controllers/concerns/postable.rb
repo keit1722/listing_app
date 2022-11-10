@@ -1,16 +1,16 @@
 module Postable
   extend ActiveSupport::Concern
-  included { before_action :set_postable, only: %i[index show] }
+  included { before_action :set_postable, only: [:index, :show] }
 
   def index
     @posts =
       @postable
-        .posts
-        .with_attached_image
-        .published
-        .page(params[:page])
-        .per(5)
-        .ordered
+      .posts
+      .with_attached_image
+      .published
+      .page(params[:page])
+      .per(5)
+      .ordered
   end
 
   def show
