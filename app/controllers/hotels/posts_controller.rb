@@ -1,5 +1,5 @@
-class Hotels::PostsController < PostsController
-  before_action :set_postable, only: [:index, :show]
+class Hotels::PostsController < ApplicationController
+  include Postable
 
   private
 

@@ -1,5 +1,5 @@
-class Restaurants::PostsController < PostsController
-  before_action :set_postable, only: [:index, :show]
+class Restaurants::PostsController < ApplicationController
+  include Postable
 
   private
 
