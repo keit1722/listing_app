@@ -1,4 +1,4 @@
-module ReservationLinkable
+module ReservationLinkableAssociation
   extend ActiveSupport::Concern
 
   included do

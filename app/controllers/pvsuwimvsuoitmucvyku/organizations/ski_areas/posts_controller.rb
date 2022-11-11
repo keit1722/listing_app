@@ -1,5 +1,5 @@
-class Pvsuwimvsuoitmucvyku::Organizations::SkiAreas::PostsController < Pvsuwimvsuoitmucvyku::Organizations::PostsController
-  before_action :set_postable
+class Pvsuwimvsuoitmucvyku::Organizations::SkiAreas::PostsController < Pvsuwimvsuoitmucvyku::BaseController
+  include AdminPostable
 
   private
 

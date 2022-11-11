@@ -1,5 +1,5 @@
-class Shops::BookmarksController < BookmarksController
-  before_action :set_bookmarkable, only: [:create, :destroy]
+class Shops::BookmarksController < ApplicationController
+  include Bookmarkable
 
   private
 

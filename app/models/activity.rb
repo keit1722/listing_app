@@ -1,15 +1,5 @@
 class Activity < ApplicationRecord
-  include ActiveModel::Validations
-
   belongs_to :organization
-
-  include Districtable
-  include Bookmarkable
-  include Postable
-  include ReservationLinkable
-  include OpeningHourable
-  include PageShowable
-
   has_one_attached :main_image
   has_many_attached :images
 
@@ -29,6 +19,13 @@ class Activity < ApplicationRecord
   validates :main_image, attached: true, content_type: [:png, :jpg, :jpeg]
   validates :images, limit: { max: 4 }, content_type: [:png, :jpg, :jpeg]
 
+  include ActiveModel::Validations
+  include DistrictableAssociation
+  include BookmarkableAssociation
+  include PostableAssociation
+  include ReservationLinkableAssociation
+  include OpeningHourableAssociation
+  include PageShowableAssociation
   include CommonListingScope
 
   def to_param

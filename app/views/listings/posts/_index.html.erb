@@ -58,7 +58,7 @@
               <div class="widget margin-top-40">
                 <h3>最近の投稿</h3>
                 <ul class="widget-tabs">
-                  <%= render partial: "listings/posts/widget_post", collection: three_posts, as: "post" %>
+                  <%= render partial: "listings/posts/widget_post", collection: posts.limit(3), as: "post" %>
                 </ul>
               </div>
               <!-- Widget / End-->

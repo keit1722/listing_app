@@ -1,5 +1,5 @@
-class Organizations::Restaurants::PostsController < Organizations::PostsController
-  before_action :set_postable
+class Organizations::Restaurants::PostsController < Organizations::BaseController
+  include OrganizationsPostable
 
   private
 

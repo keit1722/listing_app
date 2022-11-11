@@ -1,5 +1,5 @@
-class HotSprings::BookmarksController < BookmarksController
-  before_action :set_bookmarkable, only: [:create, :destroy]
+class HotSprings::BookmarksController < ApplicationController
+  include Bookmarkable
 
   private
 

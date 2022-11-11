@@ -1,4 +1,4 @@
-module OpeningHourable
+module OpeningHourableAssociation
   extend ActiveSupport::Concern
 
   included do

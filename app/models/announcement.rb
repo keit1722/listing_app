@@ -1,12 +1,12 @@
 class Announcement < ApplicationRecord
+  has_one_attached :image
+  has_many :users, through: :notices
+
+  include NoticeableAssociation
+
   validates :title, length: { maximum: 100 }, presence: true
   validates :body, length: { maximum: 10_000 }, presence: true
   validates :status, presence: true
-
-  has_many :notices, as: :noticeable, dependent: :destroy
-  has_many :users, through: :notices
-
-  has_one_attached :image
 
   enum status: { published: 1, draft: 2 }
 
@@ -40,6 +40,10 @@ class Announcement < ApplicationRecord
         .announcement
         .deliver_later
     end
+  end
+
+  def path_for_notice
+    announcement_path(self)
   end
 end
 

@@ -1,5 +1,5 @@
-class Organizations::SkiAreas::PostsController < Organizations::PostsController
-  before_action :set_postable
+class Organizations::SkiAreas::PostsController < Organizations::BaseController
+  include OrganizationsPostable
 
   private
 

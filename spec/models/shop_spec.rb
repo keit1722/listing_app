@@ -119,7 +119,9 @@ RSpec.describe Shop, type: :model do
 
       it do
         expect(
-          described_class.search_with_district([uchiyama.id, sano.id])
+          described_class
+            .search_with_district([uchiyama.id, sano.id])
+            .where(id: [shop_uchiyama.id, shop_sano.id])
         ).to eq [shop_uchiyama, shop_sano]
       end
 
