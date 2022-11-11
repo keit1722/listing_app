@@ -1,5 +1,5 @@
-class PhotoSpots::PostsController < PostsController
-  before_action :set_postable, only: [:index, :show]
+class PhotoSpots::PostsController < ApplicationController
+  include Postable
 
   private
 

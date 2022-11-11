@@ -21,7 +21,7 @@ namespace :ridgepole do
   end
 
   def schema_file
-    Rails.root.join('Schemafile')
+    Rails.root.join('db/Schemafile.rb')
   end
 
   def config_file

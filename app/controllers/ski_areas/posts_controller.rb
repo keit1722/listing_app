@@ -1,5 +1,5 @@
-class SkiAreas::PostsController < PostsController
-  before_action :set_postable, only: [:index, :show]
+class SkiAreas::PostsController < ApplicationController
+  include Postable
 
   private
 

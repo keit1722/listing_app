@@ -1,4 +1,4 @@
-module Districtable
+module DistrictableAssociation
   extend ActiveSupport::Concern
 
   included do

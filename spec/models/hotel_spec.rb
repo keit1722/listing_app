@@ -100,7 +100,9 @@ RSpec.describe Hotel, type: :model do
 
       it do
         expect(
-          described_class.search_with_district([uchiyama.id, sano.id])
+          described_class
+            .search_with_district([uchiyama.id, sano.id])
+            .where(id: [hotel_uchiyama.id, hotel_sano.id])
         ).to eq [hotel_uchiyama, hotel_sano]
       end
 

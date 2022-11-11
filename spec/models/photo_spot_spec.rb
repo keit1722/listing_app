@@ -100,7 +100,9 @@ RSpec.describe PhotoSpot, type: :model do
 
       it do
         expect(
-          described_class.search_with_district([uchiyama.id, sano.id])
+          described_class
+            .search_with_district([uchiyama.id, sano.id])
+            .where(id: [photo_spot_uchiyama.id, photo_spot_sano.id])
         ).to eq [photo_spot_uchiyama, photo_spot_sano]
       end
 

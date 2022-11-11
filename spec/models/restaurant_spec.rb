@@ -125,7 +125,9 @@ RSpec.describe Restaurant, type: :model do
 
       it do
         expect(
-          described_class.search_with_district([uchiyama.id, sano.id])
+          described_class
+            .search_with_district([uchiyama.id, sano.id])
+            .where(id: [restaurant_uchiyama.id, restaurant_sano.id])
         ).to eq [restaurant_uchiyama, restaurant_sano]
       end
 

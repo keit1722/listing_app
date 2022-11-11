@@ -1,4 +1,7 @@
-class Pvsuwimvsuoitmucvyku::Organizations::PostsController < Pvsuwimvsuoitmucvyku::BaseController
+module AdminPostable
+  extend ActiveSupport::Concern
+  included { before_action :set_postable }
+
   include AdminPostAction
 
   def index
@@ -30,5 +33,9 @@ class Pvsuwimvsuoitmucvyku::Organizations::PostsController < Pvsuwimvsuoitmucvyk
 
   def post_params
     params.require(:post).permit(:title, :body, :image)
+  end
+
+  def set_postable
+    raise NotImplementedError, '@postableがsetされていません'
   end
 end
