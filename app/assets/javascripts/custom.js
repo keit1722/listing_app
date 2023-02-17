@@ -1277,24 +1277,34 @@ $(document).ready(function(){
 	});
 
     // "All" checkbox -- categories
-    $('.checkboxes.categories input').on('change', function() {
-      if($(this).hasClass('all')){
-          $(this).parents('.checkboxes').find('input').prop('checked', false);
-          $(this).prop('checked', true);
+    $(".checkboxes.categories input").on("change", function () {
+      const checkbox = $(this).parents(".checkboxes");
+      if ($(this).hasClass("all")) {
+        checkbox.find("input").prop("checked", false);
+        $(this).prop("checked", true);
       } else {
-          $(this).parents('.checkboxes').find('input.all').prop('checked', false);
+        checkbox.find("input.all").prop("checked", false);
       }
-  });
 
-  // "All" checkbox -- areas
-  $('.checkboxes.areas input').on('change', function() {
-      if($(this).hasClass('all')){
-          $(this).parents('.checkboxes').find('input').prop('checked', false);
-          $(this).prop('checked', true);
-      } else {
-          $(this).parents('.checkboxes').find('input.all').prop('checked', false);
+      if (checkbox.find("input").filter(":checked").length == 0) {
+        checkbox.find("input.all").prop("checked", true);
       }
-  });
+    });
+
+    // "All" checkbox -- areas
+    $(".checkboxes.areas input").on("change", function () {
+      const checkbox = $(this).parents(".checkboxes");
+      if ($(this).hasClass("all")) {
+        checkbox.find("input").prop("checked", false);
+        $(this).prop("checked", true);
+      } else {
+        checkbox.find("input.all").prop("checked", false);
+      }
+
+      if (checkbox.find("input").filter(":checked").length == 0) {
+        checkbox.find("input.all").prop("checked", true);
+      }
+    });
 
 
 	$('input[type="range"].distance-radius').rangeslider({
