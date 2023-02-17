@@ -21,8 +21,3 @@ end
 #  index_organization_users_on_user_id                      (user_id)
 #  index_organization_users_on_user_id_and_organization_id  (user_id,organization_id) UNIQUE
 #
-# Foreign Keys
-#
-#  fk_rails_...  (organization_id => organizations.id)
-#  fk_rails_...  (user_id => users.id)
-#

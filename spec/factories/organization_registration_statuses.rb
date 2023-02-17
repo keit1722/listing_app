@@ -27,7 +27,3 @@ end
 #
 #  index_org_registration_statuses_on_org_registration_id  (organization_registration_id)
 #
-# Foreign Keys
-#
-#  fk_rails_...  (organization_registration_id => organization_registrations.id)
-#

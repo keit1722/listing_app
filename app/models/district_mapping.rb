@@ -22,7 +22,3 @@ end
 #  index_district_mappings_on_districtable_id_and_type              (districtable_id,districtable_type) UNIQUE
 #  index_polymorphic_district_mappings_on_districtable_id_and_type  (districtable_type,districtable_id)
 #
-# Foreign Keys
-#
-#  fk_rails_...  (district_id => districts.id)
-#
