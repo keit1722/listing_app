@@ -20,6 +20,12 @@ class PagesController < ApplicationController
     @selected_area_groups = params[:q][:area].presence || 'all'
     @keyword = params[:q][:keyword]
 
+    if category == 'restaurants'
+      @categories = RestaurantCategory.all
+    elsif category == 'shops'
+      @categories = ShopCategory.all
+    end
+
     render template: "#{category}/search_forms/search", layout: 'listings_index'
   end
 
