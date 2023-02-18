@@ -24,7 +24,3 @@ end
 #  index_organization_invitations_on_organization_id  (organization_id)
 #  index_organization_invitations_on_token            (token) UNIQUE
 #
-# Foreign Keys
-#
-#  fk_rails_...  (organization_id => organizations.id)
-#

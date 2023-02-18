@@ -21,8 +21,3 @@ end
 #  index_restaurant_category_mappings_on_restaurant_category_id  (restaurant_category_id)
 #  index_restaurant_category_mappings_on_restaurant_id           (restaurant_id)
 #
-# Foreign Keys
-#
-#  fk_rails_...  (restaurant_category_id => restaurant_categories.id)
-#  fk_rails_...  (restaurant_id => restaurants.id)
-#

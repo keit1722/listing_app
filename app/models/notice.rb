@@ -30,7 +30,3 @@ end
 #  index_notices_on_noticeable_type_and_noticeable_id  (noticeable_type,noticeable_id)
 #  index_notices_on_user_id                            (user_id)
 #
-# Foreign Keys
-#
-#  fk_rails_...  (user_id => users.id)
-#
