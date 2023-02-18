@@ -54,7 +54,3 @@ end
 #  index_ski_areas_on_organization_id  (organization_id)
 #  index_ski_areas_on_slug             (slug) UNIQUE
 #
-# Foreign Keys
-#
-#  fk_rails_...  (organization_id => organizations.id)
-#

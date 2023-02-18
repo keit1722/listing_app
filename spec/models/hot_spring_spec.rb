@@ -179,7 +179,3 @@ end
 #  index_hot_springs_on_organization_id  (organization_id)
 #  index_hot_springs_on_slug             (slug) UNIQUE
 #
-# Foreign Keys
-#
-#  fk_rails_...  (organization_id => organizations.id)
-#

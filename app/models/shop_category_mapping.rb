@@ -21,8 +21,3 @@ end
 #  index_shop_category_mappings_on_shop_category_id    (shop_category_id)
 #  index_shop_category_mappings_on_shop_id             (shop_id)
 #
-# Foreign Keys
-#
-#  fk_rails_...  (shop_category_id => shop_categories.id)
-#  fk_rails_...  (shop_id => shops.id)
-#

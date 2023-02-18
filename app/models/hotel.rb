@@ -54,7 +54,3 @@ end
 #  index_hotels_on_organization_id  (organization_id)
 #  index_hotels_on_slug             (slug) UNIQUE
 #
-# Foreign Keys
-#
-#  fk_rails_...  (organization_id => organizations.id)
-#
