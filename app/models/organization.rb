@@ -11,6 +11,7 @@ class Organization < ApplicationRecord
   has_many :organization_invitations, dependent: :destroy
 
   include NoticeableAssociation
+  include Rails.application.routes.url_helpers
 
   validates :name, length: { maximum: 100 }, uniqueness: true, presence: true
   validates :address, length: { maximum: 100 }, presence: true
