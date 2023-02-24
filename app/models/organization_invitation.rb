@@ -2,6 +2,7 @@ class OrganizationInvitation < ApplicationRecord
   belongs_to :organization
   has_many :users, through: :notices
 
+  include Rails.application.routes.url_helpers
   include NoticeableAssociation
 
   validates :email,
@@ -39,6 +40,10 @@ class OrganizationInvitation < ApplicationRecord
     token
   end
 
+  def path_for_notice
+    organization_invitation_path(self)
+  end
+
   private
 
   def belonged_user
@@ -47,10 +52,6 @@ class OrganizationInvitation < ApplicationRecord
 
   def create_token
     self.token = SecureRandom.uuid
-  end
-
-  def path_for_notice
-    organization_invitation_path(self)
   end
 end
 

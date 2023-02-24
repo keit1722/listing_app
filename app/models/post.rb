@@ -4,6 +4,7 @@ class Post < ApplicationRecord
   has_one_attached :image
 
   include NoticeableAssociation
+  include Rails.application.routes.url_helpers
 
   validates :title, length: { maximum: 100 }, presence: true
   validates :body, length: { maximum: 10_000 }, presence: true
